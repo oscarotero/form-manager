@@ -73,6 +73,14 @@ if ($_GET) {
 	</head>
 
 	<body>
-		<?php echo $Form; ?>
+		<?php echo $Form->openHtml(); ?>
+
+		<?php foreach ($Form as $Input): ?>
+			<p>
+				<?php echo $Input; ?>
+			</p>
+		<?php endforeach; ?>
+		<input type="submit">
+		</form>
 	</body>
 </html>

@@ -15,6 +15,10 @@ abstract class Input extends Element {
 		}
 	}
 
+	public function __toString () {
+		return $this->labelToHtml().$this->toHtml();
+	}
+
 	public function label ($label = null) {
 		if ($label === null) {
 			return $this->label;
@@ -99,12 +103,20 @@ abstract class Input extends Element {
 				$attributes['class'] = 'error';
 			}
 
-			$html = '<input'.$this->attrToHtml($attributes).'>';
+			$html = '<input'.static::attrHtml($this->attributes, $attributes).'>';
 			$html .= '<label class="error">'.$this->error.'</label>';
 		} else {
-			$html = '<input'.$this->attrToHtml($attributes).'>';
+			$html = '<input'.static::attrHtml($this->attributes, $attributes).'>';
 		}
 
 		return $html;
+	}
+
+	public function labelToHtml (array $attributes = array()) {
+		if ($this->attr('id')) {
+			$attributes['for'] = $this->attr('id');
+		}
+
+		return '<label'.static::attrHtml($attributes).'>'.$this->label().'</label>';
 	}
 }

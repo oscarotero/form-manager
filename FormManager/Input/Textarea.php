@@ -25,10 +25,10 @@ class Textarea extends Input {
 				$attributes['class'] = 'error';
 			}
 
-			$html = '<textarea'.$this->attrToHtml($attributes).'>'.$this->value.'</textarea>';
+			$html = '<textarea'.static::attrHtml($this->attributes, $attributes).'>'.$this->value.'</textarea>';
 			$html .= '<label class="error">'.$this->error.'</label>';
 		} else {
-			$html = '<textarea'.$this->attrToHtml($attributes).'>'.$this->value.'</textarea>';
+			$html = '<textarea'.static::attrHtml($this->attributes, $attributes).'>'.$this->value.'</textarea>';
 		}
 
 		return $html;

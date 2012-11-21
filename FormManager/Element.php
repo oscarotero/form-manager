@@ -40,10 +40,6 @@ abstract class Element {
 		unset($this->attributes[$name]);
 	}
 
-	public function attrToHtml (array $mergedAttributes = null) {
-		return static::attrHtml($this->attributes, $mergedAttributes);
-	}
-
 	static protected function attrHtml (array $attributes, array $mergedAttributes = null) {
 		$html = '';
 

@@ -1,9 +1,25 @@
 <?php
 namespace FormManager;
 
-class Form extends Element implements \ArrayAccess {
+class Form extends Element implements \Iterator, \ArrayAccess {
 	protected $inputs;
 	protected $valid;
+
+	public function rewind () {
+		return reset($this->inputs);
+	}
+	public function current () {
+		return current($this->inputs);
+	}
+	public function key () {
+		return key($this->inputs);
+	}
+	public function next () {
+		return next($this->inputs);
+	}
+	public function valid () {
+		return key($this->inputs) !== null;
+	}
 
 	public function offsetSet ($offset, $value) {
 		$value->attr('name', $offset);
@@ -88,12 +104,16 @@ class Form extends Element implements \ArrayAccess {
 		return $this->valid;
 	}
 
+	public function openHtml (array $attributes = null) {
+		return '<form'.static::attrHtml($this->attributes, $attributes).'>'."\n";
+	}
+
 	public function toHtml (array $attributes = null) {
-		$html = '<form'.$this->attrToHtml($attributes).'>'."\n";
+		$html = $this->openHtml();
 
 		foreach ($this->inputs as $name => $Input) {
 			$html .= '<div>'."\n";
-			$html .= "\t".'<label>'.$Input->label().'</label>'."\n";
+			
 			$html .= "\t".$Input->toHtml()."\n";
 			$html .= '</div>'."\n";
 		}
