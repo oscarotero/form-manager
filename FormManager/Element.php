@@ -45,11 +45,16 @@ abstract class Element {
 
 		if ($mergedAttributes !== null) {
 			foreach ($mergedAttributes as $name => $value) {
-				if (!isset($attributes[$name]) || $name !== 'class') {
-					$attributes[$name] = $value;
+				if (strpos($name, 'add-') === 0) {
+					$name = substr($name, 4);
+
+					if (!empty($attributes[$name])) {
+						$attributes[$name] .= ' '.$value;
+						continue;
+					}
 				}
 
-				$attributes[$name] .= ' '.$value;
+				$attributes[$name] = $value;
 			}
 		}
 
