@@ -4,7 +4,7 @@ namespace FormManager\Input;
 use FormManager\Input;
 
 class Textarea extends Input {
-	protected $attributes = array('type' => 'text');
+	protected $attributes = array();
 	protected $value;
 
 	public function val ($value = null) {
