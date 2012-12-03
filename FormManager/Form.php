@@ -113,7 +113,7 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 
 		foreach ($this->inputs as $name => $Input) {
 			$html .= '<div>'."\n";
-			
+			$html .= "\t".$Input->labelToHtml()."\n";
 			$html .= "\t".$Input->toHtml()."\n";
 			$html .= '</div>'."\n";
 		}

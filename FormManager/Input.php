@@ -3,6 +3,7 @@ namespace FormManager;
 
 abstract class Input extends Element {
 	public $isFile = false;
+
 	protected $attributes_validators = array();
 	protected $label;
 	protected $error;
@@ -113,9 +114,11 @@ abstract class Input extends Element {
 	}
 
 	public function labelToHtml (array $attributes = array()) {
-		if ($this->attr('id')) {
-			$attributes['for'] = $this->attr('id');
+		if (!$this->attr('id')) {
+			$this->attr('id', uniqid('input-'));
 		}
+
+		$attributes['for'] = $this->attr('id');
 
 		return '<label'.static::attrHtml($attributes).'>'.$this->label().'</label>';
 	}
