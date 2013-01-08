@@ -7,8 +7,9 @@ abstract class Input extends Element {
 	protected $attributes_validators = array();
 	protected $label;
 	protected $error;
+        protected $display_order;
 
-	public static function __callStatic ($name, $arguments) {
+        public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\Input\\'.ucfirst($name);
 
 		if (class_exists($class)) {
@@ -17,6 +18,9 @@ abstract class Input extends Element {
 	}
 
 	public function __toString () {
+                if($this->display_order == 'reverse'){
+                    return $this->toHtml().$this->labelToHtml();    
+                }
 		return $this->labelToHtml().$this->toHtml();
 	}
 
