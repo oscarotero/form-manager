@@ -2,14 +2,17 @@
 namespace FormManager;
 
 abstract class Input extends Element {
+	const LABEL_POSITION_BEFORE = 1;
+	const LABEL_POSITION_AFTER = 2;
+
 	public $isFile = false;
 
 	protected $attributes_validators = array();
 	protected $label;
+	protected $label_position = self::LABEL_POSITION_BEFORE;
 	protected $error;
-        protected $display_order;
 
-        public static function __callStatic ($name, $arguments) {
+	public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\Input\\'.ucfirst($name);
 
 		if (class_exists($class)) {
@@ -18,10 +21,13 @@ abstract class Input extends Element {
 	}
 
 	public function __toString () {
-                if($this->display_order == 'reverse'){
-                    return $this->toHtml().$this->labelToHtml();    
-                }
-		return $this->labelToHtml().$this->toHtml();
+		switch ($this->label_position) {
+			case self::LABEL_POSITION_BEFORE:
+				return $this->labelToHtml().$this->toHtml();
+
+			case self::LABEL_POSITION_AFTER:
+				return $this->toHtml().$this->labelToHtml();
+		}
 	}
 
 	public function label ($label = null) {
@@ -118,6 +124,10 @@ abstract class Input extends Element {
 	}
 
 	public function labelToHtml (array $attributes = array()) {
+		if ($this->label() === null) {
+			return '';
+		}
+
 		if (!$this->attr('id')) {
 			$this->attr('id', uniqid('input-'));
 		}
