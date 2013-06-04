@@ -117,8 +117,6 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 			$html .= '</div>'."\n";
 		}
 
-		$html .= '<input type="submit">'."\n";
-
 		$html .= '</form>'."\n";
 
 		return $html;
