@@ -94,7 +94,8 @@ echo $MyForm->openHtml(); //<form action="test.php" method="get">
 foreach ($MyForm as $Input) {
 	echo $Input;
 }
-echo '</form>';
+
+echo $MyForm->closeHtml(); //</form>
 
 //Access to the inputs using key names
 echo $MyForm->openHtml();
@@ -102,7 +103,7 @@ echo $MyForm->openHtml();
 echo $MyForm['email']->toHtml(array('class' => 'email-input'));
 ...
 
-echo '</form>';
+echo $MyForm->closeHtml();
 ```
 
 Manage data

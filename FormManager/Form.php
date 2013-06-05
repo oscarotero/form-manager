@@ -114,6 +114,10 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return '<form'.static::attrHtml($this->attributes, $attributes).'>'."\n";
 	}
 
+	public function closeHtml () {
+		return '</form>'."\n";
+	}
+
 	public function toHtml (array $attributes = null) {
 		$html = $this->openHtml();
 
@@ -123,7 +127,7 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 			$html .= '</div>'."\n";
 		}
 
-		$html .= '</form>'."\n";
+		$html .= $this->closeHtml();
 
 		return $html;
 	}
