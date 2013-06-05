@@ -1,6 +1,8 @@
 <?php
 namespace FormManager;
 
+use FormManager\Input;
+
 class Form extends Element implements \Iterator, \ArrayAccess {
 	protected $inputs;
 	protected $valid;
@@ -22,6 +24,10 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 	}
 
 	public function offsetSet ($offset, $value) {
+		if (!($value instanceof Input)) {
+			throw new \InvalidArgumentException('Only FormManager\\Input instances must be added to forms');
+		}
+
 		$value->attr('name', $offset);
 		$this->inputs[$offset] = $value;
 	}

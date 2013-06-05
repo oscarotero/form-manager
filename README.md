@@ -11,8 +11,8 @@ Requirements:
 * Any PSR-0 autoloader
 
 
-Create a input
---------------
+Create an input
+---------------
 
 ```php
 use FormManager\Input;
