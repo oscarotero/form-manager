@@ -26,22 +26,27 @@ spl_autoload_register('autoload');
 
 class MyForm extends Form {
 	public function __construct () {
-		$this->attr(array(
-			'action' => 'test.php'
-		));
+		$this->attr('action', 'test.php');
 
 		$this->inputs(array(
-			'name' => Input::text()->maxlength(50)->required()->label('Your name'),
-			'dni' => Input::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-			'search' => Input::search()->label('What are you looking for?'),
-			'comment' => Input::textarea()->label('A comment')->maxlength(30),
-			'email' => Input::email()->label('Your email'),
-			'website' => Input::url()->label('Your website')->required(),
-			'age' => Input::number()->min(5)->max(110)->label('How old are you?'),
-			'height' => Input::range()->min(50)->max(220)->label('How height are you?'),
-			'telephone' => Input::tel()->label('Telephone number'),
-			'is-happy' => Input::checkbox()->label('Are you happy?')->required()
-		));
+            'name' => Input::text()->maxlength(50)->required()->label('Your name'),
+            'dni' => Input::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+            'search' => Input::search()->label('What are you looking for?'),
+            'comment' => Input::textarea()->label('A comment')->maxlength(30),
+            'email' => Input::email()->label('Your email'),
+            'website' => Input::url()->label('Your website')->required(),
+            'age' => Input::number()->min(5)->max(110)->label('How old are you?'),
+            'height' => Input::range()->min(50)->max(220)->label('How height are you?'),
+            'telephone' => Input::tel()->label('Telephone number'),
+            'is-happy' => Input::checkbox()->label('Are you happy?')->required(),
+            'gender' => Input::select()->options(array(
+                'm' => 'Male',
+                'f' => 'Female'
+            ))->label('Gender'),
+
+            'submit' => Input::button()->type('submit')->html('Send data')
+            //or also: 'submit' => Input::submit()->val('Send data') 
+        ));
 	}
 }
 
@@ -73,14 +78,6 @@ if ($_GET) {
 	</head>
 
 	<body>
-		<?php echo $Form->openHtml(); ?>
-
-		<?php foreach ($Form as $Input): ?>
-			<p>
-				<?php echo $Input; ?>
-			</p>
-		<?php endforeach; ?>
-		<input type="submit">
-		</form>
+		<?php echo $Form; ?>
 	</body>
 </html>
