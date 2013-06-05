@@ -73,7 +73,9 @@ class MyForm extends Form {
 			'gender' => Input::select()->options(array(
 				'm' => 'Male',
 				'f' => 'Female'
-			))->label('Gender')
+			))->label('Gender'),
+            'click-me' => Input::button()->html('Click Me'),
+            'submit' => Input::submit()->value('Submit')
 		));
 	}
 }

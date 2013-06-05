@@ -5,7 +5,7 @@ use FormManager\Input;
 
 class Button extends Input {
 	protected $html = 'Button';
-	protected $attributes = array('type' => 'submit');
+	protected $attributes = array('type' => 'button');
 
 	public function html ($html = null) {
 		if ($html === null) {
