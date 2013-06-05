@@ -56,7 +56,7 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return $this;
 	}
 
-	public function load (array $get, array $post, array $file) {
+	public function load (array $get = array(), array $post = array(), array $file = array()) {
 		$data = ($this->attr('method') === 'post') ? $post : $get;
 
 		foreach ($file as $name => $file) {
@@ -65,7 +65,15 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 			}
 		}
 
-		return $this->val($data);
+		foreach ($data as $name => $value) {
+			if (isset($this->inputs[$name])) {
+				$this->inputs[$name]->load($value);
+			}
+		}
+
+		$this->validate();
+
+		return $this;
 	}
 
 	public function val (array $value = null) {

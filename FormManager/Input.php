@@ -82,6 +82,10 @@ abstract class Input extends Element {
 		unset($this->validators[$name]);
 	}
 
+	public function load ($value = null) {
+		$this->val($value);
+	}
+
 	public function val ($value = null) {
 		if ($value === null) {
 			return isset($this->attributes['value']) ? $this->attributes['value'] : null;

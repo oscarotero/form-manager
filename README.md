@@ -7,7 +7,7 @@ GNU Affero GPL version 3. http://www.gnu.org/licenses/agpl-3.0.html
 
 Requirements:
 
-* PHP 5.3
+* PHP 5.4
 * Any PSR-0 autoloader
 
 
