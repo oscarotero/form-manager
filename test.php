@@ -2,27 +2,7 @@
 use FormManager\Form;
 use FormManager\Input;
 
-ini_set('display_errors', 'On');
-
-function autoload ($className) {
-	$className = ltrim($className, '\\');
-	$fileName  = '';
-	$namespace = '';
-	
-	if ($lastNsPos = strripos($className, '\\')) {
-		$namespace = substr($className, 0, $lastNsPos);
-		$className = substr($className, $lastNsPos + 1);
-		$fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-	}
-
-	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-
-	if (is_file($fileName)) {
-		require $fileName;
-	}
-}
-
-spl_autoload_register('autoload');
+include('FormManager/autoloader.php');
 
 class MyForm extends Form {
 	public function __construct () {
@@ -38,7 +18,7 @@ class MyForm extends Form {
             'age' => Input::number()->min(5)->max(110)->label('How old are you?'),
             'height' => Input::range()->min(50)->max(220)->label('How height are you?'),
             'telephone' => Input::tel()->label('Telephone number'),
-            'is-happy' => Input::checkbox()->label('Are you happy?')->required(),
+            'is-happy' => Input::checkbox()->label('Are you happy?'),
             'gender' => Input::select()->options(array(
                 'm' => 'Male',
                 'f' => 'Female'
