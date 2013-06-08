@@ -137,9 +137,13 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 	}
 
 	public function inputsHtml () {
+		$html = '';
+
 		foreach ($this->inputs as $name => $Input) {
 			$html .= (string)$Input;
 		}
+
+		return $html;
 	}
 
 	public function toHtml (array $attributes = null) {
