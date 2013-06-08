@@ -136,13 +136,15 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return '</form>'."\n";
 	}
 
-	public function toHtml (array $attributes = null) {
-		$html = $this->openHtml();
-
+	public function inputsHtml () {
 		foreach ($this->inputs as $name => $Input) {
 			$html .= (string)$Input;
 		}
+	}
 
-		return $html.$this->closeHtml();
+	public function toHtml (array $attributes = null) {
+		return $this->openHtml($attributes)
+				. $this->inputsHtml()
+				. $this->closeHtml();
 	}
 }
