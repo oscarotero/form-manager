@@ -101,9 +101,14 @@ echo $MyForm->closeHtml(); //</form>
 echo $MyForm->openHtml();
 
 echo $MyForm['email']->toHtml(array('class' => 'email-input'));
-...
 
 echo $MyForm->closeHtml();
+
+//Wrap each input in a div:
+$MyForm->setInputContainer('<div>%s</div>');
+
+//But not in all inputs:
+$MyForm['email']->setInputContainer('<p>%s</p>');
 ```
 
 Manage data

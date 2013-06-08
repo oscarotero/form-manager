@@ -6,7 +6,9 @@ abstract class Input extends Element {
 	const LABEL_POSITION_AFTER = 2;
 
 	public $isFile = false;
+	public $form;
 
+	protected $inputContainer;
 	protected $attributes_validators = array();
 	protected $label;
 	protected $label_position = self::LABEL_POSITION_BEFORE;
@@ -21,13 +23,7 @@ abstract class Input extends Element {
 	}
 
 	public function __toString () {
-		switch ($this->label_position) {
-			case self::LABEL_POSITION_BEFORE:
-				return $this->labelToHtml().$this->toHtml();
-
-			case self::LABEL_POSITION_AFTER:
-				return $this->toHtml().$this->labelToHtml();
-		}
+		return $this->toHtml();
 	}
 
 	public function label ($label = null) {
@@ -110,7 +106,43 @@ abstract class Input extends Element {
 		return true;
 	}
 
-	public function toHtml (array $attributes = array()) {
+	public function setInputContainer ($html) {
+		$this->inputContainer = $html;
+
+		return $this;
+	}
+
+	public function getInputContainer () {
+		if (isset($this->inputContainer)) {
+			return $this->inputContainer;
+		}
+
+		if (isset($this->form)) {
+			return $this->form->getInputContainer();
+		}
+	}
+
+	public function toHtml (array $attributes = null) {
+		$html = '';
+
+		switch ($this->label_position) {
+			case self::LABEL_POSITION_BEFORE:
+				$html = $this->labelToHtml().$this->inputToHtml($attributes);
+				break;
+
+			case self::LABEL_POSITION_AFTER:
+				$html = $this->inputToHtml($attributes).$this->labelToHtml();
+				break;
+		}
+
+		if (($inputContainer = $this->getInputContainer())) {
+			return sprintf($inputContainer, $html);
+		}
+
+		return $html;
+	}
+
+	public function inputToHtml (array $attributes = null) {
 		if ($this->error) {
 			if (isset($attributes['class'])) {
 				$attributes['class'] .= ' error';

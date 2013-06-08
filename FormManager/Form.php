@@ -4,6 +4,7 @@ namespace FormManager;
 use FormManager\Input;
 
 class Form extends Element implements \Iterator, \ArrayAccess {
+	protected $inputContainer;
 	protected $inputs;
 	protected $valid;
 
@@ -29,6 +30,7 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		}
 
 		$value->attr('name', $offset);
+		$value->form = $this;
 		$this->inputs[$offset] = $value;
 	}
 
@@ -118,6 +120,14 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return $this->valid;
 	}
 
+	public function setInputContainer ($html) {
+		$this->inputContainer = $html;
+	}
+
+	public function getInputContainer () {
+		return $this->inputContainer;
+	}
+
 	public function openHtml (array $attributes = null) {
 		return '<form'.static::attrHtml($this->attributes, $attributes).'>'."\n";
 	}
@@ -130,13 +140,9 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		$html = $this->openHtml();
 
 		foreach ($this->inputs as $name => $Input) {
-			$html .= '<div>'."\n";
-			$html .= "\t".$Input->__toString()."\n";
-			$html .= '</div>'."\n";
+			$html .= (string)$Input;
 		}
 
-		$html .= $this->closeHtml();
-
-		return $html;
+		return $html.$this->closeHtml();
 	}
 }

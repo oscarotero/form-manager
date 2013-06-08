@@ -30,7 +30,7 @@ class Select extends Input {
         return true;
     }
 
-    public function toHtml (array $attributes = array()) {
+    public function inputToHtml (array $attributes = null) {
         if ($this->error) {
             if (isset($attributes['class'])) {
                 $attributes['class'] .= ' error';
