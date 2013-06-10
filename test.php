@@ -14,7 +14,9 @@ class MyForm extends Form {
             'name' => Input::text()->maxlength(50)->required()->label('Your name'),
             'dni' => Input::text()->pattern('[\d]{8}[\w]')->label('DNI'),
             'search' => Input::search()->label('What are you looking for?'),
-            'comment' => Input::textarea()->label('A comment')->maxlength(30),
+            'comment' => Input::textarea()->label('A comment')->maxlength(30)->sanitize(function ($value) {
+            	return strip_tags($value);
+            }),
             'email' => Input::email()->label('Your email'),
             'website' => Input::url()->label('Your website')->required(),
             'age' => Input::number()->min(5)->max(110)->label('How old are you?'),

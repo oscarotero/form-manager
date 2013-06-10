@@ -13,6 +13,7 @@ abstract class Input extends Element {
 	protected $label;
 	protected $label_position = self::LABEL_POSITION_BEFORE;
 	protected $error;
+	protected $sanitizer;
 
 	public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\Input\\'.ucfirst($name);
@@ -79,7 +80,19 @@ abstract class Input extends Element {
 	}
 
 	public function load ($value = null) {
+		if (($sanitizer = $this->sanitizer) !== null) {
+			$value = $sanitizer($value);
+		}
+
 		$this->val($value);
+
+		return $this;
+	}
+
+	public function sanitize (callable $sanitizer) {
+		$this->sanitizer = $sanitizer;
+
+		return $this;
 	}
 
 	public function val ($value = null) {

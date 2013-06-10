@@ -46,6 +46,24 @@ echo $name;
 
 //Print the html input with some extra attributes:
 echo $name->toHtml(array('class' => 'text-input'));
+
+//Sanitize the input data
+$name->sanitize(function ($raw_data) {
+	return strip_tags($raw_data);
+});
+
+//Load the data:
+$name->load($_GET['name']);
+
+//Get sanitized data:
+echo $name->val();
+
+//Validate the data
+if ($name->validate()) {
+	echo 'data is valid';
+} else {
+	echo 'Data is invalid: '.$name->error();
+}
 ```
 
 Create a form
@@ -97,6 +115,11 @@ foreach ($MyForm as $Input) {
 
 echo $MyForm->closeHtml(); //</form>
 
+//Or even:
+echo $MyForm->openHtml();
+echo $MyForm->inputsHtml();
+echo $MyForm->closeHtml();
+
 //Access to the inputs using key names
 echo $MyForm->openHtml();
 
@@ -107,7 +130,7 @@ echo $MyForm->closeHtml();
 //Wrap each input in a div:
 $MyForm->setInputContainer('<div>%s</div>');
 
-//But not in all inputs:
+//Or set custom wrapper for some inputs:
 $MyForm['email']->setInputContainer('<p>%s</p>');
 ```
 
