@@ -61,19 +61,13 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 	public function load (array $get = array(), array $post = array(), array $file = array()) {
 		$data = ($this->attr('method') === 'post') ? $post : $get;
 
-		foreach ($file as $name => $file) {
-			if (!empty($this->inputs[$name]->isFile)) {
-				$data[$name] = $file;
+		foreach ($this->inputs as $name => $Input) {
+			if (empty($Input->isFile)) {
+				$Input->load(isset($data[$name]) ? $data[$name] : null);
+			} else {
+				$Input->load(isset($file[$name]) ? $file[$name] : null);
 			}
 		}
-
-		foreach ($data as $name => $value) {
-			if (isset($this->inputs[$name])) {
-				$this->inputs[$name]->load($value);
-			}
-		}
-
-		$this->validate();
 
 		return $this;
 	}
@@ -95,29 +89,17 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 			}
 		}
 
-		$this->validate();
-
-		return $this;
-	}
-
-	public function validate () {
-		$this->valid = true;
-
-		foreach ($this->inputs as $Input) {
-			if ($Input->validate() === false) {
-				$this->valid = false;
-			}
-		}
-
 		return $this;
 	}
 
 	public function isValid () {
-		if ($this->valid === null) {
-			$this->validate();
+		foreach ($this->inputs as $Input) {
+			if ($Input->isValid() === false) {
+				return false;
+			}
 		}
 
-		return $this->valid;
+		return true;
 	}
 
 	public function setInputContainer ($html) {

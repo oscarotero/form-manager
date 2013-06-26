@@ -16,33 +16,7 @@ class Select extends Input {
         return $this;
     }
 
-    public function validate () {
-        $value = $this->val();
-
-        foreach ($this->attributes_validators as $name => $validator) {
-            if (!call_user_func($validator, $value, $this->attributes[$name])) {
-                $this->error($validator[0]::$error_message, $this->attributes[$name]);
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public function inputToHtml (array $attributes = null) {
-        if ($this->error) {
-            if (isset($attributes['class'])) {
-                $attributes['class'] .= ' error';
-            } else {
-                $attributes['class'] = 'error';
-            }
-
-            $error = '<label class="error">'.$this->error.'</label>';
-        } else {
-            $error = '';
-        }
-
         $html = '<select'.static::attrHtml($this->attributes, $attributes).'>';
 
         foreach ($this->options as $value => $opt) {
@@ -56,6 +30,6 @@ class Select extends Input {
 
         $html .= '</select>';
 
-        return $html.$error;
+        return $html;
     }
 }

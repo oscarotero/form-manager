@@ -14,6 +14,8 @@ class Checkbox extends Input {
 		if (!empty($this->loaded_value) && ($this->attributes['value'] == $this->loaded_value)) {
 			$this->attr('checked', true);
 		}
+
+		$this->validate();
 	}
 
 	public function val ($value = null) {
@@ -22,6 +24,7 @@ class Checkbox extends Input {
 		}
 
 		$this->attributes['value'] = $value;
+		$this->validate();
 
 		return $this;
 	}

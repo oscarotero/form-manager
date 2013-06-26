@@ -12,6 +12,7 @@ abstract class Input extends Element {
 	protected $attributes_validators = array();
 	protected $label;
 	protected $label_position = self::LABEL_POSITION_BEFORE;
+	protected $error_label_position = self::LABEL_POSITION_AFTER;
 	protected $error;
 	protected $sanitizer;
 
@@ -101,11 +102,13 @@ abstract class Input extends Element {
 		}
 
 		$this->attributes['value'] = $value;
+		$this->validate();
 
 		return $this;
 	}
 
 	public function validate () {
+		$this->error = null;
 		$value = $this->val();
 
 		foreach ($this->attributes_validators as $name => $validator) {
@@ -117,6 +120,10 @@ abstract class Input extends Element {
 		}
 
 		return true;
+	}
+
+	public function isValid () {
+		return ($this->error === null);
 	}
 
 	public function setInputContainer ($html) {
@@ -148,6 +155,16 @@ abstract class Input extends Element {
 				break;
 		}
 
+		switch ($this->error_label_position) {
+			case self::LABEL_POSITION_BEFORE:
+				$html = $this->errorLabelToHtml().$html;
+				break;
+
+			case self::LABEL_POSITION_AFTER:
+				$html = $html.$this->errorLabelToHtml();
+				break;
+		}
+
 		if (($inputContainer = $this->getInputContainer())) {
 			return sprintf($inputContainer, $html);
 		}
@@ -156,20 +173,7 @@ abstract class Input extends Element {
 	}
 
 	public function inputToHtml (array $attributes = null) {
-		if ($this->error) {
-			if (isset($attributes['class'])) {
-				$attributes['class'] .= ' error';
-			} else {
-				$attributes['class'] = 'error';
-			}
-
-			$html = '<input'.static::attrHtml($this->attributes, $attributes).'>';
-			$html .= '<label class="error">'.$this->error.'</label>';
-		} else {
-			$html = '<input'.static::attrHtml($this->attributes, $attributes).'>';
-		}
-
-		return $html;
+		return '<input'.static::attrHtml($this->attributes, $attributes).'>';
 	}
 
 	public function labelToHtml (array $attributes = array()) {
@@ -184,5 +188,25 @@ abstract class Input extends Element {
 		$attributes['for'] = $this->attr('id');
 
 		return '<label'.static::attrHtml($attributes).'>'.$this->label().'</label>';
+	}
+
+	public function errorLabelToHtml (array $attributes = array()) {
+		if (empty($this->error)) {
+			return '';
+		}
+
+		if (!$this->attr('id')) {
+			$this->attr('id', uniqid('input-'));
+		}
+
+		$attributes['for'] = $this->attr('id');
+		
+		if (empty($attributes['class'])) {
+			$attributes['class'] = ' error';
+		} else {
+			$attributes['class'] .= 'error';
+		}
+
+		return '<label'.static::attrHtml($attributes).'>'.$this->error.'</label>';
 	}
 }

@@ -13,24 +13,12 @@ class Textarea extends Input {
 		}
 
 		$this->value = $value;
+		$this->validate();
 
 		return $this;
 	}
 
 	public function inputToHtml (array $attributes = null) {
-		if ($this->error) {
-			if (isset($attributes['class'])) {
-				$attributes['class'] .= ' error';
-			} else {
-				$attributes['class'] = 'error';
-			}
-
-			$html = '<textarea'.static::attrHtml($this->attributes, $attributes).'>'.$this->value.'</textarea>';
-			$html .= '<label class="error">'.$this->error.'</label>';
-		} else {
-			$html = '<textarea'.static::attrHtml($this->attributes, $attributes).'>'.$this->value.'</textarea>';
-		}
-
-		return $html;
+		return '<textarea'.static::attrHtml($this->attributes, $attributes).'>'.$this->value.'</textarea>';
 	}
 }

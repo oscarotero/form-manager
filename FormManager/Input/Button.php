@@ -18,20 +18,6 @@ class Button extends Input {
 	}
 
 	public function inputToHtml (array $attributes = null) {
-		if ($this->error) {
-			if (isset($attributes['class'])) {
-				$attributes['class'] .= ' error';
-			} else {
-				$attributes['class'] = 'error';
-			}
-
-			$error = '<label class="error">'.$this->error.'</label>';
-		} else {
-			$error = '';
-		}
-		
-		$html = '<button'.static::attrHtml($this->attributes, $attributes).'>'.$this->html().'</button>';
-
-		return $html.$error;
+		return '<button'.static::attrHtml($this->attributes, $attributes).'>'.$this->html().'</button>';
 	}
 }
