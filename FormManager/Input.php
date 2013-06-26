@@ -144,24 +144,27 @@ abstract class Input extends Element {
 
 	public function toHtml (array $attributes = null) {
 		$html = '';
+		$label = $this->labelToHtml();
+		$errorLabel = $this->errorLabelToHtml();
+		$input = $this->inputToHtml($attributes);
 
 		switch ($this->label_position) {
 			case self::LABEL_POSITION_BEFORE:
-				$html = $this->labelToHtml().$this->inputToHtml($attributes);
+				$html = $label.$input;
 				break;
 
 			case self::LABEL_POSITION_AFTER:
-				$html = $this->inputToHtml($attributes).$this->labelToHtml();
+				$html = $input.$label;
 				break;
 		}
 
 		switch ($this->error_label_position) {
 			case self::LABEL_POSITION_BEFORE:
-				$html = $this->errorLabelToHtml().$html;
+				$html = $errorLabel.$html;
 				break;
 
 			case self::LABEL_POSITION_AFTER:
-				$html = $html.$this->errorLabelToHtml();
+				$html = $html.$errorLabel;
 				break;
 		}
 

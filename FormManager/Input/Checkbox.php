@@ -2,8 +2,9 @@
 namespace FormManager\Input;
 
 use FormManager\Input;
+use FormManager\InputInterface;
 
-class Checkbox extends Input {
+class Checkbox extends Input implements InputInterface {
 	protected $attributes = array('type' => 'checkbox', 'value' => 'on');
 	protected $label_position = Input::LABEL_POSITION_AFTER;
 	protected $loaded_value = null;

@@ -2,8 +2,9 @@
 namespace FormManager\Input;
 
 use FormManager\Input;
+use FormManager\InputInterface;
 
-class Button extends Input {
+class Button extends Input implements InputInterface {
 	protected $html = 'Button';
 	protected $attributes = array('type' => 'button');
 

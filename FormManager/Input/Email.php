@@ -2,8 +2,9 @@
 namespace FormManager\Input;
 
 use FormManager\Input;
+use FormManager\InputInterface;
 
-class Email extends Input {
+class Email extends Input implements InputInterface {
 	public static $error_message = 'This value is not a valid email';
 	protected $attributes = array('type' => 'email');
 

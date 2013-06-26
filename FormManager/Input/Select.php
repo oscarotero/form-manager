@@ -2,8 +2,9 @@
 namespace FormManager\Input;
 
 use FormManager\Input;
+use FormManager\InputInterface;
 
-class Select extends Input {
+class Select extends Input implements InputInterface {
     protected $options;
 
     public function options (array $value = null) {

@@ -1,12 +1,13 @@
 <?php
-namespace FormManager;
+namespace FormManager\Input;
 
+use FormManager\Element;
 use FormManager\Input;
-use FormManager\Input\Collection;
+use FormManager\InputInterface;
 
-class Form extends Element implements \Iterator, \ArrayAccess {
+class Collection extends Element implements \Iterator, \ArrayAccess, InputInterface {
 	protected $inputContainer;
-	protected $inputs;
+	protected $inputs = array();
 	protected $valid;
 
 	public function rewind () {
@@ -26,12 +27,13 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 	}
 
 	public function offsetSet ($offset, $value) {
-		if (!($value instanceof Input) && !($value instanceof Collection)) {
+		if (!($value instanceof Input)) {
 			throw new \InvalidArgumentException('Only FormManager\\Input instances must be added to forms');
 		}
 
-		$value->attr('name', $offset);
-		$value->form = $this;
+		$value->val($offset);
+		$value->attr('name', $this->attr('name'));
+		//$value->form = $this->form;
 		$this->inputs[$offset] = $value;
 	}
 
@@ -47,6 +49,34 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return isset($this->inputs[$offset]) ? $this->inputs[$offset] : null;
 	}
 
+	public function __toString () {
+		return $this->inputsHtml();
+	}
+
+	public function attr ($name, $value = null) {
+		if (($value === null) && !is_array($name)) {
+			$values = array();
+
+			foreach ($this->inputs as $key => $Input) {
+				$values[$key] = $Input->attr($name);
+			}
+
+			return $values;
+		}
+
+		foreach ($this->inputs as $Input) {
+			$Input->attr($name, $value);
+		}
+
+		return $this;
+	}
+
+	public function removeAttr ($name) {
+		foreach ($this->inputs as $Input) {
+			$Input->removeAttr($name);
+		}
+	}
+
 	public function inputs (array $inputs = null) {
 		if ($inputs === null) {
 			return $this->inputs;
@@ -59,21 +89,15 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return $this;
 	}
 
-	public function load (array $get = array(), array $post = array(), array $file = array()) {
-		$data = ($this->attr('method') === 'post') ? $post : $get;
-
-		foreach ($this->inputs as $name => $Input) {
-			if (empty($Input->isFile)) {
-				$Input->load(isset($data[$name]) ? $data[$name] : null);
-			} else {
-				$Input->load(isset($file[$name]) ? $file[$name] : null);
-			}
+	public function load ($value = null) {
+		if (isset($this[$value])) {
+			$this[$value]->load($value);
 		}
 
 		return $this;
 	}
 
-	public function val (array $value = null) {
+	public function val ($value = null) {
 		if ($value === null) {
 			$value = array();
 
@@ -111,14 +135,6 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return $this->inputContainer;
 	}
 
-	public function openHtml (array $attributes = null) {
-		return '<form'.static::attrHtml($this->attributes, $attributes).'>'."\n";
-	}
-
-	public function closeHtml () {
-		return '</form>'."\n";
-	}
-
 	public function inputsHtml () {
 		$html = '';
 
@@ -127,11 +143,5 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		}
 
 		return $html;
-	}
-
-	public function toHtml (array $attributes = null) {
-		return $this->openHtml($attributes)
-				. $this->inputsHtml()
-				. $this->closeHtml();
 	}
 }

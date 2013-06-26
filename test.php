@@ -1,6 +1,7 @@
 <?php
 use FormManager\Form;
 use FormManager\Input;
+use FormManager\InputCollection;
 
 include('FormManager/autoloader.php');
 
@@ -27,6 +28,13 @@ class MyForm extends Form {
                 'm' => 'Male',
                 'f' => 'Female'
             ))->label('Gender'),
+
+            'color' => Input::collection()->inputs(array(
+            	'red' => Input::radio()->label('Red'),
+				'blue' => Input::radio()->label('Blue'),
+				'green' => Input::radio()->label('Green'),
+				'yellow' => Input::radio()->label('Yellow')
+            )),
 
             'submit' => Input::button()->type('submit')->html('Send data')
             //or also: 'submit' => Input::submit()->val('Send data') 

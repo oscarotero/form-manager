@@ -2,9 +2,9 @@
 namespace FormManager\Input;
 
 use FormManager\Input;
+use FormManager\InputInterface;
 
-class Textarea extends Input {
-	protected $attributes = array();
+class Textarea extends Input implements InputInterface {
 	protected $value;
 
 	public function val ($value = null) {

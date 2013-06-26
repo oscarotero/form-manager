@@ -2,8 +2,9 @@
 namespace FormManager\Input;
 
 use FormManager\Input;
+use FormManager\InputInterface;
 
-class Url extends Input {
+class Url extends Input implements InputInterface {
 	public static $error_message = 'This value is not a valid url';
 	protected $attributes = array('type' => 'url');
 
