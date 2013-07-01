@@ -4,7 +4,7 @@ namespace FormManager;
 interface InputInterface {
 	public function __toString ();
 
-	public function attr ($name, $value = null);
+	public function attr ($name = null, $value = null);
 
 	public function removeAttr ($name);
 

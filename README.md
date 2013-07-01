@@ -136,7 +136,7 @@ $MyForm['email']->setInputContainer('<p>%s</p>');
 
 Collections
 -----------
-Sometimes, there are inputs sharing the name (for example radio inputs or submits with different values but the same name). For these cases, there is a special input called "Collection":
+Sometimes, there are inputs sharing the name (for example radio inputs or submits with different values but the same name). For these cases, there is a special input called "Collection". A collection is a group of inputs that share the same name with different values.
 
 ```php
 use FormManager\Form;
@@ -160,6 +160,17 @@ class MyForm extends Form {
 		]);
 	}
 }
+
+//You can access to any input in a collection using both name and value as keys:
+$Form = new MyForm;
+
+echo $Form['color']['red'];
+
+//Or expand the collection with more inputs
+$Form['color']['yellow'] = Input::radio()->label('Yellow');
+
+//note that you have not specify the value because it get it from the key. The above code is equivalent to:
+$Form['color'][] = Input::radio()->value('yellow')->label('Yellow');
 ```
 
 

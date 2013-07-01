@@ -6,7 +6,7 @@ use FormManager\Input;
 use FormManager\InputInterface;
 
 class Collection extends Element implements \Iterator, \ArrayAccess, InputInterface {
-	public $form;
+	public $parent;
 	
 	protected $inputContainer;
 	protected $inputs = array();
@@ -33,9 +33,14 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 			throw new \InvalidArgumentException('Only FormManager\\Input instances must be added to forms');
 		}
 
-		$value->val($offset);
-		$value->attr('name', $this->attr('name'));
-		$value->form = $this->form;
+		if ($offset === null) {
+			$offset = $value->val();
+		} else {
+			$value->val($offset);
+		}
+		
+		$value->attr($this->attr());
+		$value->parent = $this;
 		$this->inputs[$offset] = $value;
 	}
 
@@ -61,28 +66,22 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 		}
 	}
 
-	public function attr ($name, $value = null) {
-		if (($value === null) && !is_array($name)) {
-			$values = array();
-
-			foreach ($this->inputs as $key => $Input) {
-				$values[$key] = $Input->attr($name);
+	public function attr ($name = null, $value = null) {
+		if (($value !== null) || is_array($name)) {
+			foreach ($this->inputs as $Input) {
+				$Input->attr($name, $value);
 			}
-
-			return $values;
 		}
 
-		foreach ($this->inputs as $Input) {
-			$Input->attr($name, $value);
-		}
-
-		return $this;
+		return parent::attr($name, $value);
 	}
 
 	public function removeAttr ($name) {
 		foreach ($this->inputs as $Input) {
 			$Input->removeAttr($name);
 		}
+
+		return parent::removeAttr($name);
 	}
 
 	public function inputs (array $inputs = null) {

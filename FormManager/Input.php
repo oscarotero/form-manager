@@ -6,7 +6,7 @@ abstract class Input extends Element {
 	const LABEL_POSITION_AFTER = 2;
 
 	public $isFile = false;
-	public $form;
+	public $parent;
 
 	protected $inputContainer;
 	protected $attributes_validators = array();
@@ -52,7 +52,7 @@ abstract class Input extends Element {
 		return $this;
 	}
 
-	public function attr ($name, $value = null) {
+	public function attr ($name = null, $value = null) {
 		if ($name === 'value') {
 			return $this->val($value);
 		}
@@ -137,8 +137,8 @@ abstract class Input extends Element {
 			return $this->inputContainer;
 		}
 
-		if (isset($this->form)) {
-			return $this->form->getInputContainer();
+		if (isset($this->parent)) {
+			return $this->parent->getInputContainer();
 		}
 	}
 

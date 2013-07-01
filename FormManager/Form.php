@@ -30,7 +30,7 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		}
 
 		$value->attr('name', $offset);
-		$value->form = $this;
+		$value->parent = $this;
 		$this->inputs[$offset] = $value;
 	}
 

@@ -14,7 +14,7 @@ abstract class Element {
 		return $this->toHtml();
 	}
 
-	public function attr ($name, $value = null) {
+	public function attr ($name = null, $value = null) {
 		if ($name === null) {
 			return $this->attributes;
 		}
