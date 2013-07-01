@@ -20,7 +20,7 @@ abstract class Input extends Element {
 		$class = __NAMESPACE__.'\\Input\\'.ucfirst($name);
 
 		if (class_exists($class)) {
-			return new $class;
+			return (new \ReflectionClass($class))->newInstanceArgs($arguments);
 		}
 	}
 

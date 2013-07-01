@@ -6,9 +6,11 @@ use FormManager\Input;
 use FormManager\InputInterface;
 
 class Collection extends Element implements \Iterator, \ArrayAccess, InputInterface {
+	public $form;
+	
 	protected $inputContainer;
 	protected $inputs = array();
-	protected $valid;
+	protected $value = null;
 
 	public function rewind () {
 		return reset($this->inputs);
@@ -33,7 +35,7 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 
 		$value->val($offset);
 		$value->attr('name', $this->attr('name'));
-		//$value->form = $this->form;
+		$value->form = $this->form;
 		$this->inputs[$offset] = $value;
 	}
 
@@ -51,6 +53,12 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 
 	public function __toString () {
 		return $this->inputsHtml();
+	}
+
+	public function __construct (array $inputs = null) {
+		if ($inputs !== null) {
+			$this->inputs($inputs);
+		}
 	}
 
 	public function attr ($name, $value = null) {
@@ -91,6 +99,7 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 
 	public function load ($value = null) {
 		if (isset($this[$value])) {
+			$this->value = $value;
 			$this[$value]->load($value);
 		}
 
@@ -99,19 +108,22 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 
 	public function val ($value = null) {
 		if ($value === null) {
-			$value = array();
-
-			foreach ($this->inputs as $name => $Input) {
-				$value[$name] = $Input->val();
+			if ($this->value !== null) {
+				return $this->value;
 			}
 
-			return $value;
+			foreach ($this->inputs as $Input) {
+				if (($value = $Input->val()) !== null) {
+					return $value;
+				}
+			}
+
+			return null;
 		}
 
-		foreach ($value as $name => $value) {
-			if (isset($this->inputs[$name])) {
-				$this->inputs[$name]->val($value);
-			}
+		if (isset($this[$value])) {
+			$this->value = $value;
+			$this[$value]->val($value);
 		}
 
 		return $this;

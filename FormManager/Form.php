@@ -7,7 +7,6 @@ use FormManager\Input\Collection;
 class Form extends Element implements \Iterator, \ArrayAccess {
 	protected $inputContainer;
 	protected $inputs;
-	protected $valid;
 
 	public function rewind () {
 		return reset($this->inputs);
@@ -26,8 +25,8 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 	}
 
 	public function offsetSet ($offset, $value) {
-		if (!($value instanceof Input) && !($value instanceof Collection)) {
-			throw new \InvalidArgumentException('Only FormManager\\Input instances must be added to forms');
+		if (!($value instanceof InputInterface)) {
+			throw new \InvalidArgumentException('Only elements implementing FormManager\\InputInterface must be added to forms');
 		}
 
 		$value->attr('name', $offset);

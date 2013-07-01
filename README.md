@@ -59,7 +59,7 @@ $name->load($_GET['name']);
 echo $name->val();
 
 //Validate the data
-if ($name->validate()) {
+if ($name->isValid()) {
 	echo 'data is valid';
 } else {
 	echo 'Data is invalid: '.$name->error();
@@ -133,6 +133,34 @@ $MyForm->setInputContainer('<div>%s</div>');
 //Or set custom wrapper for some inputs:
 $MyForm['email']->setInputContainer('<p>%s</p>');
 ```
+
+Collections
+-----------
+Sometimes, there are inputs sharing the name (for example radio inputs or submits with different values but the same name). For these cases, there is a special input called "Collection":
+
+```php
+use FormManager\Form;
+use FormManager\Input;
+
+class MyForm extends Form {
+	public function __construct () {
+		$this->attr('action', 'test.php');
+
+		$this->inputs([
+			'color' => Input::Collection([
+				'red' => Input::radio()->label('Red'),
+				'green' => Input::radio()->label('Green'),
+				'blue' => Input::radio()->label('Blue')
+			]),
+			'action' => Input::Collection([
+				'pants' => Input::button()->type('submit')->html('Set this color to my pants'),
+				'tshirt' => Input::button()->type('submit')->html('Set this color to my T-shirt'),
+				'shoes' => Input::button()->type('submit')->html('Set this color to my shoes'),
+			])
+		]);
+	}
+}
+
 
 Manage data
 -----------
