@@ -7,6 +7,7 @@ abstract class Input extends Element {
 
 	public $isFile = false;
 	public $parent;
+	public $group;
 
 	protected $inputContainer;
 	protected $attributes_validators = array();

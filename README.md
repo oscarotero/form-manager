@@ -173,6 +173,56 @@ $Form['color']['yellow'] = Input::radio()->label('Yellow');
 $Form['color'][] = Input::radio()->value('yellow')->label('Yellow');
 ```
 
+Groups
+------
+You can group the inputs for different purposes. The method Form->inputs() has a second argument to save the inputs in a named group.
+
+```php
+use FormManager\Form;
+use FormManager\Input;
+
+class MyForm extends Form {
+	public function __construct () {
+		$this->attr('action', 'test.php');
+
+		//Create a group named "personal-info"
+
+		$this->inputs([
+			'name' => Input::text()->maxlength(50)->required()->label('Your name'),
+			'age' => Input::number()->maxlength(3)->required()->label('Your age')
+		], 'personal-info');
+
+		//Create other group named "favorites"
+		$this->inputs([
+			'colors' => Input::select()->label('Your favorite color')->options(array(
+				'red' => 'Red'
+				'blue' => 'Blue'
+				'green' => 'Green'
+			)),
+			'food' => Input::text()->label('Your favorite food')
+		], 'favorites');
+	}
+}
+
+$Form = new MyForm;
+
+//Print the form in different fieldsets
+
+echo $Form->openHtml();
+
+echo '<fieldset>';
+echo '<legend>Your personal info</legend>';
+echo $Form->inputsHtml('personal-info');
+echo '</fieldset>'
+
+echo '<fieldset>';
+echo '<legend>Your favorites</legend>';
+echo $Form->inputsHtml('favorites');
+echo '</fieldset>'
+
+echo $form->closeHtml();
+```
+
 
 Manage data
 -----------

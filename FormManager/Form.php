@@ -46,13 +46,28 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return isset($this->inputs[$offset]) ? $this->inputs[$offset] : null;
 	}
 
-	public function inputs (array $inputs = null) {
+	public function inputs ($inputs = null, $group = null) {
 		if ($inputs === null) {
 			return $this->inputs;
 		}
 
-		foreach ($inputs as $name => $value) {
-			$this[$name] = $value;
+		if (is_string($inputs)) {
+			$selectedInputs = array();
+
+			foreach ($this->inputs as $name => $value) {
+				if ($value->group === $inputs) {
+					$selectedInputs[$name] = $value;
+				}
+			}
+
+			return $selectedInputs;
+		}
+
+		if (is_array($inputs)) {
+			foreach ($inputs as $name => $value) {
+				$value->group = $group;
+				$this[$name] = $value;
+			}
 		}
 
 		return $this;
@@ -118,10 +133,12 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return '</form>'."\n";
 	}
 
-	public function inputsHtml () {
+	public function inputsHtml ($group = null) {
 		$html = '';
 
-		foreach ($this->inputs as $name => $Input) {
+		$inputs = $this->inputs($group);
+
+		foreach ($inputs as $name => $Input) {
 			$html .= (string)$Input;
 		}
 

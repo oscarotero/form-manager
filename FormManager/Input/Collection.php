@@ -7,6 +7,7 @@ use FormManager\InputInterface;
 
 class Collection extends Element implements \Iterator, \ArrayAccess, InputInterface {
 	public $parent;
+	public $group;
 	
 	protected $inputContainer;
 	protected $inputs = array();
@@ -40,6 +41,7 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 		}
 		
 		$value->attr($this->attr());
+		$value->group($this->group);
 		$value->parent = $this;
 		$this->inputs[$offset] = $value;
 	}
@@ -140,10 +142,18 @@ class Collection extends Element implements \Iterator, \ArrayAccess, InputInterf
 
 	public function setInputContainer ($html) {
 		$this->inputContainer = $html;
+
+		return $this;
 	}
 
 	public function getInputContainer () {
-		return $this->inputContainer;
+		if (isset($this->inputContainer)) {
+			return $this->inputContainer;
+		}
+
+		if (isset($this->parent)) {
+			return $this->parent->getInputContainer();
+		}
 	}
 
 	public function inputsHtml () {
