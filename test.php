@@ -1,7 +1,6 @@
 <?php
 use FormManager\Form;
 use FormManager\Input;
-use FormManager\InputCollection;
 
 include('FormManager/autoloader.php');
 
@@ -32,12 +31,12 @@ class MyForm extends Form {
 				'm' => 'Male',
 				'f' => 'Female'
 			))->label('Gender'),
-			'color' => Input::Collection([
+			'color' => Input::Choose([
 				'red' => Input::radio()->label('Red'),
 				'green' => Input::radio()->label('Green'),
 				'blue' => Input::radio()->label('Blue')
 			])->setInputContainer('%s'),
-			'action' => Input::Collection([
+			'action' => Input::Choose([
 				'update' => Input::button()->type('submit')->html('Update data'),
 				'duplicate' => Input::button()->type('submit')->html('Duplicate element')
 			])

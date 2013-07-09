@@ -5,7 +5,7 @@ use FormManager\Element;
 use FormManager\Input;
 use FormManager\InputInterface;
 
-class Collection extends Element implements \Iterator, \ArrayAccess, InputInterface {
+class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface {
 	public $parent;
 	public $group;
 	

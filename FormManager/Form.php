@@ -2,7 +2,6 @@
 namespace FormManager;
 
 use FormManager\Input;
-use FormManager\Input\Collection;
 
 class Form extends Element implements \Iterator, \ArrayAccess {
 	protected $inputContainer;

@@ -134,9 +134,9 @@ $MyForm->setInputContainer('<div>%s</div>');
 $MyForm['email']->setInputContainer('<p>%s</p>');
 ```
 
-Collections
------------
-Sometimes, there are inputs sharing the name (for example radio inputs or submits with different values but the same name). For these cases, there is a special input called "Collection". A collection is a group of inputs that share the same name with different values.
+Choose
+------
+Sometimes, there are inputs sharing the name (for example radio inputs or submits with different values but the same name). For these cases, there is a special input called "Choose". A Choose is a group of inputs that share the same name with different values.
 
 ```php
 use FormManager\Form;
@@ -147,12 +147,12 @@ class MyForm extends Form {
 		$this->attr('action', 'test.php');
 
 		$this->inputs([
-			'color' => Input::Collection([
+			'color' => Input::Choose([
 				'red' => Input::radio()->label('Red'),
 				'green' => Input::radio()->label('Green'),
 				'blue' => Input::radio()->label('Blue')
 			]),
-			'action' => Input::Collection([
+			'action' => Input::Choose([
 				'pants' => Input::button()->type('submit')->html('Set this color to my pants'),
 				'tshirt' => Input::button()->type('submit')->html('Set this color to my T-shirt'),
 				'shoes' => Input::button()->type('submit')->html('Set this color to my shoes'),
