@@ -21,4 +21,8 @@ class Button extends Input implements InputInterface {
 	public function inputToHtml (array $attributes = null) {
 		return '<button'.static::attrHtml($this->attributes, $attributes).'>'.$this->html().'</button>';
 	}
+
+	protected function defaultFnRender ($input, $label, $errorLabel) {
+		return $input;
+	}
 }

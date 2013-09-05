@@ -2,6 +2,8 @@
 namespace FormManager;
 
 abstract class Element {
+	protected $name;
+	protected $html;
 	protected $attributes = array();
 
 	public function __call ($name, $arguments) {
@@ -12,6 +14,16 @@ abstract class Element {
 
 	public function __toString () {
 		return $this->toHtml();
+	}
+
+	public function html ($html = null) {
+		if ($html === null) {
+			return $this->html;
+		}
+
+		$this->html = $html;
+
+		return $this;
 	}
 
 	public function attr ($name = null, $value = null) {
@@ -40,11 +52,12 @@ abstract class Element {
 		unset($this->attributes[$name]);
 	}
 
-	static protected function attrHtml (array $attributes, array $mergedAttributes = null) {
+	protected function attrToHtml (array $extraAttributes = null) {
 		$html = '';
+		$attributes = $this->attributes;
 
-		if ($mergedAttributes !== null) {
-			foreach ($mergedAttributes as $name => $value) {
+		if ($extraAttributes !== null) {
+			foreach ($extraAttributes as $name => $value) {
 				if (strpos($name, 'add-') === 0) {
 					$name = substr($name, 4);
 
@@ -69,6 +82,16 @@ abstract class Element {
 				$value = str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
 				$html .= " $name=\"$value\"";
 			}
+		}
+
+		return $html;
+	}
+
+	public function toHtml (array $attributes = null) {
+		$html = '<'.$this->name.$this->attrToHtml($attributes).'>';
+
+		if ($this->html !== null) {
+			$html .= $this->html.'</'.$this->name.'>';
 		}
 
 		return $html;

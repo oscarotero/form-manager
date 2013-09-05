@@ -6,7 +6,6 @@ use FormManager\InputInterface;
 
 class Radio extends Input implements InputInterface {
 	protected $attributes = array('type' => 'radio');
-	protected $label_position = Input::LABEL_POSITION_AFTER;
 	protected $loaded_value = null;
 
 	public function load ($value = null) {
@@ -28,5 +27,9 @@ class Radio extends Input implements InputInterface {
 		$this->validate();
 
 		return $this;
+	}
+
+	protected function defaultFnRender ($input, $label, $errorLabel) {
+		return "$input $label $errorLabel";
 	}
 }

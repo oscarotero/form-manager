@@ -4,8 +4,9 @@ namespace FormManager;
 use FormManager\Input;
 
 class Form extends Element implements \Iterator, \ArrayAccess {
-	protected $inputContainer;
-	protected $inputs;
+	protected $inputs = array();
+	protected $groups = array();
+	protected $template;
 
 	public function rewind () {
 		return reset($this->inputs);
@@ -29,7 +30,7 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		}
 
 		$value->attr('name', $offset);
-		$value->parent = $this;
+		$value->form = $this;
 		$this->inputs[$offset] = $value;
 	}
 
@@ -39,10 +40,23 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 
 	public function offsetUnset ($offset) {
 		unset($this->inputs[$offset]);
+
+		foreach ($this->groups as &$group) {
+			if (($key = array_search($offset, $group)) !== false) {
+				unset($group[$key]);
+				break;
+			}
+		}
 	}
 
 	public function offsetGet ($offset) {
 		return isset($this->inputs[$offset]) ? $this->inputs[$offset] : null;
+	}
+
+	public function template (callable $template) {
+		$this->template = $template;
+
+		return $this;
 	}
 
 	public function inputs ($inputs = null, $group = null) {
@@ -51,12 +65,14 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		}
 
 		if (is_string($inputs)) {
+			if (!isset($this->groups[$inputs])) {
+				throw new \InvalidArgumentException("The group '$inputs' does not exist in this form");
+			}
+
 			$selectedInputs = array();
 
-			foreach ($this->inputs as $name => $value) {
-				if ($value->group === $inputs) {
-					$selectedInputs[$name] = $value;
-				}
+			foreach ($this->groups[$inputs] as $name) {
+				$selectedInputs[$name] = $this->inputs[$name];
 			}
 
 			return $selectedInputs;
@@ -64,8 +80,11 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 
 		if (is_array($inputs)) {
 			foreach ($inputs as $name => $value) {
-				$value->group = $group;
 				$this[$name] = $value;
+			}
+
+			if ($group !== null) {
+				$this->groups[$group] = array_keys($inputs);
 			}
 		}
 
@@ -116,14 +135,6 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return true;
 	}
 
-	public function setInputContainer ($html) {
-		$this->inputContainer = $html;
-	}
-
-	public function getInputContainer () {
-		return $this->inputContainer;
-	}
-
 	public function openHtml (array $attributes = null) {
 		return '<form'.static::attrHtml($this->attributes, $attributes).'>'."\n";
 	}
@@ -148,5 +159,31 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return $this->openHtml($attributes)
 				. $this->inputsHtml()
 				. $this->closeHtml();
+	}
+
+	protected function render (array $attributes = null, $group = null) {
+		$inputs = $this->inputs($group);
+		
+		$input = $this->toHtml($attributes);
+		$label = $this->label->toHtml($labelAttributes);
+		$errorLabel = $this->errorLabel->html() ? $this->errorLabel->toHtml($errorLabelAttributes) : '';
+
+		if ($this->template) {
+			return $this->template($input, $label, $errorLabel);
+		}
+
+		return $this->defaultTemplate($input, $label, $errorLabel);
+	}
+
+	protected function defaultTemplate ($openHtml, array $inputs, $closeHtml) {
+		$html = $openHtml;
+
+		foreach ($inputs as $input) {
+			$html .= (string)$input;
+		}
+
+		$html .= $closeHtml;
+
+		return $html;
 	}
 }

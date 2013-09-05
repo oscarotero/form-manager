@@ -9,7 +9,6 @@ class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface 
 	public $parent;
 	public $group;
 	
-	protected $inputContainer;
 	protected $inputs = array();
 	protected $value = null;
 
@@ -138,22 +137,6 @@ class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface 
 		}
 
 		return true;
-	}
-
-	public function setInputContainer ($html) {
-		$this->inputContainer = $html;
-
-		return $this;
-	}
-
-	public function getInputContainer () {
-		if (isset($this->inputContainer)) {
-			return $this->inputContainer;
-		}
-
-		if (isset($this->parent)) {
-			return $this->parent->getInputContainer();
-		}
 	}
 
 	public function inputsHtml () {
