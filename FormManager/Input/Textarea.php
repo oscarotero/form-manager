@@ -5,20 +5,30 @@ use FormManager\Input;
 use FormManager\InputInterface;
 
 class Textarea extends Input implements InputInterface {
-	protected $value;
+	protected $name = 'textarea';
 
 	public function val ($value = null) {
 		if ($value === null) {
-			return $this->value;
+			return $this->html;
 		}
 
-		$this->value = $value;
+		$this->html = $value;
 		$this->validate();
 
 		return $this;
 	}
 
-	public function inputToHtml (array $attributes = null) {
-		return '<textarea'.static::attrHtml($this->attributes, $attributes).'>'.$this->value.'</textarea>';
+	public function toHtml (array $attributes = null) {
+		return '<'.$this->name.$this->attrToHtml($attributes).'>'.$this->html().'</'.$this->name.'>';
+	}
+
+	public function html ($html = null) {
+		if ($html === null) {
+			return static::escape($this->html);
+		}
+
+		$this->html = $html;
+
+		return $this;
 	}
 }

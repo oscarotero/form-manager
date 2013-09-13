@@ -5,6 +5,7 @@ use FormManager\Input;
 use FormManager\InputInterface;
 
 class Select extends Input implements InputInterface {
+    protected $name = 'select';
     protected $options;
 
     public function options (array $value = null) {
@@ -17,20 +18,20 @@ class Select extends Input implements InputInterface {
         return $this;
     }
 
-    public function inputToHtml (array $attributes = null) {
-        $html = '<select'.static::attrHtml($this->attributes, $attributes).'>';
+    public function toHtml (array $attributes = null) {
+        $html = '<'.$this->name.$this->attrToHtml($attributes).'>';
+        $currentVal = $this->val();
 
-        foreach ($this->options as $value => $opt) {
-            $html .= '<option'.static::attrHtml(array(
-                'value' => $value,
-                'selected' => ($this->val() === $value)
-            )).'>';
+        foreach ($this->options as $value => $label) {
+            $html .= '<option value="'.static::escape($value).'"';
+            
+            if ($currentVal === $value) {
+                $html .= ' selected';
+            }
 
-            $html .= $opt.'</option>';
+            $html .= '>'.$label.'</option>';
         }
 
-        $html .= '</select>';
-
-        return $html;
+        return $html.'</'.$this->name.'>';
     }
 }

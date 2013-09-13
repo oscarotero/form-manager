@@ -4,9 +4,9 @@ namespace FormManager;
 use FormManager\Input;
 
 class Form extends Element implements \Iterator, \ArrayAccess {
+	protected $name = 'form';
 	protected $inputs = array();
-	protected $groups = array();
-	protected $template;
+	protected $fieldsets = array();
 
 	public function rewind () {
 		return reset($this->inputs);
@@ -25,13 +25,31 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 	}
 
 	public function offsetSet ($offset, $value) {
+		if ($value instanceof Fieldset) {
+			$this->addFieldset($value);
+			return;
+		}
+
 		if (!($value instanceof InputInterface)) {
 			throw new \InvalidArgumentException('Only elements implementing FormManager\\InputInterface must be added to forms');
 		}
 
-		$value->attr('name', $offset);
+		if ($offset === null) {
+			$offset = $value->attr('name');
+		} else {
+			$value->attr('name', $offset);
+		}
+
 		$value->form = $this;
 		$this->inputs[$offset] = $value;
+
+		if (!$value->fieldset) {
+			if (!isset($this->fieldsets[-1])) {
+				$this->fieldsets[-1] = new Fieldset;
+			}
+
+			$this->fieldsets[-1][] = $value;
+		}
 	}
 
 	public function offsetExists ($offset) {
@@ -40,62 +58,31 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 
 	public function offsetUnset ($offset) {
 		unset($this->inputs[$offset]);
-
-		foreach ($this->groups as &$group) {
-			if (($key = array_search($offset, $group)) !== false) {
-				unset($group[$key]);
-				break;
-			}
-		}
 	}
 
 	public function offsetGet ($offset) {
 		return isset($this->inputs[$offset]) ? $this->inputs[$offset] : null;
 	}
 
-	public function template (callable $template) {
-		$this->template = $template;
-
-		return $this;
+	public function addInputs (array $inputs) {
+		foreach ($inputs as $name => $input) {
+			$this[$name] = $input;
+		}
 	}
 
-	public function inputs ($inputs = null, $group = null) {
-		if ($inputs === null) {
-			return $this->inputs;
+	public function addFieldset (Fieldset $fieldset) {
+		foreach ($fieldset as $name => $input) {
+			$this[$name] = $input;
 		}
 
-		if (is_string($inputs)) {
-			if (!isset($this->groups[$inputs])) {
-				throw new \InvalidArgumentException("The group '$inputs' does not exist in this form");
-			}
-
-			$selectedInputs = array();
-
-			foreach ($this->groups[$inputs] as $name) {
-				$selectedInputs[$name] = $this->inputs[$name];
-			}
-
-			return $selectedInputs;
-		}
-
-		if (is_array($inputs)) {
-			foreach ($inputs as $name => $value) {
-				$this[$name] = $value;
-			}
-
-			if ($group !== null) {
-				$this->groups[$group] = array_keys($inputs);
-			}
-		}
-
-		return $this;
+		$this->fieldsets[] = $fieldset;
 	}
 
 	public function load (array $get = array(), array $post = array(), array $file = array()) {
 		$data = ($this->attr('method') === 'post') ? $post : $get;
 
 		foreach ($this->inputs as $name => $Input) {
-			if (empty($Input->isFile)) {
+			if (empty($Input::IS_FILE)) {
 				$Input->load(isset($data[$name]) ? $data[$name] : null);
 			} else {
 				$Input->load(isset($file[$name]) ? $file[$name] : null);
@@ -135,54 +122,12 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return true;
 	}
 
-	public function openHtml (array $attributes = null) {
-		return '<form'.static::attrHtml($this->attributes, $attributes).'>'."\n";
-	}
-
-	public function closeHtml () {
-		return '</form>'."\n";
-	}
-
-	public function inputsHtml ($group = null) {
+	public function html () {
 		$html = '';
 
-		$inputs = $this->inputs($group);
-
-		foreach ($inputs as $name => $Input) {
-			$html .= (string)$Input;
+		foreach ($this->fieldsets as $fieldset) {
+			$html .= (string)$fieldset;
 		}
-
-		return $html;
-	}
-
-	public function toHtml (array $attributes = null) {
-		return $this->openHtml($attributes)
-				. $this->inputsHtml()
-				. $this->closeHtml();
-	}
-
-	protected function render (array $attributes = null, $group = null) {
-		$inputs = $this->inputs($group);
-		
-		$input = $this->toHtml($attributes);
-		$label = $this->label->toHtml($labelAttributes);
-		$errorLabel = $this->errorLabel->html() ? $this->errorLabel->toHtml($errorLabelAttributes) : '';
-
-		if ($this->template) {
-			return $this->template($input, $label, $errorLabel);
-		}
-
-		return $this->defaultTemplate($input, $label, $errorLabel);
-	}
-
-	protected function defaultTemplate ($openHtml, array $inputs, $closeHtml) {
-		$html = $openHtml;
-
-		foreach ($inputs as $input) {
-			$html .= (string)$input;
-		}
-
-		$html .= $closeHtml;
 
 		return $html;
 	}

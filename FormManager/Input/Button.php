@@ -5,8 +5,9 @@ use FormManager\Input;
 use FormManager\InputInterface;
 
 class Button extends Input implements InputInterface {
-	protected $html = 'Button';
+	protected $name = 'button';
 	protected $attributes = array('type' => 'button');
+	protected $html = 'Button';
 
 	public function html ($html = null) {
 		if ($html === null) {

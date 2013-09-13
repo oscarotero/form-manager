@@ -41,11 +41,20 @@ $name->pattern('\w+')->required()->maxlength(100);
 //Add a label
 $name->label('Write your name');
 
-//Print the html input (with the label)
+//Manipulate the label attributes
+$name->label->attr('class', 'beauty-label');
+
+//Print the html input
 echo $name;
 
 //Print the html input with some extra attributes:
 echo $name->toHtml(array('class' => 'text-input'));
+
+//Print the input with the label
+echo $name->render();
+
+//Print the input with the label with some extra attributes
+echo $name->render($inputAttr, $labelAttr, $errorLabelAttr);
 
 //Sanitize the input data
 $name->sanitize(function ($raw_data) {
@@ -72,12 +81,14 @@ Create a form
 ```php
 use FormManager\Form;
 use FormManager\Input;
+use FormManager\Fieldset;
 
 class MyForm extends Form {
 	public function __construct () {
 		$this->attr('action', 'test.php');
 
-		$this->inputs(array(
+		//Add inputs
+		$this->addInputs(array(
 			'name' => Input::text()->maxlength(50)->required()->label('Your name'),
 			'dni' => Input::text()->pattern('[\d]{8}[\w]')->label('DNI'),
 			'search' => Input::search()->label('What are you looking for?'),
@@ -106,32 +117,8 @@ $MyForm['new-input'] = Input::range()->min(0)->max(100);
 //Print the form
 echo $MyForm;
 
-//Print the form in diferent pieces
-echo $MyForm->openHtml(); //<form action="test.php" method="get">
-
-foreach ($MyForm as $Input) {
-	echo $Input;
-}
-
-echo $MyForm->closeHtml(); //</form>
-
-//Or even:
-echo $MyForm->openHtml();
-echo $MyForm->inputsHtml();
-echo $MyForm->closeHtml();
-
 //Access to the inputs using key names
-echo $MyForm->openHtml();
-
 echo $MyForm['email']->toHtml(array('class' => 'email-input'));
-
-echo $MyForm->closeHtml();
-
-//Wrap each input in a div:
-$MyForm->setInputContainer('<div>%s</div>');
-
-//Or set custom wrapper for some inputs:
-$MyForm['email']->setInputContainer('<p>%s</p>');
 ```
 
 Choose
@@ -146,7 +133,7 @@ class MyForm extends Form {
 	public function __construct () {
 		$this->attr('action', 'test.php');
 
-		$this->inputs([
+		$this->addInputs([
 			'color' => Input::Choose([
 				'red' => Input::radio()->label('Red'),
 				'green' => Input::radio()->label('Green'),
@@ -173,54 +160,42 @@ $Form['color']['yellow'] = Input::radio()->label('Yellow');
 $Form['color'][] = Input::radio()->value('yellow')->label('Yellow');
 ```
 
-Groups
-------
-You can group the inputs for different purposes. The method Form->inputs() has a second argument to save the inputs in a named group.
+Fieldset
+--------
+You can group the inputs in fieldsets.
 
 ```php
 use FormManager\Form;
 use FormManager\Input;
+use FormManager\Fieldset;
 
 class MyForm extends Form {
 	public function __construct () {
 		$this->attr('action', 'test.php');
 
-		//Create a group named "personal-info"
-
-		$this->inputs([
+		//Create some fieldsets
+		$personalInfo = new Fieldset([
 			'name' => Input::text()->maxlength(50)->required()->label('Your name'),
 			'age' => Input::number()->maxlength(3)->required()->label('Your age')
-		], 'personal-info');
+		]);
 
-		//Create other group named "favorites"
-		$this->inputs([
+		$favorites = new Fieldset([
 			'colors' => Input::select()->label('Your favorite color')->options(array(
 				'red' => 'Red'
 				'blue' => 'Blue'
 				'green' => 'Green'
 			)),
 			'food' => Input::text()->label('Your favorite food')
-		], 'favorites');
+		]);
+
+		//Change some attributes
+		$favorites->attr('class', 'fancy-fieldset');
+
+		//Add the fieldsets to the form
+		$this->addFieldset($personalInfo);
+		$this->addFieldset($favorites);
 	}
 }
-
-$Form = new MyForm;
-
-//Print the form in different fieldsets
-
-echo $Form->openHtml();
-
-echo '<fieldset>';
-echo '<legend>Your personal info</legend>';
-echo $Form->inputsHtml('personal-info');
-echo '</fieldset>'
-
-echo '<fieldset>';
-echo '<legend>Your favorites</legend>';
-echo $Form->inputsHtml('favorites');
-echo '</fieldset>'
-
-echo $form->closeHtml();
 ```
 
 

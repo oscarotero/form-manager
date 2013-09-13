@@ -5,8 +5,9 @@ use FormManager\Input;
 use FormManager\InputInterface;
 
 class Email extends Input implements InputInterface {
-	public static $error_message = 'This value is not a valid email';
 	protected $attributes = array('type' => 'email');
+
+	public static $error_message = 'This value is not a valid email';
 
 	public function validate () {
 		$value = $this->val();

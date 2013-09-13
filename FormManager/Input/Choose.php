@@ -6,8 +6,8 @@ use FormManager\Input;
 use FormManager\InputInterface;
 
 class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface {
-	public $parent;
-	public $group;
+	public $form;
+	public $fieldset;
 	
 	protected $inputs = array();
 	protected $value = null;
@@ -29,8 +29,8 @@ class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface 
 	}
 
 	public function offsetSet ($offset, $value) {
-		if (!($value instanceof Input)) {
-			throw new \InvalidArgumentException('Only FormManager\\Input instances must be added to forms');
+		if (!($value instanceof InputInterface)) {
+			throw new \InvalidArgumentException('Only elements implementing FormManager\\InputInterface must be added to choose');
 		}
 
 		if ($offset === null) {
@@ -40,8 +40,7 @@ class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface 
 		}
 		
 		$value->attr($this->attr());
-		$value->group($this->group);
-		$value->parent = $this;
+		$value->form = $this->form;
 		$this->inputs[$offset] = $value;
 	}
 
@@ -63,7 +62,7 @@ class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface 
 
 	public function __construct (array $inputs = null) {
 		if ($inputs !== null) {
-			$this->inputs($inputs);
+			$this->setInputs($inputs);
 		}
 	}
 
@@ -85,11 +84,7 @@ class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface 
 		return parent::removeAttr($name);
 	}
 
-	public function inputs (array $inputs = null) {
-		if ($inputs === null) {
-			return $this->inputs;
-		}
-
+	public function setInputs (array $inputs) {
 		foreach ($inputs as $name => $value) {
 			$this[$name] = $value;
 		}
@@ -139,11 +134,11 @@ class Choose extends Element implements \Iterator, \ArrayAccess, InputInterface 
 		return true;
 	}
 
-	public function inputsHtml () {
+	public function render (array $attributes = null, array $labelAttributes = null, array $errorLabelAttributes = null) {
 		$html = '';
 
-		foreach ($this->inputs as $name => $Input) {
-			$html .= (string)$Input;
+		foreach ($this->inputs as $name => $input) {
+			$html .= $input->render($attributes, $labelAttributes, $errorLabelAttributes);
 		}
 
 		return $html;

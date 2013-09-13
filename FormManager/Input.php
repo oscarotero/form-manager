@@ -4,11 +4,12 @@ namespace FormManager;
 abstract class Input extends Element {
 	const IS_FILE = false;
 
-	protected $template;
+	protected $name = 'input';
 	protected $attributes_validators = array();
 	protected $sanitizer;
 
 	public $form;
+	public $fieldset;
 	public $errorLabel;
 	public $label;
 
@@ -26,11 +27,15 @@ abstract class Input extends Element {
 	}
 
 	public function __toString () {
-		return $this->toHtml();
+		return $this->render();
 	}
 
-	public function template (callable $template) {
-		$this->template = $template;
+	public function label ($html = null) {
+		if ($html === null) {
+			return $this->label->html();
+		}
+
+		$this->label->html($html);
 
 		return $this;
 	}
@@ -80,7 +85,7 @@ abstract class Input extends Element {
 	public function id ($value = null) {
 		if ($value === null) {
 			if (!$this->attr('id')) {
-				$this->attr('id', uniqid('input-'));
+				$this->attr('id', uniqid($this->attr('name'), true));
 			}
 
 			return $this->attr('id');
@@ -135,19 +140,11 @@ abstract class Input extends Element {
 		return ($this->error === null);
 	}
 
-	protected function defaultTemplate ($input, $label, $errorLabel) {
-		return "$label $input $errorLabel";
-	}
-
-	protected function render (array $attributes = null, array $labelAttributes = null, array $errorLabelAttributes = null) {
-		$input = $this->toHtml($attributes);
+	public function render (array $attributes = null, array $labelAttributes = null, array $errorLabelAttributes = null) {
 		$label = $this->label->toHtml($labelAttributes);
 		$errorLabel = $this->errorLabel->html() ? $this->errorLabel->toHtml($errorLabelAttributes) : '';
+		$input = $this->toHtml($attributes);
 
-		if ($this->template) {
-			return $this->template($input, $label, $errorLabel);
-		}
-
-		return $this->defaultTemplate($input, $label, $errorLabel);
+		return "$label $input $errorLabel";
 	}
 }

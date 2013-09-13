@@ -6,6 +6,10 @@ abstract class Element {
 	protected $html;
 	protected $attributes = array();
 
+	protected static function escape ($value) {
+		return str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
+	}
+
 	public function __call ($name, $arguments) {
 		$this->attr($name, (array_key_exists(0, $arguments) ? $arguments[0] : true));
 
@@ -79,8 +83,7 @@ abstract class Element {
 			if ($value === true) {
 				$html .= " $name";
 			} else {
-				$value = str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
-				$html .= " $name=\"$value\"";
+				$html .= " $name=\"".static::escape($value)."\"";
 			}
 		}
 
@@ -90,8 +93,8 @@ abstract class Element {
 	public function toHtml (array $attributes = null) {
 		$html = '<'.$this->name.$this->attrToHtml($attributes).'>';
 
-		if ($this->html !== null) {
-			$html .= $this->html.'</'.$this->name.'>';
+		if (($innerHtml = $this->html()) !== null) {
+			$html .= $innerHtml.'</'.$this->name.'>';
 		}
 
 		return $html;
