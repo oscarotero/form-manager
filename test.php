@@ -1,56 +1,51 @@
 <?php
 use FormManager\Form;
-use FormManager\Input;
+use FormManager\Inputs\Input;
+use FormManager\Fields\Field;
 use FormManager\Fieldset;
 
 include('FormManager/autoloader.php');
 
 class MyForm extends Form {
 	public function __construct () {
-		$this->attr('action', 'test.php');
+		$this->attr([
+			'action' => 'test.php',
+			'method' => 'post'
+		]);
 
-		$this->addInputs([
-			'name' => Input::text()->maxlength(50)->required()->label('Your name'),
-			'dni' => Input::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-			'search' => Input::search()->label('What are you looking for?'),
-			'comment' => Input::textarea()->label('A comment')->maxlength(30)->sanitize(function ($value) {
+		$this->add([
+			'name' => Field::text()->maxlength(50)->required()->label('Your name')->val('Ola'),
+			'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+			'search' => Field::search()->label('What are you looking for?'),
+			'website' => Field::url()->label('Your website')->required(),
+			'comment' => Field::textarea()->label('A comment')->maxlength(30)->sanitize(function ($value) {
 				return strip_tags($value);
 			}),
-			'email' => Input::email()->label('Your email'),
-			'website' => Input::url()->label('Your website')->required(),
-			'age' => Input::number()->min(5)->max(110)->label('How old are you?'),
-			'height' => Input::range()->min(50)->max(220)->label('How height are you?'),
-			'telephone' => Input::tel()->label('Telephone number'),
-			'is-happy' => Input::checkbox()->label('Are you happy?'),
-			'gender' => Input::select()->options(array(
+			'email' => Field::email()->label('Your email'),
+			'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
+		]);
+
+		$this->addFieldset([
+			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
+			'telephone' => Field::tel()->label('Telephone number'),
+			'is-happy' => Field::checkbox()->label('Are you happy?'),
+			'gender' => Field::select()->options(array(
 				'm' => 'Male',
 				'f' => 'Female'
 			))->label('Gender'),
-			'color' => Input::Choose([
-				'red' => Input::radio()->label('Red'),
-				'green' => Input::radio()->label('Green'),
-				'blue' => Input::radio()->label('Blue')
+			'color' => Field::Radios()->options([
+				'red' => 'Red',
+				'green' => 'Green',
+				'blue' => 'Blue'
 			]),
-			'action' => Input::Choose([
-				'update' => Input::button()->type('submit')->html('Update data'),
-				'duplicate' => Input::button()->type('submit')->html('Duplicate element')
-			])
+			'update' => Field::button()->type('submit')->html('Update data'),
 		]);
-
-		$fieldset = new Fieldset([
-			'name2' => Input::text()->maxlength(50)->required()->label('Your name2'),
-			'dni2' => Input::text()->pattern('[\d]{8}[\w]')->label('DNI2'),
-		]);
-
-		$fieldset->attr('class', 'beauty');
-
-		$this->addFieldset($fieldset);
 	}
 }
 
 $Form = new MyForm;
 
-if ($_GET) {
+if ($_POST) {
 	$Form->load($_GET, $_POST, $_FILES);
 
 	if ($Form->isValid()) {

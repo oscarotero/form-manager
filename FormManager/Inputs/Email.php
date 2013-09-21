@@ -1,13 +1,10 @@
 <?php
-namespace FormManager\Input;
-
-use FormManager\Input;
-use FormManager\InputInterface;
+namespace FormManager\Inputs;
 
 class Email extends Input implements InputInterface {
-	protected $attributes = array('type' => 'email');
-
 	public static $error_message = 'This value is not a valid email';
+
+	protected $attributes = ['type' => 'email'];
 
 	public function validate () {
 		$value = $this->val();

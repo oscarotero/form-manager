@@ -1,11 +1,9 @@
 <?php
-namespace FormManager\Input;
-
-use FormManager\Input;
-use FormManager\InputInterface;
+namespace FormManager\Inputs;
 
 class Textarea extends Input implements InputInterface {
 	protected $name = 'textarea';
+	protected $close = true;
 
 	public function val ($value = null) {
 		if ($value === null) {
@@ -13,13 +11,8 @@ class Textarea extends Input implements InputInterface {
 		}
 
 		$this->html = $value;
-		$this->validate();
 
 		return $this;
-	}
-
-	public function toHtml (array $attributes = null) {
-		return '<'.$this->name.$this->attrToHtml($attributes).'>'.$this->html().'</'.$this->name.'>';
 	}
 
 	public function html ($html = null) {

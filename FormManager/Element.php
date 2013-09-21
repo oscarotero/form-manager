@@ -4,10 +4,21 @@ namespace FormManager;
 abstract class Element {
 	protected $name;
 	protected $html;
-	protected $attributes = array();
+	protected $close;
+	protected $attributes = [];
 
 	protected static function escape ($value) {
 		return str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
+	}
+
+	public function __construct (array $attributes = null, $html = null) {
+		if ($attributes !== null) {
+			$this->attr($attributes);
+		}
+
+		if ($html !== null) {
+			$this->html = $html;
+		}
 	}
 
 	public function __call ($name, $arguments) {
@@ -56,26 +67,10 @@ abstract class Element {
 		unset($this->attributes[$name]);
 	}
 
-	protected function attrToHtml (array $extraAttributes = null) {
+	protected function attrToHtml () {
 		$html = '';
-		$attributes = $this->attributes;
 
-		if ($extraAttributes !== null) {
-			foreach ($extraAttributes as $name => $value) {
-				if (strpos($name, 'add-') === 0) {
-					$name = substr($name, 4);
-
-					if (!empty($attributes[$name])) {
-						$attributes[$name] .= ' '.$value;
-						continue;
-					}
-				}
-
-				$attributes[$name] = $value;
-			}
-		}
-
-		foreach ($attributes as $name => $value) {
+		foreach ($this->attributes as $name => $value) {
 			if (($value === null) || ($value === false)) {
 				continue;
 			}
@@ -90,11 +85,11 @@ abstract class Element {
 		return $html;
 	}
 
-	public function toHtml (array $attributes = null) {
-		$html = '<'.$this->name.$this->attrToHtml($attributes).'>';
+	public function toHtml () {
+		$html = '<'.$this->name.$this->attrToHtml().'>';
 
-		if (($innerHtml = $this->html()) !== null) {
-			$html .= $innerHtml.'</'.$this->name.'>';
+		if ($this->close) {
+			$html .= $this->html().'</'.$this->name.'>';
 		}
 
 		return $html;
