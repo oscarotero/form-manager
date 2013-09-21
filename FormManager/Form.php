@@ -91,13 +91,19 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return true;
 	}
 
-	public function html () {
-		$html = '';
+	public function html ($html = null) {
+		if ($html === null) {
+			$html = $this->html;
 
-		foreach ($this->fieldsets as $fieldset) {
-			$html .= (string)$fieldset;
+			foreach ($this->fieldsets as $fieldset) {
+				$html .= (string)$fieldset;
+			}
+
+			return $html;
 		}
 
-		return $html;
+		$this->html = $html;
+
+		return $this;
 	}
 }
