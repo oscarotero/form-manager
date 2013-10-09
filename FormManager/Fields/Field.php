@@ -48,7 +48,7 @@ abstract class Field {
 		}
 
 		if (($name === 'errorLabel') && ($error = $this->error())) {
-			return new Label($this->html, ['class' => 'error'], $error);
+			return new Label($this->input, ['class' => 'error'], $error);
 		}
 	}
 
