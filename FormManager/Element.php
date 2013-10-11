@@ -94,4 +94,22 @@ abstract class Element {
 
 		return $html;
 	}
+
+	public function toHtml () {
+		$html = $this->openHtml();
+
+		if ($this->close) {
+			$html .= $this->html().$this->closeHtml();
+		}
+
+		return $html;
+	}
+
+	public function openHtml () {
+		return '<'.$this->name.$this->attrToHtml().'>';
+	}
+
+	public function closeHtml () {
+		return ($this->close) ? '</'.$this->name.'>' : '';
+	}
 }
