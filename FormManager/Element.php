@@ -86,16 +86,6 @@ abstract class Element {
 	}
 
 	public function toHtml () {
-		$html = '<'.$this->name.$this->attrToHtml().'>';
-
-		if ($this->close) {
-			$html .= $this->html().'</'.$this->name.'>';
-		}
-
-		return $html;
-	}
-
-	public function toHtml () {
 		$html = $this->openHtml();
 
 		if ($this->close) {
