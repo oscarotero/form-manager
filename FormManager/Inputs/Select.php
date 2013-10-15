@@ -27,7 +27,7 @@ class Select extends Input implements InputInterface {
 		return $this;
 	}
 
-	public function html () {
+	public function html ($html = null) {
 		$val = $this->val();
 		$html = '';
 
