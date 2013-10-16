@@ -133,6 +133,6 @@ abstract class Input extends Element {
 	}
 
 	public function isValid () {
-		return ($this->error === null);
+		return $this->validate();
 	}
 }
