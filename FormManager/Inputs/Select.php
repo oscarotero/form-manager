@@ -1,6 +1,8 @@
 <?php
 namespace FormManager\Inputs;
 
+use FormManager\InputInterface;
+
 class Select extends Input implements InputInterface {
 	protected $name = 'select';
 	protected $close = true;

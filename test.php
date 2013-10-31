@@ -2,7 +2,7 @@
 use FormManager\Form;
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
-use FormManager\Fieldset;
+use FormManager\Fieldsets\Fieldset;
 
 include('FormManager/autoloader.php');
 
@@ -23,8 +23,12 @@ class MyForm extends Form {
 			}),
 			'email' => Field::email()->label('Your email'),
 			'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
+			'pirolas' => Fieldset::generic()->add([
+				'nome' => Field::text()->label('Nome')
+			])
 		]);
 
+		/*
 		$this->addFieldset([
 			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
 			'telephone' => Field::tel()->label('Telephone number'),
@@ -38,8 +42,17 @@ class MyForm extends Form {
 				'green' => 'Green',
 				'blue' => 'Blue'
 			]),
+			'color' => Field::Duplicable()->inputs([
+				'red' => 'Red',
+				'green' => 'Green',
+				'blue' => 'Blue'
+			]),
 			'update' => Field::button()->type('submit')->html('Update data'),
 		]);
+
+		$this->addDuplicableFieldset([
+		]);
+		*/
 	}
 }
 

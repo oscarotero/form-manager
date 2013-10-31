@@ -2,21 +2,17 @@
 namespace FormManager;
 
 use FormManager\Traits\InputIteratorTrait;
-use FormManager\Fieldsets\FieldsetInterface;
-use FormManager\Fieldsets\Fieldset;
-use FormManager\Fieldsets\NoFieldset;
-use FormManager\Inputs\InputInterface;
+use FormManager\InputInterface;
 
 class Form extends Element implements \Iterator, \ArrayAccess {
 	use InputIteratorTrait;
 
 	protected $name = 'form';
 	protected $close = true;
-	protected $fieldsets = [];
 
 	public function offsetSet ($offset, $value) {
 		if (!($value instanceof InputInterface)) {
-			throw new \InvalidArgumentException('Only elements implementing FormManager\\Inputs\\InputInterface must be added to forms');
+			throw new \InvalidArgumentException('Only elements implementing FormManager\\InputInterface must be added to forms');
 		}
 
 		if ($offset === null) {
@@ -24,31 +20,8 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		} else {
 			$value->attr('name', $offset);
 		}
-
-		if (!$value->fieldset) {
-			if (!isset($this->fieldsets[-1])) {
-				$this->fieldsets[-1] = new NoFieldset($this);
-			}
-
-			$this->fieldsets[-1][$offset] = $value;
-		}
-
+var_dump($value->attr('name'));
 		$this->inputs[$offset] = $value;
-	}
-
-	public function addFieldset ($fieldset) {
-		if (is_array($fieldset)) {
-			$fieldset = (new Fieldset($this))->add($fieldset);
-		}
-		if (!($fieldset instanceof FieldsetInterface)) {
-			throw new \Exception('Only objects with FormManager\\Fieldsets\\FieldsetInterface implemented must be added');
-		}
-
-		return $this->fieldsets[] = $fieldset;
-	}
-
-	public function getFieldsets ($name = null) {
-		return $this->fieldsets;
 	}
 
 	public function load (array $get = array(), array $post = array(), array $file = array()) {
@@ -95,8 +68,8 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		if ($html === null) {
 			$html = $this->html;
 
-			foreach ($this->fieldsets as $fieldset) {
-				$html .= (string)$fieldset;
+			foreach ($this->inputs as $input) {
+				$html .= (string)$input;
 			}
 
 			return $html;

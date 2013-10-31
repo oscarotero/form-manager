@@ -3,7 +3,6 @@ namespace FormManager\Fields;
 
 use FormManager\Label;
 use FormManager\Form;
-use FormManager\Fieldsets\FieldsetInterface;
 
 abstract class Field {
 	public $input;
@@ -32,10 +31,6 @@ abstract class Field {
 
 	public function setForm (Form $form) {
 		$this->form = $form;
-	}
-
-	public function setFieldset (FieldsetInterface $fieldset) {
-		$this->fieldset = $fieldset;
 	}
 
 	public function __toString () {

@@ -1,15 +1,12 @@
 <?php
-namespace FormManager\Inputs;
+namespace FormManager;
 
 use FormManager\Form;
-use FormManager\Fieldsets\FieldsetInterface;
 
 interface InputInterface {
 	public function __toString ();
 
 	public function setForm (Form $form);
-
-	public function setFieldset (FieldsetInterface $form);
 
 	public function error ($error = null);
 	

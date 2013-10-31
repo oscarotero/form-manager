@@ -1,6 +1,8 @@
 <?php
 namespace FormManager\Inputs;
 
+use FormManager\InputInterface;
+
 class Textarea extends Input implements InputInterface {
 	protected $name = 'textarea';
 	protected $close = true;

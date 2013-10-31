@@ -3,7 +3,6 @@ namespace FormManager\Inputs;
 
 use FormManager\Element;
 use FormManager\Form;
-use FormManager\Fieldsets\FieldsetInterface;
 
 abstract class Input extends Element {
 	protected $name = 'input';
@@ -31,10 +30,6 @@ abstract class Input extends Element {
 
 	public function setForm (Form $form) {
 		$this->form = $form;
-	}
-
-	public function setFieldset (FieldsetInterface $fieldset) {
-		$this->fieldset = $fieldset;
 	}
 
 	public function attr ($name = null, $value = null) {
