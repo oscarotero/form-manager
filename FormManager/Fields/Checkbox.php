@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs\InputInterface;
+use FormManager\InputInterface;
 use FormManager\Inputs\Input;
 
 class Checkbox extends Field implements InputInterface {

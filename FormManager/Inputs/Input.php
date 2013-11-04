@@ -1,18 +1,16 @@
 <?php
 namespace FormManager\Inputs;
 
+use FormManager\Traits\PropagateTrait;
 use FormManager\Element;
-use FormManager\Form;
-use FormManager\Fieldsets\FieldsetInterface;
 
 abstract class Input extends Element {
+	use PropagateTrait;
+
 	protected $name = 'input';
 	protected $validators = [];
 	protected $sanitizer;
 	protected $error;
-
-	public $form;
-	public $fieldset;
 
 
 	public static function __callStatic ($name, $arguments) {
@@ -21,20 +19,6 @@ abstract class Input extends Element {
 		if (class_exists($class)) {
 			return new $class;
 		}
-	}
-
-	public function __call ($name, $arguments) {
-		$this->attr($name, (array_key_exists(0, $arguments) ? $arguments[0] : true));
-
-		return $this;
-	}
-
-	public function setForm (Form $form) {
-		$this->form = $form;
-	}
-
-	public function setFieldset (FieldsetInterface $fieldset) {
-		$this->fieldset = $fieldset;
 	}
 
 	public function attr ($name = null, $value = null) {

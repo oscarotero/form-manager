@@ -2,7 +2,7 @@
 use FormManager\Form;
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
-use FormManager\Fieldset;
+use FormManager\Fieldsets\Fieldset;
 
 include('FormManager/autoloader.php');
 
@@ -13,49 +13,41 @@ class MyForm extends Form {
 			'method' => 'post'
 		]);
 
+		//Add inputs, fields or fieldsets
 		$this->add([
-			'name' => Field::text()->maxlength(50)->required()->label('Your name')->val('Ola'),
-			'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-			'search' => Field::search()->label('What are you looking for?'),
-			'website' => Field::url()->label('Your website')->required(),
-			'comment' => Field::textarea()->label('A comment')->maxlength(30)->sanitize(function ($value) {
-				return strip_tags($value);
-			}),
-			'email' => Field::email()->label('Your email'),
-			'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
-		]);
-
-		$this->addFieldset([
-			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
-			'telephone' => Field::tel()->label('Telephone number'),
-			'is-happy' => Field::checkbox()->label('Are you happy?'),
-			'gender' => Field::select()->options(array(
-				'm' => 'Male',
-				'f' => 'Female'
-			))->label('Gender'),
-			'color' => Field::Radios()->options([
-				'red' => 'Red',
-				'green' => 'Green',
-				'blue' => 'Blue'
+			'personal-info' => Fieldset::generic([
+				'name' => Field::text()->maxlength(50)->required()->label('Your name'),
+				'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+				'email' => Field::email()->label('Your email'),
+				'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
+				'telephone' => Field::tel()->label('Telephone number'),
 			]),
-			'update' => Field::button()->type('submit')->html('Update data'),
+
+			'search' => Field::search()->label('What are you looking for?'),
+			'comment' => Field::textarea()->label('A comment')->maxlength(30),
+			'website' => Field::url()->label('Your website')->required(),
+			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
+			'is-happy' => Field::checkbox()->label('Are you happy?')->required(),
+
+			'language' => Field::select()->options(array(
+				'gl' => 'Galician',
+				'es' => 'Spanish',
+				'en' => 'English'
+			))->label('Gender'),
+
+			'gender' => Fieldset::choose([
+				'm' => Field::radio()->label('Male'),
+				'f' => Field::radio()->label('Female')
+			]),
+
+			'action' => Fieldset::choose([
+				'save' => Field::submit()->html('Save changes'),
+				'duplicate' => Field::submit()->value('Save as new value')
+			])
 		]);
-	}
-}
-
-$Form = new MyForm;
-
-if ($_POST) {
-	$Form->load($_GET, $_POST, $_FILES);
-
-	if ($Form->isValid()) {
-		print_r($Form->val());
-	} else {
-		echo 'There was an error';
 	}
 }
 ?>
-
 <!DOCTYPE html>
 
 <html>
@@ -71,6 +63,22 @@ if ($_POST) {
 	</head>
 
 	<body>
-		<?php echo $Form; ?>
+		<?php
+		$Form = new MyForm;
+
+		if ($_POST) {
+			$Form->load($_GET, $_POST, $_FILES);
+
+			echo '<pre>';
+			if (!$Form->isValid()) {
+				echo 'There was an error';
+			} else {
+				print_r($Form->val());
+			}
+			echo '</pre>';
+		}
+		
+		echo $Form;
+		?>
 	</body>
 </html>

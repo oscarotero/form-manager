@@ -1,6 +1,8 @@
 <?php
 namespace FormManager\Inputs;
 
+use FormManager\InputInterface;
+
 class Email extends Input implements InputInterface {
 	public static $error_message = 'This value is not a valid email';
 

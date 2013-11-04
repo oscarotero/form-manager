@@ -1,34 +1,26 @@
 <?php
 namespace FormManager\Fieldsets;
 
-use FormManager\Traits\InputIteratorTrait;
-use FormManager\Form;
+use FormManager\Traits\CollectionTrait;
+use FormManager\Traits\PropagateTrait;
 use FormManager\Element;
 
-class Fieldset extends Element implements \Iterator, \ArrayAccess, FieldsetInterface {
-	use InputIteratorTrait;
+abstract class Fieldset extends Element implements \Iterator, \ArrayAccess {
+	use CollectionTrait;
+	use PropagateTrait;
 
 	protected $name = 'fieldset';
 	protected $close = true;
-	protected $form;
 
-	public function offsetSet ($offset, $value) {
-		$this->inputs[$offset] = $value;
-		$value->setFieldset($this);
-		$this->form[$offset] = $value;
-	}
+	public static function __callStatic ($name, $arguments) {
+		$class = __NAMESPACE__.'\\'.ucfirst($name);
 
-	public function __construct (Form $form) {
-		$this->form = $form;
-	}
+		if (class_exists($class)) {
+			if (isset($arguments[0])) {
+				return new $class($arguments[0]);
+			}
 
-	public function html () {
-		$html = '';
-
-		foreach ($this->inputs as $input) {
-			$html .= (string)$input;
+			return new $class();
 		}
-
-		return $html;
 	}
 }

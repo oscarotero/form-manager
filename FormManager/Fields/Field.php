@@ -1,14 +1,13 @@
 <?php
 namespace FormManager\Fields;
 
+use FormManager\Traits\PropagateTrait;
 use FormManager\Label;
-use FormManager\Form;
-use FormManager\Fieldsets\FieldsetInterface;
 
 abstract class Field {
+	use PropagateTrait;
+
 	public $input;
-	public $form;
-	public $fieldset;
 
 	public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\'.ucfirst($name);
@@ -28,14 +27,6 @@ abstract class Field {
 		call_user_func_array([$this->input, $name], $arguments);
 
 		return $this;
-	}
-
-	public function setForm (Form $form) {
-		$this->form = $form;
-	}
-
-	public function setFieldset (FieldsetInterface $fieldset) {
-		$this->fieldset = $fieldset;
 	}
 
 	public function __toString () {

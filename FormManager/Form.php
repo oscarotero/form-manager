@@ -1,54 +1,26 @@
 <?php
 namespace FormManager;
 
-use FormManager\Traits\InputIteratorTrait;
-use FormManager\Fieldsets\FieldsetInterface;
-use FormManager\Fieldsets\Fieldset;
-use FormManager\Fieldsets\NoFieldset;
-use FormManager\Inputs\InputInterface;
+use FormManager\Traits\CollectionTrait;
+use FormManager\Traits\KeyTrait;
 
-class Form extends Element implements \Iterator, \ArrayAccess {
-	use InputIteratorTrait;
+class Form extends Element implements \Iterator, \ArrayAccess, FormInterface {
+	use CollectionTrait;
+	use KeyTrait;
 
 	protected $name = 'form';
 	protected $close = true;
-	protected $fieldsets = [];
 
-	public function offsetSet ($offset, $value) {
-		if (!($value instanceof InputInterface)) {
-			throw new \InvalidArgumentException('Only elements implementing FormManager\\Inputs\\InputInterface must be added to forms');
-		}
+	public static function __callStatic ($name, $arguments) {
+		$class = __NAMESPACE__.'\\'.ucfirst($name);
 
-		if ($offset === null) {
-			$offset = $value->attr('name');
-		} else {
-			$value->attr('name', $offset);
-		}
-
-		if (!$value->fieldset) {
-			if (!isset($this->fieldsets[-1])) {
-				$this->fieldsets[-1] = new NoFieldset($this);
+		if (class_exists($class)) {
+			if (isset($arguments[0])) {
+				return new $class($arguments[0]);
 			}
 
-			$this->fieldsets[-1][$offset] = $value;
+			return new $class();
 		}
-
-		$this->inputs[$offset] = $value;
-	}
-
-	public function addFieldset ($fieldset) {
-		if (is_array($fieldset)) {
-			$fieldset = (new Fieldset($this))->add($fieldset);
-		}
-		if (!($fieldset instanceof FieldsetInterface)) {
-			throw new \Exception('Only objects with FormManager\\Fieldsets\\FieldsetInterface implemented must be added');
-		}
-
-		return $this->fieldsets[] = $fieldset;
-	}
-
-	public function getFieldsets ($name = null) {
-		return $this->fieldsets;
 	}
 
 	public function load (array $get = array(), array $post = array(), array $file = array()) {
@@ -61,49 +33,7 @@ class Form extends Element implements \Iterator, \ArrayAccess {
 		return $this;
 	}
 
-	public function val (array $value = null) {
-		if ($value === null) {
-			$value = array();
-
-			foreach ($this->inputs as $name => $input) {
-				$value[$name] = $input->val();
-			}
-
-			return $value;
-		}
-
-		foreach ($value as $name => $value) {
-			if (isset($this->inputs[$name])) {
-				$this->inputs[$name]->val($value);
-			}
-		}
-
-		return $this;
-	}
-
-	public function isValid () {
-		foreach ($this->inputs as $input) {
-			if ($input->isValid() === false) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	public function html ($html = null) {
-		if ($html === null) {
-			$html = $this->html;
-
-			foreach ($this->fieldsets as $fieldset) {
-				$html .= (string)$fieldset;
-			}
-
-			return $html;
-		}
-
-		$this->html = $html;
-
-		return $this;
+	public function getParent () {
+		return null;
 	}
 }
