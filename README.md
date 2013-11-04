@@ -65,7 +65,7 @@ if ($name->isValid()) {
 Create a field
 --------------
 
-A field is an object that include the input and its label. It may also generate an extra label with the error message.
+A field is an object that include an input with its label. It may also generate an extra label with the error message.
 
 ```php
 use FormManager\Fields\Field;
@@ -88,6 +88,44 @@ echo $name;
 echo $name->label.' - '.$name->input.' - '.$name->labelError;
 ```
 
+Create a fieldset
+-----------------
+
+A fieldset is a collection of fields or inputs with the same namespace. Its like a field with subfields.
+
+```php
+use FormManager\Fieldsets\Fieldset;
+use FormManager\Fields\Field;
+
+$fieldset = Fieldset::generic();
+
+$fieldset->add([
+	'name' => Field::text(),
+	'age' => Field::number()
+]);
+
+//Access to the fields individually
+$nameInput = $fieldset['name'];
+
+//Add more fields dinamically
+$fieldset['email'] = Field::email()->required()->label('Please, insert your email here');
+
+//Set values
+$fieldset->val([
+	'name' => 'Antonio',
+	'age' => 31,
+	'email' => 'antonio@email.com'
+]);
+
+//Get values
+$values = $fieldset->val();
+
+echo $values['email'];
+
+//Set attributes to the fieldset
+$fieldset->class('my-fieldset');
+```
+
 
 Create a form
 -------------
@@ -97,6 +135,7 @@ Let's put all together
 ```php
 use FormManager\Form;
 use FormManager\Fields\Field;
+use FormManager\Fields\Fieldset;
 
 class MyForm extends Form {
 	public function __construct () {
@@ -105,23 +144,26 @@ class MyForm extends Form {
 			'method' => 'post'
 		]);
 
-		//Add fields
+		//Add inputs, fields or fieldsets
 		$this->add([
-			'name' => Field::text()->maxlength(50)->required()->label('Your name'),
-			'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+			'personal-info' => Fieldset::generic([
+				'name' => Field::text()->maxlength(50)->required()->label('Your name'),
+				'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+				'email' => Field::email()->label('Your email'),
+				'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
+				'telephone' => Field::tel()->label('Telephone number'),
+			]),
 			'search' => Field::search()->label('What are you looking for?'),
 			'comment' => Field::textarea()->label('A comment')->maxlength(30),
-			'email' => Field::email()->label('Your email'),
 			'website' => Field::url()->label('Your website')->required(),
-			'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
 			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
-			'telephone' => Field::tel()->label('Telephone number'),
 			'is-happy' => Field::checkbox()->label('Are you happy?')->required(),
 			'language' => Field::select()->options(array(
 				'gl' => 'Galician',
 				'es' => 'Spanish',
 				'en' => 'English'
 			))->label('Gender'),
+			
 			'gender' => Field::radios()->options(array(
 				'm' => 'Male',
 				'f' => 'Female'
@@ -141,39 +183,10 @@ $MyForm['new-input'] = Input::range()->min(0)->max(100);
 echo $MyForm;
 
 //Access to the inputs using key names
-echo $MyForm['email'];
-```
+echo $MyForm['website'];
 
-Fieldset
---------
-You can group the fields into fieldsets.
-
-```php
-use FormManager\Form;
-use FormManager\Fields\Field;
-use FormManager\Fieldsets\Fieldset;
-
-class MyForm extends Form {
-	public function __construct () {
-		$this->attr('action', 'test.php');
-
-		//Create a fieldset
-		$this->addFieldset([
-			'colors' => Input::select()->label('Your favorite color')->options(array(
-				'red' => 'Red'
-				'blue' => 'Blue'
-				'green' => 'Green'
-			)),
-			'food' => Input::text()->label('Your favorite food')
-		]);
-
-		//Add some fields out of the fieldset
-		$this->add([
-			'name' => Input::text()->maxlength(50)->required()->label('Your name'),
-			'age' => Input::number()->maxlength(3)->required()->label('Your age')
-		]);
-	}
-}
+//Or inputs inside fieldsets
+echo $MyForm['personal-info']['name'];
 ```
 
 

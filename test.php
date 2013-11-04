@@ -14,17 +14,31 @@ class MyForm extends Form {
 		]);
 
 		$this->add([
-			'name' => Field::text()->maxlength(50)->required()->label('Your name')->val('Ola'),
-			'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-			'search' => Field::search()->label('What are you looking for?'),
-			'website' => Field::url()->label('Your website')->required(),
-			'comment' => Field::textarea()->label('A comment')->maxlength(30)->sanitize(function ($value) {
+			'un' => Field::search()->label('What are you looking for?'),
+			'dous' => Field::textarea()->label('A comment')->maxlength(30)->sanitize(function ($value) {
 				return strip_tags($value);
 			}),
-			'email' => Field::email()->label('Your email'),
-			'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
-			'pirolas' => Fieldset::generic()->add([
-				'nome' => Field::text()->label('Nome')
+			
+			'3' => Fieldset::generic([
+				'3a' => Field::text()->maxlength(50)->required()->label('Your name')->val('Ola'),
+				'3b' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+				'3c' => Field::number()->min(5)->max(110)->label('How old are you?'),
+
+				'4' => Fieldset::generic([
+					'3a' => Field::text()->maxlength(50)->required()->label('Your name')->val('Ola'),
+					'3b' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+					'3c' => Field::number()->min(5)->max(110)->label('How old are you?')
+				]),
+			]),
+
+			'contact' => Fieldset::generic([
+				'email' => Field::email()->label('Your email'),
+				'website' => Field::url()->label('Your website')->required(),
+				'color' => Fieldset::choose([
+					'red' => Field::radio()->label('Red'),
+					'blue' => Field::radio()->label('Blue'),
+					'green' => Field::radio()->label('Green')
+				])
 			])
 		]);
 
@@ -56,19 +70,7 @@ class MyForm extends Form {
 	}
 }
 
-$Form = new MyForm;
-
-if ($_POST) {
-	$Form->load($_GET, $_POST, $_FILES);
-
-	if ($Form->isValid()) {
-		print_r($Form->val());
-	} else {
-		echo 'There was an error';
-	}
-}
 ?>
-
 <!DOCTYPE html>
 
 <html>
@@ -84,6 +86,18 @@ if ($_POST) {
 	</head>
 
 	<body>
-		<?php echo $Form; ?>
+		<?php
+		$Form = new MyForm;
+
+		if ($_POST) {
+			$Form->load($_GET, $_POST, $_FILES);
+
+			if (!$Form->isValid()) {
+				echo 'There was an error';
+			}
+		}
+		
+		echo $Form;
+		?>
 	</body>
 </html>

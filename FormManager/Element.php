@@ -11,16 +11,6 @@ abstract class Element {
 		return str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
 	}
 
-	public function __construct (array $attributes = null, $html = null) {
-		if ($attributes !== null) {
-			$this->attr($attributes);
-		}
-
-		if ($html !== null) {
-			$this->html = $html;
-		}
-	}
-
 	public function __call ($name, $arguments) {
 		$this->attr($name, (array_key_exists(0, $arguments) ? $arguments[0] : true));
 

@@ -11,7 +11,13 @@ class Label extends Element {
 	public function __construct (Input $input, array $attributes = null, $html = null) {
 		$this->input = $input;
 
-		parent::__construct($attributes, $html);
+		if ($attributes !== null) {
+			$this->attr($attributes);
+		}
+
+		if ($html !== null) {
+			$this->html = $html;
+		}
 	}
 
 	public function toHtml () {

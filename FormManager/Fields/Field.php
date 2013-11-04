@@ -1,13 +1,13 @@
 <?php
 namespace FormManager\Fields;
 
+use FormManager\InputTrait;
 use FormManager\Label;
-use FormManager\Form;
 
 abstract class Field {
+	use InputTrait;
+
 	public $input;
-	public $form;
-	public $fieldset;
 
 	public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\'.ucfirst($name);
@@ -27,10 +27,6 @@ abstract class Field {
 		call_user_func_array([$this->input, $name], $arguments);
 
 		return $this;
-	}
-
-	public function setForm (Form $form) {
-		$this->form = $form;
 	}
 
 	public function __toString () {
