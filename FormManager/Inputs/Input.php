@@ -1,11 +1,11 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputTrait;
+use FormManager\Traits\PropagateTrait;
 use FormManager\Element;
 
 abstract class Input extends Element {
-	use InputTrait;
+	use PropagateTrait;
 
 	protected $name = 'input';
 	protected $validators = [];

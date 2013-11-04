@@ -1,8 +1,12 @@
 <?php
 namespace FormManager;
 
+use FormManager\Traits\CollectionTrait;
+use FormManager\Traits\KeyTrait;
+
 class Form extends Element implements \Iterator, \ArrayAccess, FormInterface {
 	use CollectionTrait;
+	use KeyTrait;
 
 	protected $name = 'form';
 	protected $close = true;

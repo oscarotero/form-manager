@@ -1,9 +1,10 @@
 <?php
-namespace FormManager;
+namespace FormManager\Traits;
+
+use FormManager\CommonInterface;
 
 trait CollectionTrait {
 	protected $inputs = [];
-	protected $key;
 
 	public function __construct (array $inputs = null) {
 		if ($inputs) {
@@ -76,6 +77,14 @@ trait CollectionTrait {
 		$this->inputs[$input->getKey()] = $input;
 	}
 
+	public function load ($value = null, $file = null) {
+		foreach ($this->inputs as $name => $input) {
+			$input->load((isset($value[$name]) ? $value[$name] : null), (isset($file[$name]) ? $file[$name] : null));
+		}
+
+		return $this;
+	}
+
 	public function val ($value = null) {
 		if ($value === null) {
 			$values = [];
@@ -120,13 +129,5 @@ trait CollectionTrait {
 		$this->html = $html;
 
 		return $this;
-	}
-
-	public function setKey ($key) {
-		$this->key = $key;
-	}
-
-	public function getKey () {
-		return $this->key;
 	}
 }

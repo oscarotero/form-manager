@@ -1,11 +1,11 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\InputTrait;
+use FormManager\Traits\PropagateTrait;
 use FormManager\Label;
 
 abstract class Field {
-	use InputTrait;
+	use PropagateTrait;
 
 	public $input;
 

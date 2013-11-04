@@ -92,13 +92,20 @@ Create a fieldset
 -----------------
 
 A fieldset is a collection of fields or inputs with the same namespace. Its like a field with subfields.
+There are various types of fieldsets:
+
+#### Generic
+
+The more common fieldset. Stores a collection of inputs with different names
 
 ```php
 use FormManager\Fieldsets\Fieldset;
 use FormManager\Fields\Field;
 
+//Create a generic fielset
 $fieldset = Fieldset::generic();
 
+//Add some fields
 $fieldset->add([
 	'name' => Field::text(),
 	'age' => Field::number()
@@ -124,6 +131,37 @@ echo $values['email'];
 
 //Set attributes to the fieldset
 $fieldset->class('my-fieldset');
+```
+
+#### Choose
+
+Stores a collection of inputs with the same name. Useful for radio or checkboxes inputs or to define varios submits buttons with the same name and different values.
+
+```php
+use FormManager\Fieldsets\Fieldset;
+use FormManager\Fields\Field;
+
+//Create a choose fielset
+$colors = Fieldset::generic()->name('colors');
+
+//Add some fields. The keys are the values
+$colors->add([
+	'red' => Field::radio()->label('Red'),
+	'blue' => Field::radio()->label('Blue'),
+	'green' => Field::radio()->label('Green')
+]);
+
+//Access to the fields individually
+$redRadio = $colors['red'];
+
+//Add more fields dinamically
+$colors['yellow'] = Field::radio()->label('Label');
+
+//Set value
+$colors->val('red');
+
+//Get values
+$color = $colors->val();
 ```
 
 
@@ -153,23 +191,28 @@ class MyForm extends Form {
 				'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
 				'telephone' => Field::tel()->label('Telephone number'),
 			]),
+
 			'search' => Field::search()->label('What are you looking for?'),
 			'comment' => Field::textarea()->label('A comment')->maxlength(30),
 			'website' => Field::url()->label('Your website')->required(),
 			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
 			'is-happy' => Field::checkbox()->label('Are you happy?')->required(),
+
 			'language' => Field::select()->options(array(
 				'gl' => 'Galician',
 				'es' => 'Spanish',
 				'en' => 'English'
 			))->label('Gender'),
-			
-			'gender' => Field::radios()->options(array(
-				'm' => 'Male',
-				'f' => 'Female'
-			)),
-            'click-me' => Field::button()->html('Click Me'),
-            'submit' => Field::submit()->value('Submit')
+
+			'gender' => Fieldset::choose([
+				'm' => Field::radio()->label('Male'),
+				'f' => Field::radio()->label('Female')
+			]),
+
+			'action' => Fieldset::choose([
+				'save' => Field::submit()->html('Save changes'),
+				'duplicate' => Field::submit()->value('Save as new value')
+			])
 		]);
 	}
 }

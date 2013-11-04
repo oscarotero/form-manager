@@ -13,63 +13,40 @@ class MyForm extends Form {
 			'method' => 'post'
 		]);
 
+		//Add inputs, fields or fieldsets
 		$this->add([
-			'un' => Field::search()->label('What are you looking for?'),
-			'dous' => Field::textarea()->label('A comment')->maxlength(30)->sanitize(function ($value) {
-				return strip_tags($value);
-			}),
-			
-			'3' => Fieldset::generic([
-				'3a' => Field::text()->maxlength(50)->required()->label('Your name')->val('Ola'),
-				'3b' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-				'3c' => Field::number()->min(5)->max(110)->label('How old are you?'),
-
-				'4' => Fieldset::generic([
-					'3a' => Field::text()->maxlength(50)->required()->label('Your name')->val('Ola'),
-					'3b' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-					'3c' => Field::number()->min(5)->max(110)->label('How old are you?')
-				]),
+			'personal-info' => Fieldset::generic([
+				'name' => Field::text()->maxlength(50)->required()->label('Your name'),
+				'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
+				'email' => Field::email()->label('Your email'),
+				'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
+				'telephone' => Field::tel()->label('Telephone number'),
 			]),
 
-			'contact' => Fieldset::generic([
-				'email' => Field::email()->label('Your email'),
-				'website' => Field::url()->label('Your website')->required(),
-				'color' => Fieldset::choose([
-					'red' => Field::radio()->label('Red'),
-					'blue' => Field::radio()->label('Blue'),
-					'green' => Field::radio()->label('Green')
-				])
+			'search' => Field::search()->label('What are you looking for?'),
+			'comment' => Field::textarea()->label('A comment')->maxlength(30),
+			'website' => Field::url()->label('Your website')->required(),
+			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
+			'is-happy' => Field::checkbox()->label('Are you happy?')->required(),
+
+			'language' => Field::select()->options(array(
+				'gl' => 'Galician',
+				'es' => 'Spanish',
+				'en' => 'English'
+			))->label('Gender'),
+
+			'gender' => Fieldset::choose([
+				'm' => Field::radio()->label('Male'),
+				'f' => Field::radio()->label('Female')
+			]),
+
+			'action' => Fieldset::choose([
+				'save' => Field::submit()->html('Save changes'),
+				'duplicate' => Field::submit()->value('Save as new value')
 			])
 		]);
-
-		/*
-		$this->addFieldset([
-			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
-			'telephone' => Field::tel()->label('Telephone number'),
-			'is-happy' => Field::checkbox()->label('Are you happy?'),
-			'gender' => Field::select()->options(array(
-				'm' => 'Male',
-				'f' => 'Female'
-			))->label('Gender'),
-			'color' => Field::Radios()->options([
-				'red' => 'Red',
-				'green' => 'Green',
-				'blue' => 'Blue'
-			]),
-			'color' => Field::Duplicable()->inputs([
-				'red' => 'Red',
-				'green' => 'Green',
-				'blue' => 'Blue'
-			]),
-			'update' => Field::button()->type('submit')->html('Update data'),
-		]);
-
-		$this->addDuplicableFieldset([
-		]);
-		*/
 	}
 }
-
 ?>
 <!DOCTYPE html>
 
@@ -92,9 +69,13 @@ class MyForm extends Form {
 		if ($_POST) {
 			$Form->load($_GET, $_POST, $_FILES);
 
+			echo '<pre>';
 			if (!$Form->isValid()) {
 				echo 'There was an error';
+			} else {
+				print_r($Form->val());
 			}
+			echo '</pre>';
 		}
 		
 		echo $Form;

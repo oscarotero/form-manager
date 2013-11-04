@@ -1,11 +1,13 @@
 <?php
 namespace FormManager\Fieldsets;
 
-use FormManager\InputCollectionTrait;
+use FormManager\Traits\CollectionTrait;
+use FormManager\Traits\PropagateTrait;
 use FormManager\Element;
 
 abstract class Fieldset extends Element implements \Iterator, \ArrayAccess {
-	use InputCollectionTrait;
+	use CollectionTrait;
+	use PropagateTrait;
 
 	protected $name = 'fieldset';
 	protected $close = true;
@@ -19,39 +21,6 @@ abstract class Fieldset extends Element implements \Iterator, \ArrayAccess {
 			}
 
 			return new $class();
-		}
-	}
-
-	public function __construct (array $inputs = null) {
-		if ($inputs) {
-			$this->add($inputs);
-		}
-	}
-
-	public function getKeys () {
-		if (!$key = $this->getKey()) {
-			return [];
-		}
-
-		$parent = $this;
-		$keys = [$key];
-
-		while (($parent = $parent->getParent()) && ($key = $parent->getKey())) {
-			$keys[] = $key;
-		}
-
-		return $keys;
-	}
-
-	public function generateName () {
-		if ($keys = $this->getKeys()) {
-			$name = array_pop($keys);
-
-			while ($keys) {
-				$name .= '['.array_pop($keys).']';
-			}
-
-			$this->attr('name', $name);
 		}
 	}
 }
