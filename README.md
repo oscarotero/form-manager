@@ -164,6 +164,41 @@ $colors->val('red');
 $color = $colors->val();
 ```
 
+#### Multiple
+
+Stores a collection of inputs and clone them for each loaded value.
+
+```php
+use FormManager\Fieldsets\Fieldset;
+use FormManager\Fields\Field;
+
+//Create a choose fielset
+$people = Fieldset::multiple()->name('people');
+
+//Add some fields. The keys are the names
+$people->add([
+	'name' => Field::text()->label('Name'),
+	'email' => Field::email()->label('email'),
+	'age' => Field::number()->label('Age')
+]);
+
+//Set values
+$people->val([
+	[
+		'name' => 'Xaquín',
+		'email' => 'xaquin@email.com',
+		'age' => '24'
+	],[
+		'name' => 'Uxío',
+		'email' => 'uxio@email.com',
+		'age' => '37'
+	]
+]);
+
+//Get fieldsets by number
+echo $people[0]['name']->val(); //returns 'Xaquín'
+```
+
 
 Create a form
 -------------
