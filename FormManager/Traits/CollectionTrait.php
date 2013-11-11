@@ -12,6 +12,13 @@ trait CollectionTrait {
 		}
 	}
 
+	public function __clone () {
+		foreach ($this->inputs as $key => $input) {
+			$this->inputs[$key] = clone $input;
+			$this->inputs[$key]->setParent($this);
+		}
+	}
+
 	public function rewind () {
 		return reset($this->inputs);
 	}
