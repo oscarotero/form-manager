@@ -15,7 +15,7 @@ class MyForm extends Form {
 
 		//Add inputs, fields or fieldsets
 		$this->add([
-			'personal-info' => Fieldset::generic([
+			'personal-info' => Fieldset::multiple([
 				'name' => Field::text()->maxlength(50)->required()->label('Your name'),
 				'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
 				'email' => Field::email()->label('Your email'),
@@ -40,10 +40,7 @@ class MyForm extends Form {
 				'f' => Field::radio()->label('Female')
 			]),
 
-			'action' => Fieldset::choose([
-				'save' => Field::submit()->html('Save changes'),
-				'duplicate' => Field::submit()->value('Save as new value')
-			])
+			'save' => Field::submit()->html('Save changes')
 		]);
 	}
 }

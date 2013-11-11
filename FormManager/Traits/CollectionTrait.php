@@ -60,8 +60,6 @@ trait CollectionTrait {
 	}
 
 	public function add (array $inputs) {
-		$parent = $this->attr('name');
-
 		foreach ($inputs as $name => $input) {
 			$this[$name] = $input;
 		}

@@ -33,6 +33,14 @@ abstract class Field {
 		return $this->toHtml();
 	}
 
+	public function __clone () {
+		$this->input = clone $this->input;
+
+		if (isset($this->label)) {
+			$this->label = clone $this->label;
+		}
+	}
+
 	public function __get ($name) {
 		if ($name === 'label') {
 			return $this->label = new Label($this->input);
