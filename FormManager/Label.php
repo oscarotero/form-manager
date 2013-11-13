@@ -8,8 +8,10 @@ class Label extends Element {
 	protected $close = true;
 	protected $input;
 
-	public function __construct (Input $input, array $attributes = null, $html = null) {
-		$this->input = $input;
+	public function __construct (Input $input = null, array $attributes = null, $html = null) {
+		if ($input !== null) {
+			$this->input = $input;
+		}
 
 		if ($attributes !== null) {
 			$this->attr($attributes);
