@@ -5,6 +5,7 @@ abstract class Element {
 	protected $name;
 	protected $close;
 	protected $attributes = [];
+	protected $data = [];
 	protected $html;
 
 	protected static function escape ($value) {
@@ -57,6 +58,32 @@ abstract class Element {
 		unset($this->attributes[$name]);
 	}
 
+	public function data ($name = null, $value = null) {
+		if ($name === null) {
+			return $this->data;
+		}
+
+		if (is_array($name)) {
+			foreach ($name as $name => $value) {
+				$this->data[$name] = $value;
+			}
+
+			return $this;
+		}
+
+		if ($value === null) {
+			return isset($this->data[$name]) ? $this->data[$name] : null;
+		}
+
+		$this->data[$name] = $value;
+
+		return $this;
+	}
+
+	public function removeData ($name) {
+		unset($this->data[$name]);
+	}
+
 	protected function attrToHtml () {
 		$html = '';
 
@@ -70,6 +97,10 @@ abstract class Element {
 			} else {
 				$html .= " $name=\"".static::escape($value)."\"";
 			}
+		}
+
+		foreach ($this->data as $name => $value) {
+			$html .= " data-$name=\"".static::escape($value)."\"";
 		}
 
 		return $html;

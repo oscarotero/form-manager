@@ -15,7 +15,7 @@ class MyForm extends Form {
 		$this->add([
 			'name' => Field::text()->maxlength(50)->required()->label('Your name'),
 			'email' => Field::email()->label('Your email'),
-			'telephone' => Field::tel()->label('Telephone number'),
+			'telephone' => Field::tel()->label('Telephone number')->data(['ola' => 'kease']),
 
 			'gender' => Field::choose([
 				'm' => Field::radio()->label('Male'),
