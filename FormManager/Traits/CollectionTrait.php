@@ -1,118 +1,88 @@
 <?php
+/**
+ * Trait with common method for collection objects (objects having children)
+ */
 namespace FormManager\Traits;
 
-use FormManager\CommonInterface;
+use FormManager\Form;
+use FormManager\CollectionInterface;
 
 trait CollectionTrait {
-	protected $inputs = [];
-
-	public function __construct (array $inputs = null) {
-		if ($inputs) {
-			$this->add($inputs);
-		}
-	}
+	protected $children = [];
+	protected $sanitizer;
+	protected $error;
 
 	public function __clone () {
-		foreach ($this->inputs as $key => $input) {
-			$this->inputs[$key] = clone $input;
-			$this->inputs[$key]->setParent($this);
+		foreach ($this->children as $key => $child) {
+			$this->children[$key] = clone $child;
+			$this->children[$key]->setParent($this);
 		}
 	}
 
+	//Iterator interface methods:
 	public function rewind () {
-		return reset($this->inputs);
+		return reset($this->children);
 	}
 
 	public function current () {
-		return current($this->inputs);
+		return current($this->children);
 	}
 
 	public function key () {
-		return key($this->inputs);
+		return key($this->children);
 	}
 
 	public function next () {
-		return next($this->inputs);
+		return next($this->children);
 	}
 
 	public function valid () {
-		return key($this->inputs) !== null;
+		return key($this->children) !== null;
 	}
 
+	//ArrayAccess interface methods
 	public function offsetSet ($offset, $value) {
-		if (!($value instanceof CommonInterface)) {
-			throw new \InvalidArgumentException('Only elements implementing FormManager\\CommonInterface must be added to forms');
-		}
-
 		if ($offset === null) {
-			throw new \InvalidArgumentException('You must define a name to every element added to form');
+			throw new \InvalidArgumentException('You must define a key to every element added');
 		}
 
-		$value->setParent($this);
-		$value->setKey($offset);
-
-		$this->addInput($value);
+		$this->add($offset, $value);
 	}
 
 	public function offsetExists ($offset) {
-		return isset($this->inputs[$offset]);
+		return isset($this->children[$offset]);
 	}
 
 	public function offsetUnset ($offset) {
-		unset($this->inputs[$offset]);
+		unset($this->children[$offset]);
 	}
 
 	public function offsetGet ($offset) {
-		return isset($this->inputs[$offset]) ? $this->inputs[$offset] : null;
+		return isset($this->children[$offset]) ? $this->children[$offset] : null;
 	}
 
-	public function add (array $inputs) {
-		foreach ($inputs as $name => $input) {
-			$this[$name] = $input;
-		}
-
-		return $this;
-	}
-
-	protected function addInput ($input) {
-		if (!$this->getParent() || !empty($this->getKey())) {
-			$input->generateName();
-		}
-
-		$this->inputs[$input->getKey()] = $input;
-	}
-
-	public function load ($value = null, $file = null) {
-		foreach ($this->inputs as $name => $input) {
-			$input->load((isset($value[$name]) ? $value[$name] : null), (isset($file[$name]) ? $file[$name] : null));
-		}
-
-		return $this;
-	}
-
-	public function val ($value = null) {
-		if ($value === null) {
-			$values = [];
-
-			foreach ($this->inputs as $name => $input) {
-				$values[$name] = $input->val();
+	//Add elements
+	public function add ($key, $value = null) {
+		if (is_array($key)) {
+			foreach ($key as $key => $value) {
+				$this->children[$key] = $value->setParent($this);
+				$this->prepareChild($value, $key);
 			}
 
-			return $values;
+			return $this;
 		}
 
-		foreach ($value as $name => $value) {
-			if (isset($this->inputs[$name])) {
-				$this->inputs[$name]->val($value);
-			}
-		}
+		$this->children[$key] = $value->setParent($this);
+		$this->prepareChild($value, $key);
 
 		return $this;
 	}
 
+
+	//Input interface methods
 	public function isValid () {
-		foreach ($this->inputs as $input) {
-			if ($input->isValid() === false) {
+		foreach ($this->children as $child) {
+			if (!$child->isValid()) {
 				return false;
 			}
 		}
@@ -120,19 +90,78 @@ trait CollectionTrait {
 		return true;
 	}
 
-	public function html ($html = null) {
-		if ($html === null) {
-			$html = $this->html;
+	public function val ($value = null) {
+		if ($value === null) {
+			$value = [];
 
-			foreach ($this->inputs as $input) {
-				$html .= (string)$input;
+			foreach ($this->children as $key => $child) {
+				$value[$key] = $child->val();
 			}
 
-			return $html;
+			return $value;
 		}
 
-		$this->html = $html;
+		foreach ($this->children as $key => $child) {
+			$child->val(isset($value[$key]) ? $value[$key] : null);
+		}
 
 		return $this;
+	}
+
+	public function load ($value = null, $file = null) {
+		if (($sanitizer = $this->sanitizer) !== null) {
+			$value = $sanitizer($value);
+		}
+
+		foreach ($this->children as $key => $child) {
+			$child->load(
+				isset($value[$key]) ? $value[$key] : null,
+				isset($file[$key]) ? $file[$key] : null
+			);
+		}
+
+		return $this;
+	}
+
+	public function sanitize (callable $sanitizer) {
+		$this->sanitizer = $sanitizer;
+
+		return $this;
+	}
+
+	public function error ($error = null) {
+		if ($error === null) {
+			return $this->error;
+		}
+
+		$this->error = $error;
+
+		return $this;
+	}
+
+	public function prepareChildren ($parentPath = null) {
+		foreach ($this->children as $key => $child) {
+			$this->prepareChild($child, $key, $parentPath);
+		}
+	}
+
+	public function prepareChild ($child, $key, $parentPath = null) {
+		$path = $parentPath ? "{$parentPath}[{$key}]" : $key;
+
+		if ($child instanceof CollectionInterface) {
+			$child->prepareChildren($path);
+		} else {
+			$child->attr('name', $path);
+		}
+	}
+
+	protected function childrenToHtml () {
+		$html = '';
+
+		foreach ($this->children as $child) {
+			$html .= (string)$child;
+		}
+
+		return $html;
 	}
 }

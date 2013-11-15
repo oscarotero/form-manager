@@ -10,7 +10,7 @@ class Label extends Element {
 
 	public function __construct (Input $input = null, array $attributes = null, $html = null) {
 		if ($input !== null) {
-			$this->input = $input;
+			$this->setInput($input);
 		}
 
 		if ($attributes !== null) {
@@ -20,6 +20,10 @@ class Label extends Element {
 		if ($html !== null) {
 			$this->html = $html;
 		}
+	}
+
+	public function setInput (Input $input) {
+		$this->input = $input;
 	}
 
 	public function toHtml () {

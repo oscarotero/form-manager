@@ -3,9 +3,9 @@ namespace FormManager;
 
 abstract class Element {
 	protected $name;
-	protected $html;
 	protected $close;
 	protected $attributes = [];
+	protected $html;
 
 	protected static function escape ($value) {
 		return str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
@@ -75,11 +75,11 @@ abstract class Element {
 		return $html;
 	}
 
-	public function toHtml () {
+	public function toHtml ($append = '') {
 		$html = $this->openHtml();
 
 		if ($this->close) {
-			$html .= $this->html().$this->closeHtml();
+			$html .= $this->html().$append.$this->closeHtml();
 		}
 
 		return $html;

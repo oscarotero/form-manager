@@ -1,11 +1,13 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Traits\PropagateTrait;
-use FormManager\Label;
+use FormManager\Traits\ChildTrait;
 
-abstract class Field {
-	use PropagateTrait;
+use FormManager\Label;
+use FormManager\InputInterface;
+
+class Field implements InputInterface {
+	use ChildTrait;
 
 	public $input;
 
@@ -13,14 +15,28 @@ abstract class Field {
 		$class = __NAMESPACE__.'\\'.ucfirst($name);
 
 		if (class_exists($class)) {
+			if (isset($arguments[0])) {
+				return new $class($arguments[0]);
+			}
+
 			return new $class;
 		}
 
-		$class = 'FormManager\\Inputs\\'.ucfirst($name);
+		$input = 'FormManager\\Inputs\\'.ucfirst($name);
 
-		if (class_exists($class)) {
-			return new Generic(new $class);
+		if (class_exists($input)) {
+			return new static(new $input);
 		}
+	}
+
+	public function __construct (InputInterface $input = null) {
+		if ($input) {
+			$this->input = $input;
+		}
+	}
+
+	public function __toString () {
+		return $this->toHtml();
 	}
 
 	public function __call ($name, $arguments) {
@@ -29,15 +45,12 @@ abstract class Field {
 		return $this;
 	}
 
-	public function __toString () {
-		return $this->toHtml();
-	}
-
 	public function __clone () {
 		$this->input = clone $this->input;
 
 		if (isset($this->label)) {
 			$this->label = clone $this->label;
+			$this->label->setInput($this->input);
 		}
 	}
 
@@ -124,6 +137,30 @@ abstract class Field {
 	public function toHtml () {
 		$label = isset($this->label) ? (string)$this->label : '';
 
-		return "$label $this->input $this->errorLabel";
+		return "{$label} {$this->input} {$this->errorLabel}";
+	}
+
+	public function setKey ($key) {
+		$this->input->setKey($key);
+
+		return $this;
+	}
+
+	public function setParent (InputInterface $parent) {
+		$this->input->setParent($parent);
+
+		return $this;
+	}
+
+	public function getParent () {
+		return $this->input->getParent();
+	}
+
+	public function getInputName () {
+		return $this->input->getInputName();
+	}
+
+	public function generateInputName () {
+		return $this->input->generateInputName();
 	}
 }

@@ -2,9 +2,30 @@
 use FormManager\Form;
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
+use FormManager\Fields\FieldContainer;
 use FormManager\Fieldsets\Fieldset;
 
 include('FormManager/autoloader.php');
+
+$col = Field::choose([
+	'nome' => Field::radio()->label('nome'),
+	'apelido' => Field::radio()->label('apelido')
+]);
+
+$form = (new Form)->add([
+	'pirolas' => Field::duplicable([
+		'nome' => Field::text()->label('nome'),
+		'apelido' => Field::text()->label('apelido'),
+		'conas' => $col
+	]),
+	'outro' => Field::text()->val('ola')->label('pirolas')
+]);
+
+$form['pirolas']->addDuplicate();
+
+echo $form;
+
+die();
 
 class MyForm extends Form {
 	public function __construct () {

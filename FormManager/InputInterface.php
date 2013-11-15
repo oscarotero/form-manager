@@ -1,7 +1,11 @@
 <?php
+/**
+ * Interface used by all elements (forms, fields, inputs, etc) to keep the basic behaviour
+ */
+
 namespace FormManager;
 
-interface InputInterface extends CommonInterface {
+interface InputInterface {
 	public function load ($value = null, $file = null);
 
 	public function val ($value = null);
@@ -13,12 +17,4 @@ interface InputInterface extends CommonInterface {
 	public function id ($id = null);
 
 	public function sanitize (callable $sanitizer);
-
-	public function getParent ();
-
-	public function setParent (CommonInterface $parent);
-
-	public function setKey ($key);
-
-	public function getKey ();
 }
