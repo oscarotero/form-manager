@@ -84,6 +84,42 @@ abstract class Element {
 		unset($this->data[$name]);
 	}
 
+	public function addClass ($class) {
+		$classes = $this->attr('class');
+
+		if (!$classes) {
+			return $this->attr('class', $class);
+		}
+
+		if (!is_array($classes)) {
+			$classes = explode(' ', $classes);
+		}
+
+		if (!is_array($class)) {
+			$class = explode(' ', $class);
+		}
+
+		return $this->attr('class', array_unique(array_merge($classes, $class)));
+	}
+
+	public function removeClass ($class) {
+		$classes = $this->attr('class');
+
+		if (!$classes) {
+			return $this;
+		}
+
+		if (!is_array($classes)) {
+			$classes = explode(' ', $classes);
+		}
+
+		if (!is_array($class)) {
+			$class = explode(' ', $class);
+		}
+
+		return $this->attr('class', array_diff($classes, $class));
+	}
+
 	protected function attrToHtml () {
 		$html = '';
 
@@ -95,6 +131,10 @@ abstract class Element {
 			if ($value === true) {
 				$html .= " $name";
 			} else {
+				if (is_array($value)) {
+					$value = implode(' ', $value);
+				}
+
 				$html .= " $name=\"".static::escape($value)."\"";
 			}
 		}
