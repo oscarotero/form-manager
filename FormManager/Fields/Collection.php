@@ -5,6 +5,7 @@ use FormManager\Traits\ChildTrait;
 use FormManager\Traits\CollectionTrait;
 
 use FormManager\Label;
+use FormManager\Element;
 use FormManager\CollectionInterface;
 
 use Iterator;
@@ -38,6 +39,10 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 			return $this->label = new Label();
 		}
 
+		if ($name === 'wrapper') {
+			return $this->wrapper = new Element;
+		}
+
 		if (($name === 'errorLabel') && ($error = $this->error())) {
 			return new Label(null, ['class' => 'error'], $error);
 		}
@@ -49,6 +54,16 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 		}
 
 		$this->label->html($html);
+
+		return $this;
+	}
+
+	public function wrapper ($name, array $attributes = null) {
+		$this->wrapper->setElementName($name, true);
+
+		if ($attributes) {
+			$this->wrapper->attr($attributes);
+		}
 
 		return $this;
 	}
@@ -80,7 +95,12 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 	public function toHtml () {
 		$label = isset($this->label) ? (string)$this->label : '';
 		$html = $this->childrenToHtml();
+		$html = "{$label} {$html} {$this->errorLabel}";
 
-		return "{$label} {$html} {$this->errorLabel}";
+		if (isset($this->wrapper)) {
+			return $this->wrapper->toHtml($html);
+		}
+
+		return $html;
 	}
 }

@@ -20,7 +20,7 @@ class MyForm extends Form {
 			'gender' => Field::choose([
 				'm' => Field::radio()->label('Male'),
 				'f' => Field::radio()->label('Female')
-			]),
+			])->wrapper('div', ['class' => 'field']),
 			
 			'born' => Field::collection([
 				'day' => Field::number()->min(1)->max(31)->label('Day'),

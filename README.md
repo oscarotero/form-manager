@@ -102,6 +102,24 @@ echo $name;
 echo $name->label.' - '.$name->input.' - '.$name->labelError;
 ```
 
+By default, the fields are not html elements, but you can define a wrapper:
+
+```php
+$field = Field::textarea()
+	->name('comment')
+	->id('comment-input')
+	->label('Comment')
+	->wrapper('div', ['class' => 'comment']);
+
+echo $field;
+/*
+<div class="comment">
+	<label for="id_comment-input"></label>
+	<textarea name="comment"></textarea>
+</div>
+*/
+```
+
 #### Collection field
 
 A collection is a special field that contains other fields or inputs:

@@ -155,7 +155,7 @@ trait CollectionTrait {
 		}
 	}
 
-	protected function childrenToHtml () {
+	public function childrenToHtml () {
 		$html = '';
 
 		foreach ($this->children as $child) {

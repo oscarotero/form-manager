@@ -4,6 +4,7 @@ namespace FormManager\Fields;
 use FormManager\Traits\ChildTrait;
 
 use FormManager\Label;
+use FormManager\Element;
 use FormManager\InputInterface;
 
 class Field implements InputInterface {
@@ -59,6 +60,10 @@ class Field implements InputInterface {
 			return $this->label = new Label($this->input);
 		}
 
+		if ($name === 'wrapper') {
+			return $this->wrapper = new Element;
+		}
+
 		if (($name === 'errorLabel') && ($error = $this->error())) {
 			return new Label($this->input, ['class' => 'error'], $error);
 		}
@@ -70,6 +75,16 @@ class Field implements InputInterface {
 		}
 
 		$this->label->html($html);
+
+		return $this;
+	}
+
+	public function wrapper ($name, array $attributes = null) {
+		$this->wrapper->setElementName($name, true);
+
+		if ($attributes) {
+			$this->wrapper->attr($attributes);
+		}
 
 		return $this;
 	}
@@ -136,8 +151,13 @@ class Field implements InputInterface {
 
 	public function toHtml () {
 		$label = isset($this->label) ? (string)$this->label : '';
+		$html = "{$label} {$this->input} {$this->errorLabel}";
 
-		return "{$label} {$this->input} {$this->errorLabel}";
+		if (isset($this->wrapper)) {
+			return $this->wrapper->toHtml($html);
+		}
+
+		return $html;
 	}
 
 	public function setKey ($key) {

@@ -1,7 +1,7 @@
 <?php
 namespace FormManager;
 
-abstract class Element {
+class Element {
 	protected $name;
 	protected $close;
 	protected $attributes = [];
@@ -20,6 +20,11 @@ abstract class Element {
 
 	public function __toString () {
 		return $this->toHtml();
+	}
+
+	public function setElementName ($name, $close) {
+		$this->name = $name;
+		$this->close = $close;
 	}
 
 	public function html ($html = null) {
