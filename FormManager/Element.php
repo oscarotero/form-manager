@@ -56,6 +56,8 @@ abstract class Element {
 
 	public function removeAttr ($name) {
 		unset($this->attributes[$name]);
+
+		return $this;
 	}
 
 	public function data ($name = null, $value = null) {
@@ -80,8 +82,14 @@ abstract class Element {
 		return $this;
 	}
 
-	public function removeData ($name) {
-		unset($this->data[$name]);
+	public function removeData ($name = null) {
+		if ($name === null) {
+			$this->data = [];
+		} else {
+			unset($this->data[$name]);
+		}
+
+		return $this;
 	}
 
 	public function addClass ($class) {

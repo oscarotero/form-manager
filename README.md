@@ -34,6 +34,20 @@ $name->removeAttr('required');
 
 $name->val('MyName');
 
+$name->addClass('cool-input');
+
+//Get/set/remove data-* attributes
+$name->data('id', 23);
+$name->data([
+	'name' => 'value',
+	'foo' => 'bar'
+]);
+$foo = $name->data('foo');
+
+$name->removeData('id');
+
+$name->removeData(); //Remove all data
+
 //Other way to add attributes:
 $name->pattern('\w+')->required()->maxlength(100);
 
