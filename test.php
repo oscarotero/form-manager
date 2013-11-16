@@ -20,7 +20,15 @@ class MyForm extends Form {
 			'gender' => Field::choose([
 				'm' => Field::radio()->label('Male'),
 				'f' => Field::radio()->label('Female')
-			])->wrapper('div', ['class' => 'field']),
+			])->render(function ($inputs, $label, $errorLabel) {
+				$html = '';
+				
+				foreach ($inputs as $input) {
+					$html .= (string)$input;
+				}
+
+				return "<div>{$html} {$label} {$errorLabel}</div>";
+			}),
 			
 			'born' => Field::collection([
 				'day' => Field::number()->min(1)->max(31)->label('Day'),

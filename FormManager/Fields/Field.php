@@ -11,6 +11,7 @@ class Field implements InputInterface {
 	use ChildTrait;
 
 	public $input;
+	protected $render;
 
 	public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\'.ucfirst($name);
@@ -60,10 +61,6 @@ class Field implements InputInterface {
 			return $this->label = new Label($this->input);
 		}
 
-		if ($name === 'wrapper') {
-			return $this->wrapper = new Element;
-		}
-
 		if (($name === 'errorLabel') && ($error = $this->error())) {
 			return new Label($this->input, ['class' => 'error'], $error);
 		}
@@ -75,16 +72,6 @@ class Field implements InputInterface {
 		}
 
 		$this->label->html($html);
-
-		return $this;
-	}
-
-	public function wrapper ($name, array $attributes = null) {
-		$this->wrapper->setElementName($name, true);
-
-		if ($attributes) {
-			$this->wrapper->attr($attributes);
-		}
 
 		return $this;
 	}
@@ -132,7 +119,15 @@ class Field implements InputInterface {
 	}
 
 	public function sanitize (callable $sanitizer) {
-		return $this->input->sanitize($sanitizer);
+		$this->input->sanitize($sanitizer);
+
+		return $this;
+	}
+
+	public function render (callable $render) {
+		$this->render = $render;
+
+		return $this;
 	}
 
 	public function val ($value = null) {
@@ -150,20 +145,15 @@ class Field implements InputInterface {
 	}
 
 	public function toHtml () {
-		$label = isset($this->label) ? (string)$this->label : '';
-		$html = "{$label} {$this->input} {$this->errorLabel}";
+		$label = isset($this->label) ? $this->label : null;
 
-		if (isset($this->wrapper)) {
-			return $this->wrapper->toHtml($html);
+		if ($this->render) {
+			$render = $this->render;
+
+			return $render($this->input, $label, $this->errorLabel);
 		}
 
-		return $html;
-	}
-
-	public function setKey ($key) {
-		$this->input->setKey($key);
-
-		return $this;
+		return "{$label} {$this->input} {$this->errorLabel}";
 	}
 
 	public function setParent (InputInterface $parent) {
@@ -174,13 +164,5 @@ class Field implements InputInterface {
 
 	public function getParent () {
 		return $this->input->getParent();
-	}
-
-	public function getInputName () {
-		return $this->input->getInputName();
-	}
-
-	public function generateInputName () {
-		return $this->input->generateInputName();
 	}
 }

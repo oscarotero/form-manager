@@ -100,24 +100,13 @@ echo $name;
 
 //Print the pieces individually:
 echo $name->label.' - '.$name->input.' - '.$name->labelError;
-```
 
-By default, the fields are not html elements, but you can define a wrapper:
+//Define a render function to reuse templates
+$name->render(function ($input, $label, $labelError) {
+	return "<div class="field">$label $input $labelError</div>";
+});
 
-```php
-$field = Field::textarea()
-	->name('comment')
-	->id('comment-input')
-	->label('Comment')
-	->wrapper('div', ['class' => 'comment']);
-
-echo $field;
-/*
-<div class="comment">
-	<label for="id_comment-input"></label>
-	<textarea name="comment"></textarea>
-</div>
-*/
+echo $name;
 ```
 
 #### Collection field

@@ -39,10 +39,6 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 			return $this->label = new Label();
 		}
 
-		if ($name === 'wrapper') {
-			return $this->wrapper = new Element;
-		}
-
 		if (($name === 'errorLabel') && ($error = $this->error())) {
 			return new Label(null, ['class' => 'error'], $error);
 		}
@@ -58,12 +54,8 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 		return $this;
 	}
 
-	public function wrapper ($name, array $attributes = null) {
-		$this->wrapper->setElementName($name, true);
-
-		if ($attributes) {
-			$this->wrapper->attr($attributes);
-		}
+	public function render (callable $render) {
+		$this->render = $render;
 
 		return $this;
 	}
@@ -93,14 +85,16 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 	}
 
 	public function toHtml () {
-		$label = isset($this->label) ? (string)$this->label : '';
-		$html = $this->childrenToHtml();
-		$html = "{$label} {$html} {$this->errorLabel}";
+		$label = isset($this->label) ? $this->label : null;
 
-		if (isset($this->wrapper)) {
-			return $this->wrapper->toHtml($html);
+		if ($this->render) {
+			$render = $this->render;
+
+			return $render($this->children, $label, $this->errorLabel);
 		}
 
-		return $html;
+		$html = $this->childrenToHtml();
+
+		return "{$label} {$html} {$this->errorLabel}";
 	}
 }
