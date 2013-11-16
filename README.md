@@ -79,7 +79,7 @@ if ($name->isValid()) {
 Create a field
 --------------
 
-A field is an object that include an input with its label. It may also generate an extra label with the error message.
+A field is an object that includes an input with its label. It may also generate an extra label with the error message.
 
 ```php
 use FormManager\Fields\Field;
@@ -104,7 +104,7 @@ echo $name->label.' - '.$name->input.' - '.$name->labelError;
 
 #### Collection field
 
-A collection is a special field that can contain other fields or inputs:
+A collection is a special field that contains other fields or inputs:
 
 ```php
 use FormManager\Fields\Field;
@@ -140,7 +140,7 @@ echo $values['year'];
 
 #### Choose
 
-Another special field that contains fields with the same name but different values. Useful for radio inputs or to define varios submits buttons.
+Another special field that contains fields with the same name but different values. Useful for radio inputs or to define various submit buttons.
 
 ```php
 use FormManager\Fields\Field;
@@ -159,7 +159,7 @@ $colors->add([
 $radio = $colors['red'];
 
 //Add more fields dinamically
-$colors['yellow'] = Field::radio()->label('Label');
+$colors['yellow'] = Field::radio()->label('Yellow');
 
 //Set value
 $colors->val('red');
@@ -170,13 +170,13 @@ $color = $colors->val();
 
 #### Duplicable
 
-Stores a collection of inputs that you can clone them for multiple values.
+Special field that stores a collection of inputs that you can clone them for multiple values.
 
 ```php
 use FormManager\Fields\Field;
 
 //Create a multiple field
-$people = Field::duplicate([
+$people = Field::duplicable([
 	'name' => Field::text()->label('Name'),
 	'email' => Field::email()->label('email'),
 	'age' => Field::number()->label('Age')
