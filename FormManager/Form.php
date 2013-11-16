@@ -2,11 +2,13 @@
 namespace FormManager;
 
 use FormManager\Traits\CollectionTrait;
-use FormManager\Traits\KeyTrait;
+use FormManager\InputInterface;
 
-class Form extends Element implements \Iterator, \ArrayAccess, FormInterface {
+use Iterator;
+use ArrayAccess;
+
+class Form extends Element implements Iterator, ArrayAccess, InputInterface {
 	use CollectionTrait;
-	use KeyTrait;
 
 	protected $name = 'form';
 	protected $close = true;
@@ -23,17 +25,31 @@ class Form extends Element implements \Iterator, \ArrayAccess, FormInterface {
 		}
 	}
 
-	public function load (array $get = array(), array $post = array(), array $file = array()) {
-		$data = ($this->attr('method') === 'post') ? $post : $get;
-
-		foreach ($this->inputs as $name => $input) {
-			$input->load((isset($data[$name]) ? $data[$name] : null), (isset($file[$name]) ? $file[$name] : null));
+	public function loadFromGlobal (array $get = array(), array $post = array(), array $file = array()) {
+		if (func_num_args() === 0) {
+			$get = $_GET;
+			$post = $_POST;
+			$file = $_FILES;
 		}
 
-		return $this;
+		$value = ($this->attr('method') === 'post') ? $post : $get;
+
+		return $this->load($value, $file);
 	}
 
-	public function getParent () {
-		return null;
+	public function id ($id = null) {
+		if ($id === null) {
+			return $this->attr('id');
+		}
+
+		return $this->attr('id', $id);
+	}
+
+	public function getInputName () {
+		return $this->attr('name');
+	}
+
+	public function toHtml () {
+		return parent::toHtml($this->childrenToHtml());
 	}
 }

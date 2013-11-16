@@ -1,11 +1,12 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\Traits\PropagateTrait;
+use FormManager\Traits\ChildTrait;
+
 use FormManager\Element;
 
 abstract class Input extends Element {
-	use PropagateTrait;
+	use ChildTrait;
 
 	protected $name = 'input';
 	protected $validators = [];
@@ -74,7 +75,7 @@ abstract class Input extends Element {
 	public function id ($id = null) {
 		if ($id === null) {
 			if (empty($this->attributes['id'])) {
-				$this->attributes['id'] = uniqid($this->attr('name'), true);
+				$this->attributes['id'] = uniqid('id_', true);
 			}
 
 			return $this->attributes['id'];

@@ -2,7 +2,6 @@
 use FormManager\Form;
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
-use FormManager\Fieldsets\Fieldset;
 
 include('FormManager/autoloader.php');
 
@@ -13,34 +12,38 @@ class MyForm extends Form {
 			'method' => 'post'
 		]);
 
-		//Add inputs, fields or fieldsets
 		$this->add([
-			'personal-info' => Fieldset::multiple([
-				'name' => Field::text()->maxlength(50)->required()->label('Your name'),
-				'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-				'email' => Field::email()->label('Your email'),
-				'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
-				'telephone' => Field::tel()->label('Telephone number'),
-			]),
+			'name' => Field::text()->maxlength(50)->required()->label('Your name'),
+			'email' => Field::email()->label('Your email'),
+			'telephone' => Field::tel()->label('Telephone number')->data(['ola' => 'kease']),
 
-			'search' => Field::search()->label('What are you looking for?'),
-			'comment' => Field::textarea()->label('A comment')->maxlength(30),
-			'website' => Field::url()->label('Your website')->required(),
-			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
-			'is-happy' => Field::checkbox()->label('Are you happy?')->required(),
+			'gender' => Field::choose([
+				'm' => Field::radio()->label('Male'),
+				'f' => Field::radio()->label('Female')
+			]),
+			
+			'born' => Field::collection([
+				'day' => Field::number()->min(1)->max(31)->label('Day'),
+				'month' => Field::number()->min(1)->max(12)->label('Month'),
+				'year' => Field::number()->min(1900)->max(2013)->label('Year')
+			]),
 
 			'language' => Field::select()->options(array(
 				'gl' => 'Galician',
 				'es' => 'Spanish',
 				'en' => 'English'
-			))->label('Gender'),
+			))->label('Language'),
 
-			'gender' => Fieldset::choose([
-				'm' => Field::radio()->label('Male'),
-				'f' => Field::radio()->label('Female')
-			]),
+			'friends' => Field::duplicable([
+				'name' => Field::text()->label('Name'),
+				'email' => Field::email()->label('email'),
+				'age' => Field::number()->label('Age')
+			])->addDuplicate(),
 
-			'save' => Field::submit()->html('Save changes')
+			'action' => Field::choose([
+				'save' => Field::submit()->html('Save changes'),
+				'duplicate' => Field::submit()->html('Save as new value')
+			])
 		]);
 	}
 }
@@ -64,7 +67,7 @@ class MyForm extends Form {
 		$Form = new MyForm;
 
 		if ($_POST) {
-			$Form->load($_GET, $_POST, $_FILES);
+			$Form->loadFromGlobal();
 
 			echo '<pre>';
 			if (!$Form->isValid()) {

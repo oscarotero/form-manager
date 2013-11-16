@@ -34,6 +34,20 @@ $name->removeAttr('required');
 
 $name->val('MyName');
 
+$name->addClass('cool-input');
+
+//Get/set/remove data-* attributes
+$name->data('id', 23);
+$name->data([
+	'name' => 'value',
+	'foo' => 'bar'
+]);
+$foo = $name->data('foo');
+
+$name->removeData('id');
+
+$name->removeData(); //Remove all data
+
 //Other way to add attributes:
 $name->pattern('\w+')->required()->maxlength(100);
 
@@ -88,63 +102,53 @@ echo $name;
 echo $name->label.' - '.$name->input.' - '.$name->labelError;
 ```
 
-Create a fieldset
------------------
+#### Collection field
 
-A fieldset is a collection of fields or inputs with the same namespace. Its like a field with subfields.
-There are various types of fieldsets:
-
-#### Generic
-
-The more common fieldset. Stores a collection of inputs with different names
+A collection is a special field that can contain other fields or inputs:
 
 ```php
-use FormManager\Fieldsets\Fieldset;
 use FormManager\Fields\Field;
 
-//Create a generic fielset
-$fieldset = Fieldset::generic();
+$date = Field::collection([
+	'day' => Field::number()->min(1)->max(31)->label('Day'),
+	'month' => Field::number()->min(1)->max(12)->label('Month'),
+	'year' => Field::number()->min(1900)->max(2013)->label('Year')
+]);
 
-//Add some fields
-$fieldset->add([
-	'name' => Field::text(),
-	'age' => Field::number()
+//You can add also a global label for this collection
+$date->label('Your birth day');
+
+//Add some data
+$date->val([
+	'day' => 21,
+	'month' => 6,
+	'year' => 1979
 ]);
 
 //Access to the fields individually
-$nameInput = $fieldset['name'];
+$year = $date['year']->val();
 
 //Add more fields dinamically
-$fieldset['email'] = Field::email()->required()->label('Please, insert your email here');
+$date['hour'] = Field::number()->min(0)->max(23)->label('Hour');
 
-//Set values
-$fieldset->val([
-	'name' => 'Antonio',
-	'age' => 31,
-	'email' => 'antonio@email.com'
-]);
 
 //Get values
-$values = $fieldset->val();
+$values = $date->val();
 
-echo $values['email'];
-
-//Set attributes to the fieldset
-$fieldset->class('my-fieldset');
+echo $values['year'];
 ```
 
 #### Choose
 
-Stores a collection of inputs with the same name. Useful for radio or checkboxes inputs or to define varios submits buttons with the same name and different values.
+Another special field that contains fields with the same name but different values. Useful for radio inputs or to define varios submits buttons.
 
 ```php
-use FormManager\Fieldsets\Fieldset;
 use FormManager\Fields\Field;
 
-//Create a choose fielset
-$colors = Fieldset::generic()->name('colors');
+//Create a choose field
+$colors = Field::choose()->name('colors');
 
-//Add some fields. The keys are the values
+//Add some fields. The keys will be the values
 $colors->add([
 	'red' => Field::radio()->label('Red'),
 	'blue' => Field::radio()->label('Blue'),
@@ -152,7 +156,7 @@ $colors->add([
 ]);
 
 //Access to the fields individually
-$redRadio = $colors['red'];
+$radio = $colors['red'];
 
 //Add more fields dinamically
 $colors['yellow'] = Field::radio()->label('Label');
@@ -164,19 +168,15 @@ $colors->val('red');
 $color = $colors->val();
 ```
 
-#### Multiple
+#### Duplicable
 
-Stores a collection of inputs and clone them for each loaded value.
+Stores a collection of inputs that you can clone them for multiple values.
 
 ```php
-use FormManager\Fieldsets\Fieldset;
 use FormManager\Fields\Field;
 
-//Create a choose fielset
-$people = Fieldset::multiple()->name('people');
-
-//Add some fields. The keys are the names
-$people->add([
+//Create a multiple field
+$people = Field::duplicate([
 	'name' => Field::text()->label('Name'),
 	'email' => Field::email()->label('email'),
 	'age' => Field::number()->label('Age')
@@ -197,6 +197,12 @@ $people->val([
 
 //Get fieldsets by number
 echo $people[0]['name']->val(); //returns 'Xaquín'
+
+//Append a new empty duplicate
+$people->addDuplicate();
+
+//Access to the new duplicated fields
+$people[1]['name']->val('Manoel');
 ```
 
 
@@ -208,7 +214,6 @@ Let's put all together
 ```php
 use FormManager\Form;
 use FormManager\Fields\Field;
-use FormManager\Fields\Fieldset;
 
 class MyForm extends Form {
 	public function __construct () {
@@ -217,36 +222,37 @@ class MyForm extends Form {
 			'method' => 'post'
 		]);
 
-		//Add inputs, fields or fieldsets
 		$this->add([
-			'personal-info' => Fieldset::generic([
-				'name' => Field::text()->maxlength(50)->required()->label('Your name'),
-				'dni' => Field::text()->pattern('[\d]{8}[\w]')->label('DNI'),
-				'email' => Field::email()->label('Your email'),
-				'age' => Field::number()->min(5)->max(110)->label('How old are you?'),
-				'telephone' => Field::tel()->label('Telephone number'),
-			]),
+			'name' => Field::text()->maxlength(50)->required()->label('Your name'),
+			'email' => Field::email()->label('Your email'),
+			'telephone' => Field::tel()->label('Telephone number'),
 
-			'search' => Field::search()->label('What are you looking for?'),
-			'comment' => Field::textarea()->label('A comment')->maxlength(30),
-			'website' => Field::url()->label('Your website')->required(),
-			'height' => Field::range()->min(50)->max(220)->label('How height are you?'),
-			'is-happy' => Field::checkbox()->label('Are you happy?')->required(),
+			'gender' => Field::choose([
+				'm' => Field::radio()->label('Male'),
+				'f' => Field::radio()->label('Female')
+			]),
+			
+			'born' => Field::collection([
+				'day' => Field::number()->min(1)->max(31)->label('Day'),
+				'month' => Field::number()->min(1)->max(12)->label('Month'),
+				'year' => Field::number()->min(1900)->max(2013)->label('Year')
+			]),
 
 			'language' => Field::select()->options(array(
 				'gl' => 'Galician',
 				'es' => 'Spanish',
 				'en' => 'English'
-			))->label('Gender'),
+			))->label('Language'),
 
-			'gender' => Fieldset::choose([
-				'm' => Field::radio()->label('Male'),
-				'f' => Field::radio()->label('Female')
-			]),
+			'friends' => Field::duplicate([
+				'name' => Field::text()->label('Name'),
+				'email' => Field::email()->label('email'),
+				'age' => Field::number()->label('Age')
+			])->addDuplicate(),
 
-			'action' => Fieldset::choose([
+			'action' => Field::choose([
 				'save' => Field::submit()->html('Save changes'),
-				'duplicate' => Field::submit()->value('Save as new value')
+				'duplicate' => Field::submit()->html('Save changes')
 			])
 		]);
 	}
@@ -260,11 +266,11 @@ $MyForm['new-input'] = Input::range()->min(0)->max(100);
 //Print the form
 echo $MyForm;
 
-//Access to the inputs using key names
+//Access to the fields using key names
 echo $MyForm['website'];
 
-//Or inputs inside fieldsets
-echo $MyForm['personal-info']['name'];
+//Or fields inside fields
+echo $MyForm['born']['day'];
 ```
 
 
@@ -276,11 +282,17 @@ Manage data
 
 $MyForm = new MyForm();
 
-$MyForm->load($_GET, $_POST, $_FILES);
+$MyForm->loadFromGlobals();
 
 if ($MyForm->isValid()) {
 	$data = $MyForm->val();
 } else {
 	echo 'there are errors in the form';
 }
+
+//You can set the global values:
+$MyForm->loadFromGlobals($_GET, $_POST, $_FILES);
+
+//Or load your custom values (like any other field or input)
+$MyForm->load($array_values);
 ```
