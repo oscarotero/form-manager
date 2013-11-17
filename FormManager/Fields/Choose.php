@@ -13,4 +13,24 @@ class Choose extends Collection implements CollectionInterface {
 		$child->val($key);
 		$child->attr('name', $parentPath);
 	}
+
+	public function load ($value = null, $file = null) {
+		if (isset($this[$value])) {
+			$this->value = $value;
+		}
+
+		return $this;
+	}
+
+	public function val ($value = null) {
+		if ($value === null) {
+			return $this->value;
+		}
+
+		if (isset($this[$value])) {
+			$this->value = $value;
+		}
+
+		return $this;
+	}
 }
