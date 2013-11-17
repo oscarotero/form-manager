@@ -29,7 +29,7 @@ class Duplicable extends Collection implements CollectionInterface {
 		}
 
 		foreach ($value as $key => $value) {
-			$child = isset($this->children[$key]) ? $this->children[$key] : $this->appendChild();
+			$child = $this->createDuplicate();
 
 			$child->load($value, isset($file[$key]) ? $file[$key] : null);
 		}
@@ -43,7 +43,7 @@ class Duplicable extends Collection implements CollectionInterface {
 		}
 
 		foreach ($value as $key => $value) {
-			$child = isset($this->children[$key]) ? $this->children[$key] : $this->createDuplicate();
+			$child = isset($this->children[$key]) ? $this->children[$key] : $this->createDuplicate($key);
 			
 			$child->val($value);
 		}
@@ -55,7 +55,7 @@ class Duplicable extends Collection implements CollectionInterface {
 		$child = clone $this->field;
 
 		if ($index === null) {
-			$index = ++$this->index;
+			$index = $this->index++;
 		}
 
 		if ($insert) {
