@@ -51,19 +51,21 @@ class Duplicable extends Collection implements CollectionInterface {
 		return $this;
 	}
 
-	protected function appendChild () {
+	protected function appendChild ($index = null) {
 		$child = clone $this->field;
 
-		array_splice($this->children, $this->index, 0, [$child->setParent($this)]);
-		$this->prepareChild($child, $this->index, $this->parentPath);
+		if ($index === null) {
+			$index = ++$this->index;
+		}
 
-		++$this->index;
+		$this->children[$index] = $child->setParent($this);
+		$this->prepareChild($child, $index, $this->parentPath);
 
 		return $child;
 	}
 
-	public function addDuplicate () {
-		$this->appendChild();
+	public function addDuplicate ($index = null) {
+		$this->appendChild($index);
 
 		return $this;
 	}
