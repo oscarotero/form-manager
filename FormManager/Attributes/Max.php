@@ -13,6 +13,6 @@ class Max {
 	}
 
 	public static function validate ($value, $attr) {
-		return (empty($attr) || ($value <= $attr));
+		return (empty($attr) || ($value <= $attr)) ? true : sprintf(static::$error_message, $attr);
 	}
 }

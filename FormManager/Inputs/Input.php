@@ -107,8 +107,8 @@ abstract class Input extends Element {
 		$value = $this->val();
 
 		foreach ($this->validators as $name => $validator) {
-			if (!call_user_func($validator, $value, $this->attributes[$name])) {
-				$this->error($validator[0]::$error_message);
+			if (($error = call_user_func($validator, $value, $this->attributes[$name])) !== true) {
+				$this->error($error);
 
 				return false;
 			}

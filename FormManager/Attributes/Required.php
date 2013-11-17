@@ -13,6 +13,6 @@ class Required {
 	}
 
 	public static function validate ($value, $attr) {
-		return (empty($attr) || !empty($value) || strlen($value) > 0);
+		return (empty($attr) || !empty($value) || strlen($value) > 0) ? true : sprintf(static::$error_message, $attr);
 	}
 }
