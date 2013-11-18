@@ -28,10 +28,15 @@ class Duplicable extends Collection implements CollectionInterface {
 			$value = $sanitizer($value);
 		}
 
-		foreach ($value as $key => $value) {
-			$child = $this->createDuplicate();
+		$this->children = [];
+		$this->index = 0;
 
-			$child->load($value, isset($file[$key]) ? $file[$key] : null);
+		if ($value) {
+			foreach ($value as $key => $value) {
+				$child = $this->createDuplicate();
+
+				$child->load($value, isset($file[$key]) ? $file[$key] : null);
+			}
 		}
 
 		return $this;
@@ -42,10 +47,14 @@ class Duplicable extends Collection implements CollectionInterface {
 			return parent::val();
 		}
 
-		foreach ($value as $key => $value) {
-			$child = isset($this->children[$key]) ? $this->children[$key] : $this->createDuplicate($key);
-			
-			$child->val($value);
+		$this->children = [];
+
+		if ($value) {
+			foreach ($value as $key => $value) {
+				$child = isset($this->children[$key]) ? $this->children[$key] : $this->createDuplicate($key);
+				
+				$child->val($value);
+			}
 		}
 
 		return $this;
