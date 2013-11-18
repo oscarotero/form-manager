@@ -26,11 +26,11 @@ class Label extends Element {
 		$this->input = $input;
 	}
 
-	public function toHtml () {
+	public function toHtml ($append = '') {
 		if ($this->input) {
 			$this->attr('for', $this->input->id());
 		}
 
-		return parent::toHtml();
+		return parent::toHtml($append);
 	}
 }

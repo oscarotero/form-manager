@@ -46,7 +46,7 @@ class MyForm extends Form {
 				'name' => Field::text()->label('Name'),
 				'email' => Field::email()->label('email'),
 				'age' => Field::number()->label('Age')
-			])->addDuplicate(),
+			]),
 
 			'action' => Field::choose([
 				'save' => Field::submit()->html('Save changes'),
