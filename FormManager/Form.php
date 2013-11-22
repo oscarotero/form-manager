@@ -45,7 +45,11 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface {
 		return $this->attr('id', $id);
 	}
 
-	public function toHtml ($append = '') {
-		return parent::toHtml($append.$this->childrenToHtml());
+	public function html ($html = null) {
+		if ($html === null) {
+			return $this->html.$this->childrenToHtml();
+		}
+
+		return parent::html($html);
 	}
 }
