@@ -15,9 +15,7 @@ class Choose extends Collection implements CollectionInterface {
 	}
 
 	public function load ($value = null, $file = null) {
-		if (isset($this[$value])) {
-			$this->value = $value;
-		}
+		$this->val($value);
 
 		return $this;
 	}
@@ -27,8 +25,15 @@ class Choose extends Collection implements CollectionInterface {
 			return $this->value;
 		}
 
-		if (isset($this[$value])) {
-			$this->value = $value;
+		$this->value = null;
+
+		foreach ($this as $v => $input) {
+			if ($v == $value) {
+				$input->check();
+				$this->value = $value;
+			} else {
+				$input->uncheck();
+			}
 		}
 
 		return $this;

@@ -120,4 +120,12 @@ abstract class Input extends Element {
 	public function isValid () {
 		return $this->validate();
 	}
+
+	public function check () {
+		return $this;
+	}
+
+	public function uncheck () {
+		return $this;
+	}
 }

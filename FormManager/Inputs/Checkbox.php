@@ -24,4 +24,12 @@ class Checkbox extends Input implements InputInterface {
 
 		return $this;
 	}
+
+	public function check () {
+		return $this->attr('checked', true);
+	}
+
+	public function uncheck () {
+		return $this->removeAttr('checked');
+	}
 }
