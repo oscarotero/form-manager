@@ -13,6 +13,6 @@ class Min {
 	}
 
 	public static function validate ($value, $attr) {
-		return (empty($attr) || (strlen($value) === 0) || ($value >= $attr)) ? true : sprintf(static::$error_message, $attr);
+		return ((strlen($value) === 0) || ($value >= $attr)) ? true : sprintf(static::$error_message, $attr);
 	}
 }
