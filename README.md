@@ -1,6 +1,8 @@
 FormManager
 ===========
 
+[![Build Status](https://travis-ci.org/oscarotero/form-manager.png?branch=master)](https://travis-ci.org/oscarotero/form-manager)
+
 Created by Oscar Otero <http://oscarotero.com> <oom@oscarotero.com>
 
 GNU Affero GPL version 3. http://www.gnu.org/licenses/agpl-3.0.html
