@@ -2,240 +2,243 @@
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
 
-include '../FormManager/autoloader.php';
+include_once '../FormManager/autoloader.php';
 
 class InputTest extends PHPUnit_Framework_TestCase {
-    public function testCheckbox () {
-        $input = Input::checkbox();
+	private function genericElementTest ($input) {
+		$input->name('input-name');
+		$this->assertEquals('input-name', $input->attr('name'));
+		$this->assertNull($input->val());
 
-        $this->assertEquals('checkbox', $input->attr('type'));
-    }
+		$input->data('name', 'value');
+		$this->assertEquals('value', $input->data('name'));
+		$this->assertEquals(['name' => 'value'], $input->data());
 
-    private function genericElementTest ($input) {
-        $input->name('input-name');
-        $this->assertEquals('input-name', $input->attr('name'));
-        $this->assertNull($input->val());
+		$this->assertNull($input->attr('class'));
+		$input->addClass('first');
+		$input->addClass('second');
+		$this->assertEquals('first second', $input->attr('class'));
 
-        $input->data('name', 'value');
-        $this->assertEquals('value', $input->data('name'));
-        $this->assertEquals(['name' => 'value'], $input->data());
+		$input->removeClass('second');
+		$this->assertEquals('first', $input->attr('class'));
+	}
 
-        $this->assertNull($input->attr('class'));
-        $input->addClass('first');
-        $input->addClass('second');
-        $this->assertEquals('first second', $input->attr('class'));
+	private function genericInputTest ($input, $type = null) {
+		$this->assertEquals($type, $input->attr('type'));
+		$this->assertEquals('', $input->closeHtml());
 
-        $input->removeClass('second');
-        $this->assertEquals('first', $input->attr('class'));
-    }
+		$html = '<input type="'.$type.'" name="input-name" class="first" data-name="value">';
+		$this->assertEquals($html, $input->toHtml());        
+	}
 
-    private function genericInputTest ($input, $type = null) {
-        $this->assertEquals($type, $input->attr('type'));
-        $this->assertEquals('', $input->closeHtml());
+	public function testCheckbox () {
+		$input = Input::checkbox();
 
-        $html = '<input type="'.$type.'" name="input-name" class="first" data-name="value">';
-        $this->assertEquals($html, $input->toHtml());        
-    }
+		$this->assertEquals('checkbox', $input->attr('type'));
+	}
 
-    public function testEmail () {
-        $input = Input::email();
+	public function testEmail () {
+		$input = Input::email();
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'email');
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'email');
 
-        //Values
-        $input->val('invalid-email');
-        $this->assertFalse($input->isValid());
+		//Values
+		$input->val('invalid-email');
+		$this->assertFalse($input->isValid());
 
-        $input->val('valid@email.com');
-        $this->assertTrue($input->isValid());
-        $this->assertEquals('valid@email.com', $input->val());
-    }
+		$input->val('valid@email.com');
+		$this->assertTrue($input->isValid());
+		$this->assertEquals('valid@email.com', $input->val());
+	}
 
-    public function testFile () {
-        $input = Input::file();
+	public function testFile () {
+		$input = Input::file();
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'file');
-    }
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'file');
+	}
 
-    public function testHidden () {
-        $input = Input::hidden();
+	public function testHidden () {
+		$input = Input::hidden();
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'hidden');
-    }
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'hidden');
+	}
 
-    public function testNumber () {
-        $input = Input::number();
+	public function testNumber () {
+		$input = Input::number();
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'number');
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'number');
 
-        //Values
-        $input->val('not a number');
-        $this->assertFalse($input->isValid());
+		//Values
+		$input->val('not a number');
+		$this->assertFalse($input->isValid());
 
-        $input->val('25');
-        $this->assertTrue($input->isValid());
-        $this->assertEquals('25', $input->val());
+		$input->val('25');
+		$this->assertTrue($input->isValid());
+		$this->assertEquals('25', $input->val());
 
-        $input->val('25.5');
-        $this->assertTrue($input->isValid());
+		$input->val('25.5');
+		$this->assertTrue($input->isValid());
 
-        $input->val('');
-        $this->assertTrue($input->isValid());
+		$input->val('');
+		$this->assertTrue($input->isValid());
 
-        $input->val('0');
-        $this->assertTrue($input->isValid());
-    }
+		$input->val('0');
+		$this->assertTrue($input->isValid());
 
-    public function testPassword () {
-        $input = Input::password();
+		$input->min(0);
+		$this->assertTrue($input->isValid());
+	}
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'password');
-    }
+	public function testPassword () {
+		$input = Input::password();
 
-    public function testRadio () {
-        $input = Input::radio();
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'password');
+	}
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'radio');
+	public function testRadio () {
+		$input = Input::radio();
 
-        //Check/uncheck
-        $this->assertNull($input->attr('checked'));
-        
-        $input->check();
-        $this->assertTrue($input->attr('checked'));
-        
-        $input->uncheck();
-        $this->assertNull($input->attr('checked'));
-    }
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'radio');
 
-    public function testRange () {
-        $input = Input::range();
+		//Check/uncheck
+		$this->assertNull($input->attr('checked'));
+		
+		$input->check();
+		$this->assertTrue($input->attr('checked'));
+		
+		$input->uncheck();
+		$this->assertNull($input->attr('checked'));
+	}
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'range');
+	public function testRange () {
+		$input = Input::range();
 
-        //Values
-        $input->val('not a number');
-        $this->assertFalse($input->isValid());
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'range');
 
-        $input->val('25');
-        $this->assertTrue($input->isValid());
+		//Values
+		$input->val('not a number');
+		$this->assertFalse($input->isValid());
 
-        $input->min(5)->max(10);
-        $this->assertFalse($input->isValid());
+		$input->val('25');
+		$this->assertTrue($input->isValid());
 
-        $input->val(5);
-        $this->assertTrue($input->isValid());
+		$input->min(5)->max(10);
+		$this->assertFalse($input->isValid());
 
-        $input->val(10);
-        $this->assertTrue($input->isValid());
+		$input->val(5);
+		$this->assertTrue($input->isValid());
 
-        $input->val(10.1);
-        $this->assertFalse($input->isValid());
-    }
+		$input->val(10);
+		$this->assertTrue($input->isValid());
 
-    public function testSearch () {
-        $input = Input::search();
+		$input->val(10.1);
+		$this->assertFalse($input->isValid());
+	}
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'search');
-    }
+	public function testSearch () {
+		$input = Input::search();
 
-    public function testSelect () {
-        $input = Input::select();
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'search');
+	}
 
-        $this->genericElementTest($input);
+	public function testSelect () {
+		$input = Input::select();
 
-        $this->assertNull($input->attr('type'));
+		$this->genericElementTest($input);
 
-        //Values
-        $input->options([
-            1 => 'One',
-            2 => 'Two'
-        ]);
+		$this->assertNull($input->attr('type'));
 
-        $input->val('three');
-        $this->assertFalse($input->isValid());
+		//Values
+		$input->options([
+			1 => 'One',
+			2 => 'Two'
+		]);
 
-        $input->val('One');
-        $this->assertFalse($input->isValid());
+		$input->val('three');
+		$this->assertFalse($input->isValid());
 
-        $input->val('1');
-        $this->assertTrue($input->isValid());
-    }
+		$input->val('One');
+		$this->assertFalse($input->isValid());
 
-    public function testSubmit () {
-        $input = Input::submit();
+		$input->val('1');
+		$this->assertTrue($input->isValid());
+	}
 
-        $this->genericElementTest($input);
+	public function testSubmit () {
+		$input = Input::submit();
 
-        $this->assertEquals('submit', $input->attr('type'));
-    }
+		$this->genericElementTest($input);
 
-    public function testTel () {
-        $input = Input::tel();
+		$this->assertEquals('submit', $input->attr('type'));
+	}
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'tel');
-    }
+	public function testTel () {
+		$input = Input::tel();
 
-    public function testText () {
-        $input = Input::text();
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'tel');
+	}
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'text');
+	public function testText () {
+		$input = Input::text();
 
-        //Validators
-        $input->maxlength(5);
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'text');
 
-        $input->val('String');
-        $this->assertFalse($input->isValid());
+		//Validators
+		$input->maxlength(5);
 
-        $input->val('Strin');
-        $this->assertTrue($input->isValid());
+		$input->val('String');
+		$this->assertFalse($input->isValid());
 
-        $input->required();
+		$input->val('Strin');
+		$this->assertTrue($input->isValid());
 
-        $input->val('');
-        $this->assertFalse($input->isValid());
+		$input->required();
 
-        $input->val('0');
-        $this->assertTrue($input->isValid());
+		$input->val('');
+		$this->assertFalse($input->isValid());
 
-        $input->pattern('[0-9]');
-        
-        $this->assertTrue($input->isValid());
+		$input->val('0');
+		$this->assertTrue($input->isValid());
 
-        $input->val('nn');
+		$input->pattern('[0-9]');
+		
+		$this->assertTrue($input->isValid());
 
-        $this->assertFalse($input->isValid());
-    }
+		$input->val('nn');
 
-    public function testTextarea () {
-        $input = Input::textarea();
+		$this->assertFalse($input->isValid());
+	}
 
-        $this->genericElementTest($input);
+	public function testTextarea () {
+		$input = Input::textarea();
 
-        $this->assertNull($input->attr('type'));
-    }
+		$this->genericElementTest($input);
 
-    public function testUrl () {
-        $input = Input::url();
+		$this->assertNull($input->attr('type'));
+	}
 
-        $this->genericElementTest($input);
-        $this->genericInputTest($input, 'url');
+	public function testUrl () {
+		$input = Input::url();
 
-        //Values
-        $input->val('invalid-url');
-        $this->assertFalse($input->isValid());
+		$this->genericElementTest($input);
+		$this->genericInputTest($input, 'url');
 
-        $input->val('http://valid-url.com');
-        $this->assertTrue($input->isValid());
-        $this->assertEquals('http://valid-url.com', $input->val());
-    }
+		//Values
+		$input->val('invalid-url');
+		$this->assertFalse($input->isValid());
+
+		$input->val('http://valid-url.com');
+		$this->assertTrue($input->isValid());
+		$this->assertEquals('http://valid-url.com', $input->val());
+	}
 }
