@@ -2,7 +2,7 @@
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
 
-include_once '../FormManager/autoloader.php';
+include_once __DIR__.'/../FormManager/autoloader.php';
 
 class InputTest extends PHPUnit_Framework_TestCase {
 	private function genericElementTest ($input) {
