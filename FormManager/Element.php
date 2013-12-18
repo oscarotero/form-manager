@@ -51,7 +51,9 @@ class Element {
 		}
 
 		if ($value === null) {
-			return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
+			$value = isset($this->attributes[$name]) ? $this->attributes[$name] : null;
+
+			return is_array($value) ? implode(' ', $value) : $value; 
 		}
 
 		$this->attributes[$name] = $value;

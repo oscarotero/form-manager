@@ -4,6 +4,8 @@ namespace FormManager\Inputs;
 use FormManager\InputInterface;
 
 class Select extends Input implements InputInterface {
+	public static $error_message = 'This value is not a valid';
+
 	protected $name = 'select';
 	protected $close = true;
 	protected $options = [];
@@ -27,6 +29,17 @@ class Select extends Input implements InputInterface {
 		$this->value = $value;
 
 		return $this;
+	}
+
+	public function validate () {
+		$value = $this->val();
+
+		if (!empty($value) && !isset($this->options[$value])) {
+			$this->error(static::$error_message);
+			return false;
+		}
+
+		return parent::validate();
 	}
 
 	public function html ($html = null) {
