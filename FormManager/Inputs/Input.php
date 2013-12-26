@@ -57,6 +57,10 @@ abstract class Input extends Element {
 			return $this->attr('value');
 		}
 
+		if ($this->attr('multiple') && !is_array($value)) {
+			$value = array($value);
+		}
+
 		return $this->attr('value', $value);
 	}
 
@@ -92,7 +96,13 @@ abstract class Input extends Element {
 
 	public function load ($value = null, $file = null) {
 		if (($sanitizer = $this->sanitizer) !== null) {
-			$value = $sanitizer($value);
+			if ($this->attr('multiple') && is_array($value)) {
+				foreach ($value as &$val) {
+					$val = $sanitizer($val);
+				}
+			} else {
+				$value = $sanitizer($value);
+			}
 		}
 
 		$this->val($value);
@@ -114,10 +124,10 @@ abstract class Input extends Element {
 
 	public function validate () {
 		$this->error = null;
-		$value = $this->val();
 
-		foreach ($this->validators as $name => $validator) {
-			if ($validator($this) !== true) {
+		foreach ($this->validators as $validator) {
+			if (($error = $validator($this)) !== true) {
+				$this->error = $error;
 				return false;
 			}
 		}
