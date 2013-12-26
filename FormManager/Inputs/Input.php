@@ -34,14 +34,8 @@ abstract class Input extends Element {
 		if ($value !== null) {
 			$class = 'FormManager\\Attributes\\'.ucfirst($name);
 
-			if (class_exists($class)) {
-				if (method_exists($class, 'validate')) {
-					$this->validators[$name] = array($class, 'validate');
-				}
-
-				if (method_exists($class, 'attr')) {
-					$value = call_user_func(array($class, 'attr'), $value);
-				}
+			if (class_exists($class) && method_exists($class, 'onAdd')) {
+				$value = $class::onAdd($this, $value);
 			}
 		}
 
@@ -51,7 +45,11 @@ abstract class Input extends Element {
 	public function removeAttr ($name) {
 		parent::removeAttr($name);
 
-		unset($this->validators[$name]);
+		$class = 'FormManager\\Attributes\\'.ucfirst($name);
+
+		if (class_exists($class) && method_exists($class, 'onRemove')) {
+			$class::onRemove($this);
+		}
 	}
 
 	public function val ($value = null) {
@@ -102,14 +100,24 @@ abstract class Input extends Element {
 		return $this;
 	}
 
+	public function addValidator ($name, $validator) {
+		$this->validators[$name] = $validator;
+
+		return $this;
+	}
+
+	public function removeValidator ($name) {
+		unset($this->validators[$name]);
+
+		return $this;
+	}
+
 	public function validate () {
 		$this->error = null;
 		$value = $this->val();
 
 		foreach ($this->validators as $name => $validator) {
-			if (($error = call_user_func($validator, $value, $this->attributes[$name])) !== true) {
-				$this->error($error);
-
+			if ($validator($this) !== true) {
 				return false;
 			}
 		}
