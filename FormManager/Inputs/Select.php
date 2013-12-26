@@ -26,6 +26,10 @@ class Select extends Input implements InputInterface {
 			return $this->value;
 		}
 
+		if ($this->attr('multiple') && !is_array($value)) {
+			$value = array($value);
+		}
+
 		$this->value = $value;
 
 		return $this;
@@ -34,9 +38,18 @@ class Select extends Input implements InputInterface {
 	public function validate () {
 		$value = $this->val();
 
-		if (!empty($value) && !isset($this->options[$value])) {
-			$this->error(static::$error_message);
-			return false;
+		if (!empty($value)) {
+			if ($this->attr('multiple') && is_array($value)) {
+				foreach ($value as $val) {
+					if (!isset($this->options[$val])) {
+						$this->error(static::$error_message);
+						return false;
+					}
+				}
+			} else if (!isset($this->options[$value])) {
+				$this->error(static::$error_message);
+				return false;
+			}
 		}
 
 		return parent::validate();
@@ -49,7 +62,7 @@ class Select extends Input implements InputInterface {
         foreach ($this->options as $value => $label) {
             $html .= '<option value="'.static::escape($value).'"';
             
-            if ($val == $value) {
+            if ($val == $value || (is_array($val) && in_array($value, $val))) {
                 $html .= ' selected';
             }
 
