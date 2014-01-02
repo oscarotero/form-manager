@@ -11,13 +11,11 @@ class Radio extends Field implements InputInterface {
 
 	public function toHtml () {
 		if ($this->render) {
-			$render = $this->render;
-
-			return $render($this);
+			return parent::toHtml();
 		}
 
 		$label = isset($this->label) ? (string)$this->label : '';
-		
+
 		return "{$this->input} {$label} {$this->errorLabel}";
 	}
 }
