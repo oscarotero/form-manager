@@ -9,7 +9,7 @@ class Element {
 	protected $html;
 
 	protected static function escape ($value) {
-		return str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
+		return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function __call ($name, $arguments) {
