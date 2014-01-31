@@ -7,10 +7,16 @@ class Element {
 	protected $attributes = [];
 	protected $data = [];
 	protected $html;
+	protected $encoding = 'UTF-8';
 
 	protected static function escape ($value) {
-		return str_replace(array('&','\\"','"','<','>','&amp;amp;'), array('&amp;','&quot;','&quot;','&lt;','&gt;','&amp;'), $value);
+		return htmlspecialchars($value, ENT_QUOTES, $this->encoding);
 	}
+    
+    public function setEscapeEncoding($encoding)
+    {
+        $this->encoding = $encoding;
+    }
 
 	public function __call ($name, $arguments) {
 		$this->attr($name, (array_key_exists(0, $arguments) ? $arguments[0] : true));
