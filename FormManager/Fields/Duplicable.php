@@ -81,7 +81,7 @@ class Duplicable extends Collection implements CollectionInterface {
 		return $this->createDuplicate($index, false);
 	}
 
-	public function prepareChildren ($parentPath) {
+	public function prepareChildren ($parentPath=null) {
 		$this->parentPath = $parentPath;
 
 		foreach ($this->children as $key => $child) {
