@@ -7,7 +7,7 @@ class Checkbox extends Input implements InputInterface {
 	protected $attributes = ['type' => 'checkbox', 'value' => 'on'];
 
 	public function load ($value = null, $file = null) {
-		if (!empty($value) && ($this->attributes['value'] == $value)) {
+		if (!empty($value) && ($this->attr('value') == $value)) {
 			$this->attr('checked', true);
 		}
 
