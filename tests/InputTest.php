@@ -170,6 +170,10 @@ class InputTest extends PHPUnit_Framework_TestCase {
 
 		$input->val('1');
 		$this->assertTrue($input->isValid());
+
+		$input->allowNewValues();
+		$input->val('new-value');
+		$this->assertTrue($input->isValid());
 	}
 
 	public function testSubmit () {

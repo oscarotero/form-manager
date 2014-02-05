@@ -8,7 +8,7 @@ include('FormManager/autoloader.php');
 class MyForm extends Form {
 	public function __construct () {
 		$this->attr([
-			'action' => 'test.php',
+			'action' => 'index.php',
 			'method' => 'post'
 		]);
 

@@ -10,6 +10,7 @@ class Select extends Input implements InputInterface {
 	protected $close = true;
 	protected $options = [];
 	protected $value;
+	protected $allowNewValues = false;
 
 	public function options (array $options = null) {
 		if ($options === null) {
@@ -17,6 +18,12 @@ class Select extends Input implements InputInterface {
 		}
 
 		$this->options = $options;
+
+		return $this;
+	}
+
+	public function allowNewValues ($allow = true) {
+		$this->allowNewValues = $allow;
 
 		return $this;
 	}
@@ -38,7 +45,7 @@ class Select extends Input implements InputInterface {
 	public function validate () {
 		$value = $this->val();
 
-		if (!empty($value)) {
+		if (!empty($value) && !$this->allowNewValues) {
 			if ($this->attr('multiple') && is_array($value)) {
 				foreach ($value as $val) {
 					if (!isset($this->options[$val])) {
