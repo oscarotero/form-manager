@@ -73,13 +73,13 @@ trait CollectionTrait
     }
 
     /**
-	 * Adds new children to this element
-	 *
-	 * @param array|InputInterface $key   The child or an array with children
-	 * @param InputInterface       $value The child
-	 *
-	 * @return $this;
-	 */
+     * Adds new children to this element
+     *
+     * @param array|InputInterface $key   The child or an array with children
+     * @param InputInterface       $value The child
+     *
+     * @return $this;
+     */
     public function add($key, $value = null)
     {
         if (is_array($key)) {
@@ -98,10 +98,10 @@ trait CollectionTrait
     }
 
     /**
-	 * Checks if all input values are valid
-	 *
-	 * @return boolean
-	 */
+     * Checks if all input values are valid
+     *
+     * @return boolean
+     */
     public function isValid()
     {
         foreach ($this->children as $child) {
@@ -114,12 +114,12 @@ trait CollectionTrait
     }
 
     /**
-	 * Set/Get the values of this collection
-	 *
-	 * @param null|array $value null to getter, array to setter
-	 *
-	 * @return mixed
-	 */
+     * Set/Get the values of this collection
+     *
+     * @param null|array $value null to getter, array to setter
+     *
+     * @return mixed
+     */
     public function val($value = null)
     {
         if ($value === null) {
@@ -140,13 +140,13 @@ trait CollectionTrait
     }
 
     /**
-	 * Loads a value sent by the client
-	 *
-	 * @param mixed $value The GET/POST value
-	 * @param mixed $file  The FILES value (used in input[type="file"])
-	 *
-	 * @return $this
-	 */
+     * Loads a value sent by the client
+     *
+     * @param mixed $value The GET/POST value
+     * @param mixed $file  The FILES value (used in input[type="file"])
+     *
+     * @return $this
+     */
     public function load($value = null, $file = null)
     {
         if (($sanitizer = $this->sanitizer) !== null) {
@@ -164,12 +164,12 @@ trait CollectionTrait
     }
 
     /**
-	 * Sets a sanitizer function to the input
-	 *
-	 * @param callable $sanitizer The function name or closure
-	 *
-	 * @return $this
-	 */
+     * Sets a sanitizer function to the input
+     *
+     * @param callable $sanitizer The function name or closure
+     *
+     * @return $this
+     */
     public function sanitize(callable $sanitizer)
     {
         $this->sanitizer = $sanitizer;
@@ -178,12 +178,12 @@ trait CollectionTrait
     }
 
     /**
-	 * Set/Get the error message
-	 *
-	 * @param null|string $error null to getter, string to setter
-	 *
-	 * @return mixed
-	 */
+     * Set/Get the error message
+     *
+     * @param null|string $error null to getter, string to setter
+     *
+     * @return mixed
+     */
     public function error($error = null)
     {
         if ($error === null) {
@@ -196,10 +196,10 @@ trait CollectionTrait
     }
 
     /**
-	 * Prepare the children before insert
-	 *
-	 * @param null|string $parentPath The full parent path (the parents names)
-	 */
+     * Prepare the children before insert
+     *
+     * @param null|string $parentPath The full parent path (the parents names)
+     */
     public function prepareChildren($parentPath = null)
     {
         foreach ($this->children as $key => $child) {
@@ -208,12 +208,12 @@ trait CollectionTrait
     }
 
     /**
-	 * Prepare a child element before insert
-	 *
-	 * @param InputInferface $child
-	 * @param string         $key        The key used to append this child (the input name)
-	 * @param null|string    $parentPath The full parent path (the parents names)
-	 */
+     * Prepare a child element before insert
+     *
+     * @param InputInferface $child
+     * @param string         $key        The key used to append this child (the input name)
+     * @param null|string    $parentPath The full parent path (the parents names)
+     */
     public function prepareChild($child, $key, $parentPath = null)
     {
         $path = $parentPath ? "{$parentPath}[{$key}]" : $key;
@@ -226,10 +226,10 @@ trait CollectionTrait
     }
 
     /**
-	 * Returns the html of all childrens
-	 *
-	 * @return string
-	 */
+     * Returns the html of all childrens
+     *
+     * @return string
+     */
     public function childrenToHtml()
     {
         $html = '';

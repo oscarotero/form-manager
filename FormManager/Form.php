@@ -14,14 +14,14 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface
     protected $close = true;
 
     /**
-	 * Load the form values from global GET, POST, FILES values
-	 *
-	 * @param array $get
-	 * @param array $post
-	 * @param array $file
-	 *
-	 * @return $this
-	 */
+     * Load the form values from global GET, POST, FILES values
+     *
+     * @param array $get
+     * @param array $post
+     * @param array $file
+     *
+     * @return $this
+     */
     public function loadFromGlobal (array $get = array(), array $post = array(), array $file = array())
     {
         if (func_num_args() === 0) {
@@ -36,10 +36,10 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface
     }
 
     /**
-	 * Returns the html code of the form
-	 *
-	 * @param string $html Optional code appended
-	 */
+     * Returns the html code of the form
+     *
+     * @param string $html Optional code appended
+     */
     public function html($html = null)
     {
         if ($html === null) {

@@ -14,8 +14,8 @@ class Field implements InputInterface
     protected $render;
 
     /**
-	 * Magic method to create new instances using the API Field::text()
-	 */
+     * Magic method to create new instances using the API Field::text()
+     */
     public static function __callStatic($name, $arguments)
     {
         $class = __NAMESPACE__.'\\'.ucfirst($name);
@@ -61,8 +61,8 @@ class Field implements InputInterface
     }
 
     /**
-	 * Clones the field and its content
-	 */
+     * Clones the field and its content
+     */
     public function __clone()
     {
         $this->input = clone $this->input;
@@ -74,8 +74,8 @@ class Field implements InputInterface
     }
 
     /**
-	 * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel
-	 */
+     * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel
+     */
     public function __get($name)
     {
         if ($name === 'label') {

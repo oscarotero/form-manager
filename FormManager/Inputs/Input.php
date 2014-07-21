@@ -15,8 +15,8 @@ abstract class Input extends Element
     protected $error;
 
     /**
-	 * Magic method to create instances using the API Input::text()
-	 */
+     * Magic method to create instances using the API Input::text()
+     */
     public static function __callStatic($name, $arguments)
     {
         $class = __NAMESPACE__.'\\'.ucfirst($name);
@@ -210,10 +210,10 @@ abstract class Input extends Element
     }
 
     /**
-	 * Unchecks the input  (used in some inputs like radio/checkboxes)
-	 *
-	 * @return $this
-	 */
+     * Unchecks the input  (used in some inputs like radio/checkboxes)
+     *
+     * @return $this
+     */
     public function uncheck()
     {
         return $this;

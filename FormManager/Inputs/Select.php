@@ -14,12 +14,12 @@ class Select extends Input implements InputInterface
     protected $allowNewValues = false;
 
     /**
-	 * Set/Get the available options in this select.
-	 *
-	 * @param null|array $options null to getter, array to setter
-	 *
-	 * @return mixed
-	 */
+     * Set/Get the available options in this select.
+     *
+     * @param null|array $options null to getter, array to setter
+     *
+     * @return mixed
+     */
     public function options(array $options = null)
     {
         if ($options === null) {
@@ -32,13 +32,13 @@ class Select extends Input implements InputInterface
     }
 
     /**
-	 * Set true to allow values non defined in the $options array
-	 * Useful to insert dinamically new values
-	 *
-	 * @param boolean $allow
-	 *
-	 * @return $this
-	 */
+     * Set true to allow values non defined in the $options array
+     * Useful to insert dinamically new values
+     *
+     * @param boolean $allow
+     *
+     * @return $this
+     */
     public function allowNewValues($allow = true)
     {
         $this->allowNewValues = $allow;
