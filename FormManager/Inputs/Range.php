@@ -3,6 +3,7 @@ namespace FormManager\Inputs;
 
 use FormManager\InputInterface;
 
-class Range extends Number implements InputInterface {
-	protected $attributes = ['type' => 'range'];
+class Range extends Number implements InputInterface
+{
+    protected $attributes = ['type' => 'range'];
 }

@@ -4,241 +4,242 @@ namespace FormManager\Fields;
 use FormManager\Traits\ChildTrait;
 
 use FormManager\Label;
-use FormManager\Element;
 use FormManager\InputInterface;
 
-class Field implements InputInterface {
-	use ChildTrait;
+class Field implements InputInterface
+{
+    use ChildTrait;
 
-	public $input;
-	protected $render;
+    public $input;
+    protected $render;
 
-
-	/**
+    /**
 	 * Magic method to create new instances using the API Field::text()
 	 */
-	public static function __callStatic ($name, $arguments) {
-		$class = __NAMESPACE__.'\\'.ucfirst($name);
+    public static function __callStatic($name, $arguments)
+    {
+        $class = __NAMESPACE__.'\\'.ucfirst($name);
 
-		if (class_exists($class)) {
-			if (isset($arguments[0])) {
-				return new $class($arguments[0]);
-			}
+        if (class_exists($class)) {
+            if (isset($arguments[0])) {
+                return new $class($arguments[0]);
+            }
 
-			return new $class;
-		}
+            return new $class;
+        }
 
-		$input = 'FormManager\\Inputs\\'.ucfirst($name);
+        $input = 'FormManager\\Inputs\\'.ucfirst($name);
 
-		if (class_exists($input)) {
-			return new static(new $input);
-		}
-	}
+        if (class_exists($input)) {
+            return new static(new $input);
+        }
+    }
 
-	public function __construct (InputInterface $input = null) {
-		if ($input) {
-			$this->input = $input;
-		}
-	}
+    public function __construct(InputInterface $input = null)
+    {
+        if ($input) {
+            $this->input = $input;
+        }
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function __toString () {
-		return $this->toHtml();
-	}
+    public function __toString()
+    {
+        return $this->toHtml();
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function __call ($name, $arguments) {
-		call_user_func_array([$this->input, $name], $arguments);
+    public function __call($name, $arguments)
+    {
+        call_user_func_array([$this->input, $name], $arguments);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
 	 * Clones the field and its content
 	 */
-	public function __clone () {
-		$this->input = clone $this->input;
+    public function __clone()
+    {
+        $this->input = clone $this->input;
 
-		if (isset($this->label)) {
-			$this->label = clone $this->label;
-			$this->label->setInput($this->input);
-		}
-	}
+        if (isset($this->label)) {
+            $this->label = clone $this->label;
+            $this->label->setInput($this->input);
+        }
+    }
 
-
-	/**
+    /**
 	 * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel
 	 */
-	public function __get ($name) {
-		if ($name === 'label') {
-			return $this->label = new Label($this->input);
-		}
+    public function __get($name)
+    {
+        if ($name === 'label') {
+            return $this->label = new Label($this->input);
+        }
 
-		if (($name === 'errorLabel') && ($error = $this->error())) {
-			return new Label($this->input, ['class' => 'error'], $error);
-		}
-	}
+        if (($name === 'errorLabel') && ($error = $this->error())) {
+            return new Label($this->input, ['class' => 'error'], $error);
+        }
+    }
 
-
-	/**
+    /**
      * Creates/edit/returns the label associated with the input
-     * 
+     *
      * @param null|string $html Null to get the label html, string to create/edit the label content
-     * 
+     *
      * @return $this
      */
-	public function label ($html = null) {
-		if ($html === null) {
-			return $this->label->html();
-		}
+    public function label($html = null)
+    {
+        if ($html === null) {
+            return $this->label->html();
+        }
 
-		$this->label->html($html);
+        $this->label->html($html);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function error ($error = null) {
-		if ($error === null) {
-			return $this->input->error($error);
-		}
+    public function error($error = null)
+    {
+        if ($error === null) {
+            return $this->input->error($error);
+        }
 
-		$this->input->error($error);
+        $this->input->error($error);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function id ($id = null) {
-		if ($id === null) {
-			return $this->input->id();
-		}
+    public function id($id = null)
+    {
+        if ($id === null) {
+            return $this->input->id();
+        }
 
-		$this->input->id($id);
+        $this->input->id($id);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function attr ($name = null, $value = null) {
-		if (($value !== null) || (is_array($name))) {
-			$this->input->attr($name, $value);
+    public function attr($name = null, $value = null)
+    {
+        if (($value !== null) || (is_array($name))) {
+            $this->input->attr($name, $value);
 
-			return $this;
-		}
+            return $this;
+        }
 
-		return $this->input->attr($name);
-	}
+        return $this->input->attr($name);
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function removeAttr ($name) {
-		$this->input->removeAttr($name);
+    public function removeAttr($name)
+    {
+        $this->input->removeAttr($name);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function load ($value = null, $file = null) {
-		$this->input->load($value, $file);
+    public function load($value = null, $file = null)
+    {
+        $this->input->load($value, $file);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function sanitize (callable $sanitizer) {
-		$this->input->sanitize($sanitizer);
+    public function sanitize(callable $sanitizer)
+    {
+        $this->input->sanitize($sanitizer);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function render (callable $render) {
-		$this->render = $render;
+    public function render(callable $render)
+    {
+        $this->render = $render;
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function val ($value = null) {
-		if ($value === null) {
-			return $this->input->val();
-		}
+    public function val($value = null)
+    {
+        if ($value === null) {
+            return $this->input->val();
+        }
 
-		$this->input->val($value);
+        $this->input->val($value);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function isValid () {
-		return $this->input->isValid();
-	}
+    public function isValid()
+    {
+        return $this->input->isValid();
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function toHtml () {
-		$label = isset($this->label) ? $this->label : null;
+    public function toHtml()
+    {
+        $label = isset($this->label) ? $this->label : null;
 
-		if ($this->render) {
-			$render = $this->render;
+        if ($this->render) {
+            $render = $this->render;
 
-			return $render($this->input, $label, $this->errorLabel);
-		}
+            return $render($this->input, $label, $this->errorLabel);
+        }
 
-		return "{$label} {$this->input} {$this->errorLabel}";
-	}
+        return "{$label} {$this->input} {$this->errorLabel}";
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function setParent (InputInterface $parent) {
-		$this->input->setParent($parent);
+    public function setParent(InputInterface $parent)
+    {
+        $this->input->setParent($parent);
 
-		return $this;
-	}
+        return $this;
+    }
 
-
-	/**
+    /**
      * {@inheritDoc}
      */
-	public function getParent () {
-		return $this->input->getParent();
-	}
+    public function getParent()
+    {
+        return $this->input->getParent();
+    }
 }

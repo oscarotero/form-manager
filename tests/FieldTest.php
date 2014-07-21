@@ -4,13 +4,15 @@ use FormManager\Fields\Field;
 
 include_once __DIR__.'/../FormManager/autoloader.php';
 
-class FieldTest extends PHPUnit_Framework_TestCase {
-    public function testField () {
+class FieldTest extends PHPUnit_Framework_TestCase
+{
+    public function testField()
+    {
         $field = Field::text();
 
         $this->assertEquals('text', $field->attr('type'));
         $this->assertEquals('text', $field->input->attr('type'));
-        
+
         $field->label('Label');
         $this->assertEquals('Label', $field->label->html());
 
