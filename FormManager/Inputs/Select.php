@@ -12,6 +12,14 @@ class Select extends Input implements InputInterface {
 	protected $value;
 	protected $allowNewValues = false;
 
+
+	/**
+	 * Set/Get the available options in this select.
+	 * 
+	 * @param null|array $options null to getter, array to setter
+	 * 
+	 * @return mixed
+	 */
 	public function options (array $options = null) {
 		if ($options === null) {
 			return $this->options;
@@ -22,12 +30,25 @@ class Select extends Input implements InputInterface {
 		return $this;
 	}
 
+
+	/**
+	 * Set true to allow values non defined in the $options array
+	 * Useful to insert dinamically new values
+	 * 
+	 * @param boolean $allow
+	 * 
+	 * @return $this
+	 */
 	public function allowNewValues ($allow = true) {
 		$this->allowNewValues = $allow;
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function val ($value = null) {
 		if ($value === null) {
 			return $this->value;
@@ -42,6 +63,10 @@ class Select extends Input implements InputInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function validate () {
 		$value = $this->val();
 
@@ -62,6 +87,10 @@ class Select extends Input implements InputInterface {
 		return parent::validate();
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function html ($html = null) {
 		$val = $this->val();
 		$html = '';

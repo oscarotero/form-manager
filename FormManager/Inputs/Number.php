@@ -8,6 +8,9 @@ class Number extends Input implements InputInterface {
 
 	protected $attributes = ['type' => 'number'];
 
+	/**
+     * {@inheritDoc}
+     */
 	public function validate () {
 		$value = $this->val();
 

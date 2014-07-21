@@ -9,6 +9,9 @@ class Radio extends Field implements InputInterface {
 		$this->input = Input::radio();
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	public function toHtml () {
 		if ($this->render) {
 			return parent::toHtml();

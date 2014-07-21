@@ -13,7 +13,9 @@ abstract class Input extends Element {
 	protected $sanitizer;
 	protected $error;
 
-
+	/**
+	 * Magic method to create instances using the API Input::text()
+	 */
 	public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\'.ucfirst($name);
 
@@ -22,6 +24,10 @@ abstract class Input extends Element {
 		}
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function attr ($name = null, $value = null) {
 		if (is_array($name)) {
 			foreach ($name as $name => $value) {
@@ -42,6 +48,10 @@ abstract class Input extends Element {
 		return parent::attr($name, $value);
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function removeAttr ($name) {
 		parent::removeAttr($name);
 
@@ -52,6 +62,10 @@ abstract class Input extends Element {
 		}
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function val ($value = null) {
 		if ($value === null) {
 			return $this->attr('value');
@@ -64,6 +78,10 @@ abstract class Input extends Element {
 		return $this->attr('value', $value);
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function error ($error = null) {
 		if ($error === null) {
 			return $this->error;
@@ -74,6 +92,10 @@ abstract class Input extends Element {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function id ($id = null) {
 		if ($id === null) {
 			if (empty($this->attributes['id'])) {
@@ -88,12 +110,20 @@ abstract class Input extends Element {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function sanitize (callable $sanitizer) {
 		$this->sanitizer = $sanitizer;
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function load ($value = null, $file = null) {
 		if (($sanitizer = $this->sanitizer) !== null) {
 			if ($this->attr('multiple') && is_array($value)) {
@@ -110,18 +140,41 @@ abstract class Input extends Element {
 		return $this;
 	}
 
+
+	/**
+     * Adds new value validator
+     * 
+     * @param string   $name      The validator name
+     * @param callable $validator The validator function
+     * 
+     * @return $this
+     */
 	public function addValidator ($name, $validator) {
 		$this->validators[$name] = $validator;
 
 		return $this;
 	}
 
+
+	/**
+     * Removes a validator
+     * 
+     * @param string $name The validator name
+     * 
+     * @return $this
+     */
 	public function removeValidator ($name) {
 		unset($this->validators[$name]);
 
 		return $this;
 	}
 
+
+	/**
+     * Executes all validators and returns whether the value is valid or not
+     * 
+     * @return boolean
+     */
 	public function validate () {
 		$this->error = null;
 
@@ -135,14 +188,30 @@ abstract class Input extends Element {
 		return true;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function isValid () {
 		return $this->validate();
 	}
 
+
+	/**
+     * Checks the input (used in some inputs like radio/checkboxes)
+     * 
+     * @return $this
+     */
 	public function check () {
 		return $this;
 	}
 
+
+	/**
+	 * Unchecks the input  (used in some inputs like radio/checkboxes)
+	 * 
+	 * @return $this
+	 */
 	public function uncheck () {
 		return $this;
 	}

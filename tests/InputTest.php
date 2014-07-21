@@ -221,6 +221,16 @@ class InputTest extends PHPUnit_Framework_TestCase {
 		$input->val('nn');
 
 		$this->assertFalse($input->isValid());
+
+		$input->pattern('/[a-z]{2}/');
+
+		$input->val('/a/');
+
+		$this->assertFalse($input->isValid());
+
+		$input->val('/ab/');
+
+		$this->assertTrue($input->isValid());
 	}
 
 	public function testTextarea () {

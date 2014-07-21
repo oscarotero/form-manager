@@ -7,6 +7,10 @@ class Textarea extends Input implements InputInterface {
 	protected $name = 'textarea';
 	protected $close = true;
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function val ($value = null) {
 		if ($value === null) {
 			return $this->html;
@@ -17,6 +21,10 @@ class Textarea extends Input implements InputInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function html ($html = null) {
 		if ($html === null) {
 			return static::escape($this->html);

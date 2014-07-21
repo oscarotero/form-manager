@@ -13,18 +13,16 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface {
 	protected $name = 'form';
 	protected $close = true;
 
-	public static function __callStatic ($name, $arguments) {
-		$class = __NAMESPACE__.'\\'.ucfirst($name);
 
-		if (class_exists($class)) {
-			if (isset($arguments[0])) {
-				return new $class($arguments[0]);
-			}
-
-			return new $class();
-		}
-	}
-
+	/**
+	 * Load the form values from global GET, POST, FILES values
+	 * 
+	 * @param array $get
+	 * @param array $post
+	 * @param array $file
+	 * 
+	 * @return $this
+	 */
 	public function loadFromGlobal (array $get = array(), array $post = array(), array $file = array()) {
 		if (func_num_args() === 0) {
 			$get = $_GET;
@@ -37,14 +35,12 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface {
 		return $this->load($value, $file);
 	}
 
-	public function id ($id = null) {
-		if ($id === null) {
-			return $this->attr('id');
-		}
 
-		return $this->attr('id', $id);
-	}
-
+	/**
+	 * Returns the html code of the form
+	 * 
+	 * @param string $html Optional code appended
+	 */
 	public function html ($html = null) {
 		if ($html === null) {
 			return $this->html.$this->childrenToHtml();

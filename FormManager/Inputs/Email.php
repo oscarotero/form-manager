@@ -8,6 +8,9 @@ class Email extends Input implements InputInterface {
 
 	protected $attributes = ['type' => 'email'];
 
+	/**
+     * {@inheritDoc}
+     */
 	public function validate () {
 		$value = $this->val();
 

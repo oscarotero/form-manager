@@ -17,12 +17,20 @@ class Duplicable extends Collection implements CollectionInterface {
 		}
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function add ($key, $value = null) {
 		$this->field->add($key, $value);
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function load ($value = null, $file = null) {
 		if (($sanitizer = $this->sanitizer) !== null) {
 			$value = $sanitizer($value);
@@ -42,6 +50,10 @@ class Duplicable extends Collection implements CollectionInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function val ($value = null) {
 		if ($value === null) {
 			return parent::val();
@@ -60,6 +72,15 @@ class Duplicable extends Collection implements CollectionInterface {
 		return $this;
 	}
 
+
+	/**
+     * Creates a new cloned child
+     * 
+     * @param null|string $index  The copy index
+     * @param boolean     $insert Set false to return the copy without insert into
+     * 
+     * @return Field The cloned field
+     */
 	protected function createDuplicate ($index = null, $insert = true) {
 		$child = clone $this->field;
 
@@ -77,11 +98,21 @@ class Duplicable extends Collection implements CollectionInterface {
 		return $child;
 	}
 
+
+	/**
+     * Returns a new cloned child without insert into
+     * 
+     * @return Field The cloned field
+     */
 	public function getDuplicate ($index = '::n::') {
 		return $this->createDuplicate($index, false);
 	}
 
-	public function prepareChildren ($parentPath=null) {
+
+	/**
+     * {@inheritDoc}
+     */
+	public function prepareChildren ($parentPath = null) {
 		$this->parentPath = $parentPath;
 
 		foreach ($this->children as $key => $child) {

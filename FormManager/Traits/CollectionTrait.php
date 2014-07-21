@@ -5,6 +5,7 @@
 namespace FormManager\Traits;
 
 use FormManager\Form;
+use FormManager\InputInterface;
 use FormManager\CollectionInterface;
 
 trait CollectionTrait {
@@ -61,7 +62,14 @@ trait CollectionTrait {
 		return isset($this->children[$offset]) ? $this->children[$offset] : null;
 	}
 
-	//Add elements
+	/**
+	 * Adds new children to this element
+	 * 
+	 * @param array|InputInterface $key   The child or an array with children
+	 * @param InputInterface       $value The child
+	 * 
+	 * @return $this;
+	 */
 	public function add ($key, $value = null) {
 		if (is_array($key)) {
 			foreach ($key as $key => $value) {
@@ -79,7 +87,11 @@ trait CollectionTrait {
 	}
 
 
-	//Input interface methods
+	/**
+	 * Checks if all input values are valid
+	 * 
+	 * @return boolean
+	 */
 	public function isValid () {
 		foreach ($this->children as $child) {
 			if (!$child->isValid()) {
@@ -90,6 +102,14 @@ trait CollectionTrait {
 		return true;
 	}
 
+
+	/**
+	 * Set/Get the values of this collection
+	 * 
+	 * @param null|array $value null to getter, array to setter
+	 * 
+	 * @return mixed
+	 */
 	public function val ($value = null) {
 		if ($value === null) {
 			$value = [];
@@ -108,6 +128,15 @@ trait CollectionTrait {
 		return $this;
 	}
 
+
+	/**
+	 * Loads a value sent by the client
+	 * 
+	 * @param mixed $value The GET/POST value
+	 * @param mixed $file  The FILES value (used in input[type="file"])
+	 * 
+	 * @return $this
+	 */
 	public function load ($value = null, $file = null) {
 		if (($sanitizer = $this->sanitizer) !== null) {
 			$value = $sanitizer($value);
@@ -123,12 +152,28 @@ trait CollectionTrait {
 		return $this;
 	}
 
+
+	/**
+	 * Sets a sanitizer function to the input
+	 * 
+	 * @param callable $sanitizer The function name or closure
+	 * 
+	 * @return $this
+	 */
 	public function sanitize (callable $sanitizer) {
 		$this->sanitizer = $sanitizer;
 
 		return $this;
 	}
 
+
+	/**
+	 * Set/Get the error message
+	 * 
+	 * @param null|string $error null to getter, string to setter
+	 * 
+	 * @return mixed
+	 */
 	public function error ($error = null) {
 		if ($error === null) {
 			return $this->error;
@@ -139,12 +184,26 @@ trait CollectionTrait {
 		return $this;
 	}
 
+
+	/**
+	 * Prepare the children before insert
+	 * 
+	 * @param null|string $parentPath The full parent path (the parents names)
+	 */
 	public function prepareChildren ($parentPath = null) {
 		foreach ($this->children as $key => $child) {
 			$this->prepareChild($child, $key, $parentPath);
 		}
 	}
 
+
+	/**
+	 * Prepare a child element before insert
+	 * 
+	 * @param InputInferface $child
+	 * @param string         $key        The key used to append this child (the input name)
+	 * @param null|string    $parentPath The full parent path (the parents names)
+	 */
 	public function prepareChild ($child, $key, $parentPath = null) {
 		$path = $parentPath ? "{$parentPath}[{$key}]" : $key;
 
@@ -155,6 +214,12 @@ trait CollectionTrait {
 		}
 	}
 
+
+	/**
+	 * Returns the html of all childrens
+	 * 
+	 * @return string
+	 */
 	public function childrenToHtml () {
 		$html = '';
 

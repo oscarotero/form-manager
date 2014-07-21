@@ -22,6 +22,9 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 		}
 	}
 
+	/**
+     * {@inheritDoc}
+     */
 	public function __toString () {
 		return $this->toHtml();
 	}
@@ -44,6 +47,14 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 		}
 	}
 
+
+	/**
+     * Creates/edit/returns the label associated with the input
+     * 
+     * @param null|string $html Null to get the label html, string to create/edit the label content
+     * 
+     * @return $this
+     */
 	public function label ($html = null) {
 		if ($html === null) {
 			return $this->label->html();
@@ -54,12 +65,20 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function render (callable $render) {
 		$this->render = $render;
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function error ($error = null) {
 		if ($error === null) {
 			return $this->error;
@@ -70,6 +89,10 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function id ($id = null) {
 		if ($id === null) {
 			if (empty($this->attributes['id'])) {
@@ -84,6 +107,10 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function toHtml () {
 		$label = isset($this->label) ? $this->label : null;
 

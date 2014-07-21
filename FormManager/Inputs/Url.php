@@ -8,6 +8,10 @@ class Url extends Input implements InputInterface {
 
 	protected $attributes = ['type' => 'url'];
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function validate () {
 		$value = $this->val();
 

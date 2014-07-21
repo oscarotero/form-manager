@@ -13,6 +13,10 @@ class Field implements InputInterface {
 	public $input;
 	protected $render;
 
+
+	/**
+	 * Magic method to create new instances using the API Field::text()
+	 */
 	public static function __callStatic ($name, $arguments) {
 		$class = __NAMESPACE__.'\\'.ucfirst($name);
 
@@ -37,16 +41,28 @@ class Field implements InputInterface {
 		}
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function __toString () {
 		return $this->toHtml();
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function __call ($name, $arguments) {
 		call_user_func_array([$this->input, $name], $arguments);
 
 		return $this;
 	}
 
+
+	/**
+	 * Clones the field and its content
+	 */
 	public function __clone () {
 		$this->input = clone $this->input;
 
@@ -56,6 +72,10 @@ class Field implements InputInterface {
 		}
 	}
 
+
+	/**
+	 * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel
+	 */
 	public function __get ($name) {
 		if ($name === 'label') {
 			return $this->label = new Label($this->input);
@@ -66,6 +86,14 @@ class Field implements InputInterface {
 		}
 	}
 
+
+	/**
+     * Creates/edit/returns the label associated with the input
+     * 
+     * @param null|string $html Null to get the label html, string to create/edit the label content
+     * 
+     * @return $this
+     */
 	public function label ($html = null) {
 		if ($html === null) {
 			return $this->label->html();
@@ -76,6 +104,10 @@ class Field implements InputInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function error ($error = null) {
 		if ($error === null) {
 			return $this->input->error($error);
@@ -86,6 +118,10 @@ class Field implements InputInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function id ($id = null) {
 		if ($id === null) {
 			return $this->input->id();
@@ -96,6 +132,10 @@ class Field implements InputInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function attr ($name = null, $value = null) {
 		if (($value !== null) || (is_array($name))) {
 			$this->input->attr($name, $value);
@@ -106,30 +146,50 @@ class Field implements InputInterface {
 		return $this->input->attr($name);
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function removeAttr ($name) {
 		$this->input->removeAttr($name);
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function load ($value = null, $file = null) {
 		$this->input->load($value, $file);
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function sanitize (callable $sanitizer) {
 		$this->input->sanitize($sanitizer);
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function render (callable $render) {
 		$this->render = $render;
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function val ($value = null) {
 		if ($value === null) {
 			return $this->input->val();
@@ -140,10 +200,18 @@ class Field implements InputInterface {
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function isValid () {
 		return $this->input->isValid();
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function toHtml () {
 		$label = isset($this->label) ? $this->label : null;
 
@@ -156,12 +224,20 @@ class Field implements InputInterface {
 		return "{$label} {$this->input} {$this->errorLabel}";
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function setParent (InputInterface $parent) {
 		$this->input->setParent($parent);
 
 		return $this;
 	}
 
+
+	/**
+     * {@inheritDoc}
+     */
 	public function getParent () {
 		return $this->input->getParent();
 	}
