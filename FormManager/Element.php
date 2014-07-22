@@ -78,8 +78,8 @@ class Element
     /**
      * Set/Get an attribute value
      *
-     * @param null|string $name  If it's null, returns an array with all attributes
-     * @param null|string $value null to getter, string to setter
+     * @param null|string|array $name  If it's null, returns an array with all attributes
+     * @param null|string|array $value null to getter, string to setter
      *
      * @return mixed
      */

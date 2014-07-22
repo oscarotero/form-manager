@@ -12,6 +12,8 @@ use ArrayAccess;
 
 class Collection implements Iterator, ArrayAccess, CollectionInterface
 {
+    protected $render;
+
     use ChildTrait, CollectionTrait {
         CollectionTrait::__clone as private __collectionClone;
     }
