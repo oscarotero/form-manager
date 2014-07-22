@@ -3,34 +3,25 @@ use FormManager\Form;
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
 
-include 'FormManager/autoloader.php';
+include_once __DIR__.'/../FormManager/autoloader.php';
 
-class MyForm extends Form
+class FormTest extends PHPUnit_Framework_TestCase
 {
-    public function __construct()
+    public function testForm()
     {
-        $this->attr([
-            'action' => 'index.php',
-            'method' => 'post'
-        ]);
+        $form = new Form;
 
-        $this->add([
+        $form->action('index.php')->method('post');
+
+        $form->add([
             'name' => Field::text()->maxlength(50)->required()->label('Your name'),
             'email' => Field::email()->label('Your email'),
-            'telephone' => Field::tel()->label('Telephone number')->data(['ola' => 'kease']),
+            'telephone' => Field::tel()->label('Telephone number'),
 
             'gender' => Field::choose([
                 'm' => Field::radio()->label('Male'),
                 'f' => Field::radio()->label('Female')
-            ])->render(function ($inputs, $label, $errorLabel) {
-                $html = '';
-
-                foreach ($inputs as $input) {
-                    $html .= (string) $input;
-                }
-
-                return "<div>{$html} {$label} {$errorLabel}</div>";
-            }),
+            ]),
 
             'born' => Field::collection([
                 'day' => Field::number()->min(1)->max(31)->label('Day'),
@@ -55,40 +46,33 @@ class MyForm extends Form
                 'duplicate' => Field::submit()->html('Save as new value')
             ])
         ]);
+
+        $data = array(
+            'name' => 'Manuel',
+            'email' => null,
+            'telephone' => null,
+            'gender' => 'm',
+            'born' => array(
+                'day' => 23,
+                'month' => 12,
+                'year' => 2013
+            ),
+            'language' => 'gl',
+            'friends' => array(
+                array(
+                    'name' => 'Luis',
+                    'email' => 'luis@luis.com',
+                    'age' => 30
+                )
+            ),
+            'action' => 'save'
+        );
+
+        $form->val($data);
+
+        $this->assertTrue($form->isValid());
+
+
     }
+
 }
-?>
-<!DOCTYPE html>
-
-<html>
-	<head>
-		<meta charset="utf-8">
-
-		<title>Form manager tests</title>
-		<style type="text/css">
-			body {
-				font-family: sans-serif;
-			}
-		</style>
-	</head>
-
-	<body>
-		<?php
-        $Form = new MyForm;
-
-        if ($_POST) {
-            $Form->loadFromGlobal();
-
-            echo '<pre>';
-            if (!$Form->isValid()) {
-                echo 'There was an error';
-            } else {
-                print_r($Form->val());
-            }
-            echo '</pre>';
-        }
-
-        echo $Form;
-        ?>
-	</body>
-</html>

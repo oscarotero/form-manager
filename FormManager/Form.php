@@ -36,9 +36,7 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface
     }
 
     /**
-     * Returns the html code of the form
-     *
-     * @param string $html Optional code appended
+     * {@inheritDoc}
      */
     public function html($html = null)
     {
@@ -47,5 +45,13 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface
         }
 
         return parent::html($html);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function id($id = null)
+    {
+        return $this->attr('id', $id);
     }
 }
