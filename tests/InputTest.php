@@ -62,6 +62,38 @@ class InputTest extends PHPUnit_Framework_TestCase
 
         $this->genericElementTest($input);
         $this->genericInputTest($input, 'file');
+
+        $input->val(array(
+            'name' => 'image.jpg',
+            'type' => 'image/jpeg',
+            'tmp_name' => __DIR__.'/image.jpg',
+            'error' => 1
+        ));
+
+        $this->assertFalse($input->isValid());
+        $this->assertEquals('The uploaded file exceeds the upload_max_filesize directive in php.ini', $input->error());
+
+        $input->val(array(
+            'name' => 'image.jpg',
+            'type' => 'image/jpeg',
+            'tmp_name' => __DIR__.'/image.jpg',
+            'error' => 0
+        ));
+
+        $input->accept('image/png');
+
+        $this->assertFalse($input->isValid());
+
+        $input->val(array(
+            'name' => 'image.jpg',
+            'type' => 'image/jpeg',
+            'tmp_name' => __DIR__.'/image.jpg',
+            'error' => 0
+        ));
+
+        $input->accept('image/jpeg');
+
+        $this->assertTrue($input->isValid(), $input->error());
     }
 
     public function testHidden()

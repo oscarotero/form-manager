@@ -13,16 +13,22 @@ class File extends Input implements InputInterface
         6 => 'Missing a temporary folder'
 	);
 
-
+    protected $value;
     protected $attributes = ['type' => 'file'];
 
 
     /**
      * {@inheritDoc}
      */
-    public function load($value = null, $file = null)
+    public function val($value = null)
     {
-        parent::load($file);
+        if ($value === null) {
+            return $this->value;
+        }
+
+        $this->value = $value;
+
+        return $this;
     }
 
 
