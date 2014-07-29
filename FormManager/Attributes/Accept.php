@@ -1,9 +1,11 @@
 <?php
 namespace FormManager\Attributes;
 
-class Pattern
+use FormManager\InputInterface;
+
+class Accept
 {
-    public static $error_message = 'This value is not valid';
+    public static $error_message = 'The mime type of this input must be %s';
 
     /**
      * Callback used on add this attribute to an input
@@ -15,7 +17,7 @@ class Pattern
      */
     public static function onAdd($input, $value)
     {
-        $input->addValidator('pattern', array(__CLASS__, 'validate'));
+        $input->addValidator('accept', array(__CLASS__, 'validate'));
 
         return $value;
     }
@@ -27,7 +29,7 @@ class Pattern
      */
     public static function onRemove($input)
     {
-        $input->removeValidator('pattern');
+        $input->removeValidator('accept');
     }
 
     /**
@@ -41,13 +43,18 @@ class Pattern
     {
         $value = $input->val();
 
-        //File
-        if ($input->attr('type') === 'file') {
-            $value = isset($value['name']) ? $value['name'] : null;
+        if (empty($value['tmp_name'])) {
+            return true;
         }
 
-        $attr = str_replace('/', '\\/', $input->attr('pattern'));
+        $attr = $input->attr('accept');
+        $accept = array_map('trim', explode(',', $attr));
+        $filename = $value['tmp_name'];
 
-        return (empty($attr) || empty($value) || filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/^{$attr}\$/")))) ? true : sprintf(static::$error_message, $attr);
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $filename);
+        finfo_close($finfo);
+
+        return (array_search($mime, $accept) !== false) ? true : sprintf(static::$error_message, $attr);
     }
 }

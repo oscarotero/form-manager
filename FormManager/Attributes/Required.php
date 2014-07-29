@@ -44,6 +44,12 @@ class Required
     public static function validate($input)
     {
         $value = $input->val();
+
+        //File
+        if ($input->attr('type') === 'file') {
+            $value = isset($value['name']) ? $value['name'] : null;
+        }
+
         $attr = $input->attr('required');
 
         return (empty($attr) || !empty($value) || strlen($value) > 0) ? true : sprintf(static::$error_message, $attr);
