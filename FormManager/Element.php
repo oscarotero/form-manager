@@ -188,7 +188,7 @@ class Element
     /**
      * Add one or more classes to the element
      *
-     * @param array|string $name The class or classes names.
+     * @param array|string $class The class or classes names.
      *
      * @return $this
      */
@@ -215,7 +215,7 @@ class Element
     /**
      * Removes one or more classes
      *
-     * @param array|string $name The class or classes names
+     * @param array|string $class The class or classes names
      *
      * @return $this
      */
