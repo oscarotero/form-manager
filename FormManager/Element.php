@@ -58,6 +58,16 @@ class Element
     }
 
     /**
+     * Returns the name of the element
+     *
+     * @return string
+     */
+    public function getElementName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set/Get the html content for this element
      *
      * @param null|string $html null to getter, string to setter
