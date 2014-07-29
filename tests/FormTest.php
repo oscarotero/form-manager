@@ -73,7 +73,7 @@ class FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($form->isValid());
 
         $form->addValidator('myValidator', function ($form) {
-            return empty($form['name']->val()) ?: 'The name value must be empty';
+            return empty($form['name']->val()) ? true : 'The name value must be empty';
         });
 
         $this->assertFalse($form->isValid());

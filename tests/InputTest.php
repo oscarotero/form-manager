@@ -94,6 +94,10 @@ class InputTest extends PHPUnit_Framework_TestCase
         $input->accept('image/jpeg');
 
         $this->assertTrue($input->isValid(), $input->error());
+
+        $input->required();
+
+        $this->assertFalse($input->isValid());
     }
 
     public function testHidden()

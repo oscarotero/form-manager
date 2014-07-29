@@ -47,7 +47,7 @@ class Required
 
         //File
         if ($input->attr('type') === 'file') {
-            $value = isset($value['name']) ? $value['name'] : null;
+            $value = (isset($value['name']) && !empty($value['size'])) ? $value['name'] : null;
         }
 
         $attr = $input->attr('required');
