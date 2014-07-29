@@ -2,6 +2,7 @@
 namespace FormManager;
 
 use FormManager\Traits\CollectionTrait;
+use FormManager\Traits\ValidationTrait;
 
 use Iterator;
 use ArrayAccess;
@@ -9,6 +10,7 @@ use ArrayAccess;
 class Form extends Element implements Iterator, ArrayAccess, InputInterface
 {
     use CollectionTrait;
+    use ValidationTrait;
 
     protected $name = 'form';
     protected $close = true;

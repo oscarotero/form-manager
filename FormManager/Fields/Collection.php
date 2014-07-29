@@ -3,6 +3,7 @@ namespace FormManager\Fields;
 
 use FormManager\Traits\ChildTrait;
 use FormManager\Traits\CollectionTrait;
+use FormManager\Traits\ValidationTrait;
 
 use FormManager\Label;
 use FormManager\CollectionInterface;
@@ -14,7 +15,7 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface
 {
     protected $render;
 
-    use ChildTrait, CollectionTrait {
+    use ChildTrait, ValidationTrait, CollectionTrait {
         CollectionTrait::__clone as private __collectionClone;
     }
 
@@ -77,20 +78,6 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface
     public function render(callable $render)
     {
         $this->render = $render;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function error($error = null)
-    {
-        if ($error === null) {
-            return $this->error;
-        }
-
-        $this->error = $error;
 
         return $this;
     }

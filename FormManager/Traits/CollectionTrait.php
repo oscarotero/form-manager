@@ -11,7 +11,6 @@ trait CollectionTrait
 {
     protected $children = [];
     protected $sanitizer;
-    protected $error;
 
     public function __clone()
     {
@@ -98,7 +97,7 @@ trait CollectionTrait
     }
 
     /**
-     * Checks if all input values are valid
+     * Checks whether all input values are valid
      *
      * @return boolean
      */
@@ -110,7 +109,7 @@ trait CollectionTrait
             }
         }
 
-        return true;
+        return $this->validate();
     }
 
     /**
@@ -173,24 +172,6 @@ trait CollectionTrait
     public function sanitize(callable $sanitizer)
     {
         $this->sanitizer = $sanitizer;
-
-        return $this;
-    }
-
-    /**
-     * Set/Get the error message
-     *
-     * @param null|string $error null to getter, string to setter
-     *
-     * @return mixed
-     */
-    public function error($error = null)
-    {
-        if ($error === null) {
-            return $this->error;
-        }
-
-        $this->error = $error;
 
         return $this;
     }

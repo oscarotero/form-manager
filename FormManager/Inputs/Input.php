@@ -2,17 +2,17 @@
 namespace FormManager\Inputs;
 
 use FormManager\Traits\ChildTrait;
+use FormManager\Traits\ValidationTrait;
 
 use FormManager\Element;
 
 abstract class Input extends Element
 {
     use ChildTrait;
+    use ValidationTrait;
 
     protected $name = 'input';
-    protected $validators = [];
     protected $sanitizer;
-    protected $error;
 
     /**
      * Magic method to create instances using the API Input::text()
@@ -83,20 +83,6 @@ abstract class Input extends Element
     /**
      * {@inheritDoc}
      */
-    public function error($error = null)
-    {
-        if ($error === null) {
-            return $this->error;
-        }
-
-        $this->error = $error;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function id($id = null)
     {
         if ($id === null) {
@@ -140,55 +126,6 @@ abstract class Input extends Element
         $this->val($value);
 
         return $this;
-    }
-
-    /**
-     * Adds new value validator
-     *
-     * @param string   $name      The validator name
-     * @param callable $validator The validator function
-     *
-     * @return $this
-     */
-    public function addValidator($name, $validator)
-    {
-        $this->validators[$name] = $validator;
-
-        return $this;
-    }
-
-    /**
-     * Removes a validator
-     *
-     * @param string $name The validator name
-     *
-     * @return $this
-     */
-    public function removeValidator($name)
-    {
-        unset($this->validators[$name]);
-
-        return $this;
-    }
-
-    /**
-     * Executes all validators and returns whether the value is valid or not
-     *
-     * @return boolean
-     */
-    public function validate()
-    {
-        $this->error = null;
-
-        foreach ($this->validators as $validator) {
-            if (($error = $validator($this)) !== true) {
-                $this->error = $error;
-
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
