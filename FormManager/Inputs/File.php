@@ -35,6 +35,15 @@ class File extends Input implements InputInterface
     /**
      * {@inheritDoc}
      */
+    public function load($value = null, $file = null)
+    {
+        return parent::load($file);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
     public function validate()
     {
         $value = $this->val();
