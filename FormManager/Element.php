@@ -10,6 +10,27 @@ class Element
     protected $html;
 
     /**
+     * Creates a new html element
+     *
+     * @param string $name       The element name
+     * @param bool   $close      Whether the element has close tag or not
+     * @param array  $attributes Attributes added to the element
+     *
+     * @return Element
+     */
+    public static function create($name, $close = false, array $attributes = null)
+    {
+        $element = new Element();
+        $element->setElementName($name, $close);
+
+        if ($attributes !== null) {
+            $element->attr($attributes);
+        }
+
+        return $element;
+    }
+
+    /**
      * Escapes a property value
      *
      * @param string $value
