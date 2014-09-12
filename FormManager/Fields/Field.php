@@ -217,9 +217,7 @@ class Field implements InputInterface
         $label = isset($this->label) ? $this->label : null;
 
         if ($this->render) {
-            $render = $this->render;
-
-            return $render($this->input, $label, $this->errorLabel);
+            return call_user_func($this->render, $this->input, $label, $this->errorLabel);
         }
 
         return "{$label} {$this->input} {$this->errorLabel}";

@@ -108,9 +108,7 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface
         $label = isset($this->label) ? $this->label : null;
 
         if ($this->render) {
-            $render = $this->render;
-
-            return $render($this->children, $label, $this->errorLabel);
+            return call_user_func($this->render, $this->children, $label, $this->errorLabel);
         }
 
         $html = $this->childrenToHtml();
