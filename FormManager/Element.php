@@ -273,16 +273,17 @@ class Element
     /**
      * Return the element as html string
      *
-     * @param string $append Optional string appended to html content
+     * @param string $prepend Optional string prepended to html content
+     * @param string $append  Optional string appended to html content
      *
      * @return string
      */
-    public function toHtml($append = '')
+    public function toHtml($prepend = '', $append = '')
     {
         $html = $this->openHtml();
 
         if ($this->close) {
-            $html .= $this->html().$append.$this->closeHtml();
+            $html .= $prepend.$this->html().$append.$this->closeHtml();
         }
 
         return $html;

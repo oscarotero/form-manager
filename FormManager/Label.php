@@ -44,16 +44,17 @@ class Label extends Element
     /**
      * Converts the label to html code
      *
-     * @param string $append The optional string appended to the content
+     * @param string $prepend Optional string prepended to html content
+     * @param string $append  Optional string appended to html content
      *
      * @return string
      */
-    public function toHtml($append = '')
+    public function toHtml($prepend = '', $append = '')
     {
         if ($this->input) {
             $this->attr('for', $this->input->id());
         }
 
-        return parent::toHtml($append);
+        return parent::toHtml($prepend, $append);
     }
 }
