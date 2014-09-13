@@ -22,6 +22,9 @@ class InputTest extends PHPUnit_Framework_TestCase
 
         $input->removeClass('second');
         $this->assertEquals('first', $input->attr('class'));
+
+        $input->set('myVar', ['one', 'two']);
+        $this->assertEquals(['one', 'two'], $input->get('myVar'));
     }
 
     private function genericInputTest($input, $type = null)

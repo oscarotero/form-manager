@@ -2,9 +2,12 @@
 namespace FormManager;
 
 use FormManager\Inputs\Input;
+use FormManager\Traits\VarsTrait;
 
 class Label extends Element
 {
+    use VarsTrait;
+
     protected $name = 'label';
     protected $close = true;
     protected $input;

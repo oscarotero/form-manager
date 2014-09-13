@@ -97,6 +97,19 @@ trait CollectionTrait
     }
 
     /**
+     * Callback used on add new elements
+     * 
+     * @param InputInterface $child
+     * 
+     * @return InputInterface
+     */
+    public function onAdd(InputInterface $child)
+    {
+        return $child;
+    }
+
+
+    /**
      * Checks whether all input values are valid
      *
      * @return boolean

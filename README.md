@@ -105,8 +105,8 @@ echo $name;
 echo $name->label.' - '.$name->input.' - '.$name->labelError;
 
 //Define a render function to reuse templates
-$name->render(function ($input, $label, $labelError) {
-	return "<div class="field">$label $input $labelError</div>";
+$name->render(function ($field) {
+	return "<div class="field">$field->label $field->input $field->labelError</div>";
 });
 
 echo $name;

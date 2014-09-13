@@ -7,6 +7,7 @@ use FormManager\Traits\ValidationTrait;
 
 use FormManager\Label;
 use FormManager\CollectionInterface;
+use FormManager\Traits\VarsTrait;
 
 use Iterator;
 use ArrayAccess;
@@ -15,7 +16,7 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface
 {
     protected $render;
 
-    use ChildTrait, ValidationTrait, CollectionTrait {
+    use ChildTrait, ValidationTrait, VarsTrait, CollectionTrait {
         CollectionTrait::__clone as private __collectionClone;
     }
 
@@ -105,12 +106,11 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface
      */
     public function toHtml()
     {
-        $label = isset($this->label) ? $this->label : null;
-
         if ($this->render) {
-            return call_user_func($this->render, $this->children, $label, $this->errorLabel);
+            return call_user_func($this->render, $this);
         }
 
+        $label = isset($this->label) ? $this->label : null;
         $html = $this->childrenToHtml();
 
         return "{$label} {$html} {$this->errorLabel}";

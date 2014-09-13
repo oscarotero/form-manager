@@ -5,10 +5,12 @@ use FormManager\Traits\ChildTrait;
 
 use FormManager\Label;
 use FormManager\InputInterface;
+use FormManager\Traits\VarsTrait;
 
 class Field implements InputInterface
 {
     use ChildTrait;
+    use VarsTrait;
 
     public $input;
     protected $render;
@@ -214,11 +216,11 @@ class Field implements InputInterface
      */
     public function toHtml()
     {
-        $label = isset($this->label) ? $this->label : null;
-
         if ($this->render) {
-            return call_user_func($this->render, $this->input, $label, $this->errorLabel);
+            return call_user_func($this->render, $this);
         }
+
+        $label = isset($this->label) ? $this->label : null;
 
         return "{$label} {$this->input} {$this->errorLabel}";
     }
