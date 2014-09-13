@@ -10,22 +10,15 @@ class Element
     protected $html;
 
     /**
-     * Creates a new html element
-     *
-     * @param string $name       The element name
-     * @param bool   $close      Whether the element has close tag or not
-     * @param array  $attributes Attributes added to the element
-     *
+     * Magic method to create new instances using the API Element::div(bool $close)
+     * 
      * @return Element
      */
-    public static function create($name, $close = false, array $attributes = null)
+    public static function __callStatic($name, $arguments)
     {
         $element = new Element();
-        $element->setElementName($name, $close);
 
-        if ($attributes !== null) {
-            $element->attr($attributes);
-        }
+        $element->setElementName($name, !empty($arguments[0]));
 
         return $element;
     }
