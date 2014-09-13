@@ -83,8 +83,7 @@ trait CollectionTrait
     {
         if (is_array($key)) {
             foreach ($key as $key => $value) {
-                $this->children[$key] = $value->setParent($this);
-                $this->prepareChild($value, $key);
+                $this->add($key, $value);
             }
 
             return $this;
@@ -92,6 +91,7 @@ trait CollectionTrait
 
         $this->children[$key] = $value->setParent($this);
         $this->prepareChild($value, $key);
+        $this->onAdd($value);
 
         return $this;
     }
