@@ -98,15 +98,15 @@ $name->label('User name');
 //And modify the label:
 $name->label->class('main-label');
 
-//Print the field (label + input and, optionally, the label-error)
+//Print the field (label + input and, optionally, the error label)
 echo $name;
 
 //Print the pieces individually:
-echo $name->label.' - '.$name->input.' - '.$name->labelError;
+echo $name->label.' - '.$name->input.' - '.$name->errorLabel;
 
 //Define a render function to reuse templates
 $name->render(function ($field) {
-	return "<div class="field">$field->label $field->input $field->labelError</div>";
+	return "<div class="field">$field->label $field->input $field->errorLabel</div>";
 });
 
 echo $name;
