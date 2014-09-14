@@ -1,7 +1,7 @@
 <?php
 use FormManager\Inputs\Input;
 
-include_once __DIR__.'/../FormManager/autoloader.php';
+include_once __DIR__.'/../src/autoloader.php';
 
 class InputTest extends PHPUnit_Framework_TestCase
 {

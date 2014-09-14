@@ -3,7 +3,7 @@ use FormManager\Form;
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
 
-include_once __DIR__.'/../FormManager/autoloader.php';
+include_once __DIR__.'/../src/autoloader.php';
 
 class FormTest extends PHPUnit_Framework_TestCase
 {
