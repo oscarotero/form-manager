@@ -11,7 +11,7 @@ class Element
 
     /**
      * Magic method to create new instances using the API Element::div(bool $close)
-     * 
+     *
      * @return Element
      */
     public static function __callStatic($name, $arguments)

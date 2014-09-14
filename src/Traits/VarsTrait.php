@@ -8,7 +8,6 @@ trait VarsTrait
 {
     protected $vars = [];
 
-
     /**
      * Set variables
      *
@@ -33,7 +32,7 @@ trait VarsTrait
     /**
      * Get variables
      *
-     * @param null|string $name  If it's null, returns an array with all variables
+     * @param null|string $name If it's null, returns an array with all variables
      *
      * @return mixed
      */

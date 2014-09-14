@@ -4,14 +4,10 @@
  */
 namespace FormManager\Traits;
 
-use FormManager\InputInterface;
-use FormManager\CollectionInterface;
-
 trait ValidationTrait
 {
     protected $validators = [];
     protected $error;
-
 
     /**
      * Adds new value validator
@@ -61,7 +57,6 @@ trait ValidationTrait
 
         return true;
     }
-
 
     /**
      * Set/Get the error message

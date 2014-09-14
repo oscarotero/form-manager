@@ -15,7 +15,6 @@ class File extends Input implements InputInterface
     protected $value;
     protected $attributes = ['type' => 'file'];
 
-
     /**
      * {@inheritDoc}
      */
@@ -30,7 +29,6 @@ class File extends Input implements InputInterface
         return $this;
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -38,7 +36,6 @@ class File extends Input implements InputInterface
     {
         return parent::load($file);
     }
-
 
     /**
      * {@inheritDoc}
@@ -48,9 +45,9 @@ class File extends Input implements InputInterface
         $value = $this->val();
 
         if (isset(self::$uploadErrors[$value['error']])) {
-        	$this->error(self::$uploadErrors[$value['error']]);
+            $this->error(self::$uploadErrors[$value['error']]);
 
-        	return false;
+            return false;
         }
 
         return parent::validate();
