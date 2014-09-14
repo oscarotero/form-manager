@@ -11,7 +11,6 @@ trait CollectionTrait
 {
     protected $children = [];
     protected $sanitizer;
-    protected $onAdd;
 
     public function __clone()
     {
@@ -93,27 +92,8 @@ trait CollectionTrait
         $this->children[$key] = $value->setParent($this);
         $this->prepareChild($value, $key);
 
-        if ($this->onAdd) {
-            call_user_func($this->onAdd, $value);
-        }
-
         return $this;
     }
-
-    /**
-     * Callback used on add new elements
-     * 
-     * @param callable $callback
-     * 
-     * @return $this
-     */
-    public function onAdd(callable $callback)
-    {
-        $this->onAdd = $callback;
-
-        return $this;
-    }
-
 
     /**
      * Checks whether all input values are valid

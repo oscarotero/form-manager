@@ -200,6 +200,29 @@ class Element
 
 
     /**
+     * Checks whether the element has a specific class or not
+     *
+     * @param string $class The class name to check
+     *
+     * @return boolean
+     */
+    public function hasClass($class)
+    {
+        $classes = $this->attr('class');
+
+        if (!$classes) {
+            return false;
+        }
+
+        if (!is_array($classes)) {
+            $classes = explode(' ', $classes);
+        }
+
+        return in_array($class, $classes);
+    }
+
+
+    /**
      * Add one or more classes to the element
      *
      * @param array|string $class The class or classes names.

@@ -12,12 +12,12 @@ trait VarsTrait
     /**
      * Set variables
      *
-     * @param null|string|array $name  If it's null, returns an array with all variables
-     * @param null|string|array $value null to getter, string to setter
+     * @param string|array $name
+     * @param mixed        $value
      *
      * @return mixed
      */
-    public function set($name, $value)
+    public function set($name, $value = null)
     {
         if (is_array($name)) {
             $this->vars += $name;
