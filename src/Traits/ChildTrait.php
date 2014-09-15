@@ -6,6 +6,7 @@
 namespace FormManager\Traits;
 
 use FormManager\InputInterface;
+use FormManager\Form;
 
 trait ChildTrait
 {
@@ -33,5 +34,17 @@ trait ChildTrait
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Returns the form element
+     *
+     * @return null|Form
+     */
+    public function getForm()
+    {
+        if ($this->parent) {
+            return ($this->parent instanceof Form) ? $this->parent : $this->parent->getForm();
+        }
     }
 }
