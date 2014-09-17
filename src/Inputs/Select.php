@@ -101,7 +101,7 @@ class Select extends Input implements InputInterface
         foreach ($this->options as $value => $label) {
             $html .= '<option value="'.static::escape($value).'"';
 
-            if ($val == $value || (is_array($val) && in_array($value, $val))) {
+            if ($val === $value || (is_array($val) && in_array($value, $val))) {
                 $html .= ' selected';
             }
 
