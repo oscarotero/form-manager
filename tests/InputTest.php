@@ -209,6 +209,8 @@ class InputTest extends PHPUnit_Framework_TestCase
 
         //Values
         $input->options([
+            '' => 'Empty',
+            0 => 'Zero',
             1 => 'One',
             2 => 'Two'
         ]);
@@ -225,6 +227,15 @@ class InputTest extends PHPUnit_Framework_TestCase
         $input->allowNewValues();
         $input->val('new-value');
         $this->assertTrue($input->isValid());
+
+        $input->val('');
+        $this->assertSame($input->val(), '');
+
+        $input->val(1);
+        $this->assertSame($input->val(), '1');
+
+        $input->val('1');
+        $this->assertSame($input->val(), '1');
     }
 
     public function testSubmit()
