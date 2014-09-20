@@ -9,7 +9,11 @@ Created by Oscar Otero <http://oscarotero.com> <oom@oscarotero.com>
 Requirements:
 
 * PHP 5.4
-* Any PSR-0 autoloader (or you may include the autoloader.php file)
+
+Installation:
+
+* If you use composer: `composer require form-manager/form-manager`
+* If not, you have to use a PSR-4 loader or include the `src/autoloader.php` file in your project. 
 
 
 Create an input
