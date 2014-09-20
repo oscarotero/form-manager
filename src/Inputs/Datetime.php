@@ -7,7 +7,7 @@ class Datetime extends Input implements InputInterface
 {
     public static $error_message = 'This value is not a valid datetime';
 
-	protected static $format = 'Y-m-d\TH:i:sP';
+    protected static $format = 'Y-m-d\TH:i:sP';
 
     protected $attributes = ['type' => 'datetime'];
 
@@ -18,14 +18,15 @@ class Datetime extends Input implements InputInterface
     {
         $value = $this->val();
 
-    	if ($value) {
-    		if (!($date = date_create($value))) {
-        		$this->error(static::$error_message);
-        		return false;
-    		}
+        if ($value) {
+            if (!($date = date_create($value))) {
+                $this->error(static::$error_message);
 
-    		$this->val($date->format(static::$format));
-    	}
+                return false;
+            }
+
+            $this->val($date->format(static::$format));
+        }
 
         return parent::validate();
     }
