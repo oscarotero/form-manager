@@ -322,4 +322,185 @@ class InputTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($input->isValid());
         $this->assertEquals('http://valid-url.com', $input->val());
     }
+
+    public function testDatetime()
+    {
+        $input = Input::datetime();
+
+        $this->genericElementTest($input);
+        $this->genericInputTest($input, 'datetime');
+
+        //Values
+        $input->val('2005-33-14T15:52:01+00:00');
+        $this->assertFalse($input->isValid());
+
+        $input->val('Mon, 15 Aug 2005 15:52:01 +0000');
+        $this->assertTrue($input->isValid());
+        $this->assertEquals('2005-08-15T15:52:01+00:00', $input->val());
+
+        $input->max('2005-08-14T15:52:01+00:00');
+        $this->assertFalse($input->isValid());
+
+        $input->max('2005-08-15T15:52:01+00:00');
+        $this->assertTrue($input->isValid());
+
+        $input->max('2005-08-16T15:52:01+00:00');
+        $this->assertTrue($input->isValid());
+    }
+
+    public function testDatetimeLocal()
+    {
+        $input = Input::datetimeLocal();
+
+        $this->genericElementTest($input);
+        $this->genericInputTest($input, 'datetime-local');
+
+        //Values
+        $input->val('2005-33-14T15:52:01');
+        $this->assertFalse($input->isValid());
+
+        $input->val('Mon, 15 Aug 2005 15:52:01');
+        $this->assertTrue($input->isValid());
+        $this->assertEquals('2005-08-15T15:52:01', $input->val());
+
+        $input->max('2005-08-14T15:52:01');
+        $this->assertFalse($input->isValid());
+
+        $input->max('2005-08-15T15:52:01');
+        $this->assertTrue($input->isValid());
+
+        $input->max('2005-08-16T15:52:01');
+        $this->assertTrue($input->isValid());
+    }
+
+    public function testDate()
+    {
+        $input = Input::date();
+
+        $this->genericElementTest($input);
+        $this->genericInputTest($input, 'date');
+
+        //Values
+        $input->val('2005-33-14');
+        $this->assertFalse($input->isValid());
+
+        $input->val('Mon, 15 Aug 2005');
+        $this->assertTrue($input->isValid());
+        $this->assertEquals('2005-08-15', $input->val());
+
+        $input->max('2005-08-14');
+        $this->assertFalse($input->isValid());
+
+        $input->max('2005-08-15');
+        $this->assertTrue($input->isValid());
+
+        $input->max('2005-08-16');
+        $this->assertTrue($input->isValid());
+
+        $input->min('2005-08-16');
+        $this->assertFalse($input->isValid());
+    }
+
+    public function testTime()
+    {
+        $input = Input::time();
+
+        $this->genericElementTest($input);
+        $this->genericInputTest($input, 'time');
+
+        //Values
+        $input->val('38:34:32');
+        $this->assertFalse($input->isValid());
+
+        $input->val('18:34:32');
+        $this->assertTrue($input->isValid());
+        $this->assertEquals('18:34:32', $input->val());
+
+        $input->max('18:34:31');
+        $this->assertFalse($input->isValid());
+
+        $input->max('18:34:32');
+        $this->assertTrue($input->isValid());
+
+        $input->max('18:34:33');
+        $this->assertTrue($input->isValid());
+
+        $input->min('18:34:33');
+        $this->assertFalse($input->isValid());
+    }
+
+    public function testMonth()
+    {
+        $input = Input::month();
+
+        $this->genericElementTest($input);
+        $this->genericInputTest($input, 'month');
+
+        //Values
+        $input->val('2014-33');
+        $this->assertFalse($input->isValid());
+
+        $input->val('2014-09');
+        $this->assertTrue($input->isValid());
+        $this->assertEquals('2014-09', $input->val());
+
+        $input->max('2014-08');
+        $this->assertFalse($input->isValid());
+
+        $input->max('2014-09');
+        $this->assertTrue($input->isValid());
+
+        $input->max('2014-10');
+        $this->assertTrue($input->isValid());
+
+        $input->min('2014-10');
+        $this->assertFalse($input->isValid());
+    }
+
+    public function testWeek()
+    {
+        $input = Input::week();
+
+        $this->genericElementTest($input);
+        $this->genericInputTest($input, 'week');
+
+        //Values
+        $input->val('2014-W55');
+        $this->assertFalse($input->isValid());
+
+        $input->val('2014-W16');
+        $this->assertTrue($input->isValid());
+        $this->assertEquals('2014-W16', $input->val());
+
+        $input->max('2014-W15');
+        $this->assertFalse($input->isValid());
+
+        $input->max('2014-W16');
+        $this->assertTrue($input->isValid());
+
+        $input->max('2014-W17');
+        $this->assertTrue($input->isValid());
+
+        $input->min('2014-W17');
+        $this->assertFalse($input->isValid());
+    }
+
+    public function testColor()
+    {
+        $input = Input::color();
+
+        $this->genericElementTest($input);
+        $this->genericInputTest($input, 'color');
+
+        //Values
+        $input->val('red');
+        $this->assertFalse($input->isValid());
+
+        $input->val('11234f');
+        $this->assertFalse($input->isValid());
+
+        $input->val('#11234f');
+        $this->assertTrue($input->isValid());
+        $this->assertEquals('#11234f', $input->val());
+    }
 }
