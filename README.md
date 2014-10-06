@@ -211,7 +211,11 @@ $people->val([
 echo $people[0]['name']->val(); //returns 'Xaquín'
 
 //Append a new empty duplicate
-$people->addDuplicate();
+$people->getDuplicate(1);
+
+// or if you want to dynamically append a new duplicate 
+$total = count($form['people']->val());
+$people->getDuplicate($total);
 
 //Access to the new duplicated fields
 $people[1]['name']->val('Manoel');
