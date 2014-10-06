@@ -102,13 +102,19 @@ trait CollectionTrait
      */
     public function isValid()
     {
+        $valid = true;
+
         foreach ($this->children as $child) {
             if (!$child->isValid()) {
-                return false;
+                $valid = false;
             }
         }
 
-        return $this->validate();
+        if (!$this->validate()) {
+            $valid = false;
+        }
+
+        return $valid;
     }
 
     /**
