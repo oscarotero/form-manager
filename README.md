@@ -67,6 +67,14 @@ $name->sanitize(function ($raw_data) {
 	return strip_tags($raw_data);
 });
 
+//Add custom validates
+$name->addValidator('is-dave', function ($input) {
+	return ($input->val() === 'dave') ?: 'This value must be "dave"';
+});
+
+//Or remove them
+$name->removeValidator('is-dave');
+
 //Load the data:
 $name->load($_GET['name']);
 

@@ -296,6 +296,17 @@ class InputTest extends PHPUnit_Framework_TestCase
         $input->val('/ab/');
 
         $this->assertTrue($input->isValid());
+
+        $input->addValidator('is-dave', function ($input) {
+            return ($input->val() === 'dave') ?: 'This value must be "dave"';
+        });
+
+        $this->assertFalse($input->isValid());
+
+        $input->removeAttr('pattern');
+        $input->val('dave');
+
+        $this->assertTrue($input->isValid());
     }
 
     public function testTextarea()
