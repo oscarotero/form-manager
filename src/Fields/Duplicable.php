@@ -43,7 +43,7 @@ class Duplicable extends Collection implements CollectionInterface
 
         if ($value) {
             foreach ($value as $key => $value) {
-                $child = $this->createDuplicate();
+                $child = isset($this->children[$key]) ? $this->children[$key] : $this->createDuplicate($key);
 
                 $child->load($value, isset($file[$key]) ? $file[$key] : null);
             }
@@ -108,6 +108,20 @@ class Duplicable extends Collection implements CollectionInterface
     public function getDuplicate($index = '::n::')
     {
         return $this->createDuplicate($index, false);
+    }
+
+    /**
+     * Adds new empty duplicate values
+     *
+     * @return $this
+     */
+    public function addDuplicate($length = 1)
+    {
+        for ($i = 0; $i < $length; $i++) {
+            $this->createDuplicate(null, true);
+        }
+
+        return $this;
     }
 
     /**
