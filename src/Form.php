@@ -26,7 +26,7 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface
      *
      * @return $this
      */
-    public function loadFromGlobal (array $get = null, array $post = null, array $files = null)
+    public function loadFromGlobals (array $get = null, array $post = null, array $files = null)
     {
         if (strtolower($this->attr('method')) === 'post') {
             $value = ($post === null) ? $_POST : $post;
