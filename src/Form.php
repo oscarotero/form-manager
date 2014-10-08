@@ -20,23 +20,25 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface
     /**
      * Load the form values from global GET, POST, FILES values
      *
-     * @param array $get
-     * @param array $post
-     * @param array $file
+     * @param array|null $get
+     * @param array|null $post
+     * @param array|null $file
      *
      * @return $this
      */
-    public function loadFromGlobal (array $get = array(), array $post = array(), array $file = array())
+    public function loadFromGlobal (array $get = null, array $post = null, array $files = null)
     {
-        if (func_num_args() === 0) {
-            $get = $_GET;
-            $post = $_POST;
-            $file = $_FILES;
+        if (strtolower($this->attr('method')) === 'post') {
+            $value = ($post === null) ? $_POST : $post;
+        } else {
+            $value = ($get === null) ? $_GET : $get;
         }
 
-        $value = ($this->attr('method') === 'post') ? $post : $get;
+        if ($files === null) {
+            $files = self::fixFilesArray($_FILES);
+        }
 
-        return $this->load($value, $file);
+        return $this->load($value, $files);
     }
 
     /**
@@ -57,5 +59,64 @@ class Form extends Element implements Iterator, ArrayAccess, InputInterface
     public function id($id = null)
     {
         return $this->attr('id', $id);
+    }
+
+
+    /**
+     * Fix the $files order by converting from default wierd schema
+     * [first][name][second][0], [first][error][second][0]...
+     * to a more straightforward one.
+     * [first][second][0][name], [first][second][0][error]...
+     *
+     * @param array $files An array with all files values
+     *
+     * @return array The files values fixed
+     */
+    public static function fixFilesArray($files)
+    {
+        if (isset($files['name'], $files['tmp_name'], $files['size'], $files['type'], $files['error'])) {
+            return self::moveToRight($files);
+        }
+
+        foreach ($files as &$file) {
+            $file = self::fixFilesArray($file);
+        }
+
+        return $files;
+    }
+
+
+    /**
+     * Private function used by fixFilesArray
+     *
+     * @param array $files An array with all files values
+     *
+     * @return array The files values fixed
+     */
+    private static function moveToRight($files)
+    {
+        if (!is_array($files['name'])) {
+            return $files;
+        }
+
+        $results = array();
+
+        foreach ($files['name'] as $index => $name) {
+            $reordered = array(
+                'name' => $files['name'][$index],
+                'tmp_name' => $files['tmp_name'][$index],
+                'size' => $files['size'][$index],
+                'type' => $files['type'][$index],
+                'error' => $files['error'][$index]
+            );
+
+            if (is_array($name)) {
+                $reordered = self::moveToRight($reordered);
+            }
+
+            $results[$index] = $reordered;
+        }
+
+        return $results;
     }
 }
