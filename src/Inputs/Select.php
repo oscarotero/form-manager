@@ -26,7 +26,7 @@ class Select extends Input implements InputInterface
             return $this->options;
         }
 
-        $this->options = self::valueToString($options);
+        $this->options = $options;
 
         return $this;
     }
@@ -59,7 +59,7 @@ class Select extends Input implements InputInterface
             $value = array($value);
         }
 
-        $this->value = self::valueToString($value);
+        $this->value = $value;
 
         return $this;
     }
@@ -98,31 +98,32 @@ class Select extends Input implements InputInterface
         $val = $this->val();
         $html = '';
 
-        foreach ($this->options as $value => $label) {
-            $html .= '<option value="'.static::escape($value).'"';
+        if (is_array($val)) {
+            $val = array_map('strval', $val);
 
-            if ($val === $value || (is_array($val) && in_array($value, $val, true))) {
-                $html .= ' selected';
+            foreach ($this->options as $value => $label) {
+                $html .= '<option value="'.static::escape($value).'"';
+
+                if (in_array((string) $value, $val, true)) {
+                    $html .= ' selected';
+                }
+
+                $html .= '>'.$label.'</option>';
             }
+        } else {
+            $val = (string) $val;
 
-            $html .= '>'.$label.'</option>';
+            foreach ($this->options as $value => $label) {
+                $html .= '<option value="'.static::escape($value).'"';
+
+                if ((string) $value === $val) {
+                    $html .= ' selected';
+                }
+
+                $html .= '>'.$label.'</option>';
+            }
         }
 
         return $html;
-    }
-
-    private function valueToString($value)
-    {
-        if (is_array($value)) {
-            $stringValue = [];
-
-            foreach ($value as $key => $val) {
-                $stringValue[strval($key)] = $val;
-            }
-
-            return $stringValue;
-        }
-
-        return strval($value);
     }
 }

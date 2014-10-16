@@ -229,10 +229,13 @@ class InputTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($input->isValid());
 
         $input->val('');
-        $this->assertSame($input->val(), '');
+        $this->assertSame($input->val(), '')
+
+        ;$input->val(0);
+        $this->assertSame($input->val(), 0);
 
         $input->val(1);
-        $this->assertSame($input->val(), '1');
+        $this->assertSame($input->val(), 1);
 
         $input->val('1');
         $this->assertSame($input->val(), '1');
