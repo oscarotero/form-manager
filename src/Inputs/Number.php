@@ -16,7 +16,7 @@ class Number extends Input implements InputInterface
     {
         $value = $this->val();
 
-        if (!empty($value) && !filter_var($value, FILTER_VALIDATE_FLOAT)) {
+        if (!empty($value) && (filter_var($value, FILTER_VALIDATE_FLOAT) === false)) {
             $this->error(static::$error_message);
 
             return false;
