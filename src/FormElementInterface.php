@@ -12,7 +12,7 @@ interface FormElementInterface
      * @param mixed $value The GET/POST value
      * @param mixed $file  The FILES value (used in input[type="file"])
      *
-     * @return $this
+     * @return self
      */
     public function load ($value = null, $file = null);
 
@@ -55,7 +55,17 @@ interface FormElementInterface
      *
      * @param callable $sanitizer The function name or closure
      *
-     * @return $this
+     * @return self
      */
     public function sanitize (callable $sanitizer);
+
+    /**
+     * Set/Get an attribute value
+     *
+     * @param null|string|array $name  If it's null, returns an array with all attributes
+     * @param null|string|array $value null to getter, string to setter
+     *
+     * @return mixed
+     */
+    public function attr($name = null, $value = null);
 }

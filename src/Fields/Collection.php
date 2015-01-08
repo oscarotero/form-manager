@@ -1,12 +1,14 @@
 <?php
 namespace FormManager\Fields;
 
+use FormManager\Element;
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
 
 class Collection extends Group implements FormElementInterface, FormContainerInterface
 {
     public $field;
+    public $wrapper;
 
     protected $index = 0;
     protected $parentPath;
@@ -18,6 +20,8 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
         } else {
             $this->field = clone $children;
         }
+
+        $this->wrapper = Element::div(true);
     }
 
     /**
@@ -44,7 +48,7 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
 
         if ($value) {
             foreach ($value as $key => $value) {
-                $child = isset($this->children[$key]) ? $this->children[$key] : $this->createDuplicate($key);
+                $child = isset($this->children[$key]) ? $this->children[$key] : $this->createChild($key);
 
                 $child->load($value, isset($file[$key]) ? $file[$key] : null);
             }

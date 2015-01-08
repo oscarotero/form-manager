@@ -77,7 +77,7 @@ trait ParentTrait
      * @param array|string           $key   The child name or an array with children
      * @param FormElementInterface   $value The child
      *
-     * @return $this;
+     * @return self;
      */
     public function add($key, FormElementInterface $value = null)
     {
@@ -149,7 +149,7 @@ trait ParentTrait
      * @param mixed $value The GET/POST value
      * @param mixed $file  The FILES value (used in input[type="file"])
      *
-     * @return $this
+     * @return self
      */
     public function load($value = null, $file = null)
     {
@@ -172,7 +172,7 @@ trait ParentTrait
      *
      * @param callable $sanitizer The function name or closure
      *
-     * @return $this
+     * @return self
      */
     public function sanitize(callable $sanitizer)
     {

@@ -5,6 +5,7 @@ use FormManager\Traits\ChildTrait;
 use FormManager\Traits\ParentTrait;
 use FormManager\Traits\ValidationTrait;
 
+use FormManager\Element;
 use FormManager\Label;
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
@@ -13,8 +14,14 @@ use FormManager\Traits\VarsTrait;
 use Iterator;
 use ArrayAccess;
 
+/**
+ * @property null|Label $label
+ * @property null|Label $errorLabel
+ */
 class Group implements Iterator, ArrayAccess, FormElementInterface, FormContainerInterface
 {
+    public $wrapper;
+
     protected $render;
 
     use ChildTrait, ValidationTrait, VarsTrait, ParentTrait {
@@ -26,6 +33,8 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
         if ($children) {
             $this->add($children);
         }
+
+        $this->wrapper = Element::div(true);
     }
 
     /**
@@ -61,7 +70,7 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
      *
      * @param null|string $html Null to get the label html, string to create/edit the label content
      *
-     * @return $this
+     * @return self
      */
     public function label($html = null)
     {
@@ -90,14 +99,14 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
     public function id($id = null)
     {
         if ($id === null) {
-            if (empty($this->attributes['id'])) {
-                $this->attributes['id'] = uniqid('id_', true);
+            if (empty($this->wrapper->attr('id'))) {
+                $this->wrapper->attr('id', uniqid('id_', true));
             }
 
-            return $this->attributes['id'];
+            return $this->wrapper->attr('id');
         }
 
-        $this->attributes['id'] = $id;
+        $this->wrapper->attr('id', $id);
 
         return $this;
     }
@@ -114,6 +123,6 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
         $label = isset($this->label) ? $this->label : null;
         $html = $this->childrenToHtml();
 
-        return "{$label} {$html} {$this->errorLabel}";
+        return $this->wrapper->toString("{$label} {$html} {$this->errorLabel}");
     }
 }

@@ -7,6 +7,10 @@ use FormManager\Label;
 use FormManager\FormElementInterface;
 use FormManager\Traits\VarsTrait;
 
+/**
+ * @property null|Label $label
+ * @property null|Label $errorLabel
+ */
 class Field implements FormElementInterface
 {
     use ChildTrait;
@@ -94,7 +98,7 @@ class Field implements FormElementInterface
      *
      * @param null|string $html Null to get the label html, string to create/edit the label content
      *
-     * @return $this
+     * @return self
      */
     public function label($html = null)
     {

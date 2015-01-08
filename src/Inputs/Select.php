@@ -37,7 +37,7 @@ class Select extends Input implements FormElementInterface
      *
      * @param boolean $allow
      *
-     * @return $this
+     * @return self
      */
     public function allowNewValues($allow = true)
     {
