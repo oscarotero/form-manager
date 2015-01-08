@@ -4,7 +4,6 @@ namespace FormManager\Inputs;
 use FormManager\Traits\ChildTrait;
 use FormManager\Traits\ValidationTrait;
 use FormManager\Traits\VarsTrait;
-
 use FormManager\Element;
 
 abstract class Input extends Element
@@ -30,6 +29,7 @@ abstract class Input extends Element
 
     /**
      * {@inheritDoc}
+     * @param string $name
      */
     public function attr($name = null, $value = null)
     {
@@ -54,6 +54,7 @@ abstract class Input extends Element
 
     /**
      * {@inheritDoc}
+     * @param string $name
      */
     public function removeAttr($name)
     {

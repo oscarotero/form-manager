@@ -13,7 +13,7 @@ class Maxlength
      * @param Input $input The input in which the attribute will be added
      * @param mixed          $value The value of this attribute
      *
-     * @return mixed $value The value sanitized
+     * @return integer $value The value sanitized
      */
     public static function onAdd(Input $input, $value)
     {
@@ -41,7 +41,7 @@ class Maxlength
      *
      * @param Input $input The input to validate
      *
-     * @return string|true True if its valid, string with the error if not
+     * @return boolean|string True if its valid, string with the error if not
      */
     public static function validate(Input $input)
     {

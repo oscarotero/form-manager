@@ -4,7 +4,6 @@ namespace FormManager;
 use FormManager\Traits\ParentTrait;
 use FormManager\Traits\ValidationTrait;
 use FormManager\Traits\VarsTrait;
-
 use Iterator;
 use ArrayAccess;
 
@@ -22,7 +21,7 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
      *
      * @param array|null $get
      * @param array|null $post
-     * @param array|null $file
+     * @param array|null $files
      *
      * @return self
      */

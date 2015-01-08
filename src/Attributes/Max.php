@@ -84,7 +84,7 @@ class Max
      *
      * @param Input $input The input to validate
      *
-     * @return string|true True if its valid, string with the error if not
+     * @return boolean|string True if its valid, string with the error if not
      */
     public static function validate(Input $input)
     {
@@ -99,7 +99,7 @@ class Max
      *
      * @param Input $input The input to validate
      *
-     * @return string|true True if its valid, string with the error if not
+     * @return boolean|string True if its valid, string with the error if not
      */
     public static function validateDatetime(Input $input)
     {
