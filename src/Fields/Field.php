@@ -2,7 +2,6 @@
 namespace FormManager\Fields;
 
 use FormManager\Traits\ChildTrait;
-
 use FormManager\Label;
 use FormManager\FormElementInterface;
 use FormManager\Traits\VarsTrait;
@@ -31,13 +30,13 @@ class Field implements FormElementInterface
                 return new $class($arguments[0]);
             }
 
-            return new $class;
+            return new $class();
         }
 
         $input = 'FormManager\\Inputs\\'.ucfirst($name);
 
         if (class_exists($input)) {
-            return new static(new $input);
+            return new static(new $input());
         }
     }
 

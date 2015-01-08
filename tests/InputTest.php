@@ -70,7 +70,7 @@ class InputTest extends PHPUnit_Framework_TestCase
             'name' => 'image.jpg',
             'type' => 'image/jpeg',
             'tmp_name' => __DIR__.'/image.jpg',
-            'error' => 1
+            'error' => 1,
         ));
 
         $this->assertFalse($input->isValid());
@@ -80,7 +80,7 @@ class InputTest extends PHPUnit_Framework_TestCase
             'name' => 'image.jpg',
             'type' => 'image/jpeg',
             'tmp_name' => __DIR__.'/image.jpg',
-            'error' => 0
+            'error' => 0,
         ));
 
         $input->accept('image/png');
@@ -91,7 +91,7 @@ class InputTest extends PHPUnit_Framework_TestCase
             'name' => 'image.jpg',
             'type' => 'image/jpeg',
             'tmp_name' => __DIR__.'/image.jpg',
-            'error' => 0
+            'error' => 0,
         ));
 
         $input->accept('image/jpeg');
@@ -212,7 +212,7 @@ class InputTest extends PHPUnit_Framework_TestCase
             '' => 'Empty',
             0 => 'Zero',
             1 => 'One',
-            2 => 'Two'
+            2 => 'Two',
         ]);
 
         $input->val('three');
@@ -231,7 +231,8 @@ class InputTest extends PHPUnit_Framework_TestCase
         $input->val('');
         $this->assertSame($input->val(), '')
 
-        ;$input->val(0);
+        ;
+        $input->val(0);
         $this->assertSame($input->val(), 0);
 
         $input->val(1);

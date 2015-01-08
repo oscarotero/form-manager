@@ -4,7 +4,6 @@ namespace FormManager;
 use FormManager\Traits\ParentTrait;
 use FormManager\Traits\ValidationTrait;
 use FormManager\Traits\VarsTrait;
-
 use Iterator;
 use ArrayAccess;
 
@@ -61,7 +60,6 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
         return $this->attr('id', $id);
     }
 
-
     /**
      * Fix the $files order by converting from default wierd schema
      * [first][name][second][0], [first][error][second][0]...
@@ -85,7 +83,6 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
         return $files;
     }
 
-
     /**
      * Private function used by fixFilesArray
      *
@@ -107,7 +104,7 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
                 'tmp_name' => $files['tmp_name'][$index],
                 'size' => $files['size'][$index],
                 'type' => $files['type'][$index],
-                'error' => $files['error'][$index]
+                'error' => $files['error'][$index],
             );
 
             if (is_array($name)) {

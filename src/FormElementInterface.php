@@ -14,7 +14,7 @@ interface FormElementInterface
      *
      * @return self
      */
-    public function load ($value = null, $file = null);
+    public function load($value = null, $file = null);
 
     /**
      * Set/Get the value
@@ -23,14 +23,14 @@ interface FormElementInterface
      *
      * @return mixed
      */
-    public function val ($value = null);
+    public function val($value = null);
 
     /**
      * Checks if the value is valid
      *
      * @return boolean
      */
-    public function isValid ();
+    public function isValid();
 
     /**
      * Set/Get the error message
@@ -39,7 +39,7 @@ interface FormElementInterface
      *
      * @return mixed
      */
-    public function error ($error = null);
+    public function error($error = null);
 
     /**
      * Sets a sanitizer function to the input
@@ -48,5 +48,5 @@ interface FormElementInterface
      *
      * @return self
      */
-    public function sanitize (callable $sanitizer);
+    public function sanitize(callable $sanitizer);
 }

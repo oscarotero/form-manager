@@ -4,12 +4,10 @@ namespace FormManager\Fields;
 use FormManager\Traits\ChildTrait;
 use FormManager\Traits\ParentTrait;
 use FormManager\Traits\ValidationTrait;
-
 use FormManager\Label;
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
 use FormManager\Traits\VarsTrait;
-
 use Iterator;
 use ArrayAccess;
 

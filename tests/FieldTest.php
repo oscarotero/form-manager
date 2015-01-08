@@ -31,7 +31,7 @@ class FieldTest extends PHPUnit_Framework_TestCase
             'name' => Field::text()->label('Name'),
             'email' => Field::email()->label('email'),
             'age' => Field::number()->label('Age'),
-            'image' => Field::file()->label('Image')
+            'image' => Field::file()->label('Image'),
         ]);
 
         $field->val([
@@ -44,9 +44,9 @@ class FieldTest extends PHPUnit_Framework_TestCase
                     'type' => 'image/png',
                     'tmp_name' => '/tmp/phpTobJ71',
                     'error' => 0,
-                    'size' => 2297
-                ]
-            ],[
+                    'size' => 2297,
+                ],
+            ], [
                 'name' => 'Laura',
                 'email' => 'laura@email.com',
                 'age' => '35',
@@ -55,9 +55,9 @@ class FieldTest extends PHPUnit_Framework_TestCase
                     'type' => 'image/png',
                     'tmp_name' => '/tmp/phpTobJ72',
                     'error' => 0,
-                    'size' => 2297
+                    'size' => 2297,
                 ]
-            ]
+            ],
         ]);
 
         $this->assertCount(2, $field->val());

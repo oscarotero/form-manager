@@ -132,7 +132,6 @@ class Element
         return $this;
     }
 
-
     /**
      * Removes an attribute
      *
@@ -147,14 +146,13 @@ class Element
         return $this;
     }
 
-
     /**
      * Set/Get data attributes (data-*) to the element
      *
      * @param null|string $name  The data name. If is null, returns an array with all data
      * @param null|string $value The data value. null to getter, string to setter
      *
-     * @return self
+     * @return mixed
      */
     public function data($name = null, $value = null)
     {
@@ -179,7 +177,6 @@ class Element
         return $this;
     }
 
-
     /**
      * Removes one data attribute
      *
@@ -197,7 +194,6 @@ class Element
 
         return $this;
     }
-
 
     /**
      * Checks whether the element has a specific class or not
@@ -220,7 +216,6 @@ class Element
 
         return in_array($class, $classes);
     }
-
 
     /**
      * Add one or more classes to the element
@@ -247,7 +242,6 @@ class Element
 
         return $this->attr('class', array_unique(array_merge($classes, $class)));
     }
-
 
     /**
      * Removes one or more classes
@@ -326,7 +320,6 @@ class Element
         return $html;
     }
 
-
     /**
      * Returns the open element tag
      *
@@ -336,7 +329,6 @@ class Element
     {
         return '<'.$this->name.$this->attrToHtml().'>';
     }
-
 
     /**
      * Returns the close element tag

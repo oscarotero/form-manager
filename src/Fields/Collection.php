@@ -124,7 +124,7 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
      */
     public function addChild($index = null)
     {
-        $this->createChild();
+        $this->createChild($index);
 
         return $this;
     }

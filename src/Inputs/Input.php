@@ -4,7 +4,6 @@ namespace FormManager\Inputs;
 use FormManager\Traits\ChildTrait;
 use FormManager\Traits\ValidationTrait;
 use FormManager\Traits\VarsTrait;
-
 use FormManager\Element;
 
 abstract class Input extends Element
@@ -24,7 +23,7 @@ abstract class Input extends Element
         $class = __NAMESPACE__.'\\'.ucfirst($name);
 
         if (class_exists($class)) {
-            return new $class;
+            return new $class();
         }
     }
 
