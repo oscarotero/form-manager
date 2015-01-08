@@ -14,10 +14,10 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
 
     public function __construct($children = null)
     {
-        if (is_array($children)) {
-            $this->field = new Group($children);
-        } else {
+        if ($children instanceof FormElementInterface) {
             $this->field = $children;
+        } else {
+            $this->field = new Group($children);
         }
     }
 
