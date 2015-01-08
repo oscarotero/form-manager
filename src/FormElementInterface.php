@@ -68,4 +68,13 @@ interface FormElementInterface
      * @return mixed
      */
     public function attr($name = null, $value = null);
+
+    /**
+     * Removes an attribute
+     *
+     * @param string $name The attribute name
+     *
+     * @return self
+     */
+    public function removeAttr($name);
 }

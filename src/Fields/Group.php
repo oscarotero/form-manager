@@ -114,6 +114,30 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
     /**
      * {@inheritDoc}
      */
+    public function attr($name = null, $value = null)
+    {
+        if (($value !== null) || (is_array($name))) {
+            $this->wrapper->attr($name, $value);
+
+            return $this;
+        }
+
+        return $this->wrapper->attr($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeAttr($name)
+    {
+        $this->wrapper->removeAttr($name);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function toHtml()
     {
         if ($this->render) {
