@@ -8,7 +8,6 @@ use FormManager\FormContainerInterface;
 class Collection extends Group implements FormElementInterface, FormContainerInterface
 {
     public $field;
-    public $wrapper;
 
     protected $index = 0;
     protected $parentPath;
@@ -18,10 +17,8 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
         if (is_array($children)) {
             $this->field = new Group($children);
         } else {
-            $this->field = clone $children;
+            $this->field = $children;
         }
-
-        $this->wrapper = Element::div(true);
     }
 
     /**
