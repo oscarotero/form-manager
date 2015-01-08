@@ -122,7 +122,10 @@ $name->render(function ($field) {
 echo $name;
 ```
 
-#### Group field
+Special fields
+--------------
+
+#### Group
 
 A group is a special field that contains other fields or inputs:
 
@@ -234,7 +237,7 @@ echo '<div class="template">' + $template + '</div>';
 Create a form
 -------------
 
-Let's put all together
+Let's put all together using a Form class
 
 ```php
 use FormManager\Form;
@@ -257,7 +260,7 @@ class MyForm extends Form {
 				'f' => Field::radio()->label('Female')
 			]),
 			
-			'born' => Field::collection([
+			'born' => Field::group([
 				'day' => Field::number()->min(1)->max(31)->label('Day'),
 				'month' => Field::number()->min(1)->max(12)->label('Month'),
 				'year' => Field::number()->min(1900)->max(2013)->label('Year')
@@ -269,7 +272,7 @@ class MyForm extends Form {
 				'en' => 'English'
 			))->label('Language'),
 
-			'friends' => Field::duplicable([
+			'friends' => Field::collection([
 				'name' => Field::text()->label('Name'),
 				'email' => Field::email()->label('email'),
 				'age' => Field::number()->label('Age')
@@ -283,9 +286,9 @@ class MyForm extends Form {
 	}
 }
 
-//You can also add new inputs using the array syntax (the key will be the input name):
 $MyForm = new MyForm();
 
+//You can also add new inputs using the array syntax (the key will be the input name):
 $MyForm['new-input'] = Input::range()->min(0)->max(100);
 
 //Print the form
@@ -315,7 +318,7 @@ if ($MyForm->isValid()) {
 	echo 'there are errors in the form';
 }
 
-//You can set the global values:
+//You can set the global values manually:
 $MyForm->loadFromGlobals($_GET, $_POST, $_FILES);
 
 //Or load your custom values (like any other field or input)
