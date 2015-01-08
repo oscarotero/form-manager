@@ -21,7 +21,7 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
      *
      * @param array|null $get
      * @param array|null $post
-     * @param array|null $file
+     * @param array|null $files
      *
      * @return self
      */

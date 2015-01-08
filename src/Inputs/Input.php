@@ -29,6 +29,7 @@ abstract class Input extends Element
 
     /**
      * {@inheritDoc}
+     * @param string $name
      */
     public function attr($name = null, $value = null)
     {
@@ -53,6 +54,7 @@ abstract class Input extends Element
 
     /**
      * {@inheritDoc}
+     * @param string $name
      */
     public function removeAttr($name)
     {

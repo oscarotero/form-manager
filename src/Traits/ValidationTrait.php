@@ -63,7 +63,7 @@ trait ValidationTrait
      *
      * @param null|string $error null to getter, string to setter
      *
-     * @return mixed
+     * @return null|string
      */
     public function error($error = null)
     {

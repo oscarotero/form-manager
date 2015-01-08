@@ -11,7 +11,7 @@ class Multiple
      * @param Input $input The input in which the attribute will be added
      * @param mixed $value The value of this attribute
      *
-     * @return mixed $value The value sanitized
+     * @return boolean $value The value sanitized
      */
     public static function onAdd(Input $input, $value)
     {
