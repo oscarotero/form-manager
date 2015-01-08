@@ -128,20 +128,6 @@ class Field implements FormElementInterface
     /**
      * {@inheritDoc}
      */
-    public function id($id = null)
-    {
-        if ($id === null) {
-            return $this->input->id();
-        }
-
-        $this->input->id($id);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function attr($name = null, $value = null)
     {
         if (($value !== null) || (is_array($name))) {

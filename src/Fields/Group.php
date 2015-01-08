@@ -5,7 +5,6 @@ use FormManager\Traits\ChildTrait;
 use FormManager\Traits\ParentTrait;
 use FormManager\Traits\ValidationTrait;
 
-use FormManager\Element;
 use FormManager\Label;
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
@@ -20,8 +19,6 @@ use ArrayAccess;
  */
 class Group implements Iterator, ArrayAccess, FormElementInterface, FormContainerInterface
 {
-    public $wrapper;
-
     protected $render;
 
     use ChildTrait, ValidationTrait, VarsTrait, ParentTrait {
@@ -33,8 +30,6 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
         if ($children) {
             $this->add($children);
         }
-
-        $this->wrapper = Element::div(true);
     }
 
     /**
@@ -99,38 +94,14 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
     public function id($id = null)
     {
         if ($id === null) {
-            if (empty($this->wrapper->attr('id'))) {
-                $this->wrapper->attr('id', uniqid('id_', true));
+            if (empty($this->attributes['id'])) {
+                $this->attributes['id'] = uniqid('id_', true);
             }
 
-            return $this->wrapper->attr('id');
+            return $this->attributes['id'];
         }
 
-        $this->wrapper->attr('id', $id);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function attr($name = null, $value = null)
-    {
-        if (($value !== null) || (is_array($name))) {
-            $this->wrapper->attr($name, $value);
-
-            return $this;
-        }
-
-        return $this->wrapper->attr($name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function removeAttr($name)
-    {
-        $this->wrapper->removeAttr($name);
+        $this->attributes['id'] = $id;
 
         return $this;
     }
@@ -147,6 +118,6 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
         $label = isset($this->label) ? $this->label : null;
         $html = $this->childrenToHtml();
 
-        return $this->wrapper->toString("{$label} {$html} {$this->errorLabel}");
+        return "{$label} {$html} {$this->errorLabel}";
     }
 }

@@ -42,15 +42,6 @@ interface FormElementInterface
     public function error ($error = null);
 
     /**
-     * Set/Get the id of the element. For getters, generates a random id if it's not defined
-     *
-     * @param null|string $id null to getter, string to setter
-     *
-     * @return mixed
-     */
-    public function id ($id = null);
-
-    /**
      * Sets a sanitizer function to the input
      *
      * @param callable $sanitizer The function name or closure
@@ -58,23 +49,4 @@ interface FormElementInterface
      * @return self
      */
     public function sanitize (callable $sanitizer);
-
-    /**
-     * Set/Get an attribute value
-     *
-     * @param null|string|array $name  If it's null, returns an array with all attributes
-     * @param null|string|array $value null to getter, string to setter
-     *
-     * @return mixed
-     */
-    public function attr($name = null, $value = null);
-
-    /**
-     * Removes an attribute
-     *
-     * @param string $name The attribute name
-     *
-     * @return self
-     */
-    public function removeAttr($name);
 }
