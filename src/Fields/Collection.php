@@ -23,7 +23,7 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
     /**
      * {@inheritDoc}
      */
-    public function add($key, $value = null)
+    public function add($key, FormElementInterface $value = null)
     {
         $this->field->add($key, $value);
 
