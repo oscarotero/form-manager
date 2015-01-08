@@ -74,8 +74,8 @@ trait ParentTrait
     /**
      * Adds new children to this element
      *
-     * @param array|FormElementInterface $key   The child or an array with children
-     * @param FormElementInterface       $value The child
+     * @param array|string           $key   The child name or an array with children
+     * @param FormElementInterface   $value The child
      *
      * @return $this;
      */
