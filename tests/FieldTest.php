@@ -68,4 +68,30 @@ class FieldTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('2.png', $field[1]['image']->val()['name']);
     }
+
+    public function testRender()
+    {
+        $input = Field::text()->name('name')->attr('id', 'field-name')->label('Your name');
+
+        $html = '<label for="field-name">Your name</label> <input type="text" name="name" id="field-name"> ';
+
+        $this->assertEquals($html, (string) $input);
+
+        $input->render(function ($input) {
+            return $input->label.'<br>'.$input->input;
+        });
+
+        $html = '<label for="field-name">Your name</label><br><input type="text" name="name" id="field-name">';
+
+        $this->assertEquals($html, (string) $input);
+
+        $input->render(function ($input) {
+            return '<div>'.$input.'</div>';
+        });
+
+        $html = '<div><label for="field-name">Your name</label> <input type="text" name="name" id="field-name"> </div>';
+
+        $this->assertEquals($html, (string) $input);
+
+    }
 }

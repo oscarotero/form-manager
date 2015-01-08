@@ -16,7 +16,9 @@ class Field implements FormElementInterface
     use VarsTrait;
 
     public $input;
+
     protected $render;
+    protected $rendering = false;
 
     /**
      * Magic method to create new instances using the API Field::text()
@@ -205,8 +207,12 @@ class Field implements FormElementInterface
      */
     public function toHtml()
     {
-        if ($this->render) {
-            return call_user_func($this->render, $this);
+        if ($this->render && !$this->rendering) {
+            $this->rendering = true;
+            $html = call_user_func($this->render, $this);
+            $this->rendering = false;
+
+            return $html;
         }
 
         $label = isset($this->label) ? $this->label : null;

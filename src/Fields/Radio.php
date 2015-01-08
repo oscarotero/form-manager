@@ -16,8 +16,12 @@ class Radio extends Field implements FormElementInterface
      */
     public function toHtml()
     {
-        if ($this->render) {
-            return parent::toHtml();
+        if ($this->render && !$this->rendering) {
+            $this->rendering = true;
+            $html = call_user_func($this->render, $this);
+            $this->rendering = false;
+
+            return $html;
         }
 
         $label = isset($this->label) ? (string) $this->label : '';

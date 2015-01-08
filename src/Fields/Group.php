@@ -18,6 +18,7 @@ use ArrayAccess;
 class Group implements Iterator, ArrayAccess, FormElementInterface, FormContainerInterface
 {
     protected $render;
+    protected $rendering = false;
 
     use ChildTrait, ValidationTrait, VarsTrait, ParentTrait {
         ParentTrait::__clone as private __collectionClone;
@@ -109,8 +110,12 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
      */
     public function toHtml()
     {
-        if ($this->render) {
-            return call_user_func($this->render, $this);
+        if ($this->render && !$this->rendering) {
+            $this->rendering = true;
+            $html = call_user_func($this->render, $this);
+            $this->rendering = false;
+
+            return $html;
         }
 
         $label = isset($this->label) ? $this->label : null;
