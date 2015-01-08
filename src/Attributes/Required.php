@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Attributes;
 
-use FormManager\FormElementInterface;
+use FormManager\Inputs\Input;
 
 class Required
 {
@@ -10,12 +10,12 @@ class Required
     /**
      * Callback used on add this attribute to an input
      *
-     * @param FormElementInterface $input The input in which the attribute will be added
+     * @param Input $input The input in which the attribute will be added
      * @param mixed          $value The value of this attribute
      *
      * @return mixed $value The value sanitized
      */
-    public static function onAdd(FormElementInterface $input, $value)
+    public static function onAdd(Input $input, $value)
     {
         if (!is_bool($value)) {
             throw new \InvalidArgumentException('The required value must be a boolean');
@@ -29,9 +29,9 @@ class Required
     /**
      * Callback used on remove this attribute from an input
      *
-     * @param FormElementInterface $input The input from the attribute will be removed
+     * @param Input $input The input from the attribute will be removed
      */
-    public static function onRemove(FormElementInterface $input)
+    public static function onRemove(Input $input)
     {
         $input->removeValidator('required');
     }
@@ -39,11 +39,11 @@ class Required
     /**
      * Validates the input value according to this attribute
      *
-     * @param FormElementInterface $input The input to validate
+     * @param Input $input The input to validate
      *
      * @return string|true True if its valid, string with the error if not
      */
-    public static function validate(FormElementInterface $input)
+    public static function validate(Input $input)
     {
         $value = $input->val();
 
