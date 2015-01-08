@@ -1,16 +1,17 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\CollectionInterface;
+use FormManager\FormContainerInterface;
+use FormManager\FormElementInterface;
 
-class Choose extends Collection implements CollectionInterface
+class Choose extends Group implements FormContainerInterface, FormElementInterface
 {
     /**
      * {@inheritDoc}
      */
     public function prepareChild($child, $key, $parentPath = null)
     {
-        if ($child instanceof CollectionInterface) {
+        if ($child instanceof FormContainerInterface) {
             throw new \Exception("The Choose field cannot have collections inside", 1);
         }
 

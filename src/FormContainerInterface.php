@@ -1,11 +1,10 @@
 <?php
-/**
- * Interface used by all collection elements
- */
-
 namespace FormManager;
 
-interface CollectionInterface extends InputInterface
+/**
+ * Interface used by all elements with children
+ */
+interface FormContainerInterface
 {
     /**
      * Prepare a child element before insert

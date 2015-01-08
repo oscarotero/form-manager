@@ -1,11 +1,10 @@
 <?php
+namespace FormManager;
+
 /**
  * Interface used by all elements (forms, fields, inputs, etc) to keep the basic behaviour
  */
-
-namespace FormManager;
-
-interface InputInterface
+interface FormElementInterface
 {
     /**
      * Loads a value sent by the client

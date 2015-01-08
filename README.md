@@ -13,7 +13,7 @@ Requirements:
 Installation:
 
 * If you use composer: `composer require form-manager/form-manager`
-* If not, you have to use a PSR-4 loader or include the `src/autoloader.php` file in your project. 
+* If not, you have to use a PSR-4 loader or include the `src/autoloader.php` file in your project.
 
 
 Create an input
@@ -122,20 +122,20 @@ $name->render(function ($field) {
 echo $name;
 ```
 
-#### Collection field
+#### Group field
 
-A collection is a special field that contains other fields or inputs:
+A group is a special field that contains other fields or inputs:
 
 ```php
 use FormManager\Fields\Field;
 
-$date = Field::collection([
+$date = Field::group([
 	'day' => Field::number()->min(1)->max(31)->label('Day'),
 	'month' => Field::number()->min(1)->max(12)->label('Month'),
 	'year' => Field::number()->min(1900)->max(2013)->label('Year')
 ]);
 
-//You can add also a global label for this collection
+//You can add also a global label for this group
 $date->label('Your birth day');
 
 //Add some data
@@ -188,15 +188,15 @@ $colors->val('red');
 $color = $colors->val();
 ```
 
-#### Duplicable
+#### Collection
 
-Special field that stores a collection of inputs that you can clone them for multiple values.
+It's like a [group](#group), but contain a collection of values:
 
 ```php
 use FormManager\Fields\Field;
 
-//Create a multiple field
-$people = Field::duplicable([
+//Create a collection field
+$people = Field::collection([
 	'name' => Field::text()->label('Name'),
 	'email' => Field::email()->label('email'),
 	'age' => Field::number()->label('Age')
@@ -218,15 +218,16 @@ $people->val([
 //Get fieldsets by number
 echo $people[0]['name']->val(); //returns 'Xaquín'
 
-//Append a new empty duplicate
-$people->getDuplicate(1);
+//Append a new child
+$people->addChild();
 
-// or if you want to dynamically append a new duplicate 
-$total = count($form['people']->val());
-$people->getDuplicate($total);
+//Access to the new child
+$people[2]['name']->val('Manoel');
 
-//Access to the new duplicated fields
-$people[1]['name']->val('Manoel');
+//Returns a fake child to create new childs dinamically with javascript:
+$template = $people->getTemplateChild();
+
+echo '<div class="template">' + $template + '</div>';
 ```
 
 

@@ -1,74 +1,31 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Traits\ChildTrait;
-use FormManager\Traits\CollectionTrait;
-use FormManager\Traits\ValidationTrait;
+use FormManager\FormElementInterface;
+use FormManager\FormContainerInterface;
 
-use FormManager\Label;
-use FormManager\CollectionInterface;
-use FormManager\Traits\VarsTrait;
-
-use Iterator;
-use ArrayAccess;
-
-class Collection implements Iterator, ArrayAccess, CollectionInterface
+class Collection extends Group implements FormElementInterface, FormContainerInterface
 {
-    protected $render;
+    public $field;
 
-    use ChildTrait, ValidationTrait, VarsTrait, CollectionTrait {
-        CollectionTrait::__clone as private __collectionClone;
-    }
+    protected $index = 0;
+    protected $parentPath;
 
-    public function __construct(array $children = null)
+    public function __construct($children = null)
     {
-        if ($children) {
-            $this->add($children);
+        if (is_array($children)) {
+            $this->field = new Group($children);
+        } else {
+            $this->field = clone $children;
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function __toString()
+    public function add($key, $value = null)
     {
-        return $this->toHtml();
-    }
-
-    public function __clone()
-    {
-        $this->__collectionClone();
-
-        if (isset($this->label)) {
-            $this->label = clone $this->label;
-        }
-    }
-
-    public function __get($name)
-    {
-        if ($name === 'label') {
-            return $this->label = new Label();
-        }
-
-        if (($name === 'errorLabel') && ($error = $this->error())) {
-            return new Label(null, ['class' => 'error'], $error);
-        }
-    }
-
-    /**
-     * Creates/edit/returns the label associated with the input
-     *
-     * @param null|string $html Null to get the label html, string to create/edit the label content
-     *
-     * @return $this
-     */
-    public function label($html = null)
-    {
-        if ($html === null) {
-            return $this->label->html();
-        }
-
-        $this->label->html($html);
+        $this->field->add($key, $value);
 
         return $this;
     }
@@ -76,27 +33,22 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function render(callable $render)
+    public function load($value = null, $file = null)
     {
-        $this->render = $render;
+        if (($sanitizer = $this->sanitizer) !== null) {
+            $value = $sanitizer($value);
+        }
 
-        return $this;
-    }
+        $this->children = [];
+        $this->index = 0;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function id($id = null)
-    {
-        if ($id === null) {
-            if (empty($this->attributes['id'])) {
-                $this->attributes['id'] = uniqid('id_', true);
+        if ($value) {
+            foreach ($value as $key => $value) {
+                $child = isset($this->children[$key]) ? $this->children[$key] : $this->createDuplicate($key);
+
+                $child->load($value, isset($file[$key]) ? $file[$key] : null);
             }
-
-            return $this->attributes['id'];
         }
-
-        $this->attributes['id'] = $id;
 
         return $this;
     }
@@ -104,15 +56,84 @@ class Collection implements Iterator, ArrayAccess, CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function toHtml()
+    public function val($value = null)
     {
-        if ($this->render) {
-            return call_user_func($this->render, $this);
+        if ($value === null) {
+            return parent::val();
         }
 
-        $label = isset($this->label) ? $this->label : null;
-        $html = $this->childrenToHtml();
+        $this->children = [];
 
-        return "{$label} {$html} {$this->errorLabel}";
+        if ($value) {
+            foreach ($value as $key => $value) {
+                $child = isset($this->children[$key]) ? $this->children[$key] : $this->createChild($key);
+
+                $child->val($value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Create and insert new children
+     *
+     * @param null|integer $index The index of the child. Null to autogenerate
+     *
+     * @return FormElementInterface The new added child
+     */
+    protected function createChild($index = null)
+    {
+        if ($index === null) {
+            $index = $this->index++;
+        }
+
+        $child = $this->children[$index] = clone $this->field;
+
+        $child->setParent($this);
+        $this->prepareChild($child, $index, $this->parentPath);
+
+        return $child;
+    }
+
+    /**
+     * Returns a child without insert into
+     *
+     * @return FormElementInterface The cloned field
+     */
+    public function getTemplateChild($index = '::n::')
+    {
+        $child = clone $this->field;
+
+        $child->setParent($this);
+        $this->prepareChild($child, $index, $this->parentPath);
+
+        return $child;
+    }
+
+    /**
+     * Adds new empty child values
+     *
+     * @param null|integer $index The index of the child. Null to autogenerate
+     *
+     * @return FormElementInterface The new added child
+     */
+    public function addChild($index = null)
+    {
+        $this->createChild();
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prepareChildren($parentPath = null)
+    {
+        $this->parentPath = $parentPath;
+
+        foreach ($this->children as $key => $child) {
+            $this->prepareChild($child, $key, $this->parentPath);
+        }
     }
 }

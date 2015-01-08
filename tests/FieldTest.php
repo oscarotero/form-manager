@@ -25,9 +25,9 @@ class FieldTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($html, $field->toHtml());
     }
 
-    public function testDuplicableField()
+    public function testCollectionField()
     {
-        $field = Field::duplicable([
+        $field = Field::collection([
             'name' => Field::text()->label('Name'),
             'email' => Field::email()->label('email'),
             'age' => Field::number()->label('Age'),
@@ -63,7 +63,7 @@ class FieldTest extends PHPUnit_Framework_TestCase
         $this->assertCount(2, $field->val());
         $this->assertEquals('Laura', $field[1]['name']->val());
 
-        $duplicate = $field->getDuplicate();
+        $duplicate = $field->getTemplateChild();
         $this->assertEquals('::n::[name]', $duplicate['name']->attr('name'));
 
         $this->assertEquals('2.png', $field[1]['image']->val()['name']);

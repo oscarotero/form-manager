@@ -1,13 +1,13 @@
 <?php
 /**
- * Trait with common method for collection objects (objects having children)
+ * Trait with common method for elements having children (form, collection, etc)
  */
 namespace FormManager\Traits;
 
-use FormManager\InputInterface;
-use FormManager\CollectionInterface;
+use FormManager\FormElementInterface;
+use FormManager\FormContainerInterface;
 
-trait CollectionTrait
+trait ParentTrait
 {
     protected $children = [];
     protected $sanitizer;
@@ -74,12 +74,12 @@ trait CollectionTrait
     /**
      * Adds new children to this element
      *
-     * @param array|InputInterface $key   The child or an array with children
-     * @param InputInterface       $value The child
+     * @param array|FormElementInterface $key   The child or an array with children
+     * @param FormElementInterface       $value The child
      *
      * @return $this;
      */
-    public function add($key, $value = null)
+    public function add($key, FormElementInterface $value = null)
     {
         if (is_array($key)) {
             foreach ($key as $key => $value) {
@@ -204,7 +204,7 @@ trait CollectionTrait
     {
         $path = $parentPath ? "{$parentPath}[{$key}]" : $key;
 
-        if ($child instanceof CollectionInterface) {
+        if ($child instanceof FormContainerInterface) {
             $child->prepareChildren($path);
         } else {
             $child->attr('name', $path);

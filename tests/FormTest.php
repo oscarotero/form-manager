@@ -23,7 +23,7 @@ class FormTest extends PHPUnit_Framework_TestCase
                 'f' => Field::radio()->label('Female')
             ]),
 
-            'born' => Field::collection([
+            'born' => Field::group([
                 'day' => Field::number()->min(1)->max(31)->label('Day'),
                 'month' => Field::number()->min(1)->max(12)->label('Month'),
                 'year' => Field::number()->min(1900)->max(2013)->label('Year')
@@ -35,7 +35,7 @@ class FormTest extends PHPUnit_Framework_TestCase
                 'en' => 'English'
             ))->label('Language'),
 
-            'friends' => Field::duplicable([
+            'friends' => Field::collection([
                 'name' => Field::text()->label('Name'),
                 'email' => Field::email()->label('email'),
                 'age' => Field::number()->label('Age')

@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class File extends Input implements InputInterface
+class File extends Input implements FormElementInterface
 {
     protected static $uploadErrors = array(
         1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',

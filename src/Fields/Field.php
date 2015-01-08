@@ -4,10 +4,10 @@ namespace FormManager\Fields;
 use FormManager\Traits\ChildTrait;
 
 use FormManager\Label;
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 use FormManager\Traits\VarsTrait;
 
-class Field implements InputInterface
+class Field implements FormElementInterface
 {
     use ChildTrait;
     use VarsTrait;
@@ -37,7 +37,7 @@ class Field implements InputInterface
         }
     }
 
-    public function __construct(InputInterface $input = null)
+    public function __construct(FormElementInterface $input = null)
     {
         if ($input) {
             $this->input = $input;
@@ -228,7 +228,7 @@ class Field implements InputInterface
     /**
      * {@inheritDoc}
      */
-    public function setParent(InputInterface $parent)
+    public function setParent(FormElementInterface $parent)
     {
         $this->input->setParent($parent);
 

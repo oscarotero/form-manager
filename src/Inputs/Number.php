@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class Number extends Input implements InputInterface
+class Number extends Input implements FormElementInterface
 {
     public static $error_message = 'This value is not a valid number';
 

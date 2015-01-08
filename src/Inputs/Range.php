@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class Range extends Number implements InputInterface
+class Range extends Number implements FormElementInterface
 {
     protected $attributes = ['type' => 'range'];
 }

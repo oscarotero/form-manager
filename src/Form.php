@@ -1,16 +1,16 @@
 <?php
 namespace FormManager;
 
-use FormManager\Traits\CollectionTrait;
+use FormManager\Traits\ParentTrait;
 use FormManager\Traits\ValidationTrait;
 use FormManager\Traits\VarsTrait;
 
 use Iterator;
 use ArrayAccess;
 
-class Form extends Element implements Iterator, ArrayAccess, InputInterface
+class Form extends Element implements Iterator, ArrayAccess, FormElementInterface
 {
-    use CollectionTrait;
+    use ParentTrait;
     use ValidationTrait;
     use VarsTrait;
 

@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class Radio extends Checkbox implements InputInterface
+class Radio extends Checkbox implements FormElementInterface
 {
     protected $attributes = ['type' => 'radio'];
 }

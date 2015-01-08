@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class Password extends Input implements InputInterface
+class Password extends Input implements FormElementInterface
 {
     protected $attributes = ['type' => 'password'];
 }
