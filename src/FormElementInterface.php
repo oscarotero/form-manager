@@ -1,11 +1,10 @@
 <?php
+namespace FormManager;
+
 /**
  * Interface used by all elements (forms, fields, inputs, etc) to keep the basic behaviour
  */
-
-namespace FormManager;
-
-interface InputInterface
+interface FormElementInterface
 {
     /**
      * Loads a value sent by the client
@@ -13,9 +12,9 @@ interface InputInterface
      * @param mixed $value The GET/POST value
      * @param mixed $file  The FILES value (used in input[type="file"])
      *
-     * @return $this
+     * @return self
      */
-    public function load ($value = null, $file = null);
+    public function load($value = null, $file = null);
 
     /**
      * Set/Get the value
@@ -24,14 +23,14 @@ interface InputInterface
      *
      * @return mixed
      */
-    public function val ($value = null);
+    public function val($value = null);
 
     /**
      * Checks if the value is valid
      *
      * @return boolean
      */
-    public function isValid ();
+    public function isValid();
 
     /**
      * Set/Get the error message
@@ -40,23 +39,14 @@ interface InputInterface
      *
      * @return mixed
      */
-    public function error ($error = null);
-
-    /**
-     * Set/Get the id of the element. For getters, generates a random id if it's not defined
-     *
-     * @param null|string $id null to getter, string to setter
-     *
-     * @return mixed
-     */
-    public function id ($id = null);
+    public function error($error = null);
 
     /**
      * Sets a sanitizer function to the input
      *
      * @param callable $sanitizer The function name or closure
      *
-     * @return $this
+     * @return self
      */
-    public function sanitize (callable $sanitizer);
+    public function sanitize(callable $sanitizer);
 }

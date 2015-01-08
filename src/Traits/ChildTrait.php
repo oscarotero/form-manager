@@ -5,7 +5,7 @@
 
 namespace FormManager\Traits;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 use FormManager\Form;
 
 trait ChildTrait
@@ -15,11 +15,11 @@ trait ChildTrait
     /**
      * Set the element parent
      *
-     * @param InputInterface $parent
+     * @param FormElementInterface $parent
      *
-     * @return $this
+     * @return self
      */
-    public function setParent(InputInterface $parent)
+    public function setParent(FormElementInterface $parent)
     {
         $this->parent = $parent;
 
@@ -29,7 +29,7 @@ trait ChildTrait
     /**
      * Returns the element parent
      *
-     * @return null|InputInterface
+     * @return null|FormElementInterface
      */
     public function getParent()
     {

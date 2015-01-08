@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class Text extends Input implements InputInterface
+class Text extends Input implements FormElementInterface
 {
     protected $attributes = ['type' => 'text'];
 }

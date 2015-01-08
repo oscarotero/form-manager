@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class Date extends Datetime implements InputInterface
+class Date extends Datetime implements FormElementInterface
 {
     public static $error_message = 'This value is not a valid date';
 

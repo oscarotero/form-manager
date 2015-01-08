@@ -42,6 +42,7 @@ class Label extends Element
     public function setInput(Input $input)
     {
         $this->input = $input;
+        $this->input->id(); //ensure the id is defined
     }
 
     /**

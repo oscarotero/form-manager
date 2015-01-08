@@ -1,10 +1,10 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 use FormManager\Inputs\Input;
 
-class Radio extends Field implements InputInterface
+class Radio extends Field implements FormElementInterface
 {
     public function __construct()
     {

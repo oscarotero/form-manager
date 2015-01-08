@@ -2,12 +2,15 @@
 namespace FormManager\Fields;
 
 use FormManager\Traits\ChildTrait;
-
 use FormManager\Label;
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 use FormManager\Traits\VarsTrait;
 
-class Field implements InputInterface
+/**
+ * @property null|Label $label
+ * @property null|Label $errorLabel
+ */
+class Field implements FormElementInterface
 {
     use ChildTrait;
     use VarsTrait;
@@ -27,17 +30,17 @@ class Field implements InputInterface
                 return new $class($arguments[0]);
             }
 
-            return new $class;
+            return new $class();
         }
 
         $input = 'FormManager\\Inputs\\'.ucfirst($name);
 
         if (class_exists($input)) {
-            return new static(new $input);
+            return new static(new $input());
         }
     }
 
-    public function __construct(InputInterface $input = null)
+    public function __construct(FormElementInterface $input = null)
     {
         if ($input) {
             $this->input = $input;
@@ -94,7 +97,7 @@ class Field implements InputInterface
      *
      * @param null|string $html Null to get the label html, string to create/edit the label content
      *
-     * @return $this
+     * @return self
      */
     public function label($html = null)
     {
@@ -117,20 +120,6 @@ class Field implements InputInterface
         }
 
         $this->input->error($error);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function id($id = null)
-    {
-        if ($id === null) {
-            return $this->input->id();
-        }
-
-        $this->input->id($id);
 
         return $this;
     }
@@ -228,7 +217,7 @@ class Field implements InputInterface
     /**
      * {@inheritDoc}
      */
-    public function setParent(InputInterface $parent)
+    public function setParent(FormElementInterface $parent)
     {
         $this->input->setParent($parent);
 

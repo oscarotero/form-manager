@@ -4,7 +4,6 @@ namespace FormManager\Inputs;
 use FormManager\Traits\ChildTrait;
 use FormManager\Traits\ValidationTrait;
 use FormManager\Traits\VarsTrait;
-
 use FormManager\Element;
 
 abstract class Input extends Element
@@ -24,12 +23,13 @@ abstract class Input extends Element
         $class = __NAMESPACE__.'\\'.ucfirst($name);
 
         if (class_exists($class)) {
-            return new $class;
+            return new $class();
         }
     }
 
     /**
      * {@inheritDoc}
+     * @param string $name
      */
     public function attr($name = null, $value = null)
     {
@@ -54,6 +54,7 @@ abstract class Input extends Element
 
     /**
      * {@inheritDoc}
+     * @param string $name
      */
     public function removeAttr($name)
     {
@@ -141,7 +142,7 @@ abstract class Input extends Element
     /**
      * Checks the input (used in some inputs like radio/checkboxes)
      *
-     * @return $this
+     * @return self
      */
     public function check()
     {
@@ -151,7 +152,7 @@ abstract class Input extends Element
     /**
      * Unchecks the input  (used in some inputs like radio/checkboxes)
      *
-     * @return $this
+     * @return self
      */
     public function uncheck()
     {

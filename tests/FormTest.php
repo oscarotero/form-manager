@@ -1,6 +1,5 @@
 <?php
 use FormManager\Form;
-use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
 
 include_once __DIR__.'/../src/autoloader.php';
@@ -9,7 +8,7 @@ class FormTest extends PHPUnit_Framework_TestCase
 {
     public function testForm()
     {
-        $form = new Form;
+        $form = new Form();
 
         $form->action('index.php')->method('post');
 
@@ -20,31 +19,31 @@ class FormTest extends PHPUnit_Framework_TestCase
 
             'gender' => Field::choose([
                 'm' => Field::radio()->label('Male'),
-                'f' => Field::radio()->label('Female')
+                'f' => Field::radio()->label('Female'),
             ]),
 
-            'born' => Field::collection([
+            'born' => Field::group([
                 'day' => Field::number()->min(1)->max(31)->label('Day'),
                 'month' => Field::number()->min(1)->max(12)->label('Month'),
-                'year' => Field::number()->min(1900)->max(2013)->label('Year')
+                'year' => Field::number()->min(1900)->max(2013)->label('Year'),
             ]),
 
             'language' => Field::select()->options(array(
                 'gl' => 'Galician',
                 'es' => 'Spanish',
-                'en' => 'English'
+                'en' => 'English',
             ))->label('Language'),
 
-            'friends' => Field::duplicable([
+            'friends' => Field::collection([
                 'name' => Field::text()->label('Name'),
                 'email' => Field::email()->label('email'),
-                'age' => Field::number()->label('Age')
+                'age' => Field::number()->label('Age'),
             ]),
 
             'action' => Field::choose([
                 'save' => Field::submit()->html('Save changes'),
-                'duplicate' => Field::submit()->html('Save as new value')
-            ])
+                'duplicate' => Field::submit()->html('Save as new value'),
+            ]),
         ]);
 
         $data = array(
@@ -55,17 +54,17 @@ class FormTest extends PHPUnit_Framework_TestCase
             'born' => array(
                 'day' => 23,
                 'month' => 12,
-                'year' => 2013
+                'year' => 2013,
             ),
             'language' => 'gl',
             'friends' => array(
                 array(
                     'name' => 'Luis',
                     'email' => 'luis@luis.com',
-                    'age' => 30
-                )
+                    'age' => 30,
+                ),
             ),
-            'action' => 'save'
+            'action' => 'save',
         );
 
         $form->val($data);

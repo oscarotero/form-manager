@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\FormElementInterface;
 
-class Select extends Input implements InputInterface
+class Select extends Input implements FormElementInterface
 {
     public static $error_message = 'This value is not a valid';
 
@@ -37,7 +37,7 @@ class Select extends Input implements InputInterface
      *
      * @param boolean $allow
      *
-     * @return $this
+     * @return self
      */
     public function allowNewValues($allow = true)
     {
