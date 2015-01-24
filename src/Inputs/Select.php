@@ -5,7 +5,7 @@ use FormManager\FormElementInterface;
 
 class Select extends Input implements FormElementInterface
 {
-    public static $error_message = 'This value is not a valid';
+    public static $error_message = 'This value is not valid';
 
     protected $name = 'select';
     protected $close = true;

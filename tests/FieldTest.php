@@ -94,4 +94,16 @@ class FieldTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($html, (string) $input);
 
     }
+
+    public function testLocales()
+    {
+        $input = Input::text()->required();
+        $message = 'custom error message';
+        FormManager\Attributes\Required::$error_message = $message;
+
+        $this->assertFalse($input->isValid());
+
+        $this->assertEquals($message, $input->error());
+
+    }
 }
