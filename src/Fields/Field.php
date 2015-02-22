@@ -62,9 +62,9 @@ class Field implements FormElementInterface
      */
     public function __call($name, $arguments)
     {
-        call_user_func_array([$this->input, $name], $arguments);
+        $return = call_user_func_array([$this->input, $name], $arguments);
 
-        return $this;
+        return ($return === $this->input) ? $this : $return;
     }
 
     /**

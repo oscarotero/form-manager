@@ -1,0 +1,57 @@
+<?php
+namespace FormManager;
+
+use FormManager\Traits\VarsTrait;
+
+/**
+ * Class to manage an option of a select
+ */
+class Option extends Element
+{
+    use VarsTrait;
+
+    protected $name = 'option';
+    protected $close = true;
+
+    /**
+     * Creates a new option
+     * 
+     * @param string $value
+     * @param mixed  $attributes
+     */
+    public static function create($value, $attributes = null)
+    {
+        $option = new static();
+        $option->attr('value', $value);
+
+        if (!is_array($attributes)) {
+            return $option->html($attributes ? $attributes : $value);
+        }
+
+        foreach ($attributes as $n => $v) {
+            $option->$n($v);
+        }
+
+        if (!$option->html()) {
+            $option->html($value);
+        }
+
+        return $option;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function check()
+    {
+        return $this->attr('selected', true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function uncheck()
+    {
+        return $this->removeAttr('selected');
+    }
+}

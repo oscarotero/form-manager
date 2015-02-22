@@ -1,24 +1,12 @@
 <?php
-function FormManagerLoader($className)
-{
-    if (strpos($className, 'FormManager') !== 0) {
+spl_autoload_register(function ($class) {
+    if (strpos($class, 'FormManager\\') !== 0) {
         return;
     }
 
-    $className = substr($className, 12);
-    $fileName = dirname(__DIR__).'/src/';
+    $file = __DIR__.str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen('FormManager'))).'.php';
 
-    if ($lastNsPos = strripos($className, '\\')) {
-        $namespace = substr($className, 0, $lastNsPos);
-        $className = substr($className, $lastNsPos + 1);
-        $fileName  .= str_replace('\\', DIRECTORY_SEPARATOR, $namespace).DIRECTORY_SEPARATOR;
+    if (is_file($file)) {
+        require_once $file;
     }
-
-    $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className).'.php';
-
-    if (is_file($fileName)) {
-        require $fileName;
-    }
-}
-
-spl_autoload_register('FormManagerLoader');
+});

@@ -1,5 +1,4 @@
-FormManager
-===========
+# FormManager
 
 [![Build Status](https://travis-ci.org/oscarotero/form-manager.png?branch=master)](https://travis-ci.org/oscarotero/form-manager)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/form-manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarotero/form-manager/?branch=master)
@@ -16,8 +15,7 @@ Installation:
 * If not, you have to use a PSR-4 loader or include the `src/autoloader.php` file in your project.
 
 
-Create an input
----------------
+## Create an input
 
 ```php
 use FormManager\Inputs\Input;
@@ -89,8 +87,7 @@ if ($name->isValid()) {
 }
 ```
 
-Create a field
---------------
+## Create a field
 
 A field is an object that includes an input with its label. It may also generate an extra label with the error message.
 
@@ -122,10 +119,9 @@ $name->render(function ($field) {
 echo $name;
 ```
 
-Special fields
---------------
+## Special fields
 
-#### Group
+### Group
 
 A group is a special field that contains other fields or inputs:
 
@@ -161,7 +157,7 @@ $values = $date->val();
 echo $values['year'];
 ```
 
-#### Choose
+### Choose
 
 Another special field that contains fields with the same name but different values. Useful for radio inputs or to define various submit buttons.
 
@@ -191,7 +187,7 @@ $colors->val('red');
 $color = $colors->val();
 ```
 
-#### Collection
+### Collection
 
 It's like a [group](#group), but contain a collection of values:
 
@@ -233,9 +229,59 @@ $template = $people->getTemplateChild();
 echo '<div class="template">' + $template + '</div>';
 ```
 
+### CollectionMultiple
 
-Create a form
--------------
+It's like a [collection](#collection), but contains various types of values.
+
+```php
+use FormManager\Fields\Field;
+
+//Create a collectionMultiple field
+$article = Field::collectionMultiple([
+	'section' => [
+        'title' => Field::text()->label('Title'),
+        'text' => Field::textarea()->label('Text')
+    ],
+    'picture' => [
+        'caption' => Field::text()->label('Caption'),
+        'image' => Field::file()->label('Image')
+    ],
+    'quote' => [
+        'text' => Field::textarea()->label('Text'),
+        'author' => Field::text()->label('Author')
+    ]
+]);
+
+//Set values
+$people->val([
+	[
+		'type' => 'section',
+		'title' => 'This is the section title',
+        'text' => 'Lorem ipsum...',
+	],[
+		'type' => 'quote',
+		'text' => 'You have to learn the rules of the game. And then you have to play better than anyone else.',
+		'author' => 'Albert Einstein'
+	]
+]);
+
+//Get fieldsets by number
+echo $people[0]['title']->val(); //returns 'This is the section title'
+
+//Append a new child
+$people->addChild('quote');
+
+//Access to the new child
+$people[1]['author']->val('Anonimous');
+
+//Returns a fake child to create new childs dinamically with javascript:
+$template = $people->getTemplateChild('section');
+
+echo '<div class="template-section">' + $template + '</div>';
+```
+
+
+## Create a form
 
 Let's put all together using a Form class
 
@@ -302,8 +348,7 @@ echo $MyForm['born']['day'];
 ```
 
 
-Manage data
------------
+## Manage data
 
 ```php
 //Load the data send by the form:

@@ -6,6 +6,8 @@ use FormManager\FormElementInterface;
 
 class Choose extends Group implements FormContainerInterface, FormElementInterface
 {
+    public static $error_message = 'This value is not valid';
+
     /**
      * {@inheritDoc}
      */
@@ -38,17 +40,31 @@ class Choose extends Group implements FormContainerInterface, FormElementInterfa
             return $this->value;
         }
 
-        $this->value = null;
+        $this->value = $value;
 
         foreach ($this as $v => $input) {
             if ($v == $value) {
                 $input->check();
-                $this->value = $value;
             } else {
                 $input->uncheck();
             }
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function validate()
+    {
+        $value = $this->val();
+
+        if (!empty($value) && !isset($this[$value])) {
+            $this->error(static::$error_message);
+            return false;
+        }
+
+        return parent::validate();
     }
 }

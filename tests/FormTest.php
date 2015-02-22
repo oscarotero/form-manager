@@ -2,9 +2,7 @@
 use FormManager\Form;
 use FormManager\Fields\Field;
 
-include_once __DIR__.'/../src/autoloader.php';
-
-class FormTest extends PHPUnit_Framework_TestCase
+class FormTest extends BaseTest
 {
     public function testForm()
     {
@@ -12,6 +10,17 @@ class FormTest extends PHPUnit_Framework_TestCase
 
         $form->action('index.php')->method('post');
 
+        $this->assertEquals('index.php', $form->attr('action'));
+        $this->assertEquals('post', $form->attr('method'));
+
+        return $form;
+    }
+
+    /**
+     * @depends testForm
+     */
+    public function testFields($form)
+    {
         $form->add([
             'name' => Field::text()->maxlength(50)->required()->label('Your name'),
             'email' => Field::email()->label('Your email'),
@@ -46,6 +55,19 @@ class FormTest extends PHPUnit_Framework_TestCase
             ]),
         ]);
 
+        $this->assertCount(8, $form);
+
+        $this->assertInstanceOf('FormManager\\Fields\\Field', $form['name']);
+        $this->assertInstanceOf('FormManager\\Fields\\Field', $form['action']['save']);
+
+        return $form;
+    }
+
+    /**
+     * @depends testFields
+     */
+    public function testData($form)
+    {
         $data = array(
             'name' => 'Manuel',
             'email' => null,

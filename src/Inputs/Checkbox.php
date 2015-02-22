@@ -13,7 +13,9 @@ class Checkbox extends Input implements FormElementInterface
     public function load($value = null, $file = null)
     {
         if (!empty($value) && ($this->attr('value') == $value)) {
-            $this->attr('checked', true);
+            $this->check();
+        } else {
+            $this->uncheck();
         }
 
         $this->validate();

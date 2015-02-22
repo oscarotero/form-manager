@@ -5,20 +5,27 @@ use FormManager\Element;
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
 
-class Collection extends Group implements FormElementInterface, FormContainerInterface
+class CollectionMultiple extends Group implements FormElementInterface, FormContainerInterface
 {
-    public $field;
+    public $keyField;
+    public $fields = [];
 
     protected $index = 0;
     protected $parentPath;
 
-    public function __construct($field = null)
+    public function __construct(array $fields = null, $keyField = 'type')
     {
-        if ($field instanceof FormElementInterface) {
-            $this->field = $field;
-        } else {
-            $this->field = new Group($field);
+        if ($fields) {
+            foreach ($fields as $key => $field) {
+                if ($field instanceof FormElementInterface) {
+                    $this->fields[$key] = $field;
+                } else {
+                    $this->fields[$key] = new Group($field);
+                }
+            }
         }
+
+        $this->keyField = $keyField;
     }
 
     /**
@@ -26,7 +33,7 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
      */
     public function add($key, FormElementInterface $value = null)
     {
-        $this->field->add($key, $value);
+        $this->fields[$key] = $value;
 
         return $this;
     }
@@ -45,7 +52,9 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
 
         if ($value) {
             foreach ($value as $key => $value) {
-                $this->createChild($key)->load($value, isset($file[$key]) ? $file[$key] : null);
+                if (isset($value[$this->keyField])) {
+                    $this->createChild($value[$this->keyField], $key)->load($value, isset($file[$key]) ? $file[$key] : null);
+                }
             }
         }
 
@@ -65,9 +74,9 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
 
         if ($value) {
             foreach ($value as $key => $value) {
-                $child = isset($this->children[$key]) ? $this->children[$key] : $this->createChild($key);
-
-                $child->val($value);
+                if (isset($value[$this->keyField])) {
+                    $this->createChild($value[$this->keyField], $key)->val($value);
+                }
             }
         }
 
@@ -77,17 +86,22 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
     /**
      * Create and insert new children
      *
+     * @param string       $type  The child type
      * @param null|integer $index The index of the child. Null to autogenerate
      *
      * @return FormElementInterface The new added child
      */
-    protected function createChild($index = null)
+    protected function createChild($type, $index = null)
     {
+        if (!isset($this->fields[$type])) {
+            return false;
+        }
+
         if ($index === null) {
             $index = $this->index++;
         }
 
-        $child = $this->children[$index] = clone $this->field;
+        $child = $this->children[$index] = clone $this->fields[$type];
 
         $child->setParent($this);
         $this->prepareChild($child, $index, $this->parentPath);
@@ -98,11 +112,13 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
     /**
      * Returns a child without insert into
      *
+     * @param string       $type  The child type
+     * 
      * @return FormElementInterface The cloned field
      */
-    public function getTemplateChild($index = '::n::')
+    public function getTemplateChild($type, $index = '::n::')
     {
-        $child = clone $this->field;
+        $child = clone $this->fields[$type];
 
         $child->setParent($this);
         $this->prepareChild($child, $index, $this->parentPath);
@@ -113,13 +129,14 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
     /**
      * Adds new empty child values
      *
+     * @param string       $type  The child type
      * @param null|integer $index The index of the child. Null to autogenerate
      *
      * @return FormElementInterface The new added child
      */
-    public function addChild($index = null)
+    public function addChild($type, $index = null)
     {
-        $this->createChild($index);
+        $this->createChild($type, $index);
 
         return $this;
     }

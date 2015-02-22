@@ -1,9 +1,10 @@
 <?php
 namespace FormManager\Inputs;
 
+use FormManager\Option;
 use FormManager\FormElementInterface;
 
-class Select extends Input implements FormElementInterface
+class Select extends Input implements FormElementInterface, \ArrayAccess, \Countable
 {
     public static $error_message = 'This value is not valid';
 
@@ -12,6 +13,33 @@ class Select extends Input implements FormElementInterface
     protected $options = [];
     protected $value;
     protected $allowNewValues = false;
+
+    public function offsetExists($offset) {
+        return isset($this->options[$offset]);
+    }
+
+    public function offsetGet($offset) {
+        return $this->options[$offset];
+    }
+
+    public function offsetSet($offset, $value) {
+        if ($value instanceof Option) {
+            $value->attr('value', $offset);
+        } else {
+            $value = Option::create($offset, $value);
+        }
+
+        $this->options[$offset] = $value;
+    }
+
+    public function offsetUnset($offset) {
+        unset($this->options[$offset]);
+    }
+
+    public function count()
+    {
+        return count($this->options);
+    }
 
     /**
      * Set/Get the available options in this select.
@@ -26,7 +54,9 @@ class Select extends Input implements FormElementInterface
             return $this->options;
         }
 
-        $this->options = $options;
+        foreach ($options as $value => $option) {
+            $this[$value] = $option;
+        }
 
         return $this;
     }
@@ -59,6 +89,42 @@ class Select extends Input implements FormElementInterface
             $value = array($value);
         }
 
+        if (is_array($value)) {
+            $values = array_flip($value);
+
+            //Add new values
+            if ($this->allowNewValues) {
+                $new_values = array_keys(array_diff_key($values, $this->options));
+
+                foreach ($new_values as $val) {
+                    $this[$val] = $val;
+                }
+            }
+
+            //Check/uncheck current options
+            foreach ($this->options as $val => $option) {
+                if (isset($values[$val])) {
+                    $option->check();
+                } else {
+                    $option->uncheck();
+                }
+            }
+        } else {
+            //Add new value
+            if ($this->allowNewValues && !isset($this->options[$value])) {
+                $this[$value] = $value;
+            }
+
+            //Check/uncheck options
+            foreach ($this->options as $val => $option) {
+                if ($val === $value) {
+                    $option->check();
+                } else {
+                    $option->uncheck();
+                }
+            }
+        }
+        
         $this->value = $value;
 
         return $this;
@@ -71,18 +137,14 @@ class Select extends Input implements FormElementInterface
     {
         $value = $this->val();
 
-        if (!empty($value) && !$this->allowNewValues) {
-            if ($this->attr('multiple') && is_array($value)) {
-                foreach ($value as $val) {
-                    if (!isset($this->options[$val])) {
-                        $this->error(static::$error_message);
-
-                        return false;
-                    }
+        if (!empty($value)) {
+            if ($this->attr('multiple')) {
+                if (array_keys(array_diff_key(array_flip($value), $this->options))) {
+                    $this->error(static::$error_message);
+                    return false;
                 }
             } elseif (!isset($this->options[$value])) {
                 $this->error(static::$error_message);
-
                 return false;
             }
         }
@@ -98,30 +160,8 @@ class Select extends Input implements FormElementInterface
         $val = $this->val();
         $html = '';
 
-        if (is_array($val)) {
-            $val = array_map('strval', $val);
-
-            foreach ($this->options as $value => $label) {
-                $html .= '<option value="'.static::escape($value).'"';
-
-                if (in_array((string) $value, $val, true)) {
-                    $html .= ' selected';
-                }
-
-                $html .= '>'.$label.'</option>';
-            }
-        } else {
-            $val = (string) $val;
-
-            foreach ($this->options as $value => $label) {
-                $html .= '<option value="'.static::escape($value).'"';
-
-                if ((string) $value === $val) {
-                    $html .= ' selected';
-                }
-
-                $html .= '>'.$label.'</option>';
-            }
+        foreach ($this->options as $option) {
+            $html .= $option;
         }
 
         return $html;
