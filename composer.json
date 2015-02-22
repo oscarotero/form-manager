@@ -4,7 +4,7 @@
 	"description": "PHP-HTML form manager",
 	"keywords": ["form", "html", "data", "validator"],
 	"homepage": "https://github.com/oscarotero/form-manager",
-	"license": "AGPL-3.0",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Oscar Otero",
