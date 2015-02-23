@@ -16,7 +16,7 @@ abstract class Input extends Element
     protected $sanitizer;
 
     /**
-     * Magic method to create instances using the API Input::text()
+     * Magic method to create instances using the API Input::text().
      */
     public static function __callStatic($name, $arguments)
     {
@@ -29,6 +29,7 @@ abstract class Input extends Element
 
     /**
      * {@inheritDoc}
+     *
      * @param string $name
      */
     public function attr($name = null, $value = null)
@@ -54,6 +55,7 @@ abstract class Input extends Element
 
     /**
      * {@inheritDoc}
+     *
      * @param string $name
      */
     public function removeAttr($name)
@@ -140,7 +142,7 @@ abstract class Input extends Element
     }
 
     /**
-     * Checks the input (used in some inputs like radio/checkboxes)
+     * Checks the input (used in some inputs like radio/checkboxes).
      *
      * @return $this
      */
@@ -150,7 +152,7 @@ abstract class Input extends Element
     }
 
     /**
-     * Unchecks the input  (used in some inputs like radio/checkboxes)
+     * Unchecks the input  (used in some inputs like radio/checkboxes).
      *
      * @return $this
      */

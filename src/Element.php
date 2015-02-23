@@ -10,7 +10,7 @@ class Element
     protected $html;
 
     /**
-     * Magic method to create new instances using the API Element::div(bool $close)
+     * Magic method to create new instances using the API Element::div(bool $close).
      *
      * @return Element
      */
@@ -24,7 +24,7 @@ class Element
     }
 
     /**
-     * Escapes a property value
+     * Escapes a property value.
      *
      * @param string $value
      *
@@ -37,7 +37,7 @@ class Element
 
     /**
      * Magic method to convert methods in attributes
-     * Ex: ->id('my-id') converts to ->attr('id', 'my-id')
+     * Ex: ->id('my-id') converts to ->attr('id', 'my-id').
      *
      * @param string $name
      * @param array  $arguments
@@ -52,7 +52,7 @@ class Element
     }
 
     /**
-     * Magic method to convert to html
+     * Magic method to convert to html.
      */
     public function __toString()
     {
@@ -60,7 +60,7 @@ class Element
     }
 
     /**
-     * Changes the name of the element
+     * Changes the name of the element.
      *
      * @param string  $name  The element name
      * @param boolean $close True if the element must be closed
@@ -72,7 +72,7 @@ class Element
     }
 
     /**
-     * Returns the name of the element
+     * Returns the name of the element.
      *
      * @return string
      */
@@ -82,7 +82,7 @@ class Element
     }
 
     /**
-     * Set/Get the html content for this element
+     * Set/Get the html content for this element.
      *
      * @param null|string $html null to getter, string to setter
      *
@@ -100,7 +100,7 @@ class Element
     }
 
     /**
-     * Set/Get an attribute value
+     * Set/Get an attribute value.
      *
      * @param null|string|array $name  If it's null, returns an array with all attributes
      * @param null|string|array $value null to getter, string to setter
@@ -133,7 +133,7 @@ class Element
     }
 
     /**
-     * Removes an attribute
+     * Removes an attribute.
      *
      * @param string $name The attribute name
      *
@@ -147,7 +147,7 @@ class Element
     }
 
     /**
-     * Set/Get data attributes (data-*) to the element
+     * Set/Get data attributes (data-*) to the element.
      *
      * @param null|string $name  The data name. If is null, returns an array with all data
      * @param null|string $value The data value. null to getter, string to setter
@@ -178,7 +178,7 @@ class Element
     }
 
     /**
-     * Removes one data attribute
+     * Removes one data attribute.
      *
      * @param string $name The data name
      *
@@ -196,7 +196,7 @@ class Element
     }
 
     /**
-     * Checks whether the element has a specific class or not
+     * Checks whether the element has a specific class or not.
      *
      * @param string $class The class name to check
      *
@@ -218,7 +218,7 @@ class Element
     }
 
     /**
-     * Add one or more classes to the element
+     * Add one or more classes to the element.
      *
      * @param array|string $class The class or classes names.
      *
@@ -244,7 +244,7 @@ class Element
     }
 
     /**
-     * Removes one or more classes
+     * Removes one or more classes.
      *
      * @param array|string $class The class or classes names
      *
@@ -270,7 +270,7 @@ class Element
     }
 
     /**
-     * Returns the attributes as string
+     * Returns the attributes as string.
      *
      * @return string
      */
@@ -302,7 +302,7 @@ class Element
     }
 
     /**
-     * Return the element as html string
+     * Return the element as html string.
      *
      * @param string $prepend Optional string prepended to html content
      * @param string $append  Optional string appended to html content
@@ -321,7 +321,7 @@ class Element
     }
 
     /**
-     * Returns the open element tag
+     * Returns the open element tag.
      *
      * @return string
      */
@@ -331,7 +331,7 @@ class Element
     }
 
     /**
-     * Returns the close element tag
+     * Returns the close element tag.
      *
      * @return string
      */

@@ -9,15 +9,15 @@ class CollectionMultipleTest extends BaseTest
         $field = Field::collectionMultiple([
             'section' => [
                 'title' => Field::text()->label('Title'),
-                'text' => Field::textarea()->label('Text')
+                'text' => Field::textarea()->label('Text'),
             ],
             'picture' => [
                 'caption' => Field::text()->label('Caption'),
-                'image' => Field::file()->label('Image')
+                'image' => Field::file()->label('Image'),
             ],
             'quote' => [
                 'cite' => Field::textarea()->label('Cite'),
-                'author' => Field::text()->label('Author')
+                'author' => Field::text()->label('Author'),
             ],
         ]);
 
@@ -38,7 +38,7 @@ class CollectionMultipleTest extends BaseTest
                 'type' => 'section',
                 'title' => 'This is a title',
                 'text' => 'This is a text',
-            ],[
+            ], [
                 'type' => 'picture',
                 'caption' => 'This is the caption',
                 'image' => [
@@ -48,15 +48,15 @@ class CollectionMultipleTest extends BaseTest
                     'error' => 0,
                     'size' => 2297,
                 ],
-            ],[
+            ], [
                 'type' => 'quote',
                 'cite' => 'This is the cite',
                 'author' => 'This is the author of the cite',
-            ],[
+            ], [
                 'type' => 'section',
                 'title' => 'This is other section',
                 'text' => 'This is the text of the second section',
-            ]
+            ],
         ]);
 
         $this->assertCount(4, $field->val());

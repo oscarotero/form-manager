@@ -8,7 +8,7 @@ class Maxlength
     public static $error_message = 'The max length allowed is %s';
 
     /**
-     * Callback used on add this attribute to an input
+     * Callback used on add this attribute to an input.
      *
      * @param Input $input The input in which the attribute will be added
      * @param mixed $value The value of this attribute
@@ -27,7 +27,7 @@ class Maxlength
     }
 
     /**
-     * Callback used on remove this attribute from an input
+     * Callback used on remove this attribute from an input.
      *
      * @param Input $input The input from the attribute will be removed
      */
@@ -37,7 +37,7 @@ class Maxlength
     }
 
     /**
-     * Validates the input value according to this attribute
+     * Validates the input value according to this attribute.
      *
      * @param Input $input The input to validate
      *

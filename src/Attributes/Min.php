@@ -8,7 +8,7 @@ class Min
     public static $error_message = 'The min value allowed is %s';
 
     /**
-     * Callback used on add this attribute to an input
+     * Callback used on add this attribute to an input.
      *
      * @param Input $input The input in which the attribute will be added
      * @param mixed $value The value of this attribute
@@ -32,7 +32,7 @@ class Min
     }
 
     /**
-     * Callback used on add this attribute to an input
+     * Callback used on add this attribute to an input.
      *
      * @param Input $input The input in which the attribute will be added
      * @param mixed $value The value of this attribute
@@ -51,7 +51,7 @@ class Min
     }
 
     /**
-     * Callback used on add this attribute to a datetime input
+     * Callback used on add this attribute to a datetime input.
      *
      * @param Input $input The input in which the attribute will be added
      * @param mixed $value The value of this attribute
@@ -70,7 +70,7 @@ class Min
     }
 
     /**
-     * Callback used on remove this attribute from an input
+     * Callback used on remove this attribute from an input.
      *
      * @param Input $input The input from the attribute will be removed
      */
@@ -80,7 +80,7 @@ class Min
     }
 
     /**
-     * Validates the input value according to this attribute
+     * Validates the input value according to this attribute.
      *
      * @param Input $input The input to validate
      *
@@ -95,7 +95,7 @@ class Min
     }
 
     /**
-     * Validates the datetime input value according to this attribute
+     * Validates the datetime input value according to this attribute.
      *
      * @param Input $input The input to validate
      *

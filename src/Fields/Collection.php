@@ -1,7 +1,6 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Element;
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
 
@@ -75,7 +74,7 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
     }
 
     /**
-     * Create and insert new children
+     * Create and insert new children.
      *
      * @param null|integer $index The index of the child. Null to autogenerate
      *
@@ -96,7 +95,7 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
     }
 
     /**
-     * Returns a child without insert into
+     * Returns a child without insert into.
      *
      * @return FormElementInterface The cloned field
      */
@@ -111,7 +110,7 @@ class Collection extends Group implements FormElementInterface, FormContainerInt
     }
 
     /**
-     * Adds new empty child values
+     * Adds new empty child values.
      *
      * @param null|integer $index The index of the child. Null to autogenerate
      *

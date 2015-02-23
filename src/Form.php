@@ -17,7 +17,7 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
     protected $close = true;
 
     /**
-     * Load the form values from global GET, POST, FILES values
+     * Load the form values from global GET, POST, FILES values.
      *
      * @param array|null $get
      * @param array|null $post
@@ -84,7 +84,7 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
     }
 
     /**
-     * Private function used by fixFilesArray
+     * Private function used by fixFilesArray.
      *
      * @param array $files An array with all files values
      *

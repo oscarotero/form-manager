@@ -1,7 +1,6 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Element;
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
 
@@ -84,7 +83,7 @@ class CollectionMultiple extends Group implements FormElementInterface, FormCont
     }
 
     /**
-     * Create and insert new children
+     * Create and insert new children.
      *
      * @param string       $type  The child type
      * @param null|integer $index The index of the child. Null to autogenerate
@@ -110,10 +109,10 @@ class CollectionMultiple extends Group implements FormElementInterface, FormCont
     }
 
     /**
-     * Returns a child without insert into
+     * Returns a child without insert into.
      *
-     * @param string       $type  The child type
-     * 
+     * @param string $type The child type
+     *
      * @return FormElementInterface The cloned field
      */
     public function getTemplateChild($type, $index = '::n::')
@@ -127,7 +126,7 @@ class CollectionMultiple extends Group implements FormElementInterface, FormCont
     }
 
     /**
-     * Adds new empty child values
+     * Adds new empty child values.
      *
      * @param string       $type  The child type
      * @param null|integer $index The index of the child. Null to autogenerate

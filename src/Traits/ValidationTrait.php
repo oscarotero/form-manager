@@ -1,7 +1,8 @@
 <?php
 /**
- * Trait with common method for validation
+ * Trait with common method for validation.
  */
+
 namespace FormManager\Traits;
 
 trait ValidationTrait
@@ -10,7 +11,7 @@ trait ValidationTrait
     protected $error;
 
     /**
-     * Adds new value validator
+     * Adds new value validator.
      *
      * @param string   $name      The validator name
      * @param callable $validator The validator function
@@ -25,7 +26,7 @@ trait ValidationTrait
     }
 
     /**
-     * Removes a validator
+     * Removes a validator.
      *
      * @param string $name The validator name
      *
@@ -39,7 +40,7 @@ trait ValidationTrait
     }
 
     /**
-     * Executes all validators and returns whether the value is valid or not
+     * Executes all validators and returns whether the value is valid or not.
      *
      * @return boolean
      */
@@ -59,7 +60,7 @@ trait ValidationTrait
     }
 
     /**
-     * Set/Get the error message
+     * Set/Get the error message.
      *
      * @param null|string $error null to getter, string to setter
      *

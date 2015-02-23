@@ -60,7 +60,7 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
     }
 
     /**
-     * Creates/edit/returns the label associated with the input
+     * Creates/edit/returns the label associated with the input.
      *
      * @param null|string $html Null to get the label html, string to create/edit the label content
      *

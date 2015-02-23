@@ -21,7 +21,7 @@ class Field implements FormElementInterface
     protected $rendering = false;
 
     /**
-     * Magic method to create new instances using the API Field::text()
+     * Magic method to create new instances using the API Field::text().
      */
     public static function __callStatic($name, $arguments)
     {
@@ -68,7 +68,7 @@ class Field implements FormElementInterface
     }
 
     /**
-     * Clones the field and its content
+     * Clones the field and its content.
      */
     public function __clone()
     {
@@ -81,7 +81,7 @@ class Field implements FormElementInterface
     }
 
     /**
-     * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel
+     * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel.
      */
     public function __get($name)
     {
@@ -95,7 +95,7 @@ class Field implements FormElementInterface
     }
 
     /**
-     * Creates/edit/returns the label associated with the input
+     * Creates/edit/returns the label associated with the input.
      *
      * @param null|string $html Null to get the label html, string to create/edit the label content
      *

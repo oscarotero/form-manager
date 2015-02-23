@@ -14,15 +14,18 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
     protected $value;
     protected $allowNewValues = false;
 
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->options[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return $this->options[$offset];
     }
 
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if ($value instanceof Option) {
             $value->attr('value', $offset);
         } else {
@@ -32,7 +35,8 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
         $this->options[$offset] = $value;
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->options[$offset]);
     }
 
@@ -63,7 +67,7 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
 
     /**
      * Set true to allow values non defined in the $options array
-     * Useful to insert dinamically new values
+     * Useful to insert dinamically new values.
      *
      * @param boolean $allow
      *
@@ -124,7 +128,7 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
                 }
             }
         }
-        
+
         $this->value = $value;
 
         return $this;
@@ -141,10 +145,12 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
             if ($this->attr('multiple')) {
                 if (array_keys(array_diff_key(array_flip($value), $this->options))) {
                     $this->error(static::$error_message);
+
                     return false;
                 }
             } elseif (!isset($this->options[$value])) {
                 $this->error(static::$error_message);
+
                 return false;
             }
         }

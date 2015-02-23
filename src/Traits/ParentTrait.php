@@ -1,7 +1,8 @@
 <?php
 /**
- * Trait with common method for elements having children (form, collection, etc)
+ * Trait with common method for elements having children (form, collection, etc).
  */
+
 namespace FormManager\Traits;
 
 use FormManager\FormElementInterface;
@@ -72,7 +73,7 @@ trait ParentTrait
     }
 
     /**
-     * Adds new children to this element
+     * Adds new children to this element.
      *
      * @param array|string         $key   The child name or an array with children
      * @param FormElementInterface $value The child
@@ -96,7 +97,7 @@ trait ParentTrait
     }
 
     /**
-     * Checks whether all input values are valid
+     * Checks whether all input values are valid.
      *
      * @return boolean
      */
@@ -118,7 +119,7 @@ trait ParentTrait
     }
 
     /**
-     * Set/Get the values of this collection
+     * Set/Get the values of this collection.
      *
      * @param null|array $value null to getter, array to setter
      *
@@ -144,7 +145,7 @@ trait ParentTrait
     }
 
     /**
-     * Loads a value sent by the client
+     * Loads a value sent by the client.
      *
      * @param mixed $value The GET/POST value
      * @param mixed $file  The FILES value (used in input[type="file"])
@@ -168,7 +169,7 @@ trait ParentTrait
     }
 
     /**
-     * Sets a sanitizer function to the input
+     * Sets a sanitizer function to the input.
      *
      * @param callable $sanitizer The function name or closure
      *
@@ -182,7 +183,7 @@ trait ParentTrait
     }
 
     /**
-     * Prepare the children before insert
+     * Prepare the children before insert.
      *
      * @param null|string $parentPath The full parent path (the parents names)
      */
@@ -194,7 +195,7 @@ trait ParentTrait
     }
 
     /**
-     * Prepare a child element before insert
+     * Prepare a child element before insert.
      *
      * @param InputInferface $child
      * @param string         $key        The key used to append this child (the input name)
@@ -212,7 +213,7 @@ trait ParentTrait
     }
 
     /**
-     * Returns the html of all childrens
+     * Returns the html of all childrens.
      *
      * @return string
      */

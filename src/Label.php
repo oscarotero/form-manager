@@ -13,7 +13,7 @@ class Label extends Element
     protected $input;
 
     /**
-     * Label constructor
+     * Label constructor.
      *
      * @param null|Input  $input      The input associated to this label
      * @param null|array  $attributes Html attributes of this label
@@ -35,7 +35,7 @@ class Label extends Element
     }
 
     /**
-     * Sets a new input associated to this label
+     * Sets a new input associated to this label.
      *
      * @param Input $input The input instance
      */
@@ -46,7 +46,7 @@ class Label extends Element
     }
 
     /**
-     * Converts the label to html code
+     * Converts the label to html code.
      *
      * @param string $prepend Optional string prepended to html content
      * @param string $append  Optional string appended to html content

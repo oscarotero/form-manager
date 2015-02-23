@@ -1,6 +1,6 @@
 <?php
 /**
- * Trait with common methods of all child elements (elements inside the form)
+ * Trait with common methods of all child elements (elements inside the form).
  */
 
 namespace FormManager\Traits;
@@ -13,7 +13,7 @@ trait ChildTrait
     protected $parent;
 
     /**
-     * Set the element parent
+     * Set the element parent.
      *
      * @param FormElementInterface $parent
      *
@@ -27,7 +27,7 @@ trait ChildTrait
     }
 
     /**
-     * Returns the element parent
+     * Returns the element parent.
      *
      * @return null|FormElementInterface
      */
@@ -37,7 +37,7 @@ trait ChildTrait
     }
 
     /**
-     * Returns the form element
+     * Returns the form element.
      *
      * @return null|Form
      */

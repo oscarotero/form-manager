@@ -1,7 +1,8 @@
 <?php
 /**
- * Trait with methods to save arbitrary variables
+ * Trait with methods to save arbitrary variables.
  */
+
 namespace FormManager\Traits;
 
 trait VarsTrait
@@ -9,7 +10,7 @@ trait VarsTrait
     protected $vars = [];
 
     /**
-     * Set variables
+     * Set variables.
      *
      * @param string|array $name
      * @param mixed        $value
@@ -30,7 +31,7 @@ trait VarsTrait
     }
 
     /**
-     * Get variables
+     * Get variables.
      *
      * @param null|string $name If it's null, returns an array with all variables
      *

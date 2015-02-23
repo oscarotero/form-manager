@@ -103,7 +103,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
     protected function _testMaxlength($input, $success = 'strin', $fail = 'string', $max = 5)
     {
         $input->maxlength($max);
-        
+
         $input->val($success);
         $this->assertTrue($input->isValid());
 
@@ -114,7 +114,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
     protected function _testPattern($input)
     {
         $input->pattern('[0-9]');
-        
+
         $input->val('0');
         $this->assertTrue($input->isValid());
 

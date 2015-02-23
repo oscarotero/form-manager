@@ -62,6 +62,7 @@ class Choose extends Group implements FormContainerInterface, FormElementInterfa
 
         if (!empty($value) && !isset($this[$value])) {
             $this->error(static::$error_message);
+
             return false;
         }
 

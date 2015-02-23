@@ -4,7 +4,7 @@ namespace FormManager;
 use FormManager\Traits\VarsTrait;
 
 /**
- * Class to manage an option of a select
+ * Class to manage an option of a select.
  */
 class Option extends Element
 {
@@ -14,8 +14,8 @@ class Option extends Element
     protected $close = true;
 
     /**
-     * Creates a new option
-     * 
+     * Creates a new option.
+     *
      * @param string $value
      * @param mixed  $attributes
      */

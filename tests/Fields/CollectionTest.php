@@ -47,7 +47,7 @@ class CollectionTest extends BaseTest
                     'tmp_name' => '/tmp/phpTobJ72',
                     'error' => 0,
                     'size' => 2297,
-                ]
+                ],
             ],
         ]);
 
