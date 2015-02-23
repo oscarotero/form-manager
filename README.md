@@ -274,6 +274,12 @@ $people->addChild('quote');
 //Access to the new child
 $people[1]['author']->val('Anonimous');
 
+//Add new type
+$people->add('video', [
+	'title' => Field::text()->label('Title'),
+	'video' => Field::url()->label('Youtube url')
+]);
+
 //Returns a fake child to create new childs dinamically with javascript:
 $template = $people->getTemplateChild('section');
 

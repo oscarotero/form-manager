@@ -75,12 +75,12 @@ trait ParentTrait
     /**
      * Adds new children to this element.
      *
-     * @param array|string         $key   The child name or an array with children
-     * @param FormElementInterface $value The child
+     * @param array|string $key   The child name or an array with children
+     * @param mixed        $value The child
      *
      * @return $this;
      */
-    public function add($key, FormElementInterface $value = null)
+    public function add($key, $value = null)
     {
         if (is_array($key)) {
             foreach ($key as $key => $value) {
@@ -88,6 +88,10 @@ trait ParentTrait
             }
 
             return $this;
+        }
+
+        if (!($value instanceof FormElementInterface)) {
+            $value = new Group($value);
         }
 
         $this->children[$key] = $value->setParent($this);

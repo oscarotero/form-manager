@@ -3,36 +3,44 @@ namespace FormManager\Fields;
 
 use FormManager\FormElementInterface;
 use FormManager\FormContainerInterface;
+use FormManager\Inputs\Input;
 
 class CollectionMultiple extends Group implements FormElementInterface, FormContainerInterface
 {
-    public $keyField;
     public $fields = [];
 
     protected $index = 0;
+    protected $keyField;
     protected $parentPath;
 
     public function __construct(array $fields = null, $keyField = 'type')
     {
+        $this->keyField = $keyField;
+
         if ($fields) {
             foreach ($fields as $key => $field) {
-                if ($field instanceof FormElementInterface) {
-                    $this->fields[$key] = $field;
-                } else {
-                    $this->fields[$key] = new Group($field);
-                }
+                $this->add($key, $field);
             }
         }
-
-        $this->keyField = $keyField;
     }
 
     /**
-     * {@inheritDoc}
+     * Adds new types
+     * 
+     * @param string $key   The type name
+     * @param mixed  $field The type field
      */
-    public function add($key, FormElementInterface $value = null)
+    public function add($key, $field = null)
     {
-        $this->fields[$key] = $value;
+        if (!($field instanceof Group)) {
+            $field = new Group($field);
+        }
+
+        if (!isset($field[$this->keyField])) {
+            $field[$this->keyField] = Input::hidden()->val($key);
+        }
+
+        $this->fields[$key] = $field;
 
         return $this;
     }
