@@ -1,12 +1,17 @@
 <?php
 namespace FormManager;
 
+/**
+ * Class to manage an html element
+ */
 class Element
 {
+    protected $parent;
     protected $name;
     protected $close;
     protected $attributes = [];
     protected $data = [];
+    protected $vars = [];
     protected $html;
 
     /**
@@ -82,6 +87,30 @@ class Element
     }
 
     /**
+     * Set the element parent.
+     *
+     * @param Element $parent
+     *
+     * @return $this
+     */
+    public function setParent(Element $parent)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Returns the element parent.
+     *
+     * @return null|FormElementInterface
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Set/Get the html content for this element.
      *
      * @param null|string $html null to getter, string to setter
@@ -129,6 +158,12 @@ class Element
 
         $this->attributes[$name] = $value;
 
+        $class = 'FormManager\\Attributes\\'.ucfirst($name);
+
+        if (class_exists($class) && method_exists($class, 'onAdd')) {
+            $value = $class::onAdd($this, $value);
+        }
+
         return $this;
     }
 
@@ -141,7 +176,15 @@ class Element
      */
     public function removeAttr($name)
     {
-        unset($this->attributes[$name]);
+        if (isset($this->attributes[$name])) {
+            unset($this->attributes[$name]);
+
+            $class = 'FormManager\\Attributes\\'.ucfirst($name);
+
+            if (class_exists($class) && method_exists($class, 'onRemove')) {
+                $class::onRemove($this);
+            }
+        }
 
         return $this;
     }
@@ -299,6 +342,55 @@ class Element
         }
 
         return $html;
+    }
+
+    /**
+     * Set variables.
+     *
+     * @param string|array $name
+     * @param mixed        $value
+     *
+     * @return mixed
+     */
+    public function set($name, $value = null)
+    {
+        if (is_array($name)) {
+            $this->vars += $name;
+
+            return $this;
+        }
+
+        $this->vars[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get variables.
+     *
+     * @param null|string $name If it's null, returns an array with all variables
+     *
+     * @return mixed
+     */
+    public function get($name = null)
+    {
+        if ($name === null) {
+            return $this->vars;
+        }
+
+        return isset($this->vars[$name]) ? $this->vars[$name] : null;
+    }
+
+    /**
+     * Returns the form element.
+     *
+     * @return null|Form
+     */
+    public function getForm()
+    {
+        if ($this->parent) {
+            return ($this->parent instanceof Form) ? $this->parent : $this->parent->getForm();
+        }
     }
 
     /**

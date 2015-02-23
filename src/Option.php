@@ -1,15 +1,11 @@
 <?php
 namespace FormManager;
 
-use FormManager\Traits\VarsTrait;
-
 /**
  * Class to manage an option of a select.
  */
 class Option extends Element
 {
-    use VarsTrait;
-
     protected $name = 'option';
     protected $close = true;
 

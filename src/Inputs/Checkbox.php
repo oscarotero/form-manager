@@ -1,11 +1,12 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\FormElementInterface;
+use FormManager\InputInterface;
 
-class Checkbox extends Input implements FormElementInterface
+class Checkbox extends Input implements InputInterface
 {
     protected $attributes = ['type' => 'checkbox', 'value' => 'on'];
+    protected $labelBefore = false;
 
     /**
      * {@inheritDoc}

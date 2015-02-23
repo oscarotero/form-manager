@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\FormElementInterface;
+use FormManager\InputInterface;
 
-class DatetimeLocal extends Datetime implements FormElementInterface
+class DatetimeLocal extends Datetime implements InputInterface
 {
     public static $error_message = 'This value is not a valid local datetime';
 

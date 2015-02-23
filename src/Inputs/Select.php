@@ -1,28 +1,20 @@
 <?php
 namespace FormManager\Inputs;
 
+use FormManager\Traits\InputTrait;
+use FormManager\InputInterface;
+use FormManager\ElementContainer;
 use FormManager\Option;
-use FormManager\FormElementInterface;
 
-class Select extends Input implements FormElementInterface, \ArrayAccess, \Countable
+class Select extends ElementContainer implements InputInterface
 {
+    use InputTrait;
+
     public static $error_message = 'This value is not valid';
 
     protected $name = 'select';
-    protected $close = true;
-    protected $options = [];
     protected $value;
     protected $allowNewValues = false;
-
-    public function offsetExists($offset)
-    {
-        return isset($this->options[$offset]);
-    }
-
-    public function offsetGet($offset)
-    {
-        return $this->options[$offset];
-    }
 
     public function offsetSet($offset, $value)
     {
@@ -32,17 +24,7 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
             $value = Option::create($offset, $value);
         }
 
-        $this->options[$offset] = $value;
-    }
-
-    public function offsetUnset($offset)
-    {
-        unset($this->options[$offset]);
-    }
-
-    public function count()
-    {
-        return count($this->options);
+        parent::offsetSet($offset, $value);
     }
 
     /**
@@ -55,11 +37,11 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
     public function options(array $options = null)
     {
         if ($options === null) {
-            return $this->options;
+            return $this->children;
         }
 
-        foreach ($options as $value => $option) {
-            $this[$value] = $option;
+        foreach ($options as $offset => $option) {
+            $this->offsetSet($offset, $option);
         }
 
         return $this;
@@ -98,7 +80,7 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
 
             //Add new values
             if ($this->allowNewValues) {
-                $new_values = array_keys(array_diff_key($values, $this->options));
+                $new_values = array_keys(array_diff_key($values, $this->children));
 
                 foreach ($new_values as $val) {
                     $this[$val] = $val;
@@ -106,7 +88,7 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
             }
 
             //Check/uncheck current options
-            foreach ($this->options as $val => $option) {
+            foreach ($this->children as $val => $option) {
                 if (isset($values[$val])) {
                     $option->check();
                 } else {
@@ -115,12 +97,16 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
             }
         } else {
             //Add new value
-            if ($this->allowNewValues && !isset($this->options[$value])) {
+            if ($this->allowNewValues && !isset($this->children[$value])) {
                 $this[$value] = $value;
             }
 
+            if (preg_match('/^[\d]+$/', $value)) {
+                $value = intval($value);
+            }
+
             //Check/uncheck options
-            foreach ($this->options as $val => $option) {
+            foreach ($this->children as $val => $option) {
                 if ($val === $value) {
                     $option->check();
                 } else {
@@ -143,12 +129,12 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
 
         if (!empty($value)) {
             if ($this->attr('multiple')) {
-                if (array_keys(array_diff_key(array_flip($value), $this->options))) {
+                if (array_keys(array_diff_key(array_flip($value), $this->children))) {
                     $this->error(static::$error_message);
 
                     return false;
                 }
-            } elseif (!isset($this->options[$value])) {
+            } elseif (!isset($this->children[$value])) {
                 $this->error(static::$error_message);
 
                 return false;
@@ -156,19 +142,5 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
         }
 
         return parent::validate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function html($html = null)
-    {
-        $html = '';
-
-        foreach ($this->options as $option) {
-            $html .= $option;
-        }
-
-        return $html;
     }
 }

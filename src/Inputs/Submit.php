@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\FormElementInterface;
+use FormManager\InputInterface;
 
-class Submit extends Input implements FormElementInterface
+class Submit extends Input implements InputInterface
 {
     protected $name = 'button';
     protected $close = true;

@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\FormElementInterface;
+use FormManager\InputInterface;
 
-class Search extends Input implements FormElementInterface
+class Search extends Input implements InputInterface
 {
     protected $attributes = ['type' => 'search'];
 }

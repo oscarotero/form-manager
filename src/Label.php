@@ -1,13 +1,10 @@
 <?php
 namespace FormManager;
 
-use FormManager\Inputs\Input;
-use FormManager\Traits\VarsTrait;
+use FormManager\InputInterface;
 
 class Label extends Element
 {
-    use VarsTrait;
-
     protected $name = 'label';
     protected $close = true;
     protected $input;
@@ -15,11 +12,11 @@ class Label extends Element
     /**
      * Label constructor.
      *
-     * @param null|Input  $input      The input associated to this label
+     * @param null|InputInterface  $input      The input associated to this label
      * @param null|array  $attributes Html attributes of this label
      * @param null|string $html       String content of the label
      */
-    public function __construct(Input $input = null, array $attributes = null, $html = null)
+    public function __construct(InputInterface $input = null, array $attributes = null, $html = null)
     {
         if ($input !== null) {
             $this->setInput($input);
@@ -37,9 +34,9 @@ class Label extends Element
     /**
      * Sets a new input associated to this label.
      *
-     * @param Input $input The input instance
+     * @param InputInterface $input The input instance
      */
-    public function setInput(Input $input)
+    public function setInput(InputInterface $input)
     {
         $this->input = $input;
         $this->input->id(); //ensure the id is defined

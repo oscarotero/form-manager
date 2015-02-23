@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\FormElementInterface;
+use FormManager\InputInterface;
 
-class Hidden extends Input implements FormElementInterface
+class Hidden extends Input implements InputInterface
 {
     protected $attributes = ['type' => 'hidden'];
 }

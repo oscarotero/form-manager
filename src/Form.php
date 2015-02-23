@@ -1,20 +1,11 @@
 <?php
 namespace FormManager;
 
-use FormManager\Traits\ParentTrait;
-use FormManager\Traits\ValidationTrait;
-use FormManager\Traits\VarsTrait;
-use Iterator;
-use ArrayAccess;
+use FormManager\Containers\Group;
 
-class Form extends Element implements Iterator, ArrayAccess, FormElementInterface
+class Form extends Group
 {
-    use ParentTrait;
-    use ValidationTrait;
-    use VarsTrait;
-
     protected $name = 'form';
-    protected $close = true;
 
     /**
      * Load the form values from global GET, POST, FILES values.
@@ -38,26 +29,6 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
         }
 
         return $this->load($value, $files);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function html($html = null)
-    {
-        if ($html === null) {
-            return $this->html.$this->childrenToHtml();
-        }
-
-        return parent::html($html);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function id($id = null)
-    {
-        return $this->attr('id', $id);
     }
 
     /**

@@ -2,7 +2,7 @@
 namespace FormManager;
 
 /**
- * Interface used by all elements (forms, fields, inputs, etc) to keep the basic behaviour.
+ * Interface used by all elements (forms, inputs, etc) to keep the basic behaviour.
  */
 interface FormElementInterface
 {
@@ -40,13 +40,4 @@ interface FormElementInterface
      * @return mixed
      */
     public function error($error = null);
-
-    /**
-     * Sets a sanitizer function to the input.
-     *
-     * @param callable $sanitizer The function name or closure
-     *
-     * @return $this
-     */
-    public function sanitize(callable $sanitizer);
 }

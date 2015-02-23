@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\FormElementInterface;
+use FormManager\InputInterface;
 
-class Color extends Input implements FormElementInterface
+class Color extends Input implements InputInterface
 {
     public static $error_message = 'This value is not a valid color';
 
