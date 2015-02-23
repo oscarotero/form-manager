@@ -42,7 +42,7 @@ class Element
      * @param string $name
      * @param array  $arguments
      *
-     * @return self
+     * @return $this
      */
     public function __call($name, $arguments)
     {
@@ -137,7 +137,7 @@ class Element
      *
      * @param string $name The attribute name
      *
-     * @return self
+     * @return $this
      */
     public function removeAttr($name)
     {
@@ -182,7 +182,7 @@ class Element
      *
      * @param string $name The data name
      *
-     * @return self
+     * @return $this
      */
     public function removeData($name = null)
     {
@@ -222,7 +222,7 @@ class Element
      *
      * @param array|string $class The class or classes names.
      *
-     * @return self
+     * @return $this
      */
     public function addClass($class)
     {
@@ -248,7 +248,7 @@ class Element
      *
      * @param array|string $class The class or classes names
      *
-     * @return self
+     * @return $this
      */
     public function removeClass($class)
     {

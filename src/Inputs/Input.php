@@ -142,7 +142,7 @@ abstract class Input extends Element
     /**
      * Checks the input (used in some inputs like radio/checkboxes)
      *
-     * @return self
+     * @return $this
      */
     public function check()
     {
@@ -152,7 +152,7 @@ abstract class Input extends Element
     /**
      * Unchecks the input  (used in some inputs like radio/checkboxes)
      *
-     * @return self
+     * @return $this
      */
     public function uncheck()
     {

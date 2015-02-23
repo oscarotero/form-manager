@@ -15,7 +15,7 @@ trait ValidationTrait
      * @param string   $name      The validator name
      * @param callable $validator The validator function
      *
-     * @return self
+     * @return $this
      */
     public function addValidator($name, $validator)
     {
@@ -29,7 +29,7 @@ trait ValidationTrait
      *
      * @param string $name The validator name
      *
-     * @return self
+     * @return $this
      */
     public function removeValidator($name)
     {

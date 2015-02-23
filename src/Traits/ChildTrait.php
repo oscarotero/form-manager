@@ -17,7 +17,7 @@ trait ChildTrait
      *
      * @param FormElementInterface $parent
      *
-     * @return self
+     * @return $this
      */
     public function setParent(FormElementInterface $parent)
     {

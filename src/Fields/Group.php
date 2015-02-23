@@ -64,7 +64,7 @@ class Group implements Iterator, ArrayAccess, FormElementInterface, FormContaine
      *
      * @param null|string $html Null to get the label html, string to create/edit the label content
      *
-     * @return self
+     * @return $this
      */
     public function label($html = null)
     {

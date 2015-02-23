@@ -23,7 +23,7 @@ class Form extends Element implements Iterator, ArrayAccess, FormElementInterfac
      * @param array|null $post
      * @param array|null $files
      *
-     * @return self
+     * @return $this
      */
     public function loadFromGlobals(array $get = null, array $post = null, array $files = null)
     {

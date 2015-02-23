@@ -67,7 +67,7 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
      *
      * @param boolean $allow
      *
-     * @return self
+     * @return $this
      */
     public function allowNewValues($allow = true)
     {
@@ -157,7 +157,6 @@ class Select extends Input implements FormElementInterface, \ArrayAccess, \Count
      */
     public function html($html = null)
     {
-        $val = $this->val();
         $html = '';
 
         foreach ($this->options as $option) {
