@@ -1,14 +1,14 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputTextareaTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::textarea());
-        $this->_testRequired(Input::textarea());
-        $this->_testMaxlength(Input::textarea());
-        $this->_testPattern(Input::textarea());
-        $this->_testValidator(Input::textarea());
+        $this->_testElement(Builder::textarea());
+        $this->_testRequired(Builder::textarea());
+        $this->_testMaxlength(Builder::textarea());
+        $this->_testPattern(Builder::textarea());
+        $this->_testValidator(Builder::textarea());
     }
 }

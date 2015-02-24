@@ -1,17 +1,17 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputFileTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::file());
-        $this->_testRequired(Input::file());
+        $this->_testElement(Builder::file());
+        $this->_testRequired(Builder::file());
     }
 
     public function testError()
     {
-        $input = Input::file();
+        $input = Builder::file();
 
         $input->val(array(
             'name' => 'image.jpg',
@@ -26,7 +26,7 @@ class InputFileTest extends BaseTest
 
     public function testMimeType()
     {
-        $input = Input::file();
+        $input = Builder::file();
 
         $input->accept('image/png');
 

@@ -1,15 +1,15 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputNumberTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::number());
-        $this->_testRequired(Input::number());
-        $this->_testNumber(Input::number());
-        $this->_testMinMax(Input::number());
-        $this->_testMaxlength(Input::number(), 12345, 123456);
-        $this->_testMaxlength(Input::number(), 12.34, 12.345);
+        $this->_testElement(Builder::number());
+        $this->_testRequired(Builder::number());
+        $this->_testNumber(Builder::number());
+        $this->_testMinMax(Builder::number());
+        $this->_testMaxlength(Builder::number(), 12345, 123456);
+        $this->_testMaxlength(Builder::number(), 12.34, 12.345);
     }
 }

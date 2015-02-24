@@ -1,11 +1,11 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputSubmitTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::submit());
-        $this->_testRequired(Input::submit());
+        $this->_testElement(Builder::submit());
+        $this->_testRequired(Builder::submit());
     }
 }

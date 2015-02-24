@@ -1,17 +1,17 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputDateTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::date());
-        $this->_testRequired(Input::date());
+        $this->_testElement(Builder::date());
+        $this->_testRequired(Builder::date());
     }
 
     public function testsValues()
     {
-        $input = Input::date();
+        $input = Builder::date();
 
         $input->val('2005-33-14');
         $this->assertFalse($input->isValid());

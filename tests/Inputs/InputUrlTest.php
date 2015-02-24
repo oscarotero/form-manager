@@ -1,18 +1,18 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputUrlTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::url());
-        $this->_testRequired(Input::url());
-        $this->_testMaxlength(Input::url(), 'http://o.a', 'http://ola.com', 10);
+        $this->_testElement(Builder::url());
+        $this->_testRequired(Builder::url());
+        $this->_testMaxlength(Builder::url(), 'http://o.a', 'http://ola.com', 10);
     }
 
     public function testValues()
     {
-        $input = Input::url();
+        $input = Builder::url();
 
         $input->val('invalid-url');
         $this->assertFalse($input->isValid());

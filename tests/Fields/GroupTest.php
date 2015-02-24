@@ -1,21 +1,20 @@
 <?php
-use FormManager\Fields\Field;
-use FormManager\Fields\Group;
+use FormManager\Builder;
+use FormManager\Containers\Group;
 
 class GroupTest extends BaseTest
 {
     public function testBase()
     {
-        $field = Field::group([
-            'name' => Field::text()->label('Name'),
-            'email' => Field::email()->label('email'),
-            'age' => Field::number()->label('Age'),
-            'image' => Field::file()->label('Image'),
+        $field = Builder::group([
+            'name' => Builder::text()->label('Name'),
+            'email' => Builder::email()->label('email'),
+            'age' => Builder::number()->label('Age'),
+            'image' => Builder::file()->label('Image'),
         ]);
 
-        $this->assertInstanceOf('FormManager\\Fields\\Group', $field);
-        $this->assertInstanceOf('FormManager\\Fields\\Field', $field['name']);
-        $this->assertInstanceOf('FormManager\\Label', $field->label);
+        $this->assertInstanceOf('FormManager\\Containers\\Group', $field);
+        $this->assertInstanceOf('FormManager\\Inputs\\Text', $field['name']);
 
         return $field;
     }

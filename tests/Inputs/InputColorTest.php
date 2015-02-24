@@ -1,17 +1,17 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputColorTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::color());
-        $this->_testRequired(Input::color());
+        $this->_testElement(Builder::color());
+        $this->_testRequired(Builder::color());
     }
 
     public function testsValues()
     {
-        $input = Input::color();
+        $input = Builder::color();
 
         $input->val('red');
         $this->assertFalse($input->isValid());

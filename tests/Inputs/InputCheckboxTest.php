@@ -1,12 +1,12 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputCheckboxTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::checkbox());
-        $this->_testRequired(Input::checkbox());
-        $this->_testCheckUncheck(Input::checkbox());
+        $this->_testElement(Builder::checkbox());
+        $this->_testRequired(Builder::checkbox());
+        $this->_testCheckUncheck(Builder::checkbox());
     }
 }

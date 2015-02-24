@@ -1,17 +1,17 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputDatetimeLocalTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::datetimeLocal());
-        $this->_testRequired(Input::datetimeLocal());
+        $this->_testElement(Builder::datetimeLocal());
+        $this->_testRequired(Builder::datetimeLocal());
     }
 
     public function testDatetimeValues()
     {
-        $input = Input::datetimeLocal();
+        $input = Builder::datetimeLocal();
 
         $input->val('2005-33-14T15:52:01+00:00');
         $this->assertFalse($input->isValid());
@@ -23,7 +23,7 @@ class InputDatetimeLocalTest extends BaseTest
 
     public function testMinMaxDatetime()
     {
-        $input = Input::datetimeLocal();
+        $input = Builder::datetimeLocal();
 
         $input->min('2004-08-14T15:52:01');
         $input->max('2005-08-14T15:52:01');

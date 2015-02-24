@@ -1,14 +1,14 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputHiddenTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::hidden());
-        $this->_testRequired(Input::hidden());
-        $this->_testMaxlength(Input::hidden());
-        $this->_testPattern(Input::hidden());
-        $this->_testValidator(Input::hidden());
+        $this->_testElement(Builder::hidden());
+        $this->_testRequired(Builder::hidden());
+        $this->_testMaxlength(Builder::hidden());
+        $this->_testPattern(Builder::hidden());
+        $this->_testValidator(Builder::hidden());
     }
 }

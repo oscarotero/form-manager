@@ -1,20 +1,20 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputPasswordTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::password());
-        $this->_testRequired(Input::password());
-        $this->_testMaxlength(Input::password());
-        $this->_testPattern(Input::password());
-        $this->_testValidator(Input::password());
+        $this->_testElement(Builder::password());
+        $this->_testRequired(Builder::password());
+        $this->_testMaxlength(Builder::password());
+        $this->_testPattern(Builder::password());
+        $this->_testValidator(Builder::password());
     }
 
     public function testValues()
     {
-        $input = Input::password();
+        $input = Builder::password();
 
         $input->val('hello');
         $this->assertSame('hello', $input->val());

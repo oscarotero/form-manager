@@ -1,18 +1,18 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputEmailTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::email());
-        $this->_testRequired(Input::email());
-        $this->_testMaxlength(Input::email(), 'o@l.o', 'o@l.com');
+        $this->_testElement(Builder::email());
+        $this->_testRequired(Builder::email());
+        $this->_testMaxlength(Builder::email(), 'o@l.o', 'o@l.com');
     }
 
     public function testValues()
     {
-        $input = Input::email();
+        $input = Builder::email();
 
         $input->val('invalid-email');
         $this->assertFalse($input->isValid());

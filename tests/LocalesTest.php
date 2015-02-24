@@ -1,11 +1,11 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class LocalesTest extends BaseTest
 {
     public function testLocales()
     {
-        $input = Input::text()->required();
+        $input = Builder::text()->required();
         $message = 'custom error message';
 
         FormManager\Attributes\Required::$error_message = $message;

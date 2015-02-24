@@ -8,7 +8,9 @@ use FormManager\Option;
 
 class Select extends ElementContainer implements InputInterface
 {
-    use InputTrait;
+    use InputTrait {
+        InputTrait::validate as private parentValidate;
+    }
 
     public static $error_message = 'This value is not valid';
 
@@ -76,42 +78,42 @@ class Select extends ElementContainer implements InputInterface
         }
 
         if (is_array($value)) {
-            $values = array_flip($value);
+            $value = array_keys(array_flip($value));
 
-            //Add new values
-            if ($this->allowNewValues) {
-                $new_values = array_keys(array_diff_key($values, $this->children));
+            //uncheck current options
+            foreach ($this->children as $option) {
+                $option->uncheck();
+            }
 
-                foreach ($new_values as $val) {
+            //check the selected values
+            foreach ($value as $val) {
+                if (!isset($this->children[$val])) {
+                    if (!$this->allowNewValues) {
+                        continue;
+                    }
+
                     $this[$val] = $val;
                 }
-            }
-
-            //Check/uncheck current options
-            foreach ($this->children as $val => $option) {
-                if (isset($values[$val])) {
-                    $option->check();
-                } else {
-                    $option->uncheck();
-                }
+                
+                $this->children[$val]->check();
             }
         } else {
-            //Add new value
-            if ($this->allowNewValues && !isset($this->children[$value])) {
-                $this[$value] = $value;
+            //uncheck current options
+            foreach ($this->children as $option) {
+                $option->uncheck();
             }
 
             if (preg_match('/^[\d]+$/', $value)) {
                 $value = intval($value);
             }
 
-            //Check/uncheck options
-            foreach ($this->children as $val => $option) {
-                if ($val === $value) {
-                    $option->check();
-                } else {
-                    $option->uncheck();
-                }
+            //check the selected values
+            if ($this->allowNewValues && !isset($this->children[$value])) {
+                $this[$value] = $value;
+                $this->children[$value]->check();
+            }
+            else if (isset($this->children[$value])) {
+                $this->children[$value]->check();
             }
         }
 
@@ -141,6 +143,6 @@ class Select extends ElementContainer implements InputInterface
             }
         }
 
-        return parent::validate();
+        return $this->parentValidate();
     }
 }

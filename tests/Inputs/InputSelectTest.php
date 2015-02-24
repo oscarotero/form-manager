@@ -1,17 +1,17 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputSelectTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::select());
-        $this->_testRequired(Input::select());
+        $this->_testElement(Builder::select());
+        $this->_testRequired(Builder::select());
     }
 
     public function testValues()
     {
-        $select = Input::select();
+        $select = Builder::select();
 
         //Values
         $select->options([
@@ -33,7 +33,7 @@ class InputSelectTest extends BaseTest
 
     public function testAllowNewValues()
     {
-        $select = Input::select()->allowNewValues();
+        $select = Builder::select()->allowNewValues();
 
         $select->val('new-value');
         $this->assertTrue($select->isValid());
@@ -53,13 +53,13 @@ class InputSelectTest extends BaseTest
         $this->assertCount(4, $select->options());
 
         $select->val('1');
-        $this->assertSame($select->val(), '1');
+        $this->assertSame($select->val(), 1);
         $this->assertCount(4, $select->options());
     }
 
     public function testArrayAccess()
     {
-        $select = Input::select();
+        $select = Builder::select();
 
         $select['new-value'] = 'New Value';
         $option = $select['new-value'];
@@ -70,5 +70,23 @@ class InputSelectTest extends BaseTest
 
         $this->assertEquals('new-value', $option->attr('value'));
         $this->assertEquals('New Value', $option->html());
+    }
+
+    public function testMultiple()
+    {
+        $select = Builder::select()->multiple()->options([
+            '' => 'Empty',
+            0 => 'Zero',
+            1 => 'One',
+            2 => 'Two',
+        ]);
+
+        $select->val(['', '0']);
+
+        $this->assertSame(['', 0], $select->val());
+
+        $select->val(2);
+
+        $this->assertSame([2], $select->val());
     }
 }

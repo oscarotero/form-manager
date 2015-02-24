@@ -1,20 +1,20 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputSearchTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::search());
-        $this->_testRequired(Input::search());
-        $this->_testMaxlength(Input::search());
-        $this->_testPattern(Input::search());
-        $this->_testValidator(Input::search());
+        $this->_testElement(Builder::search());
+        $this->_testRequired(Builder::search());
+        $this->_testMaxlength(Builder::search());
+        $this->_testPattern(Builder::search());
+        $this->_testValidator(Builder::search());
     }
 
     public function testValues()
     {
-        $input = Input::search();
+        $input = Builder::search();
 
         $input->val('hello');
         $this->assertSame('hello', $input->val());

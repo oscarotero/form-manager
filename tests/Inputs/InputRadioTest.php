@@ -1,12 +1,12 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputRadioTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::radio());
-        $this->_testRequired(Input::radio());
-        $this->_testCheckUncheck(Input::radio());
+        $this->_testElement(Builder::radio());
+        $this->_testRequired(Builder::radio());
+        $this->_testCheckUncheck(Builder::radio());
     }
 }

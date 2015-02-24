@@ -1,21 +1,20 @@
 <?php
-use FormManager\Fields\Field;
-use FormManager\Fields\Group;
+use FormManager\Builder;
+use FormManager\Containers\Choose;
 
 class ChooseTest extends BaseTest
 {
     public function testBase()
     {
-        $field = Field::choose([
-            'value1' => Field::radio()->label('Value 1'),
-            'value2' => Field::radio()->label('Value 2'),
-            'value3' => Field::radio()->label('Value 3'),
-            'value4' => Field::radio()->label('Value 4'),
+        $field = Builder::choose([
+            'value1' => Builder::radio()->label('Value 1'),
+            'value2' => Builder::radio()->label('Value 2'),
+            'value3' => Builder::radio()->label('Value 3'),
+            'value4' => Builder::radio()->label('Value 4'),
         ]);
 
-        $this->assertInstanceOf('FormManager\\Fields\\Choose', $field);
-        $this->assertInstanceOf('FormManager\\Fields\\Radio', $field['value1']);
-        $this->assertInstanceOf('FormManager\\Label', $field->label);
+        $this->assertInstanceOf('FormManager\\Containers\\Choose', $field);
+        $this->assertInstanceOf('FormManager\\Inputs\\Radio', $field['value1']);
 
         return $field;
     }
@@ -23,7 +22,7 @@ class ChooseTest extends BaseTest
     /**
      * @depends testBase
      */
-    public function testValue(Group $field)
+    public function testValue(Choose $field)
     {
         $field->val('value1');
 

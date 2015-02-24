@@ -1,12 +1,12 @@
 <?php
-use FormManager\Form;
-use FormManager\Fields\Field;
+use FormManager\Builder;
+use FormManager\Containers\Form;
 
 class FormTest extends BaseTest
 {
-    public function testForm()
+    public function testBase()
     {
-        $form = new Form();
+        $form = Builder::Form();
 
         $form->action('index.php')->method('post');
 
@@ -17,48 +17,48 @@ class FormTest extends BaseTest
     }
 
     /**
-     * @depends testForm
+     * @depends testBase
      */
-    public function testFields($form)
+    public function testFields(Form $form)
     {
         $form->add([
-            'name' => Field::text()->maxlength(50)->required()->label('Your name'),
-            'email' => Field::email()->label('Your email'),
-            'telephone' => Field::tel()->label('Telephone number'),
+            'name' => Builder::text()->maxlength(50)->required()->label('Your name'),
+            'email' => Builder::email()->label('Your email'),
+            'telephone' => Builder::tel()->label('Telephone number'),
 
-            'gender' => Field::choose([
-                'm' => Field::radio()->label('Male'),
-                'f' => Field::radio()->label('Female'),
+            'gender' => Builder::choose([
+                'm' => Builder::radio()->label('Male'),
+                'f' => Builder::radio()->label('Female'),
             ]),
 
-            'born' => Field::group([
-                'day' => Field::number()->min(1)->max(31)->label('Day'),
-                'month' => Field::number()->min(1)->max(12)->label('Month'),
-                'year' => Field::number()->min(1900)->max(2013)->label('Year'),
+            'born' => Builder::group([
+                'day' => Builder::number()->min(1)->max(31)->label('Day'),
+                'month' => Builder::number()->min(1)->max(12)->label('Month'),
+                'year' => Builder::number()->min(1900)->max(2013)->label('Year'),
             ]),
 
-            'language' => Field::select()->options(array(
+            'language' => Builder::select()->options(array(
                 'gl' => 'Galician',
                 'es' => 'Spanish',
                 'en' => 'English',
             ))->label('Language'),
 
-            'friends' => Field::collection([
-                'name' => Field::text()->label('Name'),
-                'email' => Field::email()->label('email'),
-                'age' => Field::number()->label('Age'),
+            'friends' => Builder::collection([
+                'name' => Builder::text()->label('Name'),
+                'email' => Builder::email()->label('email'),
+                'age' => Builder::number()->label('Age'),
             ]),
 
-            'action' => Field::choose([
-                'save' => Field::submit()->html('Save changes'),
-                'duplicate' => Field::submit()->html('Save as new value'),
+            'action' => Builder::choose([
+                'save' => Builder::submit()->html('Save changes'),
+                'duplicate' => Builder::submit()->html('Save as new value'),
             ]),
         ]);
 
         $this->assertCount(8, $form);
 
-        $this->assertInstanceOf('FormManager\\Fields\\Field', $form['name']);
-        $this->assertInstanceOf('FormManager\\Fields\\Field', $form['action']['save']);
+        $this->assertInstanceOf('FormManager\\Inputs\\Text', $form['name']);
+        $this->assertInstanceOf('FormManager\\Inputs\\Submit', $form['action']['save']);
 
         return $form;
     }

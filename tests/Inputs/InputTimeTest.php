@@ -1,17 +1,17 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputTimeTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::time());
-        $this->_testRequired(Input::time());
+        $this->_testElement(Builder::time());
+        $this->_testRequired(Builder::time());
     }
 
     public function testsValues()
     {
-        $input = Input::time();
+        $input = Builder::time();
 
         $input->val('38:34:32');
         $this->assertFalse($input->isValid());

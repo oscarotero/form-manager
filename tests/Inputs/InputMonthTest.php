@@ -1,17 +1,17 @@
 <?php
-use FormManager\Inputs\Input;
+use FormManager\Builder;
 
 class InputMonthTest extends BaseTest
 {
     public function testBasic()
     {
-        $this->_testElement(Input::month());
-        $this->_testRequired(Input::month());
+        $this->_testElement(Builder::month());
+        $this->_testRequired(Builder::month());
     }
 
     public function testsValues()
     {
-        $input = Input::month();
+        $input = Builder::month();
 
         $input->val('2014-33');
         $this->assertFalse($input->isValid());

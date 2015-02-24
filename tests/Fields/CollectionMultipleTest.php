@@ -1,29 +1,28 @@
 <?php
-use FormManager\Fields\Field;
-use FormManager\Fields\CollectionMultiple;
+use FormManager\Builder;
+use FormManager\Containers\CollectionMultiple;
 
 class CollectionMultipleTest extends BaseTest
 {
     public function testBase()
     {
-        $field = Field::collectionMultiple([
+        $field = Builder::collectionMultiple([
             'section' => [
-                'title' => Field::text()->label('Title'),
-                'text' => Field::textarea()->label('Text'),
+                'title' => Builder::text()->label('Title'),
+                'text' => Builder::textarea()->label('Text'),
             ],
             'picture' => [
-                'caption' => Field::text()->label('Caption'),
-                'image' => Field::file()->label('Image'),
+                'caption' => Builder::text()->label('Caption'),
+                'image' => Builder::file()->label('Image'),
             ],
             'quote' => [
-                'cite' => Field::textarea()->label('Cite'),
-                'author' => Field::text()->label('Author'),
+                'cite' => Builder::textarea()->label('Cite'),
+                'author' => Builder::text()->label('Author'),
             ],
         ]);
 
-        $this->assertInstanceOf('FormManager\\Fields\\CollectionMultiple', $field);
-        $this->assertInstanceOf('FormManager\\Fields\\Group', $field->fields['section']);
-        $this->assertInstanceOf('FormManager\\Label', $field->label);
+        $this->assertInstanceOf('FormManager\\Containers\\CollectionMultiple', $field);
+        $this->assertInstanceOf('FormManager\\Containers\\Group', $field->template['section']);
 
         return $field;
     }

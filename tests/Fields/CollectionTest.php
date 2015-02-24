@@ -1,21 +1,20 @@
 <?php
-use FormManager\Fields\Field;
-use FormManager\Fields\Collection;
+use FormManager\Builder;
+use FormManager\Containers\Collection;
 
 class CollectionTest extends BaseTest
 {
     public function testBase()
     {
-        $field = Field::collection([
-            'name' => Field::text()->label('Name'),
-            'email' => Field::email()->label('email'),
-            'age' => Field::number()->label('Age'),
-            'image' => Field::file()->label('Image'),
+        $field = Builder::collection([
+            'name' => Builder::text()->label('Name'),
+            'email' => Builder::email()->label('email'),
+            'age' => Builder::number()->label('Age'),
+            'image' => Builder::file()->label('Image'),
         ]);
 
-        $this->assertInstanceOf('FormManager\\Fields\\Collection', $field);
-        $this->assertInstanceOf('FormManager\\Fields\\Group', $field->field);
-        $this->assertInstanceOf('FormManager\\Label', $field->label);
+        $this->assertInstanceOf('FormManager\\Containers\\Collection', $field);
+        $this->assertInstanceOf('FormManager\\Containers\\Group', $field->template);
 
         return $field;
     }
@@ -53,10 +52,21 @@ class CollectionTest extends BaseTest
 
         $this->assertCount(2, $field->val());
         $this->assertEquals('Laura', $field[1]['name']->val());
-
-        $duplicate = $field->getTemplateChild();
-
-        $this->assertEquals('::n::[name]', $duplicate['name']->attr('name'));
         $this->assertEquals('2.png', $field[1]['image']->val()['name']);
+
+        return $field;
+    }
+
+    /**
+     * @depends testValue
+     */
+    public function testTemplate(Collection $field)
+    {
+        $form = Builder::form();
+        $form['key'] = $field;
+        $template = $field->getTemplate();
+        $template['name']->id('my-id');
+
+        $this->assertEquals('<label for="my-id">Name</label> <input type="text" id="my-id" name="key[::n::][name]"> ', (string) $template['name']);
     }
 }
