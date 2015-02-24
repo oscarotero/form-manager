@@ -36,7 +36,7 @@ class CollectionMultiple extends Collection
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @return array All templates. The index are the template type
      */
     public function getTemplate($index = '::n::')

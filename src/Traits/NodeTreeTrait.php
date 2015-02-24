@@ -14,10 +14,10 @@ trait NodeTreeTrait
     protected $key;
 
     /**
-     * Set the key used to calculate the path of this node
+     * Set the key used to calculate the path of this node.
      *
      * @param mixed $key
-     * 
+     *
      * @return $this
      */
     public function setKey($key)
@@ -29,7 +29,7 @@ trait NodeTreeTrait
 
     /**
      * Get the full path of this node
-     * Used to calculate the real name of each input
+     * Used to calculate the real name of each input.
      *
      * @return null|string
      */
@@ -100,8 +100,8 @@ trait NodeTreeTrait
     }
 
     /**
-     * Check if the current value is valid or not
-     * 
+     * Check if the current value is valid or not.
+     *
      * @return boolean
      */
     public function isValid()
@@ -128,10 +128,10 @@ trait NodeTreeTrait
     }
 
     /**
-     * Register a sanitize for the value of this input
-     * 
+     * Register a sanitize for the value of this input.
+     *
      * @param callable $sanitizer
-     * 
+     *
      * @return $this
      */
     public function sanitize(callable $sanitizer)
@@ -142,10 +142,10 @@ trait NodeTreeTrait
     }
 
     /**
-     * Register a custom render function for this input
-     * 
+     * Register a custom render function for this input.
+     *
      * @param callable $render
-     * 
+     *
      * @return $this
      */
     public function render(callable $render)
@@ -172,22 +172,22 @@ trait NodeTreeTrait
     }
 
     /**
-     * This trait must be used only in Element
-     * 
+     * This trait must be used only in Element.
+     *
      * @see FormManager\Element
-     * 
+     *
      * @return null|Element
      */
     abstract public function getParent();
 
     /**
-     * Execute the default render
-     * 
+     * Execute the default render.
+     *
      * @see FormManager\Element::toHtml
-     * 
+     *
      * @param string $prepend
      * @param string $append
-     * 
+     *
      * @return string
      */
     abstract protected function renderDefault($prepend = '', $append = '');

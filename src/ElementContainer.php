@@ -6,7 +6,7 @@ use ArrayAccess;
 use Countable;
 
 /**
- * Class to manage an html element that contains other elements
+ * Class to manage an html element that contains other elements.
  */
 class ElementContainer extends Element implements Iterator, ArrayAccess, Countable
 {
@@ -14,7 +14,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     protected $children = [];
 
     /**
-     * Magic method to clone the elements
+     * Magic method to clone the elements.
      */
     public function __clone()
     {
@@ -25,10 +25,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Returns the index of an element
-     * 
+     * Returns the index of an element.
+     *
      * @param Element $child
-     * 
+     *
      * @return mixed
      */
     public function indexOf(Element $child)
@@ -37,10 +37,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Returns the current element
-     * 
+     * Returns the current element.
+     *
      * @see Iterator
-     * 
+     *
      * @return null|Element
      */
     public function current()
@@ -49,10 +49,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Returns the key of the current element
-     * 
+     * Returns the key of the current element.
+     *
      * @see Iterator
-     * 
+     *
      * @return integer|null
      */
     public function key()
@@ -61,10 +61,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Move forward to next element
-     * 
+     * Move forward to next element.
+     *
      * @see Iterator
-     * 
+     *
      * @return null|Element
      */
     public function next()
@@ -73,10 +73,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Rewind the Iterator to the first element
-     * 
+     * Rewind the Iterator to the first element.
+     *
      * @see Iterator
-     * 
+     *
      * @return null|Element
      */
     public function rewind()
@@ -85,10 +85,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Checks if current position is valid
-     * 
+     * Checks if current position is valid.
+     *
      * @see Iterator
-     * 
+     *
      * return boolean
      */
     public function valid()
@@ -97,12 +97,12 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Whether an offset exists
-     * 
+     * Whether an offset exists.
+     *
      * @see ArrayAccess
-     * 
+     *
      * @param mixed $offset
-     * 
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -111,12 +111,12 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Offset to retrieve
-     * 
+     * Offset to retrieve.
+     *
      * @see ArrayAccess
-     * 
+     *
      * @param mixed $offset
-     * 
+     *
      * @return boolean
      */
     public function offsetGet($offset)
@@ -125,10 +125,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Offset to set
-     * 
+     * Offset to set.
+     *
      * @see ArrayAccess
-     * 
+     *
      * @param mixed $offset
      * @param mixed $value
      */
@@ -143,10 +143,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Offset to unset
-     * 
+     * Offset to unset.
+     *
      * @see ArrayAccess
-     * 
+     *
      * @param mixed $offset
      */
     public function offsetUnset($offset)
@@ -158,10 +158,10 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Count the children of the element
-     * 
+     * Count the children of the element.
+     *
      * @see Countable
-     * 
+     *
      * @return integer
      */
     public function count()

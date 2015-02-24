@@ -1,7 +1,6 @@
 <?php
 namespace FormManager;
 
-use FormManager\InputInterface;
 
 class Label extends Element
 {
@@ -12,9 +11,9 @@ class Label extends Element
     /**
      * Label constructor.
      *
-     * @param null|InputInterface  $input      The input associated to this label
-     * @param null|array  $attributes Html attributes of this label
-     * @param null|string $html       String content of the label
+     * @param null|InputInterface $input      The input associated to this label
+     * @param null|array          $attributes Html attributes of this label
+     * @param null|string         $html       String content of the label
      */
     public function __construct(InputInterface $input = null, array $attributes = null, $html = null)
     {

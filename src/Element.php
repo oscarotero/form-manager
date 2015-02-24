@@ -2,7 +2,7 @@
 namespace FormManager;
 
 /**
- * Class to manage an html element
+ * Class to manage an html element.
  */
 class Element
 {
@@ -381,7 +381,7 @@ class Element
     public function getForm()
     {
         if ($this->parent) {
-            return ($this->parent instanceof Form) ? $this->parent : $this->parent->getForm();
+            return ($this->parent instanceof Containers\Form) ? $this->parent : $this->parent->getForm();
         }
     }
 

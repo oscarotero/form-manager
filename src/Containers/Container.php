@@ -43,7 +43,7 @@ abstract class Container extends ElementContainer implements FormElementInterfac
     }
 
     /**
-     * Set/Get values of this container
+     * Set/Get values of this container.
      *
      * @param null|array $value null to getter, array to setter
      *
@@ -92,7 +92,7 @@ abstract class Container extends ElementContainer implements FormElementInterfac
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see FormManager\ElementContainer::toHtml
      */
     public function renderDefault($prepend = '', $append = '')

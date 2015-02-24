@@ -1,7 +1,6 @@
 <?php
 namespace FormManager\Containers;
 
-use FormManager\FormElementInterface;
 
 class Choose extends Container
 {
@@ -11,7 +10,7 @@ class Choose extends Container
 
     /**
      * @see ArrayAccess
-     * 
+     *
      * {@inheritdoc}
      */
     public function offsetSet($offset, $value)

@@ -18,7 +18,7 @@ class Collection extends Group
 
     /**
      * @see ArrayAccess
-     * 
+     *
      * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
@@ -77,8 +77,8 @@ class Collection extends Group
     }
 
     /**
-     * Returns the template used to create all values
-     * 
+     * Returns the template used to create all values.
+     *
      * @param mixed $index The index used to generate the input name
      *
      * @return FormElementInterface The cloned field
@@ -94,7 +94,7 @@ class Collection extends Group
 
     /**
      * Adds a new value child.
-     * 
+     *
      * @param null|array $value
      *
      * @return Group The child inserted
@@ -112,7 +112,7 @@ class Collection extends Group
 
     /**
      * Adds a new value child and load content.
-     * 
+     *
      * @param mixed $value The GET/POST value
      * @param mixed $file  The FILES value (used in input[type="file"])
      *

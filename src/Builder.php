@@ -2,19 +2,19 @@
 namespace FormManager;
 
 /**
- * Factory class to create all elements
+ * Factory class to create all elements.
  */
 class Builder
 {
-    static protected $cache = [];
+    protected static $cache = [];
     static protected $namespaces = [
         'FormManager\\Inputs\\',
-        'FormManager\\Containers\\'
+        'FormManager\\Containers\\',
     ];
 
     /**
-     * Add more namespaces to the builder
-     * 
+     * Add more namespaces to the builder.
+     *
      * @param string $namespace
      */
     public static function addNamespace($namespace)
@@ -26,10 +26,10 @@ class Builder
 
     /**
      * Magic method to create instances using the API Builder::whatever().
-     * 
+     *
      * @param string $name
      * @param array  $arguments
-     * 
+     *
      * @return null|FormElementInterface
      */
     public static function __callStatic($name, $arguments)

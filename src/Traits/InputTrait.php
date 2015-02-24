@@ -4,8 +4,8 @@ namespace FormManager\Traits;
 use FormManager\Label;
 
 /**
- * Class with common methods for all inputs
- * 
+ * Class with common methods for all inputs.
+ *
  * @property null|Label $label
  * @property null|Label $errorLabel
  */
@@ -17,7 +17,7 @@ trait InputTrait
 
     /**
      * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel.
-     * 
+     *
      * @return Label|null
      */
     public function __get($name)
@@ -32,7 +32,7 @@ trait InputTrait
     }
 
     /**
-     * Clones the input and other properties
+     * Clones the input and other properties.
      */
     public function __clone()
     {
@@ -44,10 +44,10 @@ trait InputTrait
     }
 
     /**
-     * Get/Set the value of this input
-     * 
+     * Get/Set the value of this input.
+     *
      * @param mixed $value
-     * 
+     *
      * @return mixed
      */
     public function val($value = null)
@@ -64,10 +64,10 @@ trait InputTrait
     }
 
     /**
-     * Set/Get/Generates an id for this element
-     * 
+     * Set/Get/Generates an id for this element.
+     *
      * @param null|string $id
-     * 
+     *
      * @return mixed
      */
     public function id($id = null)
@@ -86,11 +86,11 @@ trait InputTrait
     }
 
     /**
-     * Load the raw data for this input
-     * 
+     * Load the raw data for this input.
+     *
      * @param mixed $value The value to load
      * @param mixed $file  The file value (used only in inputs of type "file")
-     * 
+     *
      * @return $this
      */
     public function load($value = null, $file = null)
@@ -164,10 +164,10 @@ trait InputTrait
     }
 
     /**
-     * Set the key used to calculate the path of this node
+     * Set the key used to calculate the path of this node.
      *
      * @param mixed $key
-     * 
+     *
      * @return $this
      */
     public function setKey($key)
@@ -178,7 +178,7 @@ trait InputTrait
     }
 
     /**
-     * Calculate the input name on print
+     * Calculate the input name on print.
      *
      * {@inheritdoc}
      */
@@ -196,10 +196,10 @@ trait InputTrait
     }
 
     /**
-     * This trait must be used only in Element
-     * 
+     * This trait must be used only in Element.
+     *
      * @see FormManager\Element
-     * 
+     *
      * @param mixed $name
      * @param mixed $value
      */

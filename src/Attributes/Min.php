@@ -11,7 +11,7 @@ class Min
      * Callback used on add this attribute to an input.
      *
      * @param InputInterface $input The input in which the attribute will be added
-     * @param mixed $value The value of this attribute
+     * @param mixed          $value The value of this attribute
      *
      * @return mixed $value The value sanitized
      */
@@ -35,7 +35,7 @@ class Min
      * Callback used on add this attribute to an input.
      *
      * @param InputInterface $input The input in which the attribute will be added
-     * @param mixed $value The value of this attribute
+     * @param mixed          $value The value of this attribute
      *
      * @return mixed The value sanitized
      */
@@ -54,7 +54,7 @@ class Min
      * Callback used on add this attribute to a datetime input.
      *
      * @param InputInterface $input The input in which the attribute will be added
-     * @param mixed $value The value of this attribute
+     * @param mixed          $value The value of this attribute
      *
      * @return mixed The value sanitized
      */
