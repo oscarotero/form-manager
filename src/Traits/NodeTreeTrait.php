@@ -11,6 +11,44 @@ trait NodeTreeTrait
     protected $rendering = false;
     protected $validators = [];
     protected $error;
+    protected $key;
+
+    /**
+     * Set the key used to calculate the path of this node
+     *
+     * @param mixed $key
+     * 
+     * @return $this
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+
+        return $this;
+    }
+
+    /**
+     * Get the full path of this node
+     * Used to calculate the real name of each input
+     *
+     * @return null|string
+     */
+    public function getPath()
+    {
+        if (($parent = $this->getParent())) {
+            $path = $parent->getPath();
+
+            if ($path) {
+                if ($this->key !== null) {
+                    return "{$path}[{$this->key}]";
+                }
+
+                return $path;
+            } elseif ($this->key) {
+                return $this->key;
+            }
+        }
+    }
 
     /**
      * Adds new value validator.
@@ -132,6 +170,13 @@ trait NodeTreeTrait
 
         return $this->renderDefault($prepend, $append);
     }
+
+    /**
+     * This trait must be used only in Element
+     * 
+     * @see FormManager\Element
+     */
+    abstract public function getParent();
 
     /**
      * Execute the default render

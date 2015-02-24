@@ -45,6 +45,7 @@ trait InputTrait
     {
         if (isset($this->label)) {
             $this->label = clone $this->label;
+            $this->removeAttr('id');
             $this->label->setInput($this);
         }
     }
@@ -167,5 +168,37 @@ trait InputTrait
         } else {
             return "{$html} {$label} {$this->errorLabel}";
         }
+    }
+
+    /**
+     * Set the key used to calculate the path of this node
+     *
+     * @param mixed $key
+     * 
+     * @return $this
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+
+        return $this;
+    }
+
+    /**
+     * Calculate the input name on print
+     *
+     * {@inheritdoc}
+     */
+    protected function attrToHtml()
+    {
+        $name = $this->getPath();
+
+        if ($this->attr('multiple')) {
+            $name .= '[]';
+        }
+
+        $this->attr('name', $name);
+
+        return parent::attrToHtml();
     }
 }

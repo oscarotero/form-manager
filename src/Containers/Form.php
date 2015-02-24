@@ -1,7 +1,5 @@
 <?php
-namespace FormManager;
-
-use FormManager\Containers\Group;
+namespace FormManager\Containers;
 
 class Form extends Group
 {

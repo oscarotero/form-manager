@@ -6,22 +6,14 @@ use FormManager\FormElementInterface;
 class Group extends Container
 {
     /**
+     * @see ArrayAccess
+     * 
      * {@inheritdoc}
      */
-    public function prepareChild(FormElementInterface $child, $key, $parentPath = null)
+    public function offsetSet($offset, $value)
     {
-        $path = $parentPath ? "{$parentPath}[{$key}]" : $key;
+        parent::offsetSet($offset, $value);
 
-        if ($child instanceof Container) {
-            foreach ($child as $k => $grandchild) {
-                if ($grandchild instanceof Container) {
-                    $grandchild->prepareChild($child, $k, $path);
-                } else {
-                    $grandchild->attr('name', $path);
-                }
-            }
-        } else {
-            $child->attr('name', $path);
-        }
+        $value->setKey($offset);
     }
 }

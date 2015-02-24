@@ -1,24 +1,28 @@
 <?php
-namespace FormManager\Fields;
+namespace FormManager\Containers;
 
-use FormManager\FormContainerInterface;
 use FormManager\FormElementInterface;
 
-class Choose extends Group implements FormContainerInterface, FormElementInterface
+class Choose extends Container
 {
+    protected $value;
+
     public static $error_message = 'This value is not valid';
 
     /**
-     * {@inheritDoc}
+     * @see ArrayAccess
+     * 
+     * {@inheritdoc}
      */
-    public function prepareChild($child, $key, $parentPath = null)
+    public function offsetSet($offset, $value)
     {
-        if ($child instanceof FormContainerInterface) {
-            throw new \Exception("The Choose field cannot have collections inside", 1);
+        if ($value instanceof Container) {
+            throw new \InvalidArgumentException("This element only accepts inputs");
         }
 
-        $child->val($key);
-        $child->attr('name', $parentPath);
+        $value->val($offset);
+
+        parent::offsetSet($offset, $value);
     }
 
     /**

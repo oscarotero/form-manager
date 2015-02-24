@@ -19,15 +19,6 @@ abstract class Container extends ElementContainer implements FormElementInterfac
     }
 
     /**
-     * Prepare a child element before insert.
-     *
-     * @param FormElementInterface $child
-     * @param string               $key        The key used to append this child (the input name)
-     * @param null|string          $parentPath The full parent path (the parents names)
-     */
-    abstract public function prepareChild(FormElementInterface $child, $key, $parentPath = null);
-
-    /**
      * Loads a value sent by the client.
      *
      * @param mixed $value The GET/POST value

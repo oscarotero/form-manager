@@ -25,6 +25,18 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
+     * Returns the index of an element
+     * 
+     * @param Element $child
+     * 
+     * @return mixed
+     */
+    public function indexOf(Element $child)
+    {
+        return array_search($child, $this->children, true);
+    }
+
+    /**
      * Returns the current element
      * 
      * @see Iterator
