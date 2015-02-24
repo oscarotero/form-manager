@@ -34,27 +34,26 @@ class Builder
      */
     public static function __callStatic($name, $arguments)
     {
+        $class = false;
+
         //Save the resolved classes in cache for performance
         if (isset(static::$cache[$name])) {
             $class = static::$cache[$name];
+        } else {
+            foreach (static::$namespaces as $namespace) {
+                $c = $namespace.ucfirst($name);
 
-            if ($class) {
-                return new $class(isset($arguments[0]) ? $arguments[0] : null);
+                if (class_exists($c)) {
+                    $class = $c;
+                    break;
+                }
             }
 
-            return null;
+            static::$cache[$name] = $class;
         }
 
-        foreach (static::$namespaces as $namespace) {
-            $class = $namespace.ucfirst($name);
-            
-            if (class_exists($class)) {
-                static::$cache[$name] = $class;
-
-                return new $class(isset($arguments[0]) ? $arguments[0] : null);
-            }
+        if ($class) {
+            return new $class(isset($arguments[0]) ? $arguments[0] : null);
         }
-
-        static::$cache[$name] = false;
     }
 }

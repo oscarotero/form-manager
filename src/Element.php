@@ -103,7 +103,7 @@ class Element
     /**
      * Returns the element parent.
      *
-     * @return null|FormElementInterface
+     * @return null|Element
      */
     public function getParent()
     {
@@ -131,8 +131,8 @@ class Element
     /**
      * Set/Get an attribute value.
      *
-     * @param null|string|array $name  If it's null, returns an array with all attributes
-     * @param null|string|array $value null to getter, string to setter
+     * @param mixed $name  If it's null, returns an array with all attributes
+     * @param mixed $value null to getter, string to setter
      *
      * @return mixed
      */
@@ -143,8 +143,8 @@ class Element
         }
 
         if (is_array($name)) {
-            foreach ($name as $name => $value) {
-                $this->attr($name, $value);
+            foreach ($name as $k => $v) {
+                $this->attr($k, $v);
             }
 
             return $this;
@@ -157,14 +157,6 @@ class Element
         }
 
         $this->attributes[$name] = $value;
-
-        $class = 'FormManager\\Attributes\\'.ucfirst($name);
-
-        if (class_exists($class) && method_exists($class, 'onAdd')) {
-            $value = $class::onAdd($this, $value);
-        }
-
-        return $this;
     }
 
     /**
@@ -350,7 +342,7 @@ class Element
      * @param string|array $name
      * @param mixed        $value
      *
-     * @return mixed
+     * @return $this
      */
     public function set($name, $value = null)
     {

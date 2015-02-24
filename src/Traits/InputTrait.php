@@ -16,13 +16,6 @@ trait InputTrait
     protected $labelBefore = true;
 
     /**
-     * This trait must be used only in Element
-     * 
-     * @see FormManager\Element
-     */
-    abstract public function attr($name = null, $value = null);
-
-    /**
      * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel.
      * 
      * @return Label|null
@@ -200,5 +193,34 @@ trait InputTrait
         $this->attr('name', $name);
 
         return parent::attrToHtml();
+    }
+
+    /**
+     * This trait must be used only in Element
+     * 
+     * @see FormManager\Element
+     * 
+     * @param mixed $name
+     * @param mixed $value
+     */
+    public function attr($name = null, $value = null)
+    {
+        if (is_array($name)) {
+            foreach ($name as $k => $v) {
+                $this->attr($k, $v);
+            }
+
+            return $this;
+        }
+
+        if ($value !== null) {
+            $class = 'FormManager\\Attributes\\'.ucfirst($name);
+
+            if (class_exists($class) && method_exists($class, 'onAdd')) {
+                $value = $class::onAdd($this, $value);
+            }
+        }
+
+        return parent::attr($name, $value);
     }
 }

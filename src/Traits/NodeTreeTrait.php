@@ -175,11 +175,18 @@ trait NodeTreeTrait
      * This trait must be used only in Element
      * 
      * @see FormManager\Element
+     * 
+     * @return null|Element
      */
     abstract public function getParent();
 
     /**
      * Execute the default render
+     * 
+     * @see FormManager\Element::toHtml
+     * 
+     * @param string $prepend
+     * @param string $append
      * 
      * @return string
      */
