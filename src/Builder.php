@@ -6,22 +6,16 @@ namespace FormManager;
  */
 class Builder
 {
-    protected static $cache = [];
-    static protected $namespaces = [
-        'FormManager\\Inputs\\',
-        'FormManager\\Containers\\',
-    ];
+    protected static $factories = [];
 
     /**
-     * Add more namespaces to the builder.
+     * Add a factory class to the builder
      *
-     * @param string $namespace
+     * @param Factory $factory
      */
-    public static function addNamespace($namespace)
+    public static function addFactory(Factory $factory)
     {
-        static::$cache = [];
-
-        array_unshift(static::$namespaces, $namespace);
+        array_unshift(static::$factories, $factory);
     }
 
     /**
@@ -34,26 +28,13 @@ class Builder
      */
     public static function __callStatic($name, $arguments)
     {
-        $class = false;
-
-        //Save the resolved classes in cache for performance
-        if (isset(static::$cache[$name])) {
-            $class = static::$cache[$name];
-        } else {
-            foreach (static::$namespaces as $namespace) {
-                $c = $namespace.ucfirst($name);
-
-                if (class_exists($c)) {
-                    $class = $c;
-                    break;
-                }
+        foreach (self::$factories as $factory) {
+            if (($item = $factory->get($name, $arguments)) !== null) {
+                return $item;
             }
-
-            static::$cache[$name] = $class;
-        }
-
-        if ($class) {
-            return new $class(isset($arguments[0]) ? $arguments[0] : null);
         }
     }
 }
+
+//Add the form-manager factory by default
+Builder::addFactory(new Factory());
