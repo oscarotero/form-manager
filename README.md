@@ -492,17 +492,9 @@ class CustomInputs implements FactoryInterface
 		}
 	}
 
-	public function selectWeekDay()
+	public function Year()
 	{
-		return F::select()->options([
-			'monday',
-			'tuesday',
-			'wednesday',
-			'thursday',
-			'friday',
-			'saturday',
-			'sunday'
-		]);
+		return F::number()->min(1900)->max(date('Y'))
 	}
 }
 ```
@@ -514,9 +506,9 @@ use FormManager\Builder as F;
 
 F::addFactory(new CustomInputs());
 
-$form = F::form([
-	'from-day' => F::selectWeekDay(),
-	'to-day' => F::selectWeekDay()
+$date = F::form([
+	'from-year' => F::Year(),
+	'to-year' => F::Year()
 ]);
 ```
 

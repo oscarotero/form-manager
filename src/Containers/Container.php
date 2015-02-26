@@ -91,6 +91,32 @@ abstract class Container extends ElementContainer implements FormElementInterfac
     }
 
     /**
+     * Returns all childrens contaning errors
+     * 
+     * @return array
+     */
+    public function getElementsWithErrors()
+    {
+        $elements = [];
+
+        if ($this->error() !== null) {
+            $elements[] = $this;
+        }
+
+        foreach ($this->children as $child) {
+            if ($child instanceof Container) {
+                foreach ($child->getElementsWithErrors() as $element) {
+                    $elements[] = $element;
+                }
+            } else if ($child->error() !== null) {
+                $elements[] = $child;
+            }
+        }
+
+        return $elements;
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see FormManager\ElementContainer::toHtml
