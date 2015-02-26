@@ -28,7 +28,5 @@ class Datetime
 
             $input->val($date->format(static::$format));
         }
-
-        $value = $input->val();
     }
 }

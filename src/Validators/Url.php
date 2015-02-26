@@ -6,6 +6,8 @@ use FormManager\InvalidValueException;
 
 class Url
 {
+    const FILTER = FILTER_VALIDATE_URL;
+
     public static $error_message = 'This value is not a valid url';
 
     /**
@@ -19,7 +21,7 @@ class Url
     {
         $value = $input->val();
 
-        if (!empty($value) && !filter_var($value, FILTER_VALIDATE_URL)) {
+        if (!empty($value) && !filter_var($value, static::FILTER)) {
             throw new InvalidValueException(sprintf(static::$error_message, $value));
         }
     }
