@@ -174,7 +174,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      *
      * @param array $children
      *
-     * @return $this;
+     * @return $this
      */
     public function add(array $children)
     {

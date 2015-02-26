@@ -13,7 +13,7 @@ This package needs php>=5.4 and is available on [Packagist](https://packagist.or
 composer require form-manager/form-manager
 ```
 
-## Guide
+## Usage
 
 ### Namespace import
 
@@ -25,7 +25,7 @@ use FormManager\Builder as F;
 
 ### Create an input
 
-FormManager supports all HTML5 field types.
+All HTML5 field types are supported.
 
 ```php
 //Create an input type="text" element
@@ -34,10 +34,10 @@ $name = F::text();
 //Use the jQuery syntax to set/get/remove attributes:
 $name->attr('name', 'username');
 
-$name->attr(array(
+$name->attr([
 	'maxlength' => 50,
 	'required' => true
-));
+]);
 
 $maxlength = $name->attr('maxlength');
 
@@ -62,10 +62,10 @@ $name->removeData('id');
 
 $name->removeData(); //Remove all data
 
-//You can use chaining:
+//You can chain various methods:
 $email = F::email()->addClass('cool-input')->id('my-email')->val('my@email.com');
 
-//And the __call() magic methods to add attributes:
+//And use the __call() magic method to add attributes:
 $email->required(); //same than $email->attr('required', true);
 $email->required(false); //same than $email->attr('required', false);
 ```
@@ -113,13 +113,17 @@ if (!$url->isValid()) {
 ```
 
 The inputs can handle custom validators:
-```
+```php
 $name = F::text();
 
+function isDave ($input) {
+	if ($input->val() !== 'dave') {
+		throw new FormManager\InvalidValueException('This value must be "dave"');
+	}
+}
+
 //Add custom validators
-$name->addValidator('is-dave', function ($input) {
-	return ($input->val() === 'dave') ?: 'This value must be "dave"';
-});
+$name->addValidator('isDave');
 
 $name->val('tom');
 
@@ -128,7 +132,7 @@ if (!$name->isValid()) {
 }
 
 //Remove the validator
-$name->removeValidator('is-dave');
+$name->removeValidator('isDave');
 ```
 
 The `load()` method is like `val()` but it handles the data sent by the client:
@@ -281,7 +285,7 @@ echo '<div class="template">' + $template + '</div>';
 
 ### CollectionMultiple
 
-If you need different types of values in your collection, CollectionMultiple is the solution:
+If you need different types of values in your collection, CollectionMultiple is the answer:
 
 ```php
 //Create a collectionMultiple container
@@ -470,11 +474,11 @@ $form = F::form([
 ]);
 ```
 
-The `FormManager\Builder` handles the instantation of all theses classes for you using factories. By default, it contains the `FormManager\Factory` factory, responsible of instantation of all inputs and containers.
+The `FormManager\Builder` handles the instantation of all theses classes for you using factories. By default, it contains the `FormManager\Factory`, responsible of instantation of all inputs and containers.
 
 But you can add your owns factories, creating classes implementing `FormManager\FactoryInterface`.
 
-This is useful for a lot of things. For example, to create custom inputs and avoid repetition:
+This is useful for a lot of things. For example, to create custom inputs:
 
 ```php
 use FormManager\Builder as F;
@@ -494,12 +498,12 @@ class CustomInputs implements FactoryInterface
 
 	public function Year()
 	{
-		return F::number()->min(1900)->max(date('Y'))
+		return F::number()->min(1900)->max(date('Y'));
 	}
 }
 ```
 
-Now in your app:
+Use it in your app:
 
 ```php
 use FormManager\Builder as F;
@@ -507,12 +511,13 @@ use FormManager\Builder as F;
 F::addFactory(new CustomInputs());
 
 $date = F::form([
-	'from-year' => F::Year(),
-	'to-year' => F::Year()
+	'name' => F::text(),
+	'born-year' => F::Year(),
+	'dead-year' => F::Year(),
 ]);
 ```
 
-Other usage example is save all forms of your app under a namespace:
+Other example is save all forms of your app under a namespace:
 
 ```php
 namespace MyApp\Forms;
@@ -565,7 +570,7 @@ class MyForms implements FactoryInterface
 }
 ```
 
-Now use it:
+Use it:
 
 ```php
 use FormManager\Builder as F;
