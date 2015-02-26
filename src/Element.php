@@ -157,6 +157,8 @@ class Element
         }
 
         $this->attributes[$name] = $value;
+
+        return $this;
     }
 
     /**
