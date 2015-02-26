@@ -90,40 +90,29 @@ $name->render(function ($input) {
 
 ### Working with data
 
-How to load, sanitize and validate the data:
+Inputs can validate the data depending of the type and other validation attributes:
 
 ```php
 $url = F::url();
 
-//set an invalid value
+//Set the input as required
+$url->required();
+
+//Check if the value is valid
+if (!$url->isValid()) {
+	echo $url->error(); //This value is required
+}
+
+//set an invalid url
 $url->val('invalid-url');
 
 //check the value and get the error
 if (!$url->isValid()) {
-	echo $url->error();
+	echo $url->error(); //This value is not a valid url
 }
 ```
 
-The `load()` method is like `val()` but it handles raw data (data send by the user):
-
-```php
-$name = F::text();
-
-//Add a function to sanitize the data
-$name->sanitize(function ($value) {
-	return strip_tags($value);
-});
-
-//if you use val(), the value remains as is
-$name->val('<strong>earl</strong>');
-echo $name->val(); //<strong>earl</strong>
-
-//if you use load(), the value will be sanitized
-$name->load('<strong>earl</strong>');
-echo $name->val(); //earl
-```
-
-The inputs can handle validators:
+The inputs can handle custom validators:
 ```
 $name = F::text();
 
@@ -142,6 +131,26 @@ if (!$name->isValid()) {
 $name->removeValidator('is-dave');
 ```
 
+The `load()` method is like `val()` but it handles the data sent by the client:
+
+```php
+$name = F::text();
+
+//Add a function to sanitize the data
+$name->sanitize(function ($value) {
+	return strip_tags($value);
+});
+
+//if you use val(), the value remains as is
+$name->val('<strong>earl</strong>');
+echo $name->val(); //<strong>earl</strong>
+
+//if you use load(), the value will be sanitized
+$name->load('<strong>earl</strong>');
+echo $name->val(); //earl
+```
+
+
 ### Labels
 
 You can use labels with your inputs, just use the property `->label` and it will be created automatically. It may also generate an extra label with the error message.
@@ -152,7 +161,7 @@ $name = F::text();
 //Define a label
 $name->label('User name');
 
-//And modify the label using the same jquery syntax:
+//And modify the label using the same syntax than inputs:
 $name->label->class('main-label');
 
 //Print all (label + input)
@@ -204,7 +213,7 @@ This container stores inputs with the same name but different values. Useful for
 //Create a choose container
 $colors = F::choose();
 
-//Add some fields. The keys will be the values
+//Add some fields. The keys are the values
 $colors->add([
 	'red' => F::radio()->label('Red'),
 	'blue' => F::radio()->label('Blue'),
@@ -262,8 +271,8 @@ $people->pushVal([
 	'age' => '18'
 ]);
 
-//Returns the group container used as template for each value.
-//useful to create the template in javascript
+//Returns the group container used as template for each value inserted.
+//useful to use the html template in javascript
 
 $template = $people->getTemplate();
 
@@ -304,7 +313,7 @@ $article->val([
 	]
 ]);
 
-//But you don't need to define the "type" input, it will be created for you
+// Note that a hidden input will be created for you to store the group type
 $article[0]['type']->val(); //section
 $article[0]['type']->attr('type'); //hidden
 
@@ -339,12 +348,12 @@ We need a form to put all this things together. The form is just another contain
 $form = F::form();
 
 //Set the form attributes:
-$form->action('test.php')->method('post');
-
-$form->addClass('my-form');
+$form->attr([
+	'action' => 'test.php',
+	'method' => 'post'
+]);
 
 //Add some inputs and containers
-
 $form->add([
 	'name' => F::text()->maxlength(50)->required()->label('Your name'),
 	'email' => F::email()->label('Your email'),
@@ -426,8 +435,8 @@ $values = $MyForm->val();
 //To load the raw values from globals $_GET, $_POST and $_FILES:
 $MyForm->loadFromGlobals();
 
-//Or specify your fake globals
-$MyForm->loadFromGlobals($_fake_GET, $_fake_POST, $_fake_FILES);
+//Or specify your own globals
+$MyForm->loadFromGlobals($_my_GET, $_my_POST, $_my_FILES);
 
 //Check the errors
 if (!$MyForm->isValid()) {
@@ -465,7 +474,7 @@ The `FormManager\Builder` handles the instantation of all theses classes for you
 
 But you can add your owns factories, creating classes implementing `FormManager\FactoryInterface`.
 
-This is useful for a lot of things. For example, to create custom inputs for you and avoid repetition:
+This is useful for a lot of things. For example, to create custom inputs and avoid repetition:
 
 ```php
 use FormManager\Builder as F;
@@ -474,7 +483,7 @@ use FormManager\FactoryInterface;
 class CustomInputs implements FactoryInterface
 {
 	/**
-	 * Method required in the interface
+	 * Method required by the interface
 	 */
 	public function get($name, array $arguments)
 	{
@@ -483,7 +492,7 @@ class CustomInputs implements FactoryInterface
 		}
 	}
 
-	public function selectWeek()
+	public function selectWeekDay()
 	{
 		return F::select()->options([
 			'monday',
@@ -506,7 +515,8 @@ use FormManager\Builder as F;
 F::addFactory(new CustomInputs());
 
 $form = F::form([
-	'week' => F::selectWeek()
+	'from-day' => F::selectWeekDay(),
+	'to-day' => F::selectWeekDay()
 ]);
 ```
 
