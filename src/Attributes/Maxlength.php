@@ -2,6 +2,7 @@
 namespace FormManager\Attributes;
 
 use FormManager\InputInterface;
+use FormManager\InvalidValueException;
 
 class Maxlength
 {
@@ -21,7 +22,7 @@ class Maxlength
             throw new \InvalidArgumentException('The maxlength value must be a non-negative integer');
         }
 
-        $input->addValidator('maxlength', array(__CLASS__, 'validate'));
+        $input->addValidator('FormManager\\Validators\\Maxlength::validate');
 
         return $value;
     }
@@ -33,21 +34,6 @@ class Maxlength
      */
     public static function onRemove(InputInterface $input)
     {
-        $input->removeValidator('maxlength');
-    }
-
-    /**
-     * Validates the input value according to this attribute.
-     *
-     * @param InputInterface $input The input to validate
-     *
-     * @return boolean|string True if its valid, string with the error if not
-     */
-    public static function validate(InputInterface $input)
-    {
-        $value = $input->val();
-        $attr = $input->attr('maxlength');
-
-        return (empty($attr) || (strlen($value) <= $attr)) ? true : sprintf(static::$error_message, $attr);
+        $input->removeValidator('FormManager\\Validators\\Maxlength::validate');
     }
 }

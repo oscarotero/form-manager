@@ -8,7 +8,7 @@ class LocalesTest extends BaseTest
         $input = Builder::text()->required();
         $message = 'custom error message';
 
-        FormManager\Attributes\Required::$error_message = $message;
+        FormManager\Validators\Required::$error_message = $message;
 
         $this->assertFalse($input->isValid());
 

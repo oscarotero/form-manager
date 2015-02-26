@@ -1,6 +1,8 @@
 <?php
 namespace FormManager\Traits;
 
+use FormManager\InvalidValueException;
+
 /**
  * Trait with common methods for all nodes in the form tree.
  */
@@ -51,16 +53,15 @@ trait NodeTreeTrait
     }
 
     /**
-     * Adds new value validator.
+     * push a new validator.
      *
-     * @param string   $name      The validator name
-     * @param callable $validator The validator function
+     * @param callable $validator
      *
      * @return $this
      */
-    public function addValidator($name, $validator)
+    public function addValidator($validator)
     {
-        $this->validators[$name] = $validator;
+        $this->validators[] = $validator;
 
         return $this;
     }
@@ -68,13 +69,15 @@ trait NodeTreeTrait
     /**
      * Removes a validator.
      *
-     * @param string $name The validator name
+     * @param callable $validator
      *
      * @return $this
      */
-    public function removeValidator($name)
+    public function removeValidator($validator)
     {
-        unset($this->validators[$name]);
+        if (($key = array_search($validator, $this->validators)) !== false) {
+            unset($this->validators[$key]);
+        }
 
         return $this;
     }
@@ -88,12 +91,15 @@ trait NodeTreeTrait
     {
         $this->error = null;
 
-        foreach ($this->validators as $validator) {
-            if (($error = $validator($this)) !== true) {
-                $this->error($error);
-
-                return false;
+        try {
+            foreach ($this->validators as $validator) {
+                call_user_func($validator, $this);
             }
+
+        } catch (InvalidValueException $exception) {
+            $this->error($exception->getMessage());
+
+            return false;
         }
 
         return true;

@@ -3,11 +3,12 @@ namespace FormManager\Inputs;
 
 use FormManager\InputInterface;
 
-class DatetimeLocal extends Datetime implements InputInterface
+class DatetimeLocal extends Input implements InputInterface
 {
-    public static $error_message = 'This value is not a valid local datetime';
-
-    protected static $format = 'Y-m-d\TH:i:s';
-
     protected $attributes = ['type' => 'datetime-local'];
+
+    public function __construct()
+    {
+        $this->addValidator('FormManager\\Validators\\DatetimeLocal::validate');
+    }
 }

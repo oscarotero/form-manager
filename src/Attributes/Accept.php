@@ -2,6 +2,7 @@
 namespace FormManager\Attributes;
 
 use FormManager\InputInterface;
+use FormManager\InvalidValueException;
 
 class Accept
 {
@@ -17,7 +18,7 @@ class Accept
      */
     public static function onAdd(InputInterface $input, $value)
     {
-        $input->addValidator('accept', array(__CLASS__, 'validate'));
+        $input->addValidator('FormManager\\Validators\\Accept::validate');
 
         return $value;
     }
@@ -29,32 +30,6 @@ class Accept
      */
     public static function onRemove(InputInterface $input)
     {
-        $input->removeValidator('accept');
-    }
-
-    /**
-     * Validates the input value according to this attribute.
-     *
-     * @param InputInterface $input The input to validate
-     *
-     * @return boolean|string True if its valid, string with the error if not
-     */
-    public static function validate(InputInterface $input)
-    {
-        $value = $input->val();
-
-        if (empty($value['tmp_name'])) {
-            return true;
-        }
-
-        $attr = $input->attr('accept');
-        $accept = array_map('trim', explode(',', $attr));
-        $filename = $value['tmp_name'];
-
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $filename);
-        finfo_close($finfo);
-
-        return (array_search($mime, $accept) !== false) ? true : sprintf(static::$error_message, $attr);
+        $input->removeValidator('FormManager\\Validators\\Accept::validate');
     }
 }

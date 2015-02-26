@@ -2,6 +2,8 @@
 use FormManager\Builder;
 use FormManager\Containers\Form;
 
+use FormManager\InvalidValueException;
+
 class ValidationTest extends BaseTest
 {
     public function testValidation()
@@ -11,15 +13,13 @@ class ValidationTest extends BaseTest
             'email' => Builder::email()->label('Email'),
             'password' => Builder::password()->label('Password'),
             'repeat_password' => Builder::password()->label('Repeat password'),
-        ])->addValidator('password-check', function ($form) {
+        ])->addValidator(function ($form) {
             $password1 = $form['password']->val();
             $password2 = $form['repeat_password']->val();
 
             if ($password1 != $password2) {
-                return 'The passwords does not match';
+                throw new InvalidValueException('The passwords does not match');
             }
-
-            return true;
         });
 
         $form->val([

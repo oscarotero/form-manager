@@ -1,6 +1,7 @@
 <?php
 use FormManager\Builder;
 use FormManager\Containers\Form;
+use FormManager\InvalidValueException;
 
 class FormTest extends BaseTest
 {
@@ -93,10 +94,10 @@ class FormTest extends BaseTest
 
         $this->assertTrue($form->isValid());
 
-        $form->addValidator('myValidator', function ($form) {
-            $val = $form['name']->val();
-
-            return empty($val) ? true : 'The name value must be empty';
+        $form->addValidator(function ($form) {
+            if ($form['name']->val()) {
+                throw new InvalidValueException('The name value must be empty');
+            }
         });
 
         $this->assertFalse($form->isValid());

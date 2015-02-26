@@ -3,11 +3,12 @@ namespace FormManager\Inputs;
 
 use FormManager\InputInterface;
 
-class Date extends Datetime implements InputInterface
+class Date extends Input implements InputInterface
 {
-    public static $error_message = 'This value is not a valid date';
-
-    protected static $format = 'Y-m-d';
-
     protected $attributes = ['type' => 'date'];
+
+    public function __construct()
+    {
+        $this->addValidator('FormManager\\Validators\\Date::validate');
+    }
 }

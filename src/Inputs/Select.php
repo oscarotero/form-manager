@@ -8,15 +8,16 @@ use FormManager\Option;
 
 class Select extends ElementContainer implements InputInterface
 {
-    use InputTrait {
-        InputTrait::validate as private parentValidate;
-    }
-
-    public static $error_message = 'This value is not valid';
+    use InputTrait;
 
     protected $name = 'select';
     protected $value;
     protected $allowNewValues = false;
+
+    public function __construct()
+    {
+        $this->addValidator('FormManager\\Validators\\Select::validate');
+    }
 
     public function offsetSet($offset, $value)
     {
@@ -119,29 +120,5 @@ class Select extends ElementContainer implements InputInterface
         $this->value = $value;
 
         return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function validate()
-    {
-        $value = $this->val();
-
-        if (!empty($value)) {
-            if ($this->attr('multiple')) {
-                if (array_keys(array_diff_key(array_flip($value), $this->children))) {
-                    $this->error(static::$error_message);
-
-                    return false;
-                }
-            } elseif (!isset($this->children[$value])) {
-                $this->error(static::$error_message);
-
-                return false;
-            }
-        }
-
-        return $this->parentValidate();
     }
 }

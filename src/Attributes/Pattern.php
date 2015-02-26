@@ -2,6 +2,7 @@
 namespace FormManager\Attributes;
 
 use FormManager\InputInterface;
+use FormManager\InvalidValueException;
 
 class Pattern
 {
@@ -17,7 +18,7 @@ class Pattern
      */
     public static function onAdd(InputInterface $input, $value)
     {
-        $input->addValidator('pattern', array(__CLASS__, 'validate'));
+        $input->addValidator('FormManager\\Validators\\Pattern::validate');
 
         return $value;
     }
@@ -29,27 +30,6 @@ class Pattern
      */
     public static function onRemove(InputInterface $input)
     {
-        $input->removeValidator('pattern');
-    }
-
-    /**
-     * Validates the input value according to this attribute.
-     *
-     * @param InputInterface $input The input to validate
-     *
-     * @return boolean|string True if its valid, string with the error if not
-     */
-    public static function validate(InputInterface $input)
-    {
-        $value = $input->val();
-
-        //File
-        if ($input->attr('type') === 'file') {
-            $value = isset($value['name']) ? $value['name'] : null;
-        }
-
-        $attr = str_replace('/', '\\/', $input->attr('pattern'));
-
-        return (empty($attr) || empty($value) || filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/^{$attr}\$/")))) ? true : sprintf(static::$error_message, $attr);
+        $input->removeValidator('FormManager\\Validators\\Pattern::validate');
     }
 }

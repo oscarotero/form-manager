@@ -2,6 +2,7 @@
 namespace FormManager\Attributes;
 
 use FormManager\InputInterface;
+use FormManager\InvalidValueException;
 
 class Required
 {
@@ -21,7 +22,7 @@ class Required
             throw new \InvalidArgumentException('The required value must be a boolean');
         }
 
-        $input->addValidator('required', array(__CLASS__, 'validate'));
+        $input->addValidator('FormManager\\Validators\\Required::validate');
 
         return $value;
     }
@@ -33,27 +34,6 @@ class Required
      */
     public static function onRemove(InputInterface $input)
     {
-        $input->removeValidator('required');
-    }
-
-    /**
-     * Validates the input value according to this attribute.
-     *
-     * @param InputInterface $input The input to validate
-     *
-     * @return boolean|string True if its valid, string with the error if not
-     */
-    public static function validate(InputInterface $input)
-    {
-        $value = $input->val();
-
-        //File
-        if ($input->attr('type') === 'file') {
-            $value = (isset($value['name']) && !empty($value['size'])) ? $value['name'] : null;
-        }
-
-        $attr = $input->attr('required');
-
-        return (empty($attr) || !empty($value) || strlen($value) > 0) ? true : sprintf(static::$error_message, $attr);
+        $input->removeValidator('FormManager\\Validators\\Required::validate');
     }
 }

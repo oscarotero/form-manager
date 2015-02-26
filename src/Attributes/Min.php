@@ -2,6 +2,7 @@
 namespace FormManager\Attributes;
 
 use FormManager\InputInterface;
+use FormManager\InvalidValueException;
 
 class Min
 {
@@ -45,7 +46,7 @@ class Min
             throw new \InvalidArgumentException('The min value must be a float number');
         }
 
-        $input->addValidator('min', array(__CLASS__, 'validate'));
+        $input->addValidator('FormManager\\Validators\\Min::validate');
 
         return $value;
     }
@@ -64,7 +65,7 @@ class Min
             throw new \InvalidArgumentException('The min value must be a valid datetime');
         }
 
-        $input->addValidator('min', array(__CLASS__, 'validateDatetime'));
+        $input->addValidator('FormManager\\Validators\\Min::validateDatetime');
 
         return $value;
     }
@@ -76,36 +77,7 @@ class Min
      */
     public static function onRemove(InputInterface $input)
     {
-        $input->removeValidator('min');
-    }
-
-    /**
-     * Validates the input value according to this attribute.
-     *
-     * @param InputInterface $input The input to validate
-     *
-     * @return boolean|string True if its valid, string with the error if not
-     */
-    public static function validate(InputInterface $input)
-    {
-        $value = $input->val();
-        $attr = $input->attr('min');
-
-        return (empty($attr) || ($value >= $attr)) ? true : sprintf(static::$error_message, $attr);
-    }
-
-    /**
-     * Validates the datetime input value according to this attribute.
-     *
-     * @param InputInterface $input The input to validate
-     *
-     * @return boolean|string True if its valid, string with the error if not
-     */
-    public static function validateDatetime(InputInterface $input)
-    {
-        $value = $input->val();
-        $attr = $input->attr('min');
-
-        return (empty($attr) || (strtotime($value) >= strtotime($attr))) ? true : sprintf(static::$error_message, $attr);
+        $input->removeValidator('FormManager\\Validators\\Min::validateDatetime');
+        $input->removeValidator('FormManager\\Validators\\Min::validate');
     }
 }

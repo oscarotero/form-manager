@@ -1,6 +1,8 @@
 <?php
 use FormManager\Inputs\Input;
 
+use FormManager\InvalidValueException;
+
 abstract class BaseTest extends PHPUnit_Framework_TestCase
 {
     protected function _testElement($element)
@@ -132,8 +134,10 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
     protected function _testValidator($input)
     {
-        $input->addValidator('is-dave', function ($input) {
-            return ($input->val() === 'dave') ?: 'This value must be "dave"';
+        $input->addValidator(function ($input) {
+            if ($input->val() !== 'dave') {
+                throw new InvalidValueException('This value must be "dave"');
+            };
         });
 
         $this->assertFalse($input->isValid());
