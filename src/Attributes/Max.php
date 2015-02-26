@@ -2,19 +2,11 @@
 namespace FormManager\Attributes;
 
 use FormManager\InputInterface;
-use FormManager\InvalidValueException;
 
-class Max
+class Max implements AttributeInterface
 {
-    public static $error_message = 'The max value allowed is %s';
-
     /**
-     * Callback used on add this attribute to an input.
-     *
-     * @param InputInterface $input The input in which the attribute will be added
-     * @param mixed          $value The value of this attribute
-     *
-     * @return mixed $value The value sanitized
+     * {@inheritdoc}
      */
     public static function onAdd(InputInterface $input, $value)
     {
@@ -25,55 +17,44 @@ class Max
             case 'time':
             case 'month':
             case 'week':
-                return self::checkDatetimeAttribute($input, $value);
+                if (!date_create($value)) {
+                    throw new \InvalidArgumentException('This attribute must be a valid datetime');
+                }
+                static::addDatetimeValidator($input);
+                return $value;
 
             default:
-                return self::checkAttribute($input, $value);
+                if (!is_float($value) && !is_int($value)) {
+                    throw new \InvalidArgumentException('This attribute must be a float number');
+                }
+                static::addValidator($input);
+                return $value;
         }
+
     }
 
     /**
-     * Callback used on add this attribute to an input.
+     * Add the validator for this input
      *
-     * @param InputInterface $input The input in which the attribute will be added
-     * @param mixed          $value The value of this attribute
-     *
-     * @return mixed The value sanitized
+     * @param InputInterface $input
      */
-    protected static function checkAttribute(InputInterface $input, $value)
+    protected static function addValidator(InputInterface $input)
     {
-        if (!is_float($value) && !is_int($value)) {
-            throw new \InvalidArgumentException('The max value must be a float number');
-        }
-
         $input->addValidator('FormManager\\Validators\\Max::validate');
-
-        return $value;
     }
 
     /**
-     * Callback used on add this attribute to a datetime input.
+     * Add the validator for this date-time input
      *
-     * @param InputInterface $input The input in which the attribute will be added
-     * @param mixed          $value The value of this attribute
-     *
-     * @return mixed The value sanitized
+     * @param InputInterface $input
      */
-    protected static function checkDatetimeAttribute(InputInterface $input, $value)
+    protected static function addDatetimeValidator(InputInterface $input)
     {
-        if (!date_create($value)) {
-            throw new \InvalidArgumentException('The max value must be a valid datetime');
-        }
-
         $input->addValidator('FormManager\\Validators\\Max::validateDatetime');
-
-        return $value;
     }
 
     /**
-     * Callback used on remove this attribute from an input.
-     *
-     * @param InputInterface $input The input from the attribute will be removed
+     * {@inheritdoc}
      */
     public static function onRemove(InputInterface $input)
     {
