@@ -164,7 +164,7 @@ trait NodeTreeTrait
             $this->rendering = true;
 
             if ($this->render) {
-                $html = call_user_func($this->render, $this);
+                $html = call_user_func($this->render, $this, $prepend, $append);
             } else {
                 $html = $this->renderDefault($prepend, $append);
             }
