@@ -7,26 +7,26 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
     protected function _testElement($element)
     {
         //Name
-        $element->name('input-name');
+        $this->assertSame($element->name('input-name'), $element);
         $this->assertEquals('input-name', $element->attr('name'));
         $this->assertNull($element->val());
 
         //Data
-        $element->data('name', 'value');
+        $this->assertSame($element->data('name', 'value'), $element);
         $this->assertEquals('value', $element->data('name'));
         $this->assertEquals(['name' => 'value'], $element->data());
 
         //Add, remove classes
         $this->assertNull($element->attr('class'));
-        $element->addClass('first');
+        $this->assertSame($element->addClass('first'), $element);
         $element->addClass('second');
         $this->assertEquals('first second', $element->attr('class'));
 
-        $element->removeClass('second');
+        $this->assertSame($element->removeClass('second'), $element);
         $this->assertEquals('first', $element->attr('class'));
 
         //Arbitrary values
-        $element->set('myVar', ['one', 'two']);
+        $this->assertSame($element->set('myVar', ['one', 'two']), $element);
         $this->assertEquals(['one', 'two'], $element->get('myVar'));
     }
 
