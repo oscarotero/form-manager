@@ -160,15 +160,21 @@ trait NodeTreeTrait
      */
     public function toHtml($prepend = '', $append = '')
     {
-        if ($this->render && !$this->rendering) {
+        if (!$this->rendering) {
             $this->rendering = true;
-            $html = call_user_func($this->render, $this);
+
+            if ($this->render) {
+                $html = call_user_func($this->render, $this);
+            } else {
+                $html = $this->renderDefault($prepend, $append);
+            }
+
             $this->rendering = false;
 
             return $html;
         }
 
-        return $this->renderDefault($prepend, $append);
+        return parent::toHtml($prepend, $append);
     }
 
     /**

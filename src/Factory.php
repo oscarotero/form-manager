@@ -4,7 +4,7 @@ namespace FormManager;
 use ReflectionClass;
 
 /**
- * Basic form-manager factory
+ * Basic form-manager factory.
  */
 class Factory implements FactoryInterface
 {
@@ -25,10 +25,10 @@ class Factory implements FactoryInterface
     }
 
     /**
-     * Search a class in the namespaces
-     * 
+     * Search a class in the namespaces.
+     *
      * @param string $name The class name
-     * 
+     *
      * @return false|ReflectionClass
      */
     protected function getClass($name)

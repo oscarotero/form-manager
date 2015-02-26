@@ -9,7 +9,7 @@ class Builder
     protected static $factories = [];
 
     /**
-     * Add a factory class to the builder
+     * Add a factory class to the builder.
      *
      * @param Factory $factory
      */

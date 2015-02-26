@@ -1,7 +1,6 @@
 <?php
 namespace FormManager;
 
-
 class Label extends Element
 {
     protected $name = 'label';

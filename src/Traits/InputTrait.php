@@ -154,12 +154,11 @@ trait InputTrait
     public function renderDefault($prepend = '', $append = '')
     {
         $label = isset($this->label) ? $this->label : null;
-        $html = parent::toHtml($prepend, $append);
 
         if ($this->labelBefore) {
-            return "{$label} {$html} {$this->errorLabel}";
+            return "{$label} {$this} {$this->errorLabel}";
         } else {
-            return "{$html} {$label} {$this->errorLabel}";
+            return "{$this} {$label} {$this->errorLabel}";
         }
     }
 

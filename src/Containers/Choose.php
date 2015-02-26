@@ -1,7 +1,6 @@
 <?php
 namespace FormManager\Containers;
 
-
 class Choose extends Container
 {
     protected $value;

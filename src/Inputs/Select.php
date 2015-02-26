@@ -94,7 +94,7 @@ class Select extends ElementContainer implements InputInterface
 
                     $this[$val] = $val;
                 }
-                
+
                 $this->children[$val]->check();
             }
         } else {
@@ -111,8 +111,7 @@ class Select extends ElementContainer implements InputInterface
             if ($this->allowNewValues && !isset($this->children[$value])) {
                 $this[$value] = $value;
                 $this->children[$value]->check();
-            }
-            else if (isset($this->children[$value])) {
+            } elseif (isset($this->children[$value])) {
                 $this->children[$value]->check();
             }
         }
