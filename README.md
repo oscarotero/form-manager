@@ -5,35 +5,33 @@
 
 Created by Oscar Otero <http://oscarotero.com> <oom@oscarotero.com>
 
-Requirements:
+## Installation:
 
-* PHP 5.4
+This package needs php>=5.4 and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
 
-Installation:
-
-Create or edit your composer.json file:
-
-```json
-{
-	"require": {
-		"form-manager/form-manager": "*"
-	}
-}
+```
+composer require form-manager/form-manager
 ```
 
-## Create an input
+## Guide
 
-### Using the jquery syntax:
+### Namespace import
+
+FormManager is namespaced, but you only need to import a single class into your context:
 
 ```php
-use FormManager\Builder;
+use FormManager\Builder as F;
+```
 
+### Create an input
+
+FormManager supports all HTML5 field types.
+
+```php
 //Create an input type="text" element
+$name = F::text();
 
-$name = Builder::text();
-
-//Use the jQuery syntax to set, get or remove attributes:
-
+//Use the jQuery syntax to set/get/remove attributes:
 $name->attr('name', 'username');
 
 $name->attr(array(
@@ -63,28 +61,23 @@ $foo = $name->data('foo');
 $name->removeData('id');
 
 $name->removeData(); //Remove all data
-```
 
-### The magic methods
+//You can use chaining:
+$email = F::email()->addClass('cool-input')->id('my-email')->val('my@email.com');
 
-```php
-$name = Builder::text();
-
-$name->required(); //its like $name->attr('required', true);
-$name->required(false); //its like $name->attr('required', false);
-
-//You can chain methods:
-$name->pattern('[a-z]+')->required()->maxlength(100);
+//And the __call() magic methods to add attributes:
+$email->required(); //same than $email->attr('required', true);
+$email->required(false); //same than $email->attr('required', false);
 ```
 
 ### Generate the html code
 
-The html code is created automatically on convert the object to a string:
+The html code is created automatically on convert the object into a string:
 
 ```php
-$name = Builder::text()->class('my-input');
+$name = F::text()->class('my-input')->required();
 
-echo $name; //<input type="text" class="my-input">
+echo $name; //<input type="text" class="my-input" required>
 
 //print the input with extra attributes
 echo $name->addClass('text-input')->placeholder('Your name');
@@ -97,48 +90,69 @@ $name->render(function ($input) {
 
 ### Working with data
 
-The input can load, sanitize and validate the data:
+How to load, sanitize and validate the data:
 
 ```php
-$url = Builder::url();
+$url = F::url();
 
+//set an invalid value
 $url->val('invalid-url');
 
+//check the value and get the error
 if (!$url->isValid()) {
 	echo $url->error();
 }
+```
 
-//Add a function to sanitize the data:
-$name = Builder::text();
+The `load()` method is like `val()` but it handles raw data (data send by the user):
 
+```php
+$name = F::text();
+
+//Add a function to sanitize the data
 $name->sanitize(function ($value) {
 	return strip_tags($value);
 });
 
-//Use load() to get the raw data
-$name->load('my name is <strong>earl</strong>');
-echo $name->val(); //my name is earl
+//if you use val(), the value remains as is
+$name->val('<strong>earl</strong>');
+echo $name->val(); //<strong>earl</strong>
+
+//if you use load(), the value will be sanitized
+$name->load('<strong>earl</strong>');
+echo $name->val(); //earl
+```
+
+The inputs can handle validators:
+```
+$name = F::text();
 
 //Add custom validators
 $name->addValidator('is-dave', function ($input) {
 	return ($input->val() === 'dave') ?: 'This value must be "dave"';
 });
 
-//Or remove them
+$name->val('tom');
+
+if (!$name->isValid()) {
+	echo $name->error(); //This value must be "dave"
+}
+
+//Remove the validator
 $name->removeValidator('is-dave');
 ```
 
 ### Labels
 
-You can use a label with your input, just use the property `->label`. It may also generate an extra label with the error message.
+You can use labels with your inputs, just use the property `->label` and it will be created automatically. It may also generate an extra label with the error message.
 
 ```php
-$name = Builder::text();
+$name = F::text();
 
 //Define a label
 $name->label('User name');
 
-//And modify the label using the same syntax:
+//And modify the label using the same jquery syntax:
 $name->label->class('main-label');
 
 //Print all (label + input)
@@ -147,36 +161,39 @@ echo $name;
 
 ## Containers
 
-A container is an object that contain inputs or other containers. There are various types of containers, deppending of the data structure:
+Containers are objects that contain other elements (inputs and other containers). Technically, they are html elements (by default `<div></div>`) so they have the same methods than inputs to set/get/remove attributes.
+
+There are various types of containers, deppending of the data scheme:
 
 ### Group
 
-A group is a simple container to store inputs/containers by name. For example, here a group of three inputs to store a date:
+A group is a simple container to store inputs/containers by name. The following example shows a group of three inputs:
 
 ```php
-$date = Builder::group([
-	'day' => Builder::number()->min(1)->max(31)->label('Day'),
-	'month' => Builder::number()->min(1)->max(12)->label('Month'),
-	'year' => Builder::number()->min(1900)->max(2013)->label('Year')
+$date = F::group([
+	'day' => F::number()->min(1)->max(31)->label('Day'),
+	'month' => F::number()->min(1)->max(12)->label('Month'),
+	'year' => F::number()->min(1900)->max(2013)->label('Year')
 ]);
 
-//Set the value
+//Set values to group
 $date->val([
 	'day' => 21,
 	'month' => 6,
 	'year' => 1979
 ]);
 
-//Use arrayAccess to get the inputs by name
-$year = $date['year']->val();
-
-//Add more fields dinamically
-$date['hour'] = Builder::number()->min(0)->max(23)->label('Hour');
-
 //Get values
 $values = $date->val();
 
-echo $values['year'];
+//Use array syntax to access to the inputs by name
+$year = $date['year']->val();
+
+//Add more fields dinamically
+$date['hour'] = F::number()->min(0)->max(23)->label('Hour');
+
+//Add other html attributes to the group:
+$date->addClass('field-day')->attr('id' => 'date-field');
 ```
 
 ### Choose
@@ -185,25 +202,25 @@ This container stores inputs with the same name but different values. Useful for
 
 ```php
 //Create a choose container
-$colors = Builder::choose();
+$colors = F::choose();
 
 //Add some fields. The keys will be the values
 $colors->add([
-	'red' => Builder::radio()->label('Red'),
-	'blue' => Builder::radio()->label('Blue'),
-	'green' => Builder::radio()->label('Green')
+	'red' => F::radio()->label('Red'),
+	'blue' => F::radio()->label('Blue'),
+	'green' => F::radio()->label('Green')
 ]);
 
 //Access to the fields by value
-$radio = $colors['red'];
+$red_radio = $colors['red'];
 
 //Add more fields dinamically
-$colors['yellow'] = Builder::radio()->label('Yellow');
+$colors['yellow'] = F::radio()->label('Yellow');
 
 //Set the value
 $colors->val('red');
 
-//Get values
+//Get value
 $color_choosen = $colors->val();
 ```
 
@@ -212,11 +229,11 @@ $color_choosen = $colors->val();
 It's like a [group](#group), but stores a collection of values:
 
 ```php
-//Create a collection field
-$people = Builder::collection([
-	'name' => Builder::text()->label('Name'),
-	'email' => Builder::email()->label('email'),
-	'age' => Builder::number()->label('Age')
+//Create a collection container
+$people = F::collection([
+	'name' => F::text()->label('Name'),
+	'email' => F::email()->label('email'),
+	'age' => F::number()->label('Age')
 ]);
 
 //Set two values
@@ -232,7 +249,10 @@ $people->val([
 	]
 ]);
 
-//Get fieldsets by number
+//Access to the first group of values:
+$group = $people[0];
+
+//Access to any input
 echo $people[0]['name']->val(); //returns 'Xaquín'
 
 //Push a new value
@@ -243,30 +263,31 @@ $people->pushVal([
 ]);
 
 //Returns the group container used as template for each value.
+//useful to create the template in javascript
+
 $template = $people->getTemplate();
 
-//useful to create the template in javascript
 echo '<div class="template">' + $template + '</div>';
 ```
 
 ### CollectionMultiple
 
-If you need different types of values in your collection, CollectionMultiple is your container:
+If you need different types of values in your collection, CollectionMultiple is the solution:
 
 ```php
-//Create a collectionMultiple
-$article = Builder::collectionMultiple([
+//Create a collectionMultiple container
+$article = F::collectionMultiple([
 	'section' => [
-        'title' => Builder::text()->label('Title'),
-        'text' => Builder::textarea()->label('Text')
+        'title' => F::text()->label('Title'),
+        'text' => F::textarea()->label('Text')
     ],
     'picture' => [
-        'caption' => Builder::text()->label('Caption'),
-        'image' => Builder::file()->label('Image')
+        'caption' => F::text()->label('Caption'),
+        'image' => F::file()->label('Image')
     ],
     'quote' => [
-        'text' => Builder::textarea()->label('Text'),
-        'author' => Builder::text()->label('Author')
+        'text' => F::textarea()->label('Text'),
+        'author' => F::text()->label('Author')
     ]
 ]);
 
@@ -283,11 +304,11 @@ $article->val([
 	]
 ]);
 
-// ArrayAccess
-echo $article[0]['title']->val(); //returns 'This is the section title'
-$article[1]['author']->val('Anonimous');
+//But you don't need to define the "type" input, it will be created for you
+$article[0]['type']->val(); //section
+$article[0]['type']->attr('type'); //hidden
 
-// Add new values
+//Push more values
 $article->pushVal([
 	'type' => 'section',
 	'title' => 'This is another section',
@@ -312,10 +333,10 @@ foreach ($templates as $name => $template) {
 
 ## Forms
 
-Ok, we need a form to put all together. The form is just another container, in fact, it's like a [Group](#group).
+We need a form to put all this things together. The form is just another container, in fact, it's like a [Group](#group).
 
 ```php
-$form = Builder::form();
+$form = F::form();
 
 //Set the form attributes:
 $form->action('test.php')->method('post');
@@ -325,41 +346,41 @@ $form->addClass('my-form');
 //Add some inputs and containers
 
 $form->add([
-	'name' => Builder::text()->maxlength(50)->required()->label('Your name'),
-	'email' => Builder::email()->label('Your email'),
-	'telephone' => Builder::tel()->label('Telephone number'),
+	'name' => F::text()->maxlength(50)->required()->label('Your name'),
+	'email' => F::email()->label('Your email'),
+	'telephone' => F::tel()->label('Telephone number'),
 
-	'gender' => Builder::choose([
-		'm' => Builder::radio()->label('Male'),
-		'f' => Builder::radio()->label('Female')
+	'gender' => F::choose([
+		'm' => F::radio()->label('Male'),
+		'f' => F::radio()->label('Female')
 	]),
 	
-	'born' => Builder::group([
-		'day' => Builder::number()->min(1)->max(31)->label('Day'),
-		'month' => Builder::number()->min(1)->max(12)->label('Month'),
-		'year' => Builder::number()->min(1900)->max(2013)->label('Year')
+	'born' => F::group([
+		'day' => F::number()->min(1)->max(31)->label('Day'),
+		'month' => F::number()->min(1)->max(12)->label('Month'),
+		'year' => F::number()->min(1900)->max(2013)->label('Year')
 	]),
 
-	'language' => Builder::select()->options(array(
+	'language' => F::select()->options(array(
 		'gl' => 'Galician',
 		'es' => 'Spanish',
 		'en' => 'English'
 	))->label('Language'),
 
-	'friends' => Builder::collection([
-		'name' => Builder::text()->label('Name'),
-		'email' => Builder::email()->label('email'),
-		'age' => Builder::number()->label('Age')
+	'friends' => F::collection([
+		'name' => F::text()->label('Name'),
+		'email' => F::email()->label('email'),
+		'age' => F::number()->label('Age')
 	]),
 
-	'action' => Builder::choose([
-		'save' => Builder::submit()->html('Save changes'),
-		'duplicate' => Builder::submit()->html('Save changes')
+	'action' => F::choose([
+		'save' => F::submit()->html('Save changes'),
+		'duplicate' => F::submit()->html('Save changes')
 	])
 ]);
 
 //You can also add new inputs using the array syntax (the key will be the input name):
-$MyForm['new-input'] = Builder::range()->min(0)->max(100)->val(50);
+$MyForm['new-input'] = F::range()->min(0)->max(100)->val(50);
 
 //Print the form
 echo $MyForm;
@@ -370,7 +391,7 @@ echo $MyForm['website'];
 //Or fields inside fields
 echo $MyForm['born']['day'];
 
-//Set/get the values to all inputs:
+//Set the values to all inputs:
 $MyForm->val([
 	'name' => 'Oscar',
 	'email' => 'oom@oscarotero.com',
@@ -399,20 +420,14 @@ $MyForm->val([
 	'action' => 'save'
 ]);
 
+//Get the values
 $values = $MyForm->val();
 
-//To load the values from globals $_GET, $_POST and $_FILES:
+//To load the raw values from globals $_GET, $_POST and $_FILES:
 $MyForm->loadFromGlobals();
 
 //Or specify your fake globals
 $MyForm->loadFromGlobals($_fake_GET, $_fake_POST, $_fake_FILES);
-
-//Or values manually (like any input):
-if ($MyForm->attr('method') === 'post') {
-	$MyForm->load($_POST);
-} else {
-	$MyForm->load($_GET);
-}
 
 //Check the errors
 if (!$MyForm->isValid()) {
@@ -422,7 +437,7 @@ if (!$MyForm->isValid()) {
 
 ## Builder
 
-Ok, you've seen the class `Builder` in all examples above. This class eases the creation of inputs and containers. For example, instead of do this:
+The `Builder` class is used to ease the creation of inputs and containers. For example, instead of this:
 
 ```php
 use FormManager\Containers\Form;
@@ -438,11 +453,11 @@ $form = new Form([
 You can do simply this:
 
 ```php
-use FormManager\Builder;
+use FormManager\Builder as F;
 
-$form = Builder::form([
-	'name' => Builder::text(),
-	'bio' => Builder::textarea()
+$form = F::form([
+	'name' => F::text(),
+	'bio' => F::textarea()
 ]);
 ```
 
@@ -450,10 +465,10 @@ The `FormManager\Builder` handles the instantation of all theses classes for you
 
 But you can add your owns factories, creating classes implementing `FormManager\FactoryInterface`.
 
-This is useful for a lot of things. Imagine a class that creates custom inputs for you:
+This is useful for a lot of things. For example, to create custom inputs for you and avoid repetition:
 
 ```php
-use FormManager\Builder;
+use FormManager\Builder as F;
 use FormManager\FactoryInterface;
 
 class CustomInputs implements FactoryInterface
@@ -470,7 +485,7 @@ class CustomInputs implements FactoryInterface
 
 	public function selectWeek()
 	{
-		return Builder::select()->options([
+		return F::select()->options([
 			'monday',
 			'tuesday',
 			'wednesday',
@@ -486,12 +501,12 @@ class CustomInputs implements FactoryInterface
 Now in your app:
 
 ```php
-use FormManager\Builder;
+use FormManager\Builder as F;
 
-Builder::addFactory(new CustomInputs());
+F::addFactory(new CustomInputs());
 
-$form = Builder::form([
-	'week' => Builder::selectWeek()
+$form = F::form([
+	'week' => F::selectWeek()
 ]);
 ```
 
@@ -500,7 +515,7 @@ Other usage example is save all forms of your app under a namespace:
 ```php
 namespace MyApp\Forms;
 
-use FormManager\Builder;
+use FormManager\Builder as F;
 use FormManager\Containers\Form;
 
 class EditUserForm extends Form
@@ -509,10 +524,10 @@ class EditUserForm extends Form
 	{
 
 		$this->add([
-			'name' => Builder::text()->maxlength(200)->label('Name'),
-			'email' => Builder::email()->label('Email'),
-			'password' => Builder::password()->label('Password'),
-			'repeat_password' => Builder::password()->label('Repeat password'),
+			'name' => F::text()->maxlength(200)->label('Name'),
+			'email' => F::email()->label('Email'),
+			'password' => F::password()->label('Password'),
+			'repeat_password' => F::password()->label('Repeat password'),
 		]);
 
 		//Add a validator to check the password
@@ -551,11 +566,11 @@ class MyForms implements FactoryInterface
 Now use it:
 
 ```php
-use FormManager\Builder;
+use FormManager\Builder as F;
 
-Builder::addFactory(new MyForms());
+F::addFactory(new MyForms());
 
-$editUser = Builder::editUserForm();
+$editUser = F::editUserForm();
 ```
 
-Note: Each time you register a new factory, it will be prepended to the already registered ones, so if you register inputs/containers called "Form", "Textarea", etc, they will be used instead the default. This allows customize the default behaviours.
+Note: Each time you register a new factory, it will be prepended to the already registered ones, so if you register inputs/containers called "Form", "Textarea", etc, they will be used instead the default. This allows extend them.
