@@ -4,7 +4,7 @@ namespace FormManager\Attributes;
 use FormManager\InputInterface;
 
 /**
- * Interface used by all attribute classes
+ * Interface used by all attribute classes.
  */
 interface AttributeInterface
 {
@@ -15,7 +15,7 @@ interface AttributeInterface
      * @param mixed          $value The value of this attribute
      *
      * @throws \InvalidArgumentException If the value is not the correct mimetype
-     * 
+     *
      * @return mixed $value The value sanitized
      */
     public static function onAdd(InputInterface $input, $value);

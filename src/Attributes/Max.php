@@ -21,6 +21,7 @@ class Max implements AttributeInterface
                     throw new \InvalidArgumentException('This attribute must be a valid datetime');
                 }
                 static::addDatetimeValidator($input);
+
                 return $value;
 
             default:
@@ -28,13 +29,13 @@ class Max implements AttributeInterface
                     throw new \InvalidArgumentException('This attribute must be a float number');
                 }
                 static::addValidator($input);
+
                 return $value;
         }
-
     }
 
     /**
-     * Add the validator for this input
+     * Add the validator for this input.
      *
      * @param InputInterface $input
      */
@@ -44,7 +45,7 @@ class Max implements AttributeInterface
     }
 
     /**
-     * Add the validator for this date-time input
+     * Add the validator for this date-time input.
      *
      * @param InputInterface $input
      */

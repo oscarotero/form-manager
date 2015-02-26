@@ -6,7 +6,7 @@ use FormManager\InputInterface;
 class Min extends Max implements AttributeInterface
 {
     /**
-     * Add the validator for this input
+     * Add the validator for this input.
      *
      * @param InputInterface $input
      */
@@ -16,7 +16,7 @@ class Min extends Max implements AttributeInterface
     }
 
     /**
-     * Add the validator for this date-time input
+     * Add the validator for this date-time input.
      *
      * @param InputInterface $input
      */

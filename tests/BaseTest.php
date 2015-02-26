@@ -1,6 +1,5 @@
 <?php
 use FormManager\Inputs\Input;
-
 use FormManager\InvalidValueException;
 
 abstract class BaseTest extends PHPUnit_Framework_TestCase

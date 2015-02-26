@@ -12,7 +12,7 @@ class Select
      * Validates the input value according to this attribute.
      *
      * @param InputInterface $input The input to validate
-     * 
+     *
      * @throws InvalidValueException If the value is not valid
      */
     public static function validate(InputInterface $input)

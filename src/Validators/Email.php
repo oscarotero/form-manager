@@ -1,8 +1,6 @@
 <?php
 namespace FormManager\Validators;
 
-use FormManager\InputInterface;
-use FormManager\InvalidValueException;
 
 class Email extends Url
 {

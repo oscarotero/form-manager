@@ -95,7 +95,6 @@ trait NodeTreeTrait
             foreach ($this->validators as $validator) {
                 call_user_func($validator, $this);
             }
-
         } catch (InvalidValueException $exception) {
             $this->error($exception->getMessage());
 
