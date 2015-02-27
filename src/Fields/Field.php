@@ -42,7 +42,7 @@ abstract class Field implements TreeInterface
             return $this->label = new Label($this->input);
         }
 
-        if (($name === 'errorLabel') && ($error = $this->error())) {
+        if (($name === 'errorLabel') && ($error = $this->input->error())) {
             return new Label($this->input, ['class' => 'error'], $error);
         }
     }
@@ -136,9 +136,9 @@ abstract class Field implements TreeInterface
         $label = isset($this->label) ? $this->label : '';
 
         if ($this->labelPosition === static::LABEL_BEFORE) {
-            return "{$label} {$this->input} {$this->errorLabel}";
+            return "{$prepend}{$label} {$this->input} {$this->errorLabel}{$append}";
         }
 
-        return "{$this->input} {$label} {$this->errorLabel}";
+        return "{$prepend}{$this->input} {$label} {$this->errorLabel}{$append}";
     }
 }

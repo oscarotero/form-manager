@@ -27,28 +27,6 @@ trait InputTrait
     }
 
     /**
-     * Set/Get/Generates an id for this element.
-     *
-     * @param null|string $id
-     *
-     * @return mixed
-     */
-    public function id($id = null)
-    {
-        if ($id === null) {
-            if (!$this->attr('id')) {
-                $this->attr('id', uniqid('id_', true));
-            }
-
-            return $this->attr('id');
-        }
-
-        $this->attr('id', $id);
-
-        return $this;
-    }
-
-    /**
      * @see FormManager\DataElementInterface
      *
      * {@inheritdoc}

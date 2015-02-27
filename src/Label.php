@@ -3,6 +3,8 @@ namespace FormManager;
 
 class Label extends Element
 {
+    protected static $idCounter = 0;
+
     protected $name = 'label';
     protected $close = true;
     protected $input;
@@ -36,8 +38,12 @@ class Label extends Element
      */
     public function setInput(DataElementInterface $input)
     {
+        //Ensure the id is defined
+        if (!$input->attr('id')) {
+            $input->attr('id', 'fm-input-'.(++static::$idCounter));
+        }
+
         $this->input = $input;
-        $this->input->id(); //ensure the id is defined
     }
 
     /**
@@ -51,7 +57,7 @@ class Label extends Element
     public function toHtml($prepend = '', $append = '')
     {
         if ($this->input) {
-            $this->attr('for', $this->input->id());
+            $this->attr('for', $this->input->attr('id'));
         }
 
         return parent::toHtml($prepend, $append);
