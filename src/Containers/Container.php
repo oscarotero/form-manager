@@ -2,6 +2,8 @@
 namespace FormManager\Containers;
 
 use FormManager\Traits\NodeTreeTrait;
+use FormManager\Traits\RenderTrait;
+
 use FormManager\DataElementInterface;
 use FormManager\ElementContainer;
 
@@ -10,6 +12,7 @@ abstract class Container extends ElementContainer implements DataElementInterfac
     protected $name = 'div';
 
     use NodeTreeTrait;
+    use RenderTrait;
 
     public function __construct(array $children = null)
     {
@@ -121,7 +124,7 @@ abstract class Container extends ElementContainer implements DataElementInterfac
      *
      * @see ElementContainer::toHtml
      */
-    public function renderDefault($prepend = '', $append = '')
+    private function defaultRender($prepend = '', $append = '')
     {
         return parent::toHtml($prepend, $append);
     }

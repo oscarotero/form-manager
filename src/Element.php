@@ -193,8 +193,8 @@ class Element implements ElementInterface
         }
 
         if (is_array($name)) {
-            foreach ($name as $name => $value) {
-                $this->data[$name] = $value;
+            foreach ($name as $n => $v) {
+                $this->data[$n] = $v;
             }
 
             return $this;

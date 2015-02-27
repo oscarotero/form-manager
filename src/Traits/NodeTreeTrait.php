@@ -9,8 +9,6 @@ use FormManager\InvalidValueException;
 trait NodeTreeTrait
 {
     protected $sanitizer;
-    protected $render;
-    protected $rendering = false;
     protected $validators = [];
     protected $error;
     protected $key;
@@ -131,18 +129,6 @@ trait NodeTreeTrait
     public function sanitize(callable $sanitizer)
     {
         $this->sanitizer = $sanitizer;
-
-        return $this;
-    }
-
-    /**
-     * @see FormManager\DataElementInterface
-     *
-     * {@inheritdoc}
-     */
-    public function render(callable $render)
-    {
-        $this->render = $render;
 
         return $this;
     }

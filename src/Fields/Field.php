@@ -1,9 +1,10 @@
 <?php
 namespace FormManager\Fields;
 
+use FormManager\Traits\RenderTrait;
+
 use FormManager\ElementInterface;
 use FormManager\TreeInterface;
-use FormManager\DataTreeInterface;
 use FormManager\Label;
 
 /**
@@ -12,13 +13,15 @@ use FormManager\Label;
  * @property null|Label $label
  * @property null|Label $errorLabel
  */
-abstract class Field implements DataTreeInterface
+abstract class Field implements TreeInterface
 {
-    public $input;
+    use RenderTrait;
 
     const LABEL_NONE = 0;
     const LABEL_BEFORE = 1;
     const LABEL_AFTER = 2;
+
+    public $input;
 
     protected $labelPosition = 1; // LABEL_BEFORE
 
@@ -98,7 +101,7 @@ abstract class Field implements DataTreeInterface
     /**
      * {@inheritdoc}
      * 
-     * @see DataTreeInterface
+     * @see TreeInterface
      */
     public function __toString()
     {
@@ -108,7 +111,7 @@ abstract class Field implements DataTreeInterface
     /**
      * {@inheritdoc}
      * 
-     * @see DataTreeInterface
+     * @see TreeInterface
      */
     public function setParent(TreeInterface $parent)
     {
@@ -118,63 +121,11 @@ abstract class Field implements DataTreeInterface
     /**
      * {@inheritdoc}
      * 
-     * @see DataTreeInterface
+     * @see TreeInterface
      */
     public function getParent()
     {
         return $this->__call('getParent', func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see DataTreeInterface
-     */
-    public function load($value = null, $file = null)
-    {
-        return $this->__call('load', func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see DataTreeInterface
-     */
-    public function val($value = null)
-    {
-        return $this->__call('val', func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see DataTreeInterface
-     */
-    public function isValid()
-    {
-        return $this->__call('isValid', func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see DataTreeInterface
-     */
-    public function error($error = null)
-    {
-        return $this->__call('error', func_get_args());
-    }
-
-    /**
-     * @see FormManager\Element::toHtml
-     */
-    public function toHtml($prepend = '', $append = '')
-    {
-        if ($this->render) {
-            return call_user_func($this->render, $this, $prepend, $append);
-        }
-
-        return $this->defaultRender($prepend, $append);
     }
 
     /**

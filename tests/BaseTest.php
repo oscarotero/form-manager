@@ -32,7 +32,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
     protected function _testField($field, $hasLabel = true, $isContainer = false)
     {
-        $this->assertInstanceOf('FormManager\\DataTreeInterface', $field);
+        $this->assertInstanceOf('FormManager\\TreeInterface', $field);
 
         if ($isContainer) {
             $this->assertInstanceOf('FormManager\\Fields\\FieldContainer', $field);
