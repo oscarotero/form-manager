@@ -81,10 +81,10 @@ class Select extends ElementContainer implements InputInterface
 
         if (is_array($value)) {
             $this->value = $this->valArray($value);
-        } elseif (is_string($value)) {
-            $this->value = $this->valString($value);
-        } else {
+        } elseif (is_object($value)) {
             throw new InvalidValueException('Value must be an array or string');
+        } else {
+            $this->value = $this->valPlain($value);
         }
 
         return $this;
@@ -115,7 +115,7 @@ class Select extends ElementContainer implements InputInterface
         return $value;
     }
 
-    private function valString($value)
+    private function valPlain($value)
     {
         foreach ($this->children as $option) {
             $option->uncheck();
