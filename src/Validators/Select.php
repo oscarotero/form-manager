@@ -17,16 +17,16 @@ class Select
      */
     public static function validate(DataElementInterface $input)
     {
-        $value = $input->val();
+        if (!($value = $input->val())) {
+            return null;
+        }
 
-        if (!empty($value)) {
-            if ($input->attr('multiple')) {
-                if (array_keys(array_diff_key(array_flip($value), $input()))) {
-                    throw new InvalidValueException(sprintf(static::$error_message));
-                }
-            } elseif (!isset($input[$value])) {
+        if ($input->attr('multiple')) {
+            if (array_keys(array_diff_key(array_flip($value), $input()))) {
                 throw new InvalidValueException(sprintf(static::$error_message));
             }
+        } elseif (!isset($input[$value])) {
+            throw new InvalidValueException(sprintf(static::$error_message));
         }
     }
 }

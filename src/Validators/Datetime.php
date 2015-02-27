@@ -19,14 +19,14 @@ class Datetime
      */
     public static function validate(DataElementInterface $input)
     {
-        $value = $input->val();
-
-        if ($value) {
-            if (!($date = date_create($value))) {
-                throw new InvalidValueException(sprintf(static::$error_message, $value));
-            }
-
-            $input->val($date->format(static::$format));
+        if (!($value = $input->val())) {
+            return null;
         }
+
+        if (!($date = date_create($value))) {
+            throw new InvalidValueException(sprintf(static::$error_message, $value));
+        }
+
+        $input->val($date->format(static::$format));
     }
 }

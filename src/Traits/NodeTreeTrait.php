@@ -32,18 +32,22 @@ trait NodeTreeTrait
      */
     public function getPath()
     {
-        if (($parent = $this->getParent())) {
-            $path = $parent->getPath();
+        if (!($parent = $this->getParent())) {
+            return null;
+        }
 
-            if ($path) {
-                if ($this->key !== null) {
-                    return "{$path}[{$this->key}]";
-                }
+        $path = $parent->getPath();
 
-                return $path;
-            } elseif ($this->key) {
-                return $this->key;
+        if ($path) {
+            if ($this->key !== null) {
+                return "{$path}[{$this->key}]";
             }
+
+            return $path;
+        }
+
+        if ($this->key) {
+            return $this->key;
         }
     }
 
