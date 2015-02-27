@@ -1,8 +1,7 @@
 <?php
 namespace FormManager\Inputs;
 
-use InvalidValueException;
-
+use FormManager\InvalidValueException;
 use FormManager\Traits\InputTrait;
 use FormManager\InputInterface;
 use FormManager\ElementContainer;
