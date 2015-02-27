@@ -20,7 +20,7 @@ class Datetime
     public static function validate(DataElementInterface $input)
     {
         if (!($value = $input->val())) {
-            return null;
+            return;
         }
 
         if (!($date = date_create($value))) {

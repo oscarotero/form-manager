@@ -152,7 +152,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     public function offsetUnset($offset)
     {
         if (empty($this->children[$offset])) {
-            return null;
+            return;
         }
 
         $this->children[$offset]->setParent(null);

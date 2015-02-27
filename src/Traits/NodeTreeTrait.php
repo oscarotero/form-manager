@@ -33,7 +33,7 @@ trait NodeTreeTrait
     public function getPath()
     {
         if (!($parent = $this->getParent())) {
-            return null;
+            return;
         }
 
         $path = $parent->getPath();

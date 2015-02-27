@@ -18,7 +18,7 @@ class Select
     public static function validate(DataElementInterface $input)
     {
         if (!($value = $input->val())) {
-            return null;
+            return;
         }
 
         if ($input->attr('multiple')) {
