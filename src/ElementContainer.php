@@ -170,6 +170,28 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
+     * Get the html content for this element.
+     *
+     * @throws \InvalidArgumentException On set html content.
+     *
+     * @return string
+     */
+    public function html($html = null)
+    {
+        if ($html !== null) {
+            throw new \InvalidArgumentException("Element containers cannot store html");
+        }
+
+        $html = '';
+
+        foreach ($this->children as $child) {
+            $html .= (string) $child;
+        }
+
+        return $html;
+    }
+
+    /**
      * Adds new children to this element.
      *
      * @param array $children
@@ -183,17 +205,5 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
         }
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toHtml($prepend = '', $append = '')
-    {
-        foreach ($this->children as $child) {
-            $prepend .= (string) $child;
-        }
-
-        return parent::toHtml($prepend, $append);
     }
 }
