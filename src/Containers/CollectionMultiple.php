@@ -57,7 +57,7 @@ class CollectionMultiple extends Collection
      */
     public function pushVal($value = null)
     {
-        if (empty($value[$this->keyField])) {
+        if (!isset($value[$this->keyField])) {
             throw new \Exception("The value {$this->keyField} is required on add new values in CollectionMultiple");
         }
 
@@ -76,7 +76,7 @@ class CollectionMultiple extends Collection
      */
     public function pushLoad($value = null, $file = null)
     {
-        if (empty($value[$this->keyField])) {
+        if (!isset($value[$this->keyField])) {
             throw new \Exception("The value {$this->keyField} is required on add new values in CollectionMultiple");
         }
 
