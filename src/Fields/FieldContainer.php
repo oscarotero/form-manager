@@ -2,13 +2,12 @@
 namespace FormManager\Fields;
 
 use FormManager\Element;
-
 use Iterator;
 use ArrayAccess;
 use Countable;
 
 /**
- * Class that extends Field and manage Inputs extending ElementContainer (for example: select)
+ * Class that extends Field and manage Inputs extending ElementContainer (for example: select).
  */
 abstract class FieldContainer extends Field implements Iterator, ArrayAccess, Countable
 {

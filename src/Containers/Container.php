@@ -3,7 +3,6 @@ namespace FormManager\Containers;
 
 use FormManager\Traits\NodeTreeTrait;
 use FormManager\Traits\RenderTrait;
-
 use FormManager\DataElementInterface;
 use FormManager\ElementContainer;
 

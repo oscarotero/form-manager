@@ -2,14 +2,12 @@
 namespace FormManager\Fields;
 
 use FormManager\Traits\RenderTrait;
-
-use FormManager\ElementInterface;
 use FormManager\TreeInterface;
 use FormManager\Label;
 
 /**
- * Class to manage the combination of input + label
- * 
+ * Class to manage the combination of input + label.
+ *
  * @property null|Label $label
  * @property null|Label $errorLabel
  */
@@ -29,7 +27,7 @@ abstract class Field implements TreeInterface
      * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel.
      *
      * @param string $name
-     * 
+     *
      * @return Label|null
      */
     public function __get($name)
@@ -62,7 +60,7 @@ abstract class Field implements TreeInterface
     }
 
     /**
-     * Magic method to pass all undefined methods to input
+     * Magic method to pass all undefined methods to input.
      *
      * @param string $name
      * @param array  $arguments
@@ -81,7 +79,7 @@ abstract class Field implements TreeInterface
     }
 
     /**
-     * Creates/edit/returns the content of the label
+     * Creates/edit/returns the content of the label.
      *
      * @param null|string $html
      *
@@ -100,7 +98,7 @@ abstract class Field implements TreeInterface
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @see TreeInterface
      */
     public function __toString()
@@ -110,7 +108,7 @@ abstract class Field implements TreeInterface
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @see TreeInterface
      */
     public function setParent(TreeInterface $parent)
@@ -120,7 +118,7 @@ abstract class Field implements TreeInterface
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @see TreeInterface
      */
     public function getParent()

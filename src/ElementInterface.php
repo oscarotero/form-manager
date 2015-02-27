@@ -2,7 +2,7 @@
 namespace FormManager;
 
 /**
- * Interface used by all html elements
+ * Interface used by all html elements.
  */
 interface ElementInterface extends TreeInterface
 {

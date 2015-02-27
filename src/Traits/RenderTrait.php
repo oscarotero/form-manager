@@ -2,7 +2,7 @@
 namespace FormManager\Traits;
 
 /**
- * Trait with common methods for custom render
+ * Trait with common methods for custom render.
  */
 trait RenderTrait
 {
@@ -43,11 +43,11 @@ trait RenderTrait
     }
 
     /**
-     * The default render used if no custom render is provided
-     * 
+     * The default render used if no custom render is provided.
+     *
      * @param string $prepend Optional string prepended to html content
      * @param string $append  Optional string appended to html content
-     * 
+     *
      * @return string
      */
     abstract protected function defaultRender($prepend = '', $append = '');

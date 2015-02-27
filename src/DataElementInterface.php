@@ -2,7 +2,7 @@
 namespace FormManager;
 
 /**
- * Interface used by all elements that contains data
+ * Interface used by all elements that contains data.
  */
 interface DataElementInterface extends ElementInterface
 {

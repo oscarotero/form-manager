@@ -13,8 +13,8 @@ class Label extends Element
      * Label constructor.
      *
      * @param null|DataElementInterface $input      The input associated to this label
-     * @param null|array          $attributes Html attributes of this label
-     * @param null|string         $html       String content of the label
+     * @param null|array                $attributes Html attributes of this label
+     * @param null|string               $html       String content of the label
      */
     public function __construct(DataElementInterface $input = null, array $attributes = null, $html = null)
     {

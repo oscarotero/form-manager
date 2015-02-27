@@ -7,9 +7,9 @@ class Checkbox extends Field
 {
     public function __construct()
     {
-    	$this->labelPosition = static::LABEL_AFTER;
+        $this->labelPosition = static::LABEL_AFTER;
 
         $this->input = (new Inputs\Check())
-        	->attr('type', 'checkbox');
+            ->attr('type', 'checkbox');
     }
 }

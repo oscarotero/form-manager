@@ -130,7 +130,7 @@ class Element implements ElementInterface
 
     /**
      * @see ElementInterface
-     * 
+     *
      * {@inheritdoc}
      */
     public function attr($name = null, $value = null)
@@ -160,7 +160,7 @@ class Element implements ElementInterface
 
     /**
      * @see ElementInterface
-     * 
+     *
      * {@inheritdoc}
      */
     public function removeAttr($name)

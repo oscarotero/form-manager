@@ -4,7 +4,7 @@ namespace FormManager\Traits;
 use FormManager\InvalidValueException;
 
 /**
- * Trait with common methods for all elements with FormManager\DataElementInterface
+ * Trait with common methods for all elements with FormManager\DataElementInterface.
  */
 trait NodeTreeTrait
 {
