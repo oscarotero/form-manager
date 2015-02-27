@@ -23,7 +23,7 @@ FormManager is namespaced, but you only need to import a single class into your 
 use FormManager\Builder as F;
 ```
 
-### Create an input
+### Create a field
 
 All HTML5 field types are supported.
 
@@ -173,17 +173,20 @@ $name->label->class('main-label');
 
 //Print all (label + input)
 echo $name;
+
+//Print label and inputs separately
+echo $name->label . '<br>' . $name->input;
 ```
 
 ## Containers
 
-Containers are objects that contain other elements (inputs and other containers). Technically, they are html elements (by default `<div></div>`) so they have the same methods than inputs to set/get/remove attributes.
+Containers are objects that contain other elements (fields or other containers). Technically, they are html elements (by default `<div></div>`) so they have the same methods than inputs to set/get/remove attributes.
 
 There are various types of containers, deppending of the data scheme:
 
 ### Group
 
-A group is a simple container to store inputs/containers by name. The following example shows a group of three inputs:
+A group is a simple container to store fields/containers by name. The following example shows a group of three fields:
 
 ```php
 $date = F::group([
@@ -202,7 +205,7 @@ $date->val([
 //Get values
 $values = $date->val();
 
-//Use array syntax to access to the inputs by name
+//Use array syntax to access to the fields by name
 $year = $date['year']->val();
 
 //Add more fields dinamically
@@ -214,7 +217,7 @@ $date->addClass('field-day')->attr(['id' => 'date-field']);
 
 ### Choose
 
-This container stores inputs with the same name but different values. Useful for radio inputs or to define various submit buttons.
+This container stores fields with the same name but different values. Useful for radio inputs or to define various submit buttons.
 
 ```php
 //Create a choose container
@@ -268,7 +271,7 @@ $people->val([
 //Access to the first group of values:
 $group = $people[0];
 
-//Access to any input
+//Access to any field
 echo $people[0]['name']->val(); //returns 'Xaquín'
 
 //Push a new value
@@ -334,8 +337,8 @@ $article->pushVal([
 //Add new types
 $article->add([
 	'video' => [
-		'title' => Field::text()->label('Title'),
-		'video' => Field::url()->label('Youtube url')
+		'title' => F::text()->label('Title'),
+		'video' => F::url()->label('Youtube url')
 	]
 ]);
 
@@ -360,7 +363,7 @@ $form->attr([
 	'method' => 'post'
 ]);
 
-//Add some inputs and containers
+//Add some fields and containers
 $form->add([
 	'name' => F::text()->maxlength(50)->required()->label('Your name'),
 	'email' => F::email()->label('Your email'),
@@ -395,7 +398,7 @@ $form->add([
 	])
 ]);
 
-//You can also add new inputs using the array syntax (the key will be the input name):
+//You can also add new fields using the array syntax (the key will be the input name):
 $MyForm['new-input'] = F::range()->min(0)->max(100)->val(50);
 
 //Print the form
@@ -407,7 +410,7 @@ echo $MyForm['website'];
 //Or fields inside fields
 echo $MyForm['born']['day'];
 
-//Set the values to all inputs:
+//Set the values to all fields:
 $MyForm->val([
 	'name' => 'Oscar',
 	'email' => 'oom@oscarotero.com',
@@ -453,7 +456,7 @@ if (!$MyForm->isValid()) {
 
 ## Builder
 
-The `Builder` class is used to ease the creation of inputs and containers. For example, instead of this:
+The `Builder` class is used to ease the creation of fields and containers. For example, instead of this:
 
 ```php
 use FormManager\Containers\Form;
@@ -477,17 +480,17 @@ $form = F::form([
 ]);
 ```
 
-The `FormManager\Builder` handles the instantation of all theses classes for you using factories. By default, it contains the `FormManager\Factory`, responsible of instantation of all inputs and containers.
+The `FormManager\Builder` handles the instantation of all theses classes for you using factories. By default, it contains the `FormManager\Factory`, responsible of instantation of all fields and containers.
 
 But you can add your owns factories, creating classes implementing `FormManager\FactoryInterface`.
 
-This is useful for a lot of things. For example, to create custom inputs:
+This is useful for a lot of things. For example, to create custom fields:
 
 ```php
 use FormManager\Builder as F;
 use FormManager\FactoryInterface;
 
-class CustomInputs implements FactoryInterface
+class CustomFields implements FactoryInterface
 {
 	/**
 	 * Method required by the interface
@@ -511,7 +514,7 @@ Use it in your app:
 ```php
 use FormManager\Builder as F;
 
-F::addFactory(new CustomInputs());
+F::addFactory(new CustomFields());
 
 $date = F::form([
 	'name' => F::text(),
@@ -582,4 +585,4 @@ F::addFactory(new MyForms());
 $editUser = F::editUserForm();
 ```
 
-Note: Each time you register a new factory, it will be prepended to the already registered ones, so if you register inputs/containers called "Form", "Textarea", etc, they will be used instead the default. This allows extend them.
+Note: Each time you register a new factory, it will be prepended to the already registered ones, so if you register fields/containers called "Form", "Textarea", etc, they will be used instead the default. This allows extend them.
