@@ -6,6 +6,7 @@ class InputMonthTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::month());
+        $this->_testField(Builder::month());
         $this->_testRequired(Builder::month());
     }
 

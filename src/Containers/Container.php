@@ -2,10 +2,10 @@
 namespace FormManager\Containers;
 
 use FormManager\Traits\NodeTreeTrait;
-use FormManager\FormElementInterface;
+use FormManager\DataElementInterface;
 use FormManager\ElementContainer;
 
-abstract class Container extends ElementContainer implements FormElementInterface
+abstract class Container extends ElementContainer implements DataElementInterface
 {
     protected $name = 'div';
 
@@ -119,7 +119,7 @@ abstract class Container extends ElementContainer implements FormElementInterfac
     /**
      * {@inheritDoc}
      *
-     * @see FormManager\ElementContainer::toHtml
+     * @see ElementContainer::toHtml
      */
     public function renderDefault($prepend = '', $append = '')
     {

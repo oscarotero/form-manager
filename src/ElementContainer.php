@@ -27,11 +27,11 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     /**
      * Returns the index of an element.
      *
-     * @param Element $child
+     * @param TreeInterface $child
      *
      * @return mixed
      */
-    public function indexOf(Element $child)
+    public function indexOf(TreeInterface $child)
     {
         return array_search($child, $this->children, true);
     }
@@ -134,8 +134,8 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      */
     public function offsetSet($offset, $value)
     {
-        if (!($value instanceof Element)) {
-            throw new \InvalidArgumentException('This value must be an instance of FormManager\\Element');
+        if (!($value instanceof TreeInterface)) {
+            throw new \InvalidArgumentException('This value must be an instance of FormManager\\TreeInterface');
         }
 
         $value->setParent($this);

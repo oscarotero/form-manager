@@ -6,6 +6,7 @@ class InputTimeTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::time());
+        $this->_testField(Builder::time());
         $this->_testRequired(Builder::time());
     }
 

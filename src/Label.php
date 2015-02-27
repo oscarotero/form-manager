@@ -10,11 +10,11 @@ class Label extends Element
     /**
      * Label constructor.
      *
-     * @param null|InputInterface $input      The input associated to this label
+     * @param null|DataElementInterface $input      The input associated to this label
      * @param null|array          $attributes Html attributes of this label
      * @param null|string         $html       String content of the label
      */
-    public function __construct(InputInterface $input = null, array $attributes = null, $html = null)
+    public function __construct(DataElementInterface $input = null, array $attributes = null, $html = null)
     {
         if ($input !== null) {
             $this->setInput($input);
@@ -32,9 +32,9 @@ class Label extends Element
     /**
      * Sets a new input associated to this label.
      *
-     * @param InputInterface $input The input instance
+     * @param DataElementInterface $input The input instance
      */
-    public function setInput(InputInterface $input)
+    public function setInput(DataElementInterface $input)
     {
         $this->input = $input;
         $this->input->id(); //ensure the id is defined

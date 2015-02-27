@@ -1,54 +1,17 @@
 <?php
 namespace FormManager\Traits;
 
-use FormManager\Label;
-
 /**
- * Class with common methods for all inputs.
- *
- * @property null|Label $label
- * @property null|Label $errorLabel
+ * Class with common methods for all inputs with DataElementInterface.
  */
 trait InputTrait
 {
     use NodeTreeTrait;
 
-    protected $labelBefore = true;
-
     /**
-     * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel.
+     * @see FormManager\DataElementInterface
      *
-     * @return Label|null
-     */
-    public function __get($name)
-    {
-        if ($name === 'label') {
-            return $this->label = new Label($this);
-        }
-
-        if (($name === 'errorLabel') && ($error = $this->error())) {
-            return new Label($this, ['class' => 'error'], $error);
-        }
-    }
-
-    /**
-     * Clones the input and other properties.
-     */
-    public function __clone()
-    {
-        if (isset($this->label)) {
-            $this->label = clone $this->label;
-            $this->removeAttr('id');
-            $this->label->setInput($this);
-        }
-    }
-
-    /**
-     * Get/Set the value of this input.
-     *
-     * @param mixed $value
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function val($value = null)
     {
@@ -86,12 +49,9 @@ trait InputTrait
     }
 
     /**
-     * Load the raw data for this input.
+     * @see FormManager\DataElementInterface
      *
-     * @param mixed $value The value to load
-     * @param mixed $file  The file value (used only in inputs of type "file")
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function load($value = null, $file = null)
     {
@@ -131,53 +91,6 @@ trait InputTrait
     }
 
     /**
-     * Creates/edit/returns the label associated with the input.
-     *
-     * @param null|string $html
-     *
-     * @return $this
-     */
-    public function label($html = null)
-    {
-        if ($html === null) {
-            return $this->label->html();
-        }
-
-        $this->label->html($html);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function renderDefault($prepend = '', $append = '')
-    {
-        $label = isset($this->label) ? $this->label : null;
-        $html = parent::toHtml($prepend, $append);
-
-        if ($this->labelBefore) {
-            return "{$label} {$html} {$this->errorLabel}";
-        } else {
-            return "{$html} {$label} {$this->errorLabel}";
-        }
-    }
-
-    /**
-     * Set the key used to calculate the path of this node.
-     *
-     * @param mixed $key
-     *
-     * @return $this
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-
-        return $this;
-    }
-
-    /**
      * Calculate the input name on print.
      *
      * {@inheritdoc}
@@ -196,12 +109,9 @@ trait InputTrait
     }
 
     /**
-     * This trait must be used only in Element.
+     * @see FormManager\DataElementInterface
      *
-     * @see FormManager\Element
-     *
-     * @param mixed $name
-     * @param mixed $value
+     * {@inheritdoc}
      */
     public function attr($name = null, $value = null)
     {

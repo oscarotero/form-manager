@@ -14,7 +14,7 @@ class ChooseTest extends BaseTest
         ]);
 
         $this->assertInstanceOf('FormManager\\Containers\\Choose', $field);
-        $this->assertInstanceOf('FormManager\\Inputs\\Radio', $field['value1']);
+        $this->assertInstanceOf('FormManager\\Fields\\Radio', $field['value1']);
 
         return $field;
     }

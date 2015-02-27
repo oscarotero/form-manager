@@ -6,6 +6,7 @@ class InputSelectTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::select());
+        $this->_testField(Builder::select(), true, false);
         $this->_testRequired(Builder::select());
     }
 

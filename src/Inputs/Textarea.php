@@ -1,10 +1,14 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\Traits\InputTrait;
+use FormManager\DataElementInterface;
+use FormManager\Element;
 
-class Textarea extends Input implements InputInterface
+class Textarea extends Element implements DataElementInterface
 {
+    use InputTrait;
+
     protected $name = 'textarea';
     protected $close = true;
 

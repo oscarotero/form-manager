@@ -6,6 +6,7 @@ class InputColorTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::color());
+        $this->_testField(Builder::color());
         $this->_testRequired(Builder::color());
     }
 

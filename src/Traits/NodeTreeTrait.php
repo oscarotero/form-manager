@@ -4,7 +4,7 @@ namespace FormManager\Traits;
 use FormManager\InvalidValueException;
 
 /**
- * Trait with common methods for all nodes in the form tree.
+ * Trait with common methods for all elements with FormManager\DataElementInterface
  */
 trait NodeTreeTrait
 {
@@ -16,11 +16,9 @@ trait NodeTreeTrait
     protected $key;
 
     /**
-     * Set the key used to calculate the path of this node.
+     * @see FormManager\DataElementInterface
      *
-     * @param mixed $key
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setKey($key)
     {
@@ -30,10 +28,9 @@ trait NodeTreeTrait
     }
 
     /**
-     * Get the full path of this node
-     * Used to calculate the real name of each input.
+     * @see FormManager\DataElementInterface
      *
-     * @return null|string
+     * {@inheritdoc}
      */
     public function getPath()
     {
@@ -53,13 +50,11 @@ trait NodeTreeTrait
     }
 
     /**
-     * push a new validator.
+     * @see FormManager\DataElementInterface
      *
-     * @param callable $validator
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function addValidator($validator)
+    public function addValidator(callable $validator)
     {
         $this->validators[] = $validator;
 
@@ -67,11 +62,9 @@ trait NodeTreeTrait
     }
 
     /**
-     * Removes a validator.
+     * @see FormManager\DataElementInterface
      *
-     * @param callable $validator
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function removeValidator($validator)
     {
@@ -105,9 +98,9 @@ trait NodeTreeTrait
     }
 
     /**
-     * Check if the current value is valid or not.
+     * @see FormManager\DataElementInterface
      *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isValid()
     {
@@ -115,11 +108,9 @@ trait NodeTreeTrait
     }
 
     /**
-     * Set/Get the error message.
+     * @see FormManager\DataElementInterface
      *
-     * @param null|string $error null to getter, string to setter
-     *
-     * @return null|string
+     * {@inheritdoc}
      */
     public function error($error = null)
     {
@@ -133,11 +124,9 @@ trait NodeTreeTrait
     }
 
     /**
-     * Register a sanitize for the value of this input.
+     * @see FormManager\DataElementInterface
      *
-     * @param callable $sanitizer
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function sanitize(callable $sanitizer)
     {
@@ -147,11 +136,9 @@ trait NodeTreeTrait
     }
 
     /**
-     * Register a custom render function for this input.
+     * @see FormManager\DataElementInterface
      *
-     * @param callable $render
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function render(callable $render)
     {
@@ -159,47 +146,4 @@ trait NodeTreeTrait
 
         return $this;
     }
-
-    /**
-     * @see FormManager\Element::toHtml
-     */
-    public function toHtml($prepend = '', $append = '')
-    {
-        if (!$this->rendering) {
-            $this->rendering = true;
-
-            if ($this->render) {
-                $html = call_user_func($this->render, $this, $prepend, $append);
-            } else {
-                $html = $this->renderDefault($prepend, $append);
-            }
-
-            $this->rendering = false;
-
-            return $html;
-        }
-
-        return parent::toHtml($prepend, $append);
-    }
-
-    /**
-     * This trait must be used only in Element.
-     *
-     * @see FormManager\Element
-     *
-     * @return null|Element
-     */
-    abstract public function getParent();
-
-    /**
-     * Execute the default render.
-     *
-     * @see FormManager\Element::toHtml
-     *
-     * @param string $prepend
-     * @param string $append
-     *
-     * @return string
-     */
-    abstract protected function renderDefault($prepend = '', $append = '');
 }

@@ -6,6 +6,7 @@ class InputNumberTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::number());
+        $this->_testField(Builder::number());
         $this->_testRequired(Builder::number());
         $this->_testNumber(Builder::number());
         $this->_testMinMax(Builder::number());

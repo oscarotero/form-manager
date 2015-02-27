@@ -24,7 +24,7 @@ class Builder
      * @param string $name
      * @param array  $arguments
      *
-     * @return null|FormElementInterface
+     * @return null|ElementDataInterface
      */
     public static function __callStatic($name, $arguments)
     {

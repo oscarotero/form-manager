@@ -2,11 +2,11 @@
 namespace FormManager\Inputs;
 
 use FormManager\Traits\InputTrait;
-use FormManager\InputInterface;
+use FormManager\DataElementInterface;
 use FormManager\ElementContainer;
 use FormManager\Option;
 
-class Select extends ElementContainer implements InputInterface
+class Select extends ElementContainer implements DataElementInterface
 {
     use InputTrait;
 

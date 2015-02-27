@@ -1,14 +1,14 @@
 <?php
 namespace FormManager\Attributes;
 
-use FormManager\InputInterface;
+use FormManager\DataElementInterface;
 
 class Required
 {
     /**
      * {@inheritdoc}
      */
-    public static function onAdd(InputInterface $input, $value)
+    public static function onAdd(DataElementInterface $input, $value)
     {
         if (!is_bool($value)) {
             throw new \InvalidArgumentException('The required value must be a boolean');
@@ -22,7 +22,7 @@ class Required
     /**
      * {@inheritdoc}
      */
-    public static function onRemove(InputInterface $input)
+    public static function onRemove(DataElementInterface $input)
     {
         $input->removeValidator('FormManager\\Validators\\Required::validate');
     }

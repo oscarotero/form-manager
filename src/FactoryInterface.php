@@ -7,12 +7,12 @@ namespace FormManager;
 interface FactoryInterface
 {
     /**
-     * Get an instance of an FormElementInterface.
+     * Get an instance of an ElementDataInterface.
      *
      * @param string $name
      * @param array  $arguments
      *
-     * @return null|FormElementInterface
+     * @return null|ElementDataInterface
      */
     public function get($name, array $arguments);
 }

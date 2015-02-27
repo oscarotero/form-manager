@@ -6,6 +6,7 @@ class InputDatetimeTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::datetime());
+        $this->_testField(Builder::datetime());
         $this->_testRequired(Builder::datetime());
     }
 

@@ -10,7 +10,7 @@ class Factory implements FactoryInterface
 {
     protected $cache = [];
     protected $namespaces = [
-        'FormManager\\Inputs\\',
+        'FormManager\\Fields\\',
         'FormManager\\Containers\\',
     ];
 

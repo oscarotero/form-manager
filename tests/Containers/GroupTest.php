@@ -14,7 +14,7 @@ class GroupTest extends BaseTest
         ]);
 
         $this->assertInstanceOf('FormManager\\Containers\\Group', $field);
-        $this->assertInstanceOf('FormManager\\Inputs\\Text', $field['name']);
+        $this->assertInstanceOf('FormManager\\Fields\\Text', $field['name']);
 
         return $field;
     }

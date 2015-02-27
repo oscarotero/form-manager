@@ -58,8 +58,8 @@ class FormTest extends BaseTest
 
         $this->assertCount(8, $form);
 
-        $this->assertInstanceOf('FormManager\\Inputs\\Text', $form['name']);
-        $this->assertInstanceOf('FormManager\\Inputs\\Submit', $form['action']['save']);
+        $this->assertInstanceOf('FormManager\\Fields\\Text', $form['name']);
+        $this->assertInstanceOf('FormManager\\Fields\\Submit', $form['action']['save']);
 
         return $form;
     }

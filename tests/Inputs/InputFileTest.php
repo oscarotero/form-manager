@@ -6,6 +6,7 @@ class InputFileTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::file());
+        $this->_testField(Builder::file());
         $this->_testRequired(Builder::file());
     }
 

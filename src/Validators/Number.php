@@ -1,7 +1,6 @@
 <?php
 namespace FormManager\Validators;
 
-
 class Number extends Url
 {
     const FILTER = FILTER_VALIDATE_FLOAT;

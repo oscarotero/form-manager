@@ -6,6 +6,7 @@ class InputPasswordTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::password());
+        $this->_testField(Builder::password());
         $this->_testRequired(Builder::password());
         $this->_testMaxlength(Builder::password());
         $this->_testPattern(Builder::password());

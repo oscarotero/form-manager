@@ -6,6 +6,7 @@ class InputWeekTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::week());
+        $this->_testField(Builder::week());
         $this->_testRequired(Builder::week());
     }
 

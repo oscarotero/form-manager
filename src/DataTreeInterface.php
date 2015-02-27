@@ -2,9 +2,9 @@
 namespace FormManager;
 
 /**
- * Interface used by all elements (forms, inputs, etc) to keep the basic behaviour.
+ * Interface used by all elements with data
  */
-interface FormElementInterface
+interface DataTreeInterface extends TreeInterface
 {
     /**
      * Loads a value sent by the client.

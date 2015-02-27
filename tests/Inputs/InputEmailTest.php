@@ -6,6 +6,7 @@ class InputEmailTest extends BaseTest
     public function testBasic()
     {
         $this->_testElement(Builder::email());
+        $this->_testField(Builder::email());
         $this->_testRequired(Builder::email());
         $this->_testMaxlength(Builder::email(), 'o@l.o', 'o@l.com');
     }

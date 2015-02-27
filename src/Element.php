@@ -4,7 +4,7 @@ namespace FormManager;
 /**
  * Class to manage an html element.
  */
-class Element
+class Element implements ElementInterface
 {
     protected $parent;
     protected $name;
@@ -57,7 +57,9 @@ class Element
     }
 
     /**
-     * Magic method to convert to html.
+     * @see ElementInterface
+     *
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -87,13 +89,11 @@ class Element
     }
 
     /**
-     * Set the element parent.
+     * @see TreeInterface
      *
-     * @param Element $parent
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setParent(Element $parent)
+    public function setParent(TreeInterface $parent)
     {
         $this->parent = $parent;
 
@@ -101,9 +101,9 @@ class Element
     }
 
     /**
-     * Returns the element parent.
+     * @see TreeInterface
      *
-     * @return null|Element
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -129,12 +129,9 @@ class Element
     }
 
     /**
-     * Set/Get an attribute value.
-     *
-     * @param mixed $name  If it's null, returns an array with all attributes
-     * @param mixed $value null to getter, string to setter
-     *
-     * @return mixed
+     * @see ElementInterface
+     * 
+     * {@inheritdoc}
      */
     public function attr($name = null, $value = null)
     {
@@ -162,11 +159,9 @@ class Element
     }
 
     /**
-     * Removes an attribute.
-     *
-     * @param string $name The attribute name
-     *
-     * @return $this
+     * @see ElementInterface
+     * 
+     * {@inheritdoc}
      */
     public function removeAttr($name)
     {

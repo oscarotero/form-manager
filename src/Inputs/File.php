@@ -1,10 +1,14 @@
 <?php
 namespace FormManager\Inputs;
 
-use FormManager\InputInterface;
+use FormManager\Traits\InputTrait;
+use FormManager\DataElementInterface;
+use FormManager\Element;
 
-class File extends Input implements InputInterface
+class File extends Element implements DataElementInterface
 {
+    use InputTrait;
+
     protected $attributes = ['type' => 'file'];
     protected $value;
 

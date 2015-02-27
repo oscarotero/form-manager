@@ -30,6 +30,32 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['one', 'two'], $element->get('myVar'));
     }
 
+    protected function _testField($field, $hasLabel = true, $isContainer = false)
+    {
+        $this->assertInstanceOf('FormManager\\DataTreeInterface', $field);
+
+        if ($isContainer) {
+            $this->assertInstanceOf('FormManager\\Fields\\FieldContainer', $field);
+            $this->assertInstanceOf('FormManager\\ElementContainer', $field->input);
+        } else {
+            $this->assertInstanceOf('FormManager\\Fields\\Field', $field);
+            $this->assertInstanceOf('FormManager\\Element', $field->input);
+        }
+
+        //Error labels
+        $field->required();
+
+        $field->isValid();
+
+        if ($hasLabel) {
+            $this->assertInstanceOf('FormManager\\Label', $field->label);
+            $this->assertInstanceOf('FormManager\\Label', $field->errorLabel);
+        } else {
+            $this->setExpectedException('Exception');
+            $field->label;
+        }
+    }
+
     protected function _testRequired($input, $value = null)
     {
         $input->required();
