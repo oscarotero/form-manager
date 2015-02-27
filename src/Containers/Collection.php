@@ -47,12 +47,10 @@ class Collection extends Group
     {
         $this->children = [];
 
-        if (empty($value)) {
-            return $this;
-        }
-
-        foreach ($value as $k => $v) {
-            $this->pushLoad($v, isset($file[$k]) ? $file[$k] : null);
+        if ($value) {
+            foreach ($value as $k => $v) {
+                $this->pushLoad($v, isset($file[$k]) ? $file[$k] : null);
+            }
         }
 
         return $this;
@@ -69,12 +67,10 @@ class Collection extends Group
 
         $this->children = [];
 
-        if (empty($value)) {
-            return $this;
-        }
-
-        foreach ($value as $v) {
-            $this->pushVal($v);
+        if ($value) {
+            foreach ($value as $v) {
+                $this->pushVal($v);
+            }
         }
 
         return $this;
@@ -126,15 +122,13 @@ class Collection extends Group
     {
         $child = clone $this->template;
 
-        if (empty($value)) {
-            return $this[] = $child;
-        }
+        if ($value) {
+            if ($this->sanitizer) {
+                $value = call_user_func($this->sanitizer, $value);
+            }
 
-        if ($this->sanitizer) {
-            $value = call_user_func($this->sanitizer, $value);
+            $child->load($value, $file);
         }
-
-        $child->load($value, $file);
 
         return $this[] = $child;
     }

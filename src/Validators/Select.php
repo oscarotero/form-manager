@@ -17,7 +17,7 @@ class Select
      */
     public static function validate(InputInterface $input)
     {
-        if (empty($value = $input->val())) {
+        if (!($value = $input->val())) {
             return null;
         }
 

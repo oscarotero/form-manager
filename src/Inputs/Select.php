@@ -79,6 +79,10 @@ class Select extends ElementContainer implements InputInterface
             $value = array($value);
         }
 
+        foreach ($this->children as $option) {
+            $option->uncheck();
+        }
+
         if (is_array($value)) {
             $this->value = $this->valArray($value);
         } elseif (is_object($value)) {
@@ -93,11 +97,6 @@ class Select extends ElementContainer implements InputInterface
     private function valArray($value)
     {
         $value = array_keys(array_flip($value));
-
-        //uncheck current options
-        foreach ($this->children as $option) {
-            $option->uncheck();
-        }
 
         //check the selected values
         foreach ($value as $val) {
@@ -117,10 +116,6 @@ class Select extends ElementContainer implements InputInterface
 
     private function valPlain($value)
     {
-        foreach ($this->children as $option) {
-            $option->uncheck();
-        }
-
         if (preg_match('/^[\d]+$/', $value)) {
             $value = intval($value);
         }
