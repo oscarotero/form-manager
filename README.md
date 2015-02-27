@@ -83,8 +83,9 @@ echo $name; //<input type="text" class="my-input" required>
 echo $name->addClass('text-input')->placeholder('Your name');
 
 //You can customize the render function:
-$name->render(function ($input) {
-	return '<div class="field">'.$field.'</div>';
+$name->render(function($input)
+{
+	return '<div class="field">'.$input.'</div>';
 });
 ```
 
@@ -116,7 +117,8 @@ The inputs can handle custom validators:
 ```php
 $name = F::text();
 
-function isDave ($input) {
+function isDave($input)
+{
 	if ($input->val() !== 'dave') {
 		throw new FormManager\InvalidValueException('This value must be "dave"');
 	}
@@ -141,7 +143,8 @@ The `load()` method is like `val()` but it handles the data sent by the client:
 $name = F::text();
 
 //Add a function to sanitize the data
-$name->sanitize(function ($value) {
+$name->sanitize(function($value)
+{
 	return strip_tags($value);
 });
 
@@ -206,7 +209,7 @@ $year = $date['year']->val();
 $date['hour'] = F::number()->min(0)->max(23)->label('Hour');
 
 //Add other html attributes to the group:
-$date->addClass('field-day')->attr('id' => 'date-field');
+$date->addClass('field-day')->attr(['id' => 'date-field']);
 ```
 
 ### Choose
@@ -280,7 +283,7 @@ $people->pushVal([
 
 $template = $people->getTemplate();
 
-echo '<div class="template">' + $template + '</div>';
+echo '<div class="template">'.$template.'</div>';
 ```
 
 ### CollectionMultiple
@@ -325,7 +328,7 @@ $article[0]['type']->attr('type'); //hidden
 $article->pushVal([
 	'type' => 'section',
 	'title' => 'This is another section',
-    'text' => 'The world of dogs are better than the cats because...',
+    'text' => 'The world of dogs are better than the cats because...'
 ]);
 
 //Add new types
@@ -340,7 +343,7 @@ $article->add([
 $templates = $article->getTemplate();
 
 foreach ($templates as $name => $template) {
-	echo '<div class="template-'.$name.'">' + $template + '</div>';
+	echo '<div class="template-'.$name.'">'.$template.'</div>';
 }
 ```
 
@@ -534,19 +537,18 @@ class EditUserForm extends Form
 			'name' => F::text()->maxlength(200)->label('Name'),
 			'email' => F::email()->label('Email'),
 			'password' => F::password()->label('Password'),
-			'repeat_password' => F::password()->label('Repeat password'),
+			'repeat_password' => F::password()->label('Repeat password')
 		]);
 
 		//Add a validator to check the password
-		$this->addValidator('password-check', function ($form) {
+		$this->addValidator('password-check', function($form)
+		{
 			$password1 = $form['password']->val();
 			$password2 = $form['repeat_password']->val();
 
-			if ($password1 != $password2) {
-				return 'The passwords does not match';
+			if ($password1 !== $password2) {
+				throw new FormManager\InvalidValueException('The passwords does not match');
 			}
-
-			return true;
 		});
 	}
 }
@@ -561,7 +563,7 @@ class MyForms implements FactoryInterface
 {
 	public function get($name, array $arguments)
 	{
-		$class = 'MyApp\\Forms\\'.ucfirs($name);
+		$class = 'MyApp\\Forms\\'.ucfirst($name);
 
 		if (class_exists($class)) {
 			return new $class();
