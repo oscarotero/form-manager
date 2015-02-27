@@ -20,18 +20,19 @@ class Max implements AttributeInterface
                 if (!date_create($value)) {
                     throw new \InvalidArgumentException('This attribute must be a valid datetime');
                 }
+
                 static::addDatetimeValidator($input);
 
                 return $value;
-
-            default:
-                if (!is_float($value) && !is_int($value)) {
-                    throw new \InvalidArgumentException('This attribute must be a float number');
-                }
-                static::addValidator($input);
-
-                return $value;
         }
+
+        if (!is_float($value) && !is_int($value)) {
+            throw new \InvalidArgumentException('This attribute must be a float number');
+        }
+
+        static::addValidator($input);
+
+        return $value;
     }
 
     /**

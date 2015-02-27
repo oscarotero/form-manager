@@ -37,18 +37,22 @@ trait NodeTreeTrait
      */
     public function getPath()
     {
-        if (($parent = $this->getParent())) {
-            $path = $parent->getPath();
+        if (!($parent = $this->getParent())) {
+            return null;
+        }
 
-            if ($path) {
-                if ($this->key !== null) {
-                    return "{$path}[{$this->key}]";
-                }
+        $path = $parent->getPath();
 
-                return $path;
-            } elseif ($this->key) {
-                return $this->key;
+        if ($path) {
+            if ($this->key !== null) {
+                return "{$path}[{$this->key}]";
             }
+
+            return $path;
+        }
+
+        if ($this->key) {
+            return $this->key;
         }
     }
 
@@ -165,21 +169,21 @@ trait NodeTreeTrait
      */
     public function toHtml($prepend = '', $append = '')
     {
-        if (!$this->rendering) {
-            $this->rendering = true;
-
-            if ($this->render) {
-                $html = call_user_func($this->render, $this, $prepend, $append);
-            } else {
-                $html = $this->renderDefault($prepend, $append);
-            }
-
-            $this->rendering = false;
-
-            return $html;
+        if ($this->rendering) {
+            return parent::toHtml($prepend, $append);
         }
 
-        return parent::toHtml($prepend, $append);
+        $this->rendering = true;
+
+        if ($this->render) {
+            $html = call_user_func($this->render, $this, $prepend, $append);
+        } else {
+            $html = $this->renderDefault($prepend, $append);
+        }
+
+        $this->rendering = false;
+
+        return $html;
     }
 
     /**

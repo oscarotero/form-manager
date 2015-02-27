@@ -19,7 +19,6 @@ class Required
     {
         $value = $input->val();
 
-        //File
         if ($input->attr('type') === 'file') {
             $value = (isset($value['name']) && !empty($value['size'])) ? $value['name'] : null;
         }

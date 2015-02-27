@@ -1,6 +1,8 @@
 <?php
 namespace FormManager\Inputs;
 
+use InvalidValueException;
+
 use FormManager\Traits\InputTrait;
 use FormManager\InputInterface;
 use FormManager\ElementContainer;
@@ -79,46 +81,59 @@ class Select extends ElementContainer implements InputInterface
         }
 
         if (is_array($value)) {
-            $value = array_keys(array_flip($value));
-
-            //uncheck current options
-            foreach ($this->children as $option) {
-                $option->uncheck();
-            }
-
-            //check the selected values
-            foreach ($value as $val) {
-                if (!isset($this->children[$val])) {
-                    if (!$this->allowNewValues) {
-                        continue;
-                    }
-
-                    $this[$val] = $val;
-                }
-
-                $this->children[$val]->check();
-            }
+            $this->value = $this->valArray($value);
+        } elseif (is_string($value)) {
+            $this->value = $this->valString($value);
         } else {
-            //uncheck current options
-            foreach ($this->children as $option) {
-                $option->uncheck();
-            }
-
-            if (preg_match('/^[\d]+$/', $value)) {
-                $value = intval($value);
-            }
-
-            //check the selected values
-            if ($this->allowNewValues && !isset($this->children[$value])) {
-                $this[$value] = $value;
-                $this->children[$value]->check();
-            } elseif (isset($this->children[$value])) {
-                $this->children[$value]->check();
-            }
+            throw new InvalidValueException('Value must be an array or string');
         }
 
-        $this->value = $value;
-
         return $this;
+    }
+
+    private function valArray($value)
+    {
+        $value = array_keys(array_flip($value));
+
+        //uncheck current options
+        foreach ($this->children as $option) {
+            $option->uncheck();
+        }
+
+        //check the selected values
+        foreach ($value as $val) {
+            if (!isset($this->children[$val])) {
+                if (!$this->allowNewValues) {
+                    continue;
+                }
+
+                $this[$val] = $val;
+            }
+
+            $this->children[$val]->check();
+        }
+
+        return $value;
+    }
+
+    private function valString($value)
+    {
+        foreach ($this->children as $option) {
+            $option->uncheck();
+        }
+
+        if (preg_match('/^[\d]+$/', $value)) {
+            $value = intval($value);
+        }
+
+        //check the selected values
+        if ($this->allowNewValues && !isset($this->children[$value])) {
+            $this[$value] = $value;
+            $this->children[$value]->check();
+        } elseif (isset($this->children[$value])) {
+            $this->children[$value]->check();
+        }
+
+        return $value;
     }
 }

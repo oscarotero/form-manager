@@ -36,11 +36,13 @@ trait InputTrait
      */
     public function __clone()
     {
-        if (isset($this->label)) {
-            $this->label = clone $this->label;
-            $this->removeAttr('id');
-            $this->label->setInput($this);
+        if (empty($this->label)) {
+            return null;
         }
+
+        $this->label = clone $this->label;
+        $this->removeAttr('id');
+        $this->label->setInput($this);
     }
 
     /**
@@ -95,14 +97,18 @@ trait InputTrait
      */
     public function load($value = null, $file = null)
     {
-        if ($this->sanitizer !== null) {
-            if ($this->attr('multiple') && is_array($value)) {
-                foreach ($value as &$val) {
-                    $val = call_user_func($this->sanitizer, $val);
-                }
-            } else {
-                $value = call_user_func($this->sanitizer, $value);
+        if ($this->sanitizer === null) {
+            $this->val($value);
+
+            return $this;
+        }
+
+        if ($this->attr('multiple') && is_array($value)) {
+            foreach ($value as &$val) {
+                $val = call_user_func($this->sanitizer, $val);
             }
+        } else {
+            $value = call_user_func($this->sanitizer, $value);
         }
 
         $this->val($value);

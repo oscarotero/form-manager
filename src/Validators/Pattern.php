@@ -19,7 +19,6 @@ class Pattern
     {
         $value = $input->val();
 
-        //File
         if ($input->attr('type') === 'file') {
             $value = isset($value['name']) ? $value['name'] : null;
         }
