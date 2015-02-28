@@ -2,6 +2,7 @@
 namespace FormManager\Containers;
 
 use FormManager\DataElementInterface;
+use FormManager\Builder as F;
 
 class Collection extends Group
 {
@@ -11,7 +12,7 @@ class Collection extends Group
 
     public function __construct(array $children = null)
     {
-        $this->template = new Group();
+        $this->template = F::group();
 
         parent::__construct($children);
     }
@@ -86,7 +87,7 @@ class Collection extends Group
     public function setTemplate($template)
     {
         if (is_array($template)) {
-            $template = new Group($template);
+            $template = F::group($template);
         } else if (!($template instanceof Group)) {
             throw new \InvalidArgumentException('Invalid type of the template. Only arrays and FormManager\\Containers\\Group are allowed');
         }
