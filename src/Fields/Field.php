@@ -131,6 +131,10 @@ abstract class Field implements TreeInterface
      */
     protected function defaultRender($prepend = '', $append = '')
     {
+        if ($this->labelPosition === static::LABEL_NONE) {
+            return "{$prepend}{$this->input}{$append}";
+        }
+
         $label = isset($this->label) ? $this->label : '';
 
         if ($this->labelPosition === static::LABEL_BEFORE) {

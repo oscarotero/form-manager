@@ -2,6 +2,7 @@
 namespace FormManager\Containers;
 
 use FormManager\Inputs\Input;
+use FormManager\Builder as F;
 
 class CollectionMultiple extends Collection
 {
@@ -22,10 +23,10 @@ class CollectionMultiple extends Collection
     public function add(array $children)
     {
         foreach ($children as $type => $child) {
-            $child = new Group($child);
+            $child = F::group($child);
 
             if (!isset($child[$this->keyField])) {
-                $child[$this->keyField] = Input::hidden()->val($type);
+                $child[$this->keyField] = F::hidden()->val($type);
             }
 
             $this->template[$type] = $child;
