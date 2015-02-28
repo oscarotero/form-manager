@@ -79,6 +79,26 @@ class Collection extends Group
     /**
      * Returns the template used to create all values.
      *
+     * @param mixed $template The new template
+     *
+     * @return $this
+     */
+    public function setTemplate($template)
+    {
+        if (is_array($template)) {
+            $template = new Group($template);
+        } else if (!($template instanceof Group)) {
+            throw new \InvalidArgumentException('Invalid type of the template. Only arrays and FormManager\\Containers\\Group are allowed');
+        }
+
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Returns the template used to create all values.
+     *
      * @param mixed $index The index used to generate the input name
      *
      * @return DataElementInterface The cloned field
