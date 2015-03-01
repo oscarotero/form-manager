@@ -111,7 +111,7 @@ abstract class Field implements TreeInterface
      *
      * @see TreeInterface
      */
-    public function setParent(TreeInterface $parent)
+    public function setParent(TreeInterface $parent = null)
     {
         return $this->__call('setParent', func_get_args());
     }

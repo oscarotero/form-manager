@@ -31,14 +31,33 @@ trait RenderTrait
      */
     public function toHtml($prepend = '', $append = '')
     {
-        if ($this->render && ($this->rendering === false)) {
+        if ($this->rendering === false) {
             $this->rendering = true;
-            $html = call_user_func($this->render, $this, $prepend, $append);
+
+            if ($this->render) {
+                $html = call_user_func($this->render, $this, $prepend, $append);
+            } else {
+                $html = $this->customRender($prepend, $append);
+            }
+
             $this->rendering = false;
 
             return $html;
         }
 
+        return $this->defaultRender($prepend, $append);
+    }
+
+    /**
+     * The custom render used on extend this object
+     *
+     * @param string $prepend Optional string prepended to html content
+     * @param string $append  Optional string appended to html content
+     *
+     * @return string
+     */
+    protected function customRender($prepend = '', $append = '')
+    {
         return $this->defaultRender($prepend, $append);
     }
 

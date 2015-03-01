@@ -14,11 +14,11 @@ interface TreeInterface
     /**
      * Set the element parent.
      *
-     * @param ElementInterface $parent
+     * @param null|ElementInterface $parent
      *
      * @return $this
      */
-    public function setParent(TreeInterface $parent);
+    public function setParent(TreeInterface $parent = null);
 
     /**
      * Returns the element parent.

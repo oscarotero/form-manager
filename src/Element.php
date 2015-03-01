@@ -93,7 +93,7 @@ class Element implements ElementInterface
      *
      * {@inheritdoc}
      */
-    public function setParent(TreeInterface $parent)
+    public function setParent(TreeInterface $parent = null)
     {
         $this->parent = $parent;
 
