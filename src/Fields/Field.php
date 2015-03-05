@@ -111,7 +111,7 @@ abstract class Field implements TreeInterface
      *
      * @see TreeInterface
      */
-    public function setParent(TreeInterface $parent)
+    public function setParent(TreeInterface $parent = null)
     {
         return $this->__call('setParent', func_get_args());
     }
@@ -131,6 +131,10 @@ abstract class Field implements TreeInterface
      */
     protected function defaultRender($prepend = '', $append = '')
     {
+        if ($this->labelPosition === static::LABEL_NONE) {
+            return "{$prepend}{$this->input}{$append}";
+        }
+
         $label = isset($this->label) ? $this->label : '';
 
         if ($this->labelPosition === static::LABEL_BEFORE) {

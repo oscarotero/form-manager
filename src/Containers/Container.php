@@ -123,7 +123,7 @@ abstract class Container extends ElementContainer implements DataElementInterfac
      *
      * @see ElementContainer::toHtml
      */
-    private function defaultRender($prepend = '', $append = '')
+    protected function defaultRender($prepend = '', $append = '')
     {
         return parent::toHtml($prepend, $append);
     }
