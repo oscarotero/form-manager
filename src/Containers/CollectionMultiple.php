@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Containers;
 
-use FormManager\Inputs\Input;
+use FormManager\Elements\Input;
 
 class CollectionMultiple extends Collection
 {

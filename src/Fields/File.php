@@ -1,12 +1,12 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class File extends Field
 {
     public function __construct()
     {
-        $this->input = new Inputs\File();
+        $this->input = new Elements\InputFile();
     }
 }

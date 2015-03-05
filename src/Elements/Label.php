@@ -1,5 +1,7 @@
 <?php
-namespace FormManager;
+namespace FormManager\Elements;
+
+use FormManager\DataElementInterface;
 
 class Label extends Element
 {

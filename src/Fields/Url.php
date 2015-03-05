@@ -1,13 +1,13 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class Url extends Field
 {
     public function __construct()
     {
-        $this->input = (new Inputs\Input())
+        $this->input = (new Elements\Input())
             ->attr('type', 'url')
             ->addValidator('FormManager\\Validators\\Url::validate');
     }

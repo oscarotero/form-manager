@@ -1,6 +1,7 @@
 <?php
-namespace FormManager;
+namespace FormManager\Elements;
 
+use FormManager\TreeInterface;
 use Iterator;
 use ArrayAccess;
 use Countable;

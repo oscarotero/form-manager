@@ -1,12 +1,12 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class Select extends FieldContainer
 {
     public function __construct()
     {
-        $this->input = new Inputs\Select();
+        $this->input = new Elements\Select();
     }
 }

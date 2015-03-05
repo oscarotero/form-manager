@@ -1,5 +1,8 @@
 <?php
-namespace FormManager;
+namespace FormManager\Elements;
+
+use FormManager\TreeInterface;
+use FormManager\ElementInterface;
 
 /**
  * Class to manage an html element.

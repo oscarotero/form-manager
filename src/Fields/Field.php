@@ -3,7 +3,7 @@ namespace FormManager\Fields;
 
 use FormManager\Traits\RenderTrait;
 use FormManager\TreeInterface;
-use FormManager\Label;
+use FormManager\Elements\Label;
 
 /**
  * Class to manage the combination of input + label.

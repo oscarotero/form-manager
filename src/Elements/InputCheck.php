@@ -1,10 +1,9 @@
 <?php
-namespace FormManager\Inputs;
+namespace FormManager\Elements;
 
 use FormManager\DataElementInterface;
-use FormManager\Element;
 
-class Check extends Input implements DataElementInterface
+class InputCheck extends Input implements DataElementInterface
 {
     protected $attributes = ['value' => 'on'];
     protected $labelBefore = false;

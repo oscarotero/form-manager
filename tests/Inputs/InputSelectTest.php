@@ -65,7 +65,7 @@ class InputSelectTest extends BaseTest
         $select['new-value'] = 'New Value';
         $option = $select['new-value'];
 
-        $this->assertInstanceOf('FormManager\\Option', $option);
+        $this->assertInstanceOf('FormManager\\Elements\\Option', $option);
         $this->assertCount(count($select->options()), $select);
         $this->assertSame($select->offsetGet('new-value'), $select['new-value']);
 

@@ -1,13 +1,13 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class Text extends Field
 {
     public function __construct()
     {
-        $this->input = (new Inputs\Input())
+        $this->input = (new Elements\Input())
             ->attr('type', 'text');
     }
 }

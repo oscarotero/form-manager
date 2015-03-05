@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class Radio extends Field
 {
@@ -9,7 +9,7 @@ class Radio extends Field
     {
         $this->labelPosition = static::LABEL_AFTER;
 
-        $this->input = (new Inputs\Check())
+        $this->input = (new Elements\InputCheck())
             ->attr('type', 'radio');
     }
 }

@@ -4,7 +4,7 @@ namespace FormManager\Containers;
 use FormManager\Traits\NodeTreeTrait;
 use FormManager\Traits\RenderTrait;
 use FormManager\DataElementInterface;
-use FormManager\ElementContainer;
+use FormManager\Elements\ElementContainer;
 
 abstract class Container extends ElementContainer implements DataElementInterface
 {

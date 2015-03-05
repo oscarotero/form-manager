@@ -1,5 +1,5 @@
 <?php
-namespace FormManager;
+namespace FormManager\Elements;
 
 /**
  * Class to manage an option of a select.

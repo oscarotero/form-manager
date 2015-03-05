@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class Hidden extends Field
 {
@@ -9,7 +9,7 @@ class Hidden extends Field
     {
         $this->labelPosition = static::LABEL_NONE;
 
-        $this->input = (new Inputs\Input())
+        $this->input = (new Elements\Input())
             ->attr('type', 'hidden');
     }
 }

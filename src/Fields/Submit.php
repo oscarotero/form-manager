@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class Submit extends Field
 {
@@ -9,7 +9,7 @@ class Submit extends Field
     {
         $this->labelPosition = static::LABEL_NONE;
 
-        $this->input = (new Inputs\Button())
+        $this->input = (new Elements\Button())
             ->attr('type', 'submit');
     }
 

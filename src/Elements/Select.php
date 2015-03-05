@@ -1,11 +1,9 @@
 <?php
-namespace FormManager\Inputs;
+namespace FormManager\Elements;
 
 use FormManager\InvalidValueException;
 use FormManager\Traits\InputTrait;
 use FormManager\DataElementInterface;
-use FormManager\ElementContainer;
-use FormManager\Option;
 
 class Select extends ElementContainer implements DataElementInterface
 {

@@ -1,9 +1,8 @@
 <?php
-namespace FormManager\Inputs;
+namespace FormManager\Elements;
 
 use FormManager\Traits\InputTrait;
 use FormManager\DataElementInterface;
-use FormManager\Element;
 
 class Textarea extends Element implements DataElementInterface
 {

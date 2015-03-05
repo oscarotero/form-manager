@@ -36,10 +36,10 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
         if ($isContainer) {
             $this->assertInstanceOf('FormManager\\Fields\\FieldContainer', $field);
-            $this->assertInstanceOf('FormManager\\ElementContainer', $field->input);
+            $this->assertInstanceOf('FormManager\\Elements\\ElementContainer', $field->input);
         } else {
             $this->assertInstanceOf('FormManager\\Fields\\Field', $field);
-            $this->assertInstanceOf('FormManager\\Element', $field->input);
+            $this->assertInstanceOf('FormManager\\Elements\\Element', $field->input);
         }
 
         //Error labels
@@ -48,8 +48,8 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $field->isValid();
 
         if ($hasLabel) {
-            $this->assertInstanceOf('FormManager\\Label', $field->label);
-            $this->assertInstanceOf('FormManager\\Label', $field->errorLabel);
+            $this->assertInstanceOf('FormManager\\Elements\\Label', $field->label);
+            $this->assertInstanceOf('FormManager\\Elements\\Label', $field->errorLabel);
         } else {
             $this->setExpectedException('Exception');
             $field->label;

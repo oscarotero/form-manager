@@ -1,12 +1,12 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Inputs;
+use FormManager\Elements;
 
 class Textarea extends Field
 {
     public function __construct()
     {
-        $this->input = new Inputs\Textarea();
+        $this->input = new Elements\Textarea();
     }
 }

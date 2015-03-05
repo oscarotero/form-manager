@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Fields;
 
-use FormManager\Element;
+use FormManager\Elements\Element;
 use Iterator;
 use ArrayAccess;
 use Countable;
