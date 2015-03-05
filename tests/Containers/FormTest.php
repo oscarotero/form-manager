@@ -13,6 +13,7 @@ class FormTest extends BaseTest
 
         $this->assertEquals('index.php', $form->attr('action'));
         $this->assertEquals('post', $form->attr('method'));
+        $this->assertNull($form->getForm());
 
         return $form;
     }
@@ -60,6 +61,8 @@ class FormTest extends BaseTest
 
         $this->assertInstanceOf('FormManager\\Fields\\Text', $form['name']);
         $this->assertInstanceOf('FormManager\\Fields\\Submit', $form['action']['save']);
+        
+        $this->assertSame($form, $form['action']['save']->getForm());
 
         return $form;
     }

@@ -3,6 +3,7 @@ namespace FormManager\Elements;
 
 use FormManager\TreeInterface;
 use FormManager\ElementInterface;
+use FormManager\Containers\Form;
 
 /**
  * Class to manage an html element.
@@ -381,7 +382,7 @@ class Element implements ElementInterface
     public function getForm()
     {
         if ($this->parent) {
-            return ($this->parent instanceof Containers\Form) ? $this->parent : $this->parent->getForm();
+            return ($this->parent instanceof Form) ? $this->parent : $this->parent->getForm();
         }
     }
 
