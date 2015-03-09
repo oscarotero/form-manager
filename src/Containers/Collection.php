@@ -44,13 +44,13 @@ class Collection extends Group
     /**
      * {@inheritDoc}
      */
-    public function load($value = null, $file = null)
+    public function load($value = null)
     {
         $this->children = [];
 
         if ($value) {
             foreach ($value as $k => $v) {
-                $this->pushLoad($v, isset($file[$k]) ? $file[$k] : null);
+                $this->pushLoad($v);
             }
         }
 
@@ -134,12 +134,11 @@ class Collection extends Group
     /**
      * Adds a new value child and load content.
      *
-     * @param mixed $value The GET/POST value
-     * @param mixed $file  The FILES value (used in input[type="file"])
+     * @param mixed $value The GET/POST/FILES value
      *
      * @return Group The child inserted
      */
-    public function pushLoad($value = null, $file = null)
+    public function pushLoad($value = null)
     {
         $child = clone $this->template;
 
@@ -148,7 +147,7 @@ class Collection extends Group
                 $value = call_user_func($this->sanitizer, $value);
             }
 
-            $child->load($value, $file);
+            $child->load($value);
         }
 
         return $this[] = $child;

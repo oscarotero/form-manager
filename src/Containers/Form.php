@@ -17,16 +17,18 @@ class Form extends Group
     public function loadFromGlobals(array $get = null, array $post = null, array $files = null)
     {
         if (strtolower($this->attr('method')) === 'post') {
-            $value = ($post === null) ? $_POST : $post;
+            $values = ($post === null) ? $_POST : $post;
+
+            if ($files === null) {
+                $files = self::fixFilesArray($_FILES);
+            }
+
+            $values = array_replace_recursive($values, $files);
         } else {
-            $value = ($get === null) ? $_GET : $get;
+            $values = ($get === null) ? $_GET : $get;
         }
 
-        if ($files === null) {
-            $files = self::fixFilesArray($_FILES);
-        }
-
-        return $this->load($value, $files);
+        return $this->load($values);
     }
 
     /**

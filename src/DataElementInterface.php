@@ -53,12 +53,11 @@ interface DataElementInterface extends ElementInterface
     /**
      * Loads a value sent by the client.
      *
-     * @param mixed $value The GET/POST value
-     * @param mixed $file  The FILES value (used in input[type="file"])
+     * @param mixed $value The GET/POST/FILES values merged in an unique array
      *
      * @return $this
      */
-    public function load($value = null, $file = null);
+    public function load($value = null);
 
     /**
      * Set/Get the value.

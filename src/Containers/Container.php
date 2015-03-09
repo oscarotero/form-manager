@@ -23,22 +23,18 @@ abstract class Container extends ElementContainer implements DataElementInterfac
     /**
      * Loads a value sent by the client.
      *
-     * @param mixed $value The GET/POST value
-     * @param mixed $file  The FILES value (used in input[type="file"])
+     * @param mixed $value The GET/POST/FILES value
      *
      * @return $this
      */
-    public function load($value = null, $file = null)
+    public function load($value = null)
     {
         if ($this->sanitizer) {
             $value = call_user_func($this->sanitizer, $value);
         }
 
         foreach ($this->children as $key => $child) {
-            $child->load(
-                isset($value[$key]) ? $value[$key] : null,
-                isset($file[$key]) ? $file[$key] : null
-            );
+            $child->load(isset($value[$key]) ? $value[$key] : null);
         }
 
         return $this;

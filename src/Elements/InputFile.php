@@ -26,12 +26,4 @@ class InputFile extends Input implements DataElementInterface
 
         return $this;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function load($value = null, $file = null)
-    {
-        return parent::load($file);
-    }
 }

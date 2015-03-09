@@ -75,7 +75,7 @@ class CollectionMultiple extends Collection
     /**
      * {@inheritdoc}
      */
-    public function pushLoad($value = null, $file = null)
+    public function pushLoad($value = null)
     {
         if (!isset($value[$this->keyField])) {
             throw new \Exception("The value {$this->keyField} is required on add new values in CollectionMultiple");
@@ -83,7 +83,7 @@ class CollectionMultiple extends Collection
 
         $type = $value[$this->keyField];
         $child = clone $this->template[$type];
-        $child->load($value, $file);
+        $child->load($value);
 
         return $this[] = $child;
     }

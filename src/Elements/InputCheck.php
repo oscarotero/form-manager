@@ -11,7 +11,7 @@ class InputCheck extends Input implements DataElementInterface
     /**
      * {@inheritDoc}
      */
-    public function load($value = null, $file = null)
+    public function load($value = null)
     {
         if (!empty($value) && ($this->attr('value') == $value)) {
             $this->check();

@@ -26,7 +26,7 @@ class Choose extends Container
     /**
      * {@inheritDoc}
      */
-    public function load($value = null, $file = null)
+    public function load($value = null)
     {
         $this->val($value);
 

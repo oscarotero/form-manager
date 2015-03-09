@@ -31,7 +31,7 @@ trait InputTrait
      *
      * {@inheritdoc}
      */
-    public function load($value = null, $file = null)
+    public function load($value = null)
     {
         if ($this->sanitizer === null) {
             $this->val($value);
