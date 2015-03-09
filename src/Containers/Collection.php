@@ -88,7 +88,7 @@ class Collection extends Group
     {
         if (is_array($template)) {
             $template = F::group($template);
-        } else if (!($template instanceof Group)) {
+        } elseif (!($template instanceof Group)) {
             throw new \InvalidArgumentException('Invalid type of the template. Only arrays and FormManager\\Containers\\Group are allowed');
         }
 

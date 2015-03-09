@@ -61,7 +61,7 @@ class FormTest extends BaseTest
 
         $this->assertInstanceOf('FormManager\\Fields\\Text', $form['name']);
         $this->assertInstanceOf('FormManager\\Fields\\Submit', $form['action']['save']);
-        
+
         $this->assertSame($form, $form['action']['save']->getForm());
 
         return $form;

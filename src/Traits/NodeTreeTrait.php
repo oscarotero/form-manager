@@ -139,7 +139,7 @@ trait NodeTreeTrait
 
     /**
      * Returns the element parent.
-     * 
+     *
      * @see FormManager\TreeInterface
      *
      * @return null|ElementInterface

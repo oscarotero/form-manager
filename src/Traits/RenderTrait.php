@@ -49,7 +49,7 @@ trait RenderTrait
     }
 
     /**
-     * The custom render used on extend this object
+     * The custom render used on extend this object.
      *
      * @param string $prepend Optional string prepended to html content
      * @param string $append  Optional string appended to html content
