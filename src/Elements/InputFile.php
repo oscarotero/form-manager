@@ -22,6 +22,10 @@ class InputFile extends Input implements DataElementInterface
             return $this->value;
         }
 
+        if (isset($value['error']) && $value['error'] === 4) {
+            $value = null;
+        }
+
         $this->value = $value;
 
         return $this;
