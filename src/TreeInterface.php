@@ -26,4 +26,11 @@ interface TreeInterface
      * @return null|ElementInterface
      */
     public function getParent();
+
+    /**
+     * Returns the form element.
+     *
+     * @return null|Form
+     */
+    public function getForm();
 }

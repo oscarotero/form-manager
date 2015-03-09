@@ -136,4 +136,13 @@ trait NodeTreeTrait
 
         return $this;
     }
+
+    /**
+     * Returns the element parent.
+     * 
+     * @see FormManager\TreeInterface
+     *
+     * @return null|ElementInterface
+     */
+    abstract public function getParent();
 }

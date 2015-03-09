@@ -128,6 +128,16 @@ abstract class Field implements TreeInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see TreeInterface
+     */
+    public function getForm()
+    {
+        return $this->__call('getForm', func_get_args());
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function defaultRender($prepend = '', $append = '')
     {
