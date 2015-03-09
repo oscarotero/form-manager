@@ -30,7 +30,7 @@ interface TreeInterface
     /**
      * Returns the form element.
      *
-     * @return null|Form
+     * @return null|Containers\Form
      */
     public function getForm();
 }
