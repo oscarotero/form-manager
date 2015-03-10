@@ -18,10 +18,7 @@ class Form extends Group
     {
         if (strtolower($this->attr('method')) === 'post') {
             $values = ($post === null) ? $_POST : $post;
-
-            if ($files === null) {
-                $files = self::fixFilesArray($_FILES);
-            }
+            $files = self::fixFilesArray(($files === null) ? $_FILES : $files);
 
             $values = array_replace_recursive($values, $files);
         } else {
@@ -64,6 +61,11 @@ class Form extends Group
     private static function moveToRight($files)
     {
         if (!is_array($files['name'])) {
+            //avoid no uploads
+            if ($files['error'] === 4) {
+                return null;
+            }
+
             return $files;
         }
 
