@@ -1,7 +1,6 @@
 <?php
 namespace FormManager\Containers;
 
-use FormManager\TreeInterface;
 
 class Loader extends Group
 {

@@ -63,7 +63,7 @@ class Form extends Group
         if (!is_array($files['name'])) {
             //avoid no uploads
             if ($files['error'] === 4) {
-                return null;
+                return;
             }
 
             return $files;

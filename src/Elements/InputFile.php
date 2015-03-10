@@ -20,9 +20,9 @@ class InputFile extends Input implements DataElementInterface
      */
     public function load($value = null)
     {
-            $this->val($value ?: '');
+        $this->val($value ?: '');
 
-            return $this;
+        return $this;
     }
 
     /**

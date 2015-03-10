@@ -10,7 +10,7 @@ class Select extends FieldContainer
         $this->input = new Elements\Select();
 
         if ($options) {
-        	$this->input->options($options);
+            $this->input->options($options);
         }
     }
 }
