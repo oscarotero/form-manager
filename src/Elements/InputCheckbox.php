@@ -3,23 +3,20 @@ namespace FormManager\Elements;
 
 use FormManager\DataElementInterface;
 
-class InputCheck extends Input implements DataElementInterface
+class InputCheckbox extends Input implements DataElementInterface
 {
-    protected $attributes = ['value' => 'on'];
-    protected $labelBefore = false;
+    protected $attributes = ['type' => 'checkbox', 'value' => 'on'];
 
     /**
      * {@inheritDoc}
      */
     public function load($value = null)
     {
-        if (!empty($value) && ($this->attr('value') == $value)) {
+        if (($this->attr('value') == $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
             $this->check();
         } else {
             $this->uncheck();
         }
-
-        $this->validate();
     }
 
     /**
@@ -31,8 +28,11 @@ class InputCheck extends Input implements DataElementInterface
             return $this->attr('checked') ? $this->attributes['value'] : null;
         }
 
-        $this->attributes['value'] = $value;
-        $this->validate();
+        if (($this->attr('value') == $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+            $this->check();
+        } else {
+            $this->uncheck();
+        }
 
         return $this;
     }

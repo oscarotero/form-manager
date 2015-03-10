@@ -75,7 +75,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $input->uncheck();
         $this->assertNull($input->attr('checked'));
 
-        $input->val('world');
+        $input->attr('value', 'world');
         $input->load('world');
 
         $this->assertTrue($input->attr('checked'));
