@@ -34,7 +34,7 @@ trait InputTrait
     public function load($value = null)
     {
         if ($this->sanitizer === null) {
-            $this->val($value);
+            $this->val($value ?: '');
 
             return $this;
         }
@@ -47,7 +47,7 @@ trait InputTrait
             $value = call_user_func($this->sanitizer, $value);
         }
 
-        $this->val($value);
+        $this->val($value ?: '');
 
         return $this;
     }

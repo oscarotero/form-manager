@@ -26,7 +26,7 @@ class File
     {
         $value = $input->val();
 
-        if (isset(self::$error_message[$value['error']])) {
+        if (isset($value['error']) && isset(self::$error_message[$value['error']])) {
             throw new InvalidValueException(sprintf(static::$error_message[$value['error']]));
         }
     }

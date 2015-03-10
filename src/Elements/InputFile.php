@@ -14,6 +14,18 @@ class InputFile extends Input implements DataElementInterface
     }
 
     /**
+     * @see FormManager\DataElementInterface
+     *
+     * {@inheritdoc}
+     */
+    public function load($value = null)
+    {
+            $this->val($value ?: '');
+
+            return $this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function val($value = null)

@@ -39,6 +39,12 @@ trait NodeTreeTrait
         $path = $parent->getPath();
 
         if ($path) {
+            if (strpos($this->key, '[') !== false) {
+                list($p1, $p2) = explode('[', $this->key, 2);
+
+                return "{$path}[{$p1}][{$p2}";
+            }
+
             if ($this->key !== null) {
                 return "{$path}[{$this->key}]";
             }
