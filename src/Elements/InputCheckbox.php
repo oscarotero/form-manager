@@ -25,7 +25,7 @@ class InputCheckbox extends Input implements DataElementInterface
     public function val($value = null)
     {
         if ($value === null) {
-            return ($this->attr('checked') === true);
+            return ($this->attr('checked') ? $this->attr('value') : null);
         }
 
         if (($this->attr('value') == $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
