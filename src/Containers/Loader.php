@@ -22,26 +22,10 @@ class Loader extends Group
     /**
      * {@inheritDoc}
      */
-    public function load($value = null)
-    {
-        parent::load($value);
-
-        $loadedValue = $this['loader']->val();
-
-        if (!empty($loadedValue)) {
-            $this->val($loadedValue);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function val($value = null)
     {
         if ($value === null) {
-            return $this['field']->val();
+            return $this['loader']->val() ?: $this['field']->val();
         }
 
         $this['field']->val($value);
