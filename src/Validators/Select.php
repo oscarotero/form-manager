@@ -22,7 +22,7 @@ class Select
         }
 
         if ($input->attr('multiple')) {
-            if (array_keys(array_diff_key(array_flip($value), $input()))) {
+            if (array_keys(array_diff_key(array_flip($value), $input->options()))) {
                 throw new InvalidValueException(sprintf(static::$error_message));
             }
         } elseif (!isset($input[$value])) {
