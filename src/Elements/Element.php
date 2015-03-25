@@ -70,7 +70,7 @@ class Element implements ElementInterface
         try {
             $string = $this->toHtml();
         } catch (\Exception $exception) {
-            return '<pre>'.(string)$exception.'</pre>';
+            return '<pre>'.(string) $exception.'</pre>';
         }
 
         return $string;

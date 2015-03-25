@@ -1,7 +1,6 @@
 <?php
 namespace FormManager\Containers;
 
-
 class Loader extends Group
 {
     /**
