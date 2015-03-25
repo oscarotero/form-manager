@@ -25,14 +25,22 @@ class Accept
 
         $attr = $input->attr('accept');
         $accept = array_map('trim', explode(',', $attr));
-        $filename = $value['tmp_name'];
+        array_walk($accept, function (&$value) {
+            $value = str_replace('*', '.*', "|^{$value}\$|i");
+        });
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $filename);
+        $mime = finfo_file($finfo, $value['tmp_name']);
         finfo_close($finfo);
 
-        if (array_search($mime, $accept) === false) {
-            throw new InvalidValueException(sprintf(static::$error_message, $attr));
+        $match = false;
+
+        foreach ($accept as $pattern) {
+            if (preg_match($pattern, $mime)) {
+                return;
+            }
         }
+
+        throw new InvalidValueException(sprintf(static::$error_message, $attr));
     }
 }
