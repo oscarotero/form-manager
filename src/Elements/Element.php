@@ -67,7 +67,13 @@ class Element implements ElementInterface
      */
     public function __toString()
     {
-        return $this->toHtml();
+        try {
+            $string = $this->toHtml();
+        } catch (\Exception $exception) {
+            return '<pre>'.(string)$exception.'</pre>';
+        }
+
+        return $string;
     }
 
     /**
