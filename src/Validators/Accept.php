@@ -33,8 +33,6 @@ class Accept
         $mime = finfo_file($finfo, $value['tmp_name']);
         finfo_close($finfo);
 
-        $match = false;
-
         foreach ($accept as $pattern) {
             if (preg_match($pattern, $mime)) {
                 return;
