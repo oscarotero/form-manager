@@ -120,7 +120,7 @@ trait InputTrait
 
     /**
      * Generate the right name attribute for this input
-     * 
+     *
      * @return string
      */
     protected function generateName()
