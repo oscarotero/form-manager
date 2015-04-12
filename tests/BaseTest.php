@@ -4,12 +4,24 @@ use FormManager\InvalidValueException;
 
 abstract class BaseTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    protected function _testNameAttributeException($element)
+    {
+        $element->data('name', 'new-name');
+    }
+
     protected function _testElement($element)
     {
-        //Name
-        $this->assertSame($element->name('input-name'), $element);
-        $this->assertEquals('input-name', $element->attr('name'));
+        //Id attribute
+        $this->assertSame($element->id('input-id'), $element);
+        $this->assertEquals('input-id', $element->attr('id'));
         $this->assertNull($element->val());
+
+        //Name is readonly
+        $this->assertNull($element->data('name'));
+        $this->_testNameAttributeException($element);
 
         //Data
         $this->assertSame($element->data('name', 'value'), $element);

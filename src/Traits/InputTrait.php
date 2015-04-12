@@ -79,13 +79,7 @@ trait InputTrait
      */
     protected function attrToHtml()
     {
-        $name = $this->getPath();
-
-        if ($this->attr('multiple')) {
-            $name .= '[]';
-        }
-
-        $this->attr('name', $name);
+        $this->attributes['name'] = $this->generateName();
 
         return parent::attrToHtml();
     }
@@ -105,6 +99,14 @@ trait InputTrait
             return $this;
         }
 
+        if ($name === 'name') {
+            if ($value === null) {
+                return $this->generateName();
+            }
+
+            throw new \InvalidArgumentException('The attribute "name" is read only!');
+        }
+
         if ($value !== null) {
             $class = 'FormManager\\Attributes\\'.ucfirst($name);
 
@@ -114,5 +116,21 @@ trait InputTrait
         }
 
         return parent::attr($name, $value);
+    }
+
+    /**
+     * Generate the right name attribute for this input
+     * 
+     * @return string
+     */
+    protected function generateName()
+    {
+        $name = $this->getPath();
+
+        if ($this->attr('multiple')) {
+            $name .= '[]';
+        }
+
+        return $name;
     }
 }
