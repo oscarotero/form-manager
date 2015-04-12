@@ -399,19 +399,19 @@ $form->add([
 ]);
 
 //You can also add new fields using the array syntax (the key will be the input name):
-$MyForm['new-input'] = F::range()->min(0)->max(100)->val(50);
+$form['new-input'] = F::range()->min(0)->max(100)->val(50);
 
 //Print the form
-echo $MyForm;
+echo $form;
 
 //Access to the fields using key names
-echo $MyForm['website'];
+echo $form['website'];
 
 //Or fields inside fields
-echo $MyForm['born']['day'];
+echo $form['born']['day'];
 
 //Set the values to all fields:
-$MyForm->val([
+$form->val([
 	'name' => 'Oscar',
 	'email' => 'oom@oscarotero.com',
 	'gender' => 'm',
@@ -440,16 +440,16 @@ $MyForm->val([
 ]);
 
 //Get the values
-$values = $MyForm->val();
+$values = $form->val();
 
 //To load the raw values from globals $_GET, $_POST and $_FILES:
-$MyForm->loadFromGlobals();
+$form->loadFromGlobals();
 
 //Or specify your own globals
-$MyForm->loadFromGlobals($_my_GET, $_my_POST, $_my_FILES);
+$form->loadFromGlobals($_my_GET, $_my_POST, $_my_FILES);
 
 //Check the errors
-if (!$MyForm->isValid()) {
+if (!$form->isValid()) {
 	echo 'there are errors in the form';
 }
 ```
@@ -518,8 +518,8 @@ F::addFactory(new CustomFields());
 
 $date = F::form([
 	'name' => F::text(),
-	'born-year' => F::Year(),
-	'dead-year' => F::Year(),
+	'born-year' => F::year(),
+	'dead-year' => F::year(),
 ]);
 ```
 
