@@ -113,6 +113,9 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
         $input->val('0');
         $this->assertTrue($input->isValid());
+
+        $input->val('0.00');
+        $this->assertTrue($input->isValid());
     }
 
     protected function _testMinMax($input)

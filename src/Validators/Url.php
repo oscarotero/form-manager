@@ -21,7 +21,7 @@ class Url
     {
         $value = $input->val();
 
-        if (!empty($value) && !filter_var($value, static::FILTER)) {
+        if (!empty($value) && filter_var($value, static::FILTER) === false) {
             throw new InvalidValueException(sprintf(static::$error_message, $value));
         }
     }
