@@ -209,4 +209,16 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
 
         return $this;
     }
+
+    /**
+     * Removes all children
+     *
+     * @return $this
+     */
+    public function clear()
+    {
+        $this->children = [];
+
+        return $this;
+    }
 }

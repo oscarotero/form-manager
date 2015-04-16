@@ -90,4 +90,24 @@ class InputSelectTest extends BaseTest
 
         $this->assertSame([2], $select->val());
     }
+
+    public function testEmptyOptions()
+    {
+        $select = Builder::select([
+            '' => 'Empty',
+            0 => 'Zero',
+            1 => 'One',
+            2 => 'Two',
+        ]);
+
+        $this->assertCount(4, $select);
+
+        $select->options([3 => 'Three']);
+
+        $this->assertCount(5, $select);
+
+        $select->clear()->options([4 => 'Four']);
+
+        $this->assertCount(1, $select);
+    }
 }
