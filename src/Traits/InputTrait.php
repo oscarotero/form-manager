@@ -79,7 +79,9 @@ trait InputTrait
      */
     protected function attrToHtml()
     {
-        $this->attributes['name'] = $this->generateName();
+        if ($this->getParent()) {
+            $this->attributes['name'] = $this->generateName();
+        }
 
         return parent::attrToHtml();
     }
@@ -99,7 +101,7 @@ trait InputTrait
             return $this;
         }
 
-        if ($name === 'name') {
+        if ($name === 'name' && $this->getParent()) {
             if ($value === null) {
                 return $this->generateName();
             }

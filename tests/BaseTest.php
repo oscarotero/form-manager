@@ -1,15 +1,17 @@
 <?php
 use FormManager\Inputs\Input;
 use FormManager\InvalidValueException;
+use FormManager\Builder;
 
 abstract class BaseTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @expectedException InvalidArgumentException
-     */
     protected function _testNameAttributeException($element)
     {
-        $element->data('name', 'new-name');
+        try {
+            $element->attr('name', 'new-name');
+        } catch (InvalidArgumentException $exception) {}
+
+        $this->assertInstanceOf('InvalidArgumentException', $exception);
     }
 
     protected function _testElement($element)
@@ -19,8 +21,13 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('input-id', $element->attr('id'));
         $this->assertNull($element->val());
 
-        //Name is readonly
+        //Name
         $this->assertNull($element->data('name'));
+        $element->attr('name', 'new-name');
+        $this->assertEquals('new-name', $element->attr('name'));
+        $group = Builder::group();
+        $group['my-name'] = $element;
+        $this->assertEquals('my-name', $element->attr('name'));
         $this->_testNameAttributeException($element);
 
         //Data
