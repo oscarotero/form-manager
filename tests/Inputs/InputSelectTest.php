@@ -76,18 +76,23 @@ class InputSelectTest extends BaseTest
     public function testMultiple()
     {
         $select = Builder::select()->multiple()->options([
-            '' => 'Empty',
             0 => 'Zero',
             1 => 'One',
             2 => 'Two',
         ]);
 
-        $select->val(['', '0']);
+        $select->val(['1', '0']);
 
-        $this->assertSame(['', 0], $select->val());
+        $this->assertSame([1, 0], $select->val());
 
         $select->val(2);
 
+        $this->assertSame([2], $select->val());
+
+        $select->val('');
+        $this->assertSame([], $select->val());
+
+        $select->val(2);
         $this->assertSame([2], $select->val());
     }
 

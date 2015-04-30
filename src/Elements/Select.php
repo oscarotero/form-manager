@@ -74,7 +74,11 @@ class Select extends ElementContainer implements DataElementInterface
         }
 
         if ($this->attr('multiple') && !is_array($value)) {
-            $value = array($value);
+            if (strlen($value) || isset($this->children[$value])) {
+                $value = [$value];
+            } else {
+                $value = [];
+            }
         }
 
         foreach ($this->children as $option) {
