@@ -89,4 +89,13 @@ class Form extends Group
 
         return $results;
     }
+
+    /**
+     * Checks if the form was sent.
+     *
+     * @return true|false
+     */
+    public function isSent() {
+        return (strtolower($this->attr('method')) === 'post' && strtolower($_SERVER['REQUEST_METHOD']) == 'post') || isset($_GET['submit']);
+    }
 }
