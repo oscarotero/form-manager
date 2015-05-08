@@ -47,6 +47,12 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         //Arbitrary values
         $this->assertSame($element->set('myVar', ['one', 'two']), $element);
         $this->assertEquals(['one', 'two'], $element->get('myVar'));
+
+        $element->set('var1', true);
+        $this->assertTrue($element->get('var1'));
+        $element->set(['var1' => false, 'var2' => true]);
+        $this->assertFalse($element->get('var1'));
+        $this->assertTrue($element->get('var2'));
     }
 
     protected function _testField($field, $hasLabel = true, $isContainer = false)

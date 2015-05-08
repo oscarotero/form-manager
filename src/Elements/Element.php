@@ -354,7 +354,7 @@ class Element implements ElementInterface
     public function set($name, $value = null)
     {
         if (is_array($name)) {
-            $this->vars += $name;
+            $this->vars = array_replace($this->vars, $name);
 
             return $this;
         }
