@@ -19,5 +19,11 @@ class InputSearchTest extends BaseTest
 
         $input->val('hello');
         $this->assertSame('hello', $input->val());
+
+        $input->val('0');
+        $this->assertSame('0', $input->val());
+
+        $input->load('0');
+        $this->assertSame('0', $input->val());
     }
 }
