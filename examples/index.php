@@ -1,6 +1,13 @@
 <?php
-require __DIR__.'/_header.php';
 require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/_header.php';
+?>
+<p>
+    Choose the template you wish to view below. Templates which begin with "bootstrap"
+    require the <a href='https://github.com/oscarotero/form-manager-bootstrap'>
+    FormManager Bootstrap</a> extension.
+</p>
+<?php
 if (!isset($_GET['example'])) {
     echo "<h2>Pick an Example</h2>";
     require __DIR__.'/_list_examples.php';

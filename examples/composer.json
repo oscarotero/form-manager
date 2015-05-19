@@ -3,7 +3,8 @@
     "description": "Working examples of form-manager",
     "require": {
         "form-manager/form-manager": "^4.3",
-        "mihaeu/html-formatter": "^1.0"
+        "mihaeu/html-formatter": "^1.0",
+        "form-manager/bootstrap": "^2.0"
     },
     "authors": [
         {
