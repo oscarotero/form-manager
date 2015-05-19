@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "d703ac60503a2fe2ccd854c70adf8ef0",
+    "packages": [
+        {
+            "name": "form-manager/form-manager",
+            "version": "v4.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oscarotero/form-manager.git",
+                "reference": "5f7649ea7e4ba63425cc9cd424b3480f179a2936"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oscarotero/form-manager/zipball/5f7649ea7e4ba63425cc9cd424b3480f179a2936",
+                "reference": "5f7649ea7e4ba63425cc9cd424b3480f179a2936",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FormManager\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oscar Otero",
+                    "email": "oom@oscarotero.com",
+                    "homepage": "http://oscarotero.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP-HTML form manager",
+            "homepage": "https://github.com/oscarotero/form-manager",
+            "keywords": [
+                "data",
+                "form",
+                "html",
+                "validator"
+            ],
+            "time": "2015-05-13 17:58:07"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

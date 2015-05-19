@@ -1,0 +1,13 @@
+{
+    "name": "form-manager/form-manager-examples",
+    "description": "Working examples of form-manager",
+    "require": {
+        "form-manager/form-manager": "^4.3"
+    },
+    "authors": [
+        {
+            "name": "Sami Greenbury",
+            "email": "dude@patabugen.co.uk"
+        }
+    ]
+}
