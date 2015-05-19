@@ -35,7 +35,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($element->data('boolean-value'));
         $this->assertSame($element->data('name', 'value'), $element);
         $this->assertEquals('value', $element->data('name'));
-        $this->assertEquals(['name' => 'value'], $element->data());
+        $this->assertEquals(['name' => 'value', 'boolean-value' => true], $element->data());
 
         //Add, remove classes
         $this->assertNull($element->attr('class'));
