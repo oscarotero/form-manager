@@ -14,3 +14,12 @@
         <!-- End Syntax Highlighter -->
     </head>
     <body>
+    <h1>Form Manager Examples</h1>
+    <nav>
+        <ul>
+            <li>
+                <a href='index.php'>List of Examples</a>
+            </li>
+        </ul>
+    </nav>
+
