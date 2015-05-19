@@ -2,6 +2,7 @@
     This example creates a form with a collection of fields and puts them
     into two (or more) columns.
 </p>
+---
 <?php
 
 use FormManager\Bootstrap as FB;
