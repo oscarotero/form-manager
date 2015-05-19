@@ -45,6 +45,31 @@ class Element implements ElementInterface
     }
 
     /**
+     * Creates a html attribute
+     * 
+     * @param string $name
+     * @param mixed  $value
+     * 
+     * @return string
+     */
+    protected static function getHtmlAttribute($name, $value)
+    {
+        if (($value === null) || ($value === false)) {
+            return '';
+        }
+
+        if ($value === true) {
+            return " {$name}";
+        }
+
+        if (is_array($value)) {
+            $value = implode(' ', $value);
+        }
+
+        return " {$name}=\"".static::escape($value)."\"";
+    }
+
+    /**
      * Magic method to convert methods in attributes
      * Ex: ->id('my-id') converts to ->attr('id', 'my-id').
      *
@@ -268,7 +293,6 @@ class Element implements ElementInterface
      */
     public function addClass($class)
     {
-        fb($class);
         $classes = $this->attr('class');
 
         if (!$classes) {
@@ -322,23 +346,11 @@ class Element implements ElementInterface
         $html = '';
 
         foreach ($this->attributes as $name => $value) {
-            if (($value === null) || ($value === false)) {
-                continue;
-            }
-
-            if ($value === true) {
-                $html .= " $name";
-            } else {
-                if (is_array($value)) {
-                    $value = implode(' ', $value);
-                }
-
-                $html .= " $name=\"".static::escape($value)."\"";
-            }
+            $html .= static::getHtmlAttribute($name, $value);
         }
 
         foreach ($this->data as $name => $value) {
-            $html .= " data-$name=\"".static::escape($value)."\"";
+            $html .= static::getHtmlAttribute("data-{$name}", $value);
         }
 
         return $html;
