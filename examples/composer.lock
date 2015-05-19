@@ -1,0 +1,147 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "56bef916d657f991d315a8f78274be51",
+    "packages": [
+        {
+            "name": "form-manager/bootstrap",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oscarotero/form-manager-bootstrap.git",
+                "reference": "ff9338c41acf47b83155be5f53ec3000e80006be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oscarotero/form-manager-bootstrap/zipball/ff9338c41acf47b83155be5f53ec3000e80006be",
+                "reference": "ff9338c41acf47b83155be5f53ec3000e80006be",
+                "shasum": ""
+            },
+            "require": {
+                "form-manager/form-manager": "4.3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FormManager\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Oscar Otero",
+                    "email": "oom@oscarotero.com",
+                    "homepage": "http://oscarotero.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "FormManager extension to create bootstrap like forms",
+            "homepage": "https://github.com/oscarotero/form-manager-bootstrap",
+            "keywords": [
+                "bootstrap",
+                "form",
+                "html"
+            ],
+            "time": "2015-05-15 10:19:46"
+        },
+        {
+            "name": "form-manager/form-manager",
+            "version": "v4.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oscarotero/form-manager.git",
+                "reference": "5f7649ea7e4ba63425cc9cd424b3480f179a2936"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oscarotero/form-manager/zipball/5f7649ea7e4ba63425cc9cd424b3480f179a2936",
+                "reference": "5f7649ea7e4ba63425cc9cd424b3480f179a2936",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FormManager\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oscar Otero",
+                    "email": "oom@oscarotero.com",
+                    "homepage": "http://oscarotero.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP-HTML form manager",
+            "homepage": "https://github.com/oscarotero/form-manager",
+            "keywords": [
+                "data",
+                "form",
+                "html",
+                "validator"
+            ],
+            "time": "2015-05-13 17:58:07"
+        },
+        {
+            "name": "mihaeu/html-formatter",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mihaeu/html-formatter.git",
+                "reference": "a376177343ffe5484f8457f699237c1863b7cfd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mihaeu/html-formatter/zipball/a376177343ffe5484f8457f699237c1863b7cfd5",
+                "reference": "a376177343ffe5484f8457f699237c1863b7cfd5",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mihaeu": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Haeuslmann",
+                    "email": "haeuslmann@gmail.com"
+                }
+            ],
+            "description": "HTML Formatter pritifies HTML content by applying proper intendation (no tidy, purification, etc.).",
+            "homepage": "https://github.com/mihaeu/html-formatter",
+            "keywords": [
+                "clean",
+                "formatter",
+                "html",
+                "pretty"
+            ],
+            "time": "2013-11-26 11:55:02"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
