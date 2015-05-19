@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d703ac60503a2fe2ccd854c70adf8ef0",
+    "hash": "e0d68bff42d79aac627f553fe56e244d",
     "packages": [
         {
             "name": "form-manager/form-manager",
@@ -50,6 +50,46 @@
                 "validator"
             ],
             "time": "2015-05-13 17:58:07"
+        },
+        {
+            "name": "mihaeu/html-formatter",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mihaeu/html-formatter.git",
+                "reference": "a376177343ffe5484f8457f699237c1863b7cfd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mihaeu/html-formatter/zipball/a376177343ffe5484f8457f699237c1863b7cfd5",
+                "reference": "a376177343ffe5484f8457f699237c1863b7cfd5",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mihaeu": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Haeuslmann",
+                    "email": "haeuslmann@gmail.com"
+                }
+            ],
+            "description": "HTML Formatter pritifies HTML content by applying proper intendation (no tidy, purification, etc.).",
+            "homepage": "https://github.com/mihaeu/html-formatter",
+            "keywords": [
+                "clean",
+                "formatter",
+                "html",
+                "pretty"
+            ],
+            "time": "2013-11-26 11:55:02"
         }
     ],
     "packages-dev": [],
