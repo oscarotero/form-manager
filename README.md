@@ -297,17 +297,17 @@ If you need different types of values in your collection, CollectionMultiple is 
 //Create a collectionMultiple container
 $article = F::collectionMultiple([
 	'section' => [
-        'title' => F::text()->label('Title'),
-        'text' => F::textarea()->label('Text')
-    ],
-    'picture' => [
-        'caption' => F::text()->label('Caption'),
-        'image' => F::file()->label('Image')
-    ],
-    'quote' => [
-        'text' => F::textarea()->label('Text'),
-        'author' => F::text()->label('Author')
-    ]
+		'title' => F::text()->label('Title'),
+		'text' => F::textarea()->label('Text')
+	],
+	'picture' => [
+		'caption' => F::text()->label('Caption'),
+		'image' => F::file()->label('Image')
+	],
+	'quote' => [
+		'text' => F::textarea()->label('Text'),
+		'author' => F::text()->label('Author')
+	]
 ]);
 
 //Set values. Note that we need a "type" value to know the type of each row
@@ -315,7 +315,7 @@ $article->val([
 	[
 		'type' => 'section',
 		'title' => 'This is the section title',
-        'text' => 'Lorem ipsum...',
+		'text' => 'Lorem ipsum...',
 	],[
 		'type' => 'quote',
 		'text' => 'You have to learn the rules of the game. And then you have to play better than anyone else.',
@@ -331,7 +331,7 @@ $article[0]['type']->attr('type'); //hidden
 $article->pushVal([
 	'type' => 'section',
 	'title' => 'This is another section',
-    'text' => 'The world of dogs are better than the cats because...'
+	'text' => 'The world of dogs are better than the cats because...'
 ]);
 
 //Add new types
@@ -490,7 +490,7 @@ This is useful for a lot of things. For example, to create custom fields:
 use FormManager\Builder as F;
 use FormManager\FactoryInterface;
 
-class CustomFields implements FactoryInterface
+class CustomFields extends \FormManager\Factory implements FactoryInterface
 {
 	/**
 	 * Method required by the interface
@@ -504,7 +504,7 @@ class CustomFields implements FactoryInterface
 
 	public function Year()
 	{
-		return F::number()->min(1900)->max(date('Y'));
+		return F::number()->min(1900)->max((float) date('Y'));
 	}
 }
 ```
