@@ -9,7 +9,8 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
     {
         try {
             $element->attr('name', 'new-name');
-        } catch (InvalidArgumentException $exception) {}
+        } catch (InvalidArgumentException $exception) {
+        }
 
         $this->assertInstanceOf('InvalidArgumentException', $exception);
     }

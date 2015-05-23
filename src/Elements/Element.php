@@ -46,10 +46,10 @@ class Element implements ElementInterface
 
     /**
      * Creates a html attribute
-     * 
+     *
      * @param string $name
      * @param mixed  $value
-     * 
+     *
      * @return string
      */
     protected static function getHtmlAttribute($name, $value)

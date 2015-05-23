@@ -11,9 +11,9 @@ class Builder
     /**
      * Add a factory class to the builder.
      *
-     * @param Factory $factory
+     * @param FactoryInterface $factory
      */
-    public static function addFactory(Factory $factory)
+    public static function addFactory(FactoryInterface $factory)
     {
         array_unshift(static::$factories, $factory);
     }

@@ -39,8 +39,8 @@ $group->set([
         'field3' => 'col-sm-6',
         'field4' => 'col-sm-6',
         'field5' => 'col-sm-6',
-        'field6' => 'col-sm-6'
-    ]
+        'field6' => 'col-sm-6',
+    ],
 ]);
 
 // If you give the group a key then all the fields will have their values grouped by that.

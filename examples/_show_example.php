@@ -1,5 +1,5 @@
 <?php
-	require dirname(__DIR__).'/src/autoloader.php';
+    require dirname(__DIR__).'/src/autoloader.php';
     ob_start();
     require $exampleFile;
     $outputHtml = ob_get_clean();
