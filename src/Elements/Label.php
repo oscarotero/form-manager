@@ -12,15 +12,13 @@ class Label extends Element
     /**
      * Label constructor.
      *
-     * @param null|DataElementInterface $input      The input associated to this label
-     * @param null|array                $attributes Html attributes of this label
-     * @param null|string               $html       String content of the label
+     * @param DataElementInterface $input      The input associated to this label
+     * @param null|array           $attributes Html attributes of this label
+     * @param null|string          $html       String content of the label
      */
-    public function __construct(DataElementInterface $input = null, array $attributes = null, $html = null)
+    public function __construct(DataElementInterface $input, array $attributes = null, $html = null)
     {
-        if ($input !== null) {
-            $this->setInput($input);
-        }
+        $this->setInput($input);
 
         if ($attributes !== null) {
             $this->attr($attributes);
@@ -38,12 +36,13 @@ class Label extends Element
      */
     public function setInput(DataElementInterface $input)
     {
-        //Ensure the id is defined
-        if (!$input->attr('id')) {
-            $input->attr('id', 'fm-input-'.(++static::$idCounter));
-        }
+        //Ensure the label and input have ids defined
+        $this->id();
+        $input->id();
 
+        //Assign the relation to each other
         $this->input = $input;
+        $input->addLabel($this);
     }
 
     /**
@@ -62,7 +61,7 @@ class Label extends Element
         }
 
         if ($this->input) {
-            $this->attr('for', $this->input->attr('id'));
+            $this->attr('for', $this->input->id());
         }
 
         return parent::toHtml($prepend, $append);

@@ -9,5 +9,7 @@ class Password extends Field
     {
         $this->input = (new Elements\Input())
             ->attr('type', 'password');
+
+        parent::__construct();
     }
 }

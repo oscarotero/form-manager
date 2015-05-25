@@ -10,5 +10,7 @@ class Month extends Field
         $this->input = (new Elements\Input())
             ->attr('type', 'month')
             ->addValidator('FormManager\\Validators\\Month::validate');
+
+        parent::__construct();
     }
 }

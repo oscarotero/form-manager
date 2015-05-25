@@ -10,5 +10,7 @@ class Checkbox extends Field
         $this->labelPosition = static::LABEL_AFTER;
 
         $this->input = new Elements\InputCheckbox();
+
+        parent::__construct();
     }
 }

@@ -10,5 +10,7 @@ class Date extends Field
         $this->input = (new Elements\Input())
             ->attr('type', 'date')
             ->addValidator('FormManager\\Validators\\Date::validate');
+
+        parent::__construct();
     }
 }

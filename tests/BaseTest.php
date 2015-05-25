@@ -79,8 +79,8 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
             $this->assertInstanceOf('FormManager\\Elements\\Label', $field->label);
             $this->assertInstanceOf('FormManager\\Elements\\Label', $field->errorLabel);
         } else {
-            $this->setExpectedException('Exception');
-            $field->label;
+            $this->assertNull($field->label);
+            $this->assertNull($field->errorLabel);
         }
     }
 

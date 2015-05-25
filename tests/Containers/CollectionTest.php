@@ -66,7 +66,8 @@ class CollectionTest extends BaseTest
         $form['key'] = $field;
         $template = $field->getTemplate();
         $template['name']->id('my-id');
+        $template['name']->label->id('my-label-id');
 
-        $this->assertEquals('<label for="my-id">Name</label> <input type="text" id="my-id" name="key[::n::][name]"> ', (string) $template['name']);
+        $this->assertEquals('<label id="my-label-id" for="my-id">Name</label> <input type="text" id="my-id" name="key[::n::][name]" aria-labelledby="my-label-id"> ', (string) $template['name']);
     }
 }

@@ -228,7 +228,7 @@ class Element implements ElementInterface
         }
 
         if (!$this->attr('id')) {
-            $input->attr('id', static::$id_prefix.(++static::$id_counter));
+            $this->attr('id', static::$id_prefix.(++static::$id_counter));
         }
 
         return $this->attr('id');

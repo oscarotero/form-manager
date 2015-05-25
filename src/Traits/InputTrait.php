@@ -1,12 +1,16 @@
 <?php
 namespace FormManager\Traits;
 
+use FormManager\Elements\Label;
+
 /**
  * Class with common methods for all inputs with DataElementInterface.
  */
 trait InputTrait
 {
     use NodeTreeTrait;
+
+    protected $labels = [];
 
     /**
      * @see FormManager\DataElementInterface
@@ -79,9 +83,21 @@ trait InputTrait
      */
     protected function attrToHtml()
     {
+        //Generate the name
         if ($this->getParent()) {
             $this->attributes['name'] = $this->generateName();
         }
+
+        //Generate the aria attributes for labels http://www.html5accessibility.com/tests/mulitple-labels.html
+        $labelled = [];
+
+        foreach ($this->labels as $label) {
+            if ($label->html()) {
+                $labelled[] = $label->id();
+            }
+        }
+
+        $this->attributes['aria-labelledby'] = $labelled;
 
         return parent::attrToHtml();
     }
@@ -134,5 +150,33 @@ trait InputTrait
         }
 
         return $name;
+    }
+
+    /**
+     * Add a new label to this input
+     *
+     * @param Label $label
+     */
+    public function addLabel(Label $label)
+    {
+        $this->labels[] = $label;
+
+        return $this;
+    }
+
+    /**
+     * Remove the label from this input
+     *
+     * @param Label $label
+     */
+    public function removeLabel(Label $label)
+    {
+        $key = array_search($label, $this->labels, true);
+
+        if ($key !== false) {
+            unset($this->labels[$key]);
+        }
+
+        return $this;
     }
 }

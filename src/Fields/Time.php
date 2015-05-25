@@ -10,5 +10,7 @@ class Time extends Field
         $this->input = (new Elements\Input())
             ->attr('type', 'time')
             ->addValidator('FormManager\\Validators\\Time::validate');
+
+        parent::__construct();
     }
 }
