@@ -10,6 +10,9 @@ use FormManager\Containers\Form;
  */
 class Element implements ElementInterface
 {
+    public static $id_prefix = 'fm-';
+    public static $id_counter = 0;
+
     protected $parent;
     protected $name;
     protected $close;
@@ -211,6 +214,24 @@ class Element implements ElementInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @see ElementInterface
+     *
+     * {@inheritdoc}
+     */
+    public function id($id = null)
+    {
+        if ($id !== null) {
+            return $this->attr('id', $id);
+        }
+
+        if (!$this->attr('id')) {
+            $input->attr('id', static::$id_prefix.(++static::$id_counter));
+        }
+
+        return $this->attr('id');
     }
 
     /**

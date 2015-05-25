@@ -24,4 +24,13 @@ interface ElementInterface extends TreeInterface
      * @return $this
      */
     public function removeAttr($name);
+
+    /**
+     * Returns or generate an id for this element
+     *
+     * @param string $id The new id
+     *
+     * @return $this
+     */
+    public function id($id = null);
 }

@@ -33,15 +33,15 @@ abstract class Field implements TreeInterface
     public function __get($name)
     {
         if ($this->labelPosition === static::LABEL_NONE) {
-            throw new \Exception("No labels allowed for this field");
+            return null;
         }
 
         if ($name === 'label') {
             return $this->label = new Label($this->input);
         }
 
-        if (($name === 'errorLabel') && ($error = $this->input->error())) {
-            return new Label($this->input, ['class' => 'error'], $error);
+        if ($name === 'errorLabel') {
+            return $this->errorLabel = new Label($this->input, ['class' => 'error'], $this->input->error());
         }
     }
 
@@ -145,12 +145,10 @@ abstract class Field implements TreeInterface
             return "{$prepend}{$this->input}{$append}";
         }
 
-        $label = isset($this->label) ? $this->label : '';
-
         if ($this->labelPosition === static::LABEL_BEFORE) {
-            return "{$prepend}{$label} {$this->input} {$this->errorLabel}{$append}";
+            return "{$prepend}{$this->label} {$this->input} {$this->errorLabel}{$append}";
         }
 
-        return "{$prepend}{$this->input} {$label} {$this->errorLabel}{$append}";
+        return "{$prepend}{$this->input} {$this->label} {$this->errorLabel}{$append}";
     }
 }

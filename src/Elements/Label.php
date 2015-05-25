@@ -5,8 +5,6 @@ use FormManager\DataElementInterface;
 
 class Label extends Element
 {
-    protected static $idCounter = 0;
-
     protected $name = 'label';
     protected $close = true;
     protected $input;
@@ -58,6 +56,11 @@ class Label extends Element
      */
     public function toHtml($prepend = '', $append = '')
     {
+        //Do not print empty labels
+        if (strlen($this->html.$prepend.$append) === 0) {
+            return '';
+        }
+
         if ($this->input) {
             $this->attr('for', $this->input->attr('id'));
         }
