@@ -15,8 +15,8 @@ class Optgroup extends ElementContainer
     /**
      * Optgroup constructor.
      *
-     * @param null|array  $attributes Html attributes of this optgroup
-     * @param array       $options    Options contained by this optgroup
+     * @param null|array $attributes Html attributes of this optgroup
+     * @param array      $options    Options contained by this optgroup
      */
     public function __construct(array $attributes = null, array $options = null)
     {
