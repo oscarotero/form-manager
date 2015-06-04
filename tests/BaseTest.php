@@ -9,7 +9,8 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
     {
         try {
             $element->attr('name', 'new-name');
-        } catch (InvalidArgumentException $exception) {}
+        } catch (InvalidArgumentException $exception) {
+        }
 
         $this->assertInstanceOf('InvalidArgumentException', $exception);
     }
@@ -31,9 +32,11 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $this->_testNameAttributeException($element);
 
         //Data
+        $element->data('boolean-value', true);
+        $this->assertTrue($element->data('boolean-value'));
         $this->assertSame($element->data('name', 'value'), $element);
         $this->assertEquals('value', $element->data('name'));
-        $this->assertEquals(['name' => 'value'], $element->data());
+        $this->assertEquals(['name' => 'value', 'boolean-value' => true], $element->data());
 
         //Add, remove classes
         $this->assertNull($element->attr('class'));
@@ -76,8 +79,8 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
             $this->assertInstanceOf('FormManager\\Elements\\Label', $field->label);
             $this->assertInstanceOf('FormManager\\Elements\\Label', $field->errorLabel);
         } else {
-            $this->setExpectedException('Exception');
-            $field->label;
+            $this->assertNull($field->label);
+            $this->assertNull($field->errorLabel);
         }
     }
 

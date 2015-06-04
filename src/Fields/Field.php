@@ -20,11 +20,25 @@ abstract class Field implements TreeInterface
     const LABEL_AFTER = 2;
 
     public $input;
+    public $label;
 
+    protected $_errorLabel;
     protected $labelPosition = 1; // LABEL_BEFORE
 
     /**
-     * Magic method to create dinamically the label and errorLabel on $this->label and $this->errorLabel.
+     * Init the labels and errorLabels
+     * This method is protected to force to extend it
+     */
+    protected function __construct()
+    {
+        if ($this->labelPosition !== static::LABEL_NONE) {
+            $this->label = new Label($this->input);
+            $this->_errorLabel = new Label($this->input, ['class' => 'error']);
+        }
+    }
+
+    /**
+     * Magic method to return the errorLabel with the error message
      *
      * @param string $name
      *
@@ -32,16 +46,8 @@ abstract class Field implements TreeInterface
      */
     public function __get($name)
     {
-        if ($this->labelPosition === static::LABEL_NONE) {
-            throw new \Exception("No labels allowed for this field");
-        }
-
-        if ($name === 'label') {
-            return $this->label = new Label($this->input);
-        }
-
-        if (($name === 'errorLabel') && ($error = $this->input->error())) {
-            return new Label($this->input, ['class' => 'error'], $error);
+        if ($name === 'errorLabel' && $this->labelPosition !== static::LABEL_NONE) {
+            return $this->_errorLabel->html($this->input->error() ?: '');
         }
     }
 
@@ -51,11 +57,20 @@ abstract class Field implements TreeInterface
     public function __clone()
     {
         $this->input = clone $this->input;
+        $this->input->removeAttr('id');
 
-        if (isset($this->label)) {
+        if ($this->labelPosition !== static::LABEL_NONE) {
+            $this->input->removeLabel($this->label);
+            $this->input->removeLabel($this->_errorLabel);
+
             $this->label = clone $this->label;
-            $this->input->removeAttr('id');
+            $this->_errorLabel = clone $this->_errorLabel;
+
+            $this->label->removeAttr('id');
+            $this->_errorLabel->removeAttr('id');
+
             $this->label->setInput($this->input);
+            $this->_errorLabel->setInput($this->input);
         }
     }
 
@@ -145,12 +160,10 @@ abstract class Field implements TreeInterface
             return "{$prepend}{$this->input}{$append}";
         }
 
-        $label = isset($this->label) ? $this->label : '';
-
         if ($this->labelPosition === static::LABEL_BEFORE) {
-            return "{$prepend}{$label} {$this->input} {$this->errorLabel}{$append}";
+            return "{$prepend}{$this->label} {$this->input} {$this->errorLabel}{$append}";
         }
 
-        return "{$prepend}{$this->input} {$label} {$this->errorLabel}{$append}";
+        return "{$prepend}{$this->input} {$this->label} {$this->errorLabel}{$append}";
     }
 }

@@ -12,5 +12,7 @@ class Select extends FieldContainer
         if ($options) {
             $this->input->options($options);
         }
+
+        parent::__construct();
     }
 }

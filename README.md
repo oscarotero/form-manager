@@ -363,6 +363,36 @@ foreach ($templates as $name => $template) {
 }
 ```
 
+## Loader
+
+The main aim of the loader container is separate the way to load the data with the way to store and keep this data once it's loaded. Let's say for example, an input type file: if a file is loaded, the value is an array with the same structure than any $_FILES value, but if user doesn't upload anything, the value is empty. So, what is supposed to do in this case? remove the file or keep the previous value?
+The loader container has two fields: a "loader" field and a "field" field. The first one is responsive to load the new values (for example, it can be an input type file) and the second keeps the previous value (for example, it can be an input type hidden, or text, etc). Let's see an example:
+
+```php
+$fileUpload = F::loader([
+    'loader' => F::file()->label('Upload a file here'),
+    'field' => F::hidden() //this hidden input stores the old value
+]);
+
+//Set a value
+$fileUpload->val('my-file.png');
+
+//we have this value
+echo $fileUpload->val(); //my-file.png
+
+//load empty data
+$fileUpload->load(null);
+
+//Nothing was loaded, so we keep the old value
+echo $fileUpload->val(); //my-file.png
+
+//load new value
+$fileUpload->load($_FILES['file-upload']);
+
+//we have the new value
+echo ($fileUpload->val() === $_FILES['file-upload']); //true
+```
+
 ## Forms
 
 We need a form to put all this things together. The form is just another container, in fact, it's like a [Group](#group).

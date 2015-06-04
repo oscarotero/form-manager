@@ -10,5 +10,7 @@ class Radio extends Field
         $this->labelPosition = static::LABEL_AFTER;
 
         $this->input = new Elements\InputRadio();
+
+        parent::__construct();
     }
 }

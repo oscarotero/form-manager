@@ -10,5 +10,7 @@ class Range extends Field
         $this->input = (new Elements\Input())
             ->attr('type', 'range')
             ->addValidator('FormManager\\Validators\\Number::validate');
+
+        parent::__construct();
     }
 }

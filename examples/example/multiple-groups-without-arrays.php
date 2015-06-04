@@ -3,6 +3,7 @@
     HTML field arrays (e.g &lt;input name=group1[field1]&gt; ) which is often not the
     desired outcome. You can get past this by having falsy group names.
 </p>
+---
 <?php
 
 use FormManager\Bootstrap as FB;

@@ -12,6 +12,7 @@ class Select extends ElementContainer implements DataElementInterface
     protected $name = 'select';
     protected $value;
     protected $allowNewValues = false;
+    protected $optgroups;
 
     public function __construct()
     {
@@ -47,6 +48,70 @@ class Select extends ElementContainer implements DataElementInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Set/Get the available optgroup in this select.
+     *
+     * @param null|array $optgroups null to getter, array to setter
+     *
+     * @return mixed
+     */
+    public function optgroups(array $optgroups = null)
+    {
+        if ($optgroups === null) {
+            return $this->optgroups;
+        }
+
+        foreach ($optgroups as $label => $optgroup) {
+            if (!($optgroup instanceof Optgroup)) {
+                $optgroup = new Optgroup(['label' => $label], $optgroup);
+            }
+
+            $optgroup->setParent($this);
+
+            $this->optgroups[] = $optgroup;
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->optgroups = [];
+
+        return parent::clear();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function html($html = null)
+    {
+        if ($html !== null) {
+            parent::html($html);
+        }
+
+        $html = '';
+
+        //render the options not belonging to optgroups
+        foreach ($this->children as $option) {
+            if ($option->getParent() === $this) {
+                $html .= (string) $option;
+            }
+        }
+
+        //render the optgroups
+        if ($this->optgroups) {
+            foreach ($this->optgroups as $optgroup) {
+                $html .= (string) $optgroup;
+            }
+        }
+
+        return $html;
     }
 
     /**

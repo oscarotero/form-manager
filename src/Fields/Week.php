@@ -10,5 +10,7 @@ class Week extends Field
         $this->input = (new Elements\Input())
             ->attr('type', 'week')
             ->addValidator('FormManager\\Validators\\Week::validate');
+
+        parent::__construct();
     }
 }

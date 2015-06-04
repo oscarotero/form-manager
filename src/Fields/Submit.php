@@ -11,6 +11,8 @@ class Submit extends Field
 
         $this->input = (new Elements\Button())
             ->attr('type', 'submit');
+
+        parent::__construct();
     }
 
     /**

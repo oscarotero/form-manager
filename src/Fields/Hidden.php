@@ -11,5 +11,7 @@ class Hidden extends Field
 
         $this->input = (new Elements\Input())
             ->attr('type', 'hidden');
+
+        parent::__construct();
     }
 }

@@ -1,17 +1,39 @@
 <?php
+    require dirname(__DIR__).'/src/autoloader.php';
     ob_start();
     require $exampleFile;
     $outputHtml = ob_get_clean();
+    $outputHtml = explode('---', $outputHtml, 2);
 ?>
-<h2>FormManager Example: <?php echo $exampleName ?></h2>
-<h3>Browser Output</h3>
-<?php echo $outputHtml; ?>
-<h3>HTML Output</h3>
-<script type="syntaxhighlighter" class="brush: php"><![CDATA[
-<?php echo Mihaeu\HtmlFormatter::format($outputHtml);?>
-]]></script>
+<header class="page-header">
+	<h1><?php echo $exampleName ?></h1>
+	<p><?php echo $outputHtml[0] ?></p>
+</header>
 
-<h3>Source</h3>
-<script type="syntaxhighlighter" class="brush: php"><![CDATA[
-<?php echo file_get_contents($exampleFile);?>
+<div class="panel panel-default">
+  <div class="panel-heading">Browser Output</div>
+  <div class="panel-body">
+    <?php echo $outputHtml[1]; ?>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Html Output</div>
+  <div class="panel-body">
+<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+<?php echo Mihaeu\HtmlFormatter::format($outputHtml[1]);?>
 ]]></script>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">PHP Source</div>
+  <div class="panel-body">
+<script type="syntaxhighlighter" class="brush: php"><![CDATA[
+<?php
+$content = explode('---', file_get_contents($exampleFile), 2);
+echo $content[1];
+?>
+]]></script>
+  </div>
+</div>

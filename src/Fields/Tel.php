@@ -9,5 +9,7 @@ class Tel extends Field
     {
         $this->input = (new Elements\Input())
             ->attr('type', 'tel');
+
+        parent::__construct();
     }
 }

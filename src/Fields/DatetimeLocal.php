@@ -10,5 +10,7 @@ class DatetimeLocal extends Field
         $this->input = (new Elements\Input())
             ->attr('type', 'datetime-local')
             ->addValidator('FormManager\\Validators\\DatetimeLocal::validate');
+
+        parent::__construct();
     }
 }

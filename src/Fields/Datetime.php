@@ -10,5 +10,7 @@ class Datetime extends Field
         $this->input = (new Elements\Input())
             ->attr('type', 'datetime')
             ->addValidator('FormManager\\Validators\\Datetime::validate');
+
+        parent::__construct();
     }
 }

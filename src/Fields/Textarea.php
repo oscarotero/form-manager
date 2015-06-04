@@ -8,5 +8,7 @@ class Textarea extends Field
     public function __construct()
     {
         $this->input = new Elements\Textarea();
+
+        parent::__construct();
     }
 }

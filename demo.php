@@ -2,9 +2,14 @@
 require __DIR__.'/src/autoloader.php';
 
 use FormManager\Builder as F;
+use FormManager\InvalidValueException;
 
 $form = F::Form([
-    'nome' => F::text()->label('O teu nome'),
+    'nome' => F::text()->label('O teu nome')->addValidator(function ($input) {
+        if ($input->val() !== 'Lolo') {
+            throw new InvalidValueException("Nome non valido, debe ser Lolo");
+        }
+    }),
     'apelido' => F::text()->label('O teu apelido'),
     'idade' => F::select()
         ->options([
@@ -41,27 +46,12 @@ $form = F::Form([
     'enviar' => F::submit()->html('Enviar'),
 ]);
 
+$form['nome']->errorLabel->class('my-error');
+
 $form->loadFromGlobals();
-/*
-$form['personas']->val([
-    [
-        'nome' => 'Oscar',
-        'apelido' => 'Otero'
-    ],[
-        'nome' => 'Laura',
-        'apelido' => 'Rubio'
-    ]
-]);
-$form['bloques']->val([
-    [
-        'type' => 'texto',
-        'titulo' => 'Texto do primeiro bloque',
-        'texto' => 'lorem ipsum'
-    ],[
-        'type' => 'cita',
-        'autor' => 'Laura rubio',
-        'texto' => 'a cita lorem ipsum'
-    ]
-]);
-*/
+
+if (!$form->isValid()) {
+    echo 'Invalid values';
+}
+
 echo $form;

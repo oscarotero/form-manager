@@ -3,6 +3,7 @@
     when you might want to have a "Save" button and a "Save and Create Another" button
     for easily adding creating multiple records, for example.
 </p>
+---
 <?php
 
 use FormManager\Builder as F;

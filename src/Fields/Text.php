@@ -9,5 +9,7 @@ class Text extends Field
     {
         $this->input = (new Elements\Input())
             ->attr('type', 'text');
+
+        parent::__construct();
     }
 }

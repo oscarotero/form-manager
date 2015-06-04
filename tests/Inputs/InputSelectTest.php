@@ -115,4 +115,30 @@ class InputSelectTest extends BaseTest
 
         $this->assertCount(1, $select);
     }
+
+    public function testOptgroups()
+    {
+        $select = Builder::select()->optgroups([
+            'Numbers' => [
+                0 => 'Zero',
+                1 => 'One',
+                2 => 'Two',
+            ],
+            'Letters' => [
+                'a' => 'A',
+                'b' => 'B',
+                'c' => 'C',
+            ],
+        ]);
+
+        $this->assertCount(6, $select);
+
+        $select->options([3 => 'Three']);
+
+        $this->assertCount(7, $select);
+
+        $select->clear()->options([4 => 'Four']);
+
+        $this->assertCount(1, $select);
+    }
 }

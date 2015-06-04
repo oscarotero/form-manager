@@ -10,6 +10,9 @@ use FormManager\Containers\Form;
  */
 class Element implements ElementInterface
 {
+    public static $id_prefix = 'fm-';
+    public static $id_counter = 0;
+
     protected $parent;
     protected $name;
     protected $close;
@@ -42,6 +45,31 @@ class Element implements ElementInterface
     protected static function escape($value)
     {
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * Creates a html attribute
+     *
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return string
+     */
+    protected static function getHtmlAttribute($name, $value)
+    {
+        if (($value === null) || ($value === false)) {
+            return '';
+        }
+
+        if ($value === true) {
+            return " {$name}";
+        }
+
+        if (is_array($value)) {
+            $value = implode(' ', $value);
+        }
+
+        return " {$name}=\"".static::escape($value)."\"";
     }
 
     /**
@@ -189,6 +217,24 @@ class Element implements ElementInterface
     }
 
     /**
+     * @see ElementInterface
+     *
+     * {@inheritdoc}
+     */
+    public function id($id = null)
+    {
+        if ($id !== null) {
+            return $this->attr('id', $id);
+        }
+
+        if (!$this->attr('id')) {
+            $this->attr('id', static::$id_prefix.(++static::$id_counter));
+        }
+
+        return $this->attr('id');
+    }
+
+    /**
      * Set/Get data attributes (data-*) to the element.
      *
      * @param null|string $name  The data name. If is null, returns an array with all data
@@ -321,23 +367,11 @@ class Element implements ElementInterface
         $html = '';
 
         foreach ($this->attributes as $name => $value) {
-            if (($value === null) || ($value === false)) {
-                continue;
-            }
-
-            if ($value === true) {
-                $html .= " $name";
-            } else {
-                if (is_array($value)) {
-                    $value = implode(' ', $value);
-                }
-
-                $html .= " $name=\"".static::escape($value)."\"";
-            }
+            $html .= static::getHtmlAttribute($name, $value);
         }
 
         foreach ($this->data as $name => $value) {
-            $html .= " data-$name=\"".static::escape($value)."\"";
+            $html .= static::getHtmlAttribute("data-{$name}", $value);
         }
 
         return $html;
