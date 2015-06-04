@@ -38,7 +38,7 @@ trait NodeTreeTrait
 
         $path = $parent->getPath();
 
-        if ($path) {
+        if ($path && !is_integer($path)) {
             if (strpos($this->key, '[') !== false) {
                 list($p1, $p2) = explode('[', $this->key, 2);
 

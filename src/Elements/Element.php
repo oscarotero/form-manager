@@ -268,7 +268,6 @@ class Element implements ElementInterface
      */
     public function addClass($class)
     {
-        fb($class);
         $classes = $this->attr('class');
 
         if (!$classes) {
