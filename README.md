@@ -215,6 +215,19 @@ $date['hour'] = F::number()->min(0)->max(23)->label('Hour');
 $date->addClass('field-day')->attr(['id' => 'date-field']);
 ```
 
+Add the group to the form the same way you would a regular field:
+
+```
+$form->add([
+	'date' => $date,
+]);
+```
+
+If you specify a non-integer key to `add` then the children elements will have their `name` attribute updated
+to group the values (e.g  `<input name="date[day]">`) if you pass an integer or don't specify the keys then
+they will remain the same
+( see [groups-without-grouped-values](https://github.com/oscarotero/form-manager/blob/master/examples/example/bootstrap-fields-in-columns.php) ).
+
 ### Choose
 
 This container stores fields with the same name but different values. Useful for radio inputs or to define various submit buttons.
