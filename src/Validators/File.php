@@ -1,6 +1,7 @@
 <?php
 namespace FormManager\Validators;
 
+use Psr\Http\Message\UploadedFileInterface;
 use FormManager\DataElementInterface;
 use FormManager\InvalidValueException;
 
@@ -25,9 +26,16 @@ class File
     public static function validate(DataElementInterface $input)
     {
         $value = $input->val();
+        $error = null;
 
-        if (isset($value['error']) && isset(self::$error_message[$value['error']])) {
-            throw new InvalidValueException(sprintf(static::$error_message[$value['error']]));
+        if ($value instanceof UploadedFileInterface) {
+            $error = $value->getError();
+        } else if (isset($value['error'])) {
+            $error = $value['error'];
+        }
+
+        if ($error !== null && isset(self::$error_message[$error])) {
+            throw new InvalidValueException(sprintf(static::$error_message[$error]));
         }
     }
 }

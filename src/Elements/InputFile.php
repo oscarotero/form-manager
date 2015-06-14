@@ -1,6 +1,7 @@
 <?php
 namespace FormManager\Elements;
 
+use Psr\Http\Message\UploadedFileInterface;
 use FormManager\DataElementInterface;
 
 class InputFile extends Input implements DataElementInterface
@@ -34,7 +35,15 @@ class InputFile extends Input implements DataElementInterface
             return $this->value;
         }
 
-        if (isset($value['error']) && $value['error'] === 4) {
+        $error = null;
+
+        if ($value instanceof UploadedFileInterface) {
+            $error = $value->getError();
+        } else if (isset($value['error'])) {
+            $error = $value['error'];
+        }
+
+        if ($error === 4) {
             $value = null;
         }
 

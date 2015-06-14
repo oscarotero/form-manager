@@ -1,4 +1,6 @@
 examples/vendor
+vendor
+composer.lock
 
 # MACOSX
 

@@ -1,6 +1,8 @@
 <?php
 namespace FormManager\Containers;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 class Form extends Group
 {
     protected $name = 'form';
@@ -23,6 +25,27 @@ class Form extends Group
             $values = array_replace_recursive($values, $files);
         } else {
             $values = ($get === null) ? $_GET : $get;
+        }
+
+        return $this->load($values);
+    }
+
+    /**
+     * Load the form values from a PSR-7 ServerRequest
+     *
+     * @param ServerRequestInterface $request
+     *
+     * @return $this
+     */
+    public function loadFromPsr7ServerRequest(ServerRequestInterface $request)
+    {
+        if (strtolower($this->attr('method')) === 'post') {
+            $values = $request->getParsedBody();
+            $files = $request->getUploadedFiles();
+
+            $values = array_replace_recursive($values, $files);
+        } else {
+            $values = $request->getQueryParams();
         }
 
         return $this->load($values);
