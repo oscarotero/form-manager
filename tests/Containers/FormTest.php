@@ -1,7 +1,6 @@
 <?php
 use FormManager\Builder;
 use FormManager\Containers\Form;
-use FormManager\InvalidValueException;
 use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\UploadedFile;
 
@@ -124,7 +123,7 @@ class FormTest extends BaseTest
                 'tmp_name' => $file,
                 'size' => filesize($file),
                 'error' => 0,
-            )
+            ),
         );
 
         $__post = array(
@@ -162,7 +161,7 @@ class FormTest extends BaseTest
         $file = dirname(__DIR__).'/image.jpg';
 
         $__files = array(
-            'avatar' => new UploadedFile($file, filesize($file), 0, 'image.jpg', 'image/jpeg')
+            'avatar' => new UploadedFile($file, filesize($file), 0, 'image.jpg', 'image/jpeg'),
         );
 
         $__post = array(

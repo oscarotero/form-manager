@@ -30,10 +30,9 @@ class File
 
         if ($value instanceof UploadedFileInterface) {
             $error = $value->getError();
-        } else if (isset($value['error'])) {
+        } elseif (isset($value['error'])) {
             $error = $value['error'];
         }
-
 
         if ($error !== null && isset(self::$error_message[$error])) {
             throw new InvalidValueException(sprintf(static::$error_message[$error]));

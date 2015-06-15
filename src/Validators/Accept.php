@@ -38,7 +38,7 @@ class Accept
 
     /**
      * Get and validate the mimetype
-     * 
+     *
      * @param string $file The file path
      * @param string $attr The value of the accept attribute
      */

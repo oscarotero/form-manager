@@ -39,7 +39,7 @@ class InputFile extends Input implements DataElementInterface
 
         if ($value instanceof UploadedFileInterface) {
             $error = $value->getError();
-        } else if (isset($value['error'])) {
+        } elseif (isset($value['error'])) {
             $error = $value['error'];
         }
 
