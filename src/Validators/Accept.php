@@ -20,22 +20,38 @@ class Accept
     {
         $value = $input->val();
 
+        //Psr UploadeFileInterface validation
         if ($value instanceof UploadedFileInterface) {
-            return static::validatePsr($input, $value);
+            if ($value->getError() === UPLOAD_ERR_NO_FILE) {
+                return;
+            }
+
+            return static::validateMime($value->getStream()->getMetadata('uri'), $input->attr('accept'));
         }
 
         if (empty($value['tmp_name'])) {
             return true;
         }
 
-        $attr = $input->attr('accept');
+        static::validateMime($value['tmp_name'], $input->attr('accept'));
+    }
+
+    /**
+     * Get and validate the mimetype
+     * 
+     * @param string $file The file path
+     * @param string $attr The value of the accept attribute
+     */
+    protected static function validateMime($file, $attr)
+    {
         $accept = array_map('trim', explode(',', $attr));
+
         array_walk($accept, function (&$value) {
             $value = str_replace('*', '.*', "|^{$value}\$|i");
         });
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $value['tmp_name']);
+        $mime = finfo_file($finfo, $file);
         finfo_close($finfo);
 
         foreach ($accept as $pattern) {
@@ -45,21 +61,5 @@ class Accept
         }
 
         throw new InvalidValueException(sprintf(static::$error_message, $attr));
-    }
-
-    protected static function validatePsr(DataElementInterface $input, UploadedFileInterface $file) {
-        if ($input->getError() === UPLOAD_ERR_NO_FILE) {
-            return;
-        }
-
-        $resource = $file->getStream()->detach();
-
-        var_dump($resource);
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $resource);
-        finfo_close($finfo);
-
-
-        echo 'aa';
     }
 }

@@ -43,7 +43,7 @@ class InputFile extends Input implements DataElementInterface
             $error = $value['error'];
         }
 
-        if ($error === 4) {
+        if ($error === UPLOAD_ERR_NO_FILE) {
             $value = null;
         }
 

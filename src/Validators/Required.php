@@ -1,6 +1,7 @@
 <?php
 namespace FormManager\Validators;
 
+use Psr\Http\Message\UploadedFileInterface;
 use FormManager\DataElementInterface;
 use FormManager\InvalidValueException;
 
@@ -20,7 +21,11 @@ class Required
         $value = $input->val();
 
         if ($input->attr('type') === 'file') {
-            $value = (isset($value['name']) && !empty($value['size'])) ? $value['name'] : null;
+            if ($value instanceof UploadedFileInterface) {
+                $value = $value->getSize();
+            } else {
+                $value = isset($value['size']) ? $value['size'] : null;
+            }
         }
 
         $attr = $input->attr('required');

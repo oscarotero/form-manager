@@ -1,6 +1,7 @@
 <?php
 namespace FormManager\Validators;
 
+use Psr\Http\Message\UploadedFileInterface;
 use FormManager\DataElementInterface;
 use FormManager\InvalidValueException;
 
@@ -20,7 +21,11 @@ class Pattern
         $value = $input->val();
 
         if ($input->attr('type') === 'file') {
-            $value = isset($value['name']) ? $value['name'] : null;
+            if ($value instanceof UploadedFileInterface) {
+                $value = $value->getClientFilename();
+            } else {
+                $value = isset($value['name']) ? $value['name'] : null;
+            }
         }
 
         $attr = str_replace('/', '\\/', $input->attr('pattern'));
