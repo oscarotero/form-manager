@@ -39,7 +39,7 @@ class Form extends Group
      *
      * @return $this
      */
-    public function loadFromPsr7ServerRequest(ServerRequestInterface $request)
+    public function loadFromPsr7(ServerRequestInterface $request)
     {
         if (strtolower($this->attr('method')) === 'post') {
             $values = $request->getParsedBody();

@@ -190,7 +190,7 @@ class FormTest extends BaseTest
             ->withUploadedFiles($__files)
             ->withParsedBody($__post);
 
-        $form->loadFromPsr7ServerRequest($request);
+        $form->loadFromPsr7($request);
         $this->assertTrue($form->isValid());
     }
 
