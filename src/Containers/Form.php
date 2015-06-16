@@ -143,6 +143,16 @@ class Form extends Group
     /**
      * {@inheritdoc}
      */
+    public function clear()
+    {
+        $this->fieldsets = [];
+
+        return parent::clear();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function html($html = null)
     {
         if ($html !== null) {
@@ -151,16 +161,16 @@ class Form extends Group
 
         $html = '';
 
-        //render the fieldsets
-        if ($this->fieldsets) {
-            foreach ($this->fieldsets as $fieldset) {
+        //render the fieldsets not belonging to form
+        foreach ($this->children as $fieldset) {
+            if ($fieldset->getParent() === $this) {
                 $html .= (string) $fieldset;
             }
         }
 
-        //render the fieldsets not belonging to form
-        foreach ($this->children as $fieldset) {
-            if ($fieldset->getParent() === $this) {
+        //render the fieldsets
+        if ($this->fieldsets) {
+            foreach ($this->fieldsets as $fieldset) {
                 $html .= (string) $fieldset;
             }
         }

@@ -193,4 +193,25 @@ class FormTest extends BaseTest
         $form->loadFromPsr7ServerRequest($request);
         $this->assertTrue($form->isValid());
     }
+
+    public function testFieldsets()
+    {
+        $form = Builder::form([
+                'submit' => Builder::submit()
+            ])->fieldsets([
+                'personal' => [
+                    'name' => Builder::text(),
+                    'surname' => Builder::text(),
+                    'age' => Builder::number()
+                ]
+            ]);
+
+        $this->assertCount(4, $form);
+        $this->assertCount(1, $form->fieldsets());
+        $this->assertCount(3, $form->fieldsets()['personal']);
+
+        $form->clear()->add(['other' => Builder::text()]);
+
+        $this->assertCount(1, $form);
+    }
 }
