@@ -12,7 +12,7 @@ class Select extends ElementContainer implements DataElementInterface
     protected $name = 'select';
     protected $value;
     protected $allowNewValues = false;
-    protected $optgroups;
+    protected $optgroups = [];
 
     public function __construct()
     {
@@ -63,14 +63,14 @@ class Select extends ElementContainer implements DataElementInterface
             return $this->optgroups;
         }
 
-        foreach ($optgroups as $label => $optgroup) {
+        foreach ($optgroups as $name => $optgroup) {
             if (!($optgroup instanceof Optgroup)) {
-                $optgroup = new Optgroup(['label' => $label], $optgroup);
+                $optgroup = (new Optgroup())
+                    ->attr('label', $name)
+                    ->add($optgroup);
             }
 
-            $optgroup->setParent($this);
-
-            $this->optgroups[] = $optgroup;
+            $this->optgroups[$name] = $optgroup->setParent($this);
         }
 
         return $this;

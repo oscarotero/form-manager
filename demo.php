@@ -1,25 +1,16 @@
 <?php
 require __DIR__.'/src/autoloader.php';
 
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__.'/php.log');
+
 use FormManager\Builder as F;
 use FormManager\InvalidValueException;
 
 $form = F::Form([
-    'nome' => F::text()->label('O teu nome')->addValidator(function ($input) {
-        if ($input->val() !== 'Lolo') {
-            throw new InvalidValueException("Nome non valido, debe ser Lolo");
-        }
-    }),
-    'apelido' => F::text()->label('O teu apelido'),
-    'idade' => F::select()
-        ->options([
-            1 => 'Menor de idade',
-            2 => 'Maiore de idade',
-        ])
-        ->label('Idade')
-        ->render(function ($input) {
-            return '<p>'.$input.'</p>';
-        }),
     'data' => F::group([
         'dia' => F::number()->label('Dia'),
         'mes' => F::number()->label('Mes'),
@@ -44,6 +35,26 @@ $form = F::Form([
         ],
     ]),
     'enviar' => F::submit()->html('Enviar'),
+]);
+
+$form->fieldsets([
+    'personal' => [
+        'nome' => F::text()->label('O teu nome')->addValidator(function ($input) {
+            if ($input->val() !== 'Lolo') {
+                throw new InvalidValueException("Nome non valido, debe ser Lolo");
+            }
+        }),
+        'apelido' => F::text()->label('O teu apelido'),
+        'idade' => F::select()
+            ->options([
+                1 => 'Menor de idade',
+                2 => 'Maiore de idade',
+            ])
+            ->label('Idade')
+            ->render(function ($input) {
+                return '<p>'.$input.'</p>';
+            }),
+    ],
 ]);
 
 $form['nome']->errorLabel->class('my-error');

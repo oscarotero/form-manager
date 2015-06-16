@@ -2,10 +2,12 @@
 namespace FormManager\Containers;
 
 use Psr\Http\Message\ServerRequestInterface;
+use FormManager\Elements\Fieldset;
 
 class Form extends Group
 {
     protected $name = 'form';
+    protected $fieldsets = [];
 
     /**
      * Load the form values from global GET, POST, FILES values.
@@ -111,5 +113,58 @@ class Form extends Group
         }
 
         return $results;
+    }
+
+    /**
+     * Set/Get the available fieldsets in this form.
+     *
+     * @param null|array $fieldsets null to getter, array to setter
+     *
+     * @return mixed
+     */
+    public function fieldsets(array $fieldsets = null)
+    {
+        if ($fieldsets === null) {
+            return $this->fieldsets;
+        }
+
+        foreach ($fieldsets as $name => $fieldset) {
+            if (!($fieldset instanceof Fieldset)) {
+                $fieldset = (new Fieldset())
+                    ->add($fieldset);
+            }
+
+            $this->fieldsets[$name] = $fieldset->setParent($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function html($html = null)
+    {
+        if ($html !== null) {
+            parent::html($html);
+        }
+
+        $html = '';
+
+        //render the fieldsets
+        if ($this->fieldsets) {
+            foreach ($this->fieldsets as $fieldset) {
+                $html .= (string) $fieldset;
+            }
+        }
+
+        //render the fieldsets not belonging to form
+        foreach ($this->children as $fieldset) {
+            if ($fieldset->getParent() === $this) {
+                $html .= (string) $fieldset;
+            }
+        }
+
+        return $html;
     }
 }
