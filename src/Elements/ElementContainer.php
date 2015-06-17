@@ -211,6 +211,26 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
+     * Removes one or more children of the element.
+     *
+     * @param string|array $children
+     *
+     * @return $this
+     */
+    public function remove($children) {
+        if (!is_array($children))
+        {
+            $children = [$children];
+        }
+
+        foreach ($children as $offset) {
+            $this->offsetUnset($offset);
+        }
+        
+        return $this;
+    }
+
+    /**
      * Removes all children
      *
      * @return $this
