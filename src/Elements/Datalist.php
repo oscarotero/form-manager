@@ -11,7 +11,7 @@ class Datalist extends ElementContainer
     /**
      * Datalist constructor.
      *
-     * @param DataElementInterface $input      The input associated to this datalist
+     * @param DataElementInterface $input The input associated to this datalist
      */
     public function __construct(DataElementInterface $input)
     {

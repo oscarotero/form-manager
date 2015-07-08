@@ -12,7 +12,7 @@ class Label extends Element
     /**
      * Label constructor.
      *
-     * @param DataElementInterface $input      The input associated to this label
+     * @param DataElementInterface $input The input associated to this label
      */
     public function __construct(DataElementInterface $input)
     {

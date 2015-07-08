@@ -197,13 +197,13 @@ class FormTest extends BaseTest
     public function testFieldsets()
     {
         $form = Builder::form([
-                'submit' => Builder::submit()
+                'submit' => Builder::submit(),
             ])->fieldsets([
                 'personal' => [
                     'name' => Builder::text(),
                     'surname' => Builder::text(),
-                    'age' => Builder::number()
-                ]
+                    'age' => Builder::number(),
+                ],
             ]);
 
         $this->assertCount(4, $form);
