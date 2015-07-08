@@ -7,6 +7,8 @@ class Select extends FieldContainer
 {
     public function __construct(array $options = null)
     {
+    	$this->datalistAllowed = false;
+
         $this->input = new Elements\Select();
 
         if ($options) {

@@ -178,6 +178,20 @@ echo $name;
 echo $name->label . '<br>' . $name->input;
 ```
 
+### Datalist
+
+[Datalist](http://www.w3.org/TR/html5/forms.html#the-datalist-element) are also allowed, just use the `datalist()` method to set/get values:
+
+```php
+$name = F::search();
+
+//Define the datalist values
+$name->datalist([
+	'female' => 'Female',
+	'male' => 'Male'
+]);
+```
+
 ## Containers
 
 Containers are objects that contain other elements (fields or other containers). Technically, they are html elements (by default `<div></div>`) so they have the same methods than inputs to set/get/remove attributes.

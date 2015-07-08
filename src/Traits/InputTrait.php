@@ -2,6 +2,7 @@
 namespace FormManager\Traits;
 
 use FormManager\Elements\Label;
+use FormManager\Elements\Datalist;
 
 /**
  * Class with common methods for all inputs with DataElementInterface.
@@ -11,6 +12,7 @@ trait InputTrait
     use NodeTreeTrait;
 
     protected $labels = [];
+    protected $datalist;
 
     /**
      * @see FormManager\DataElementInterface
@@ -97,7 +99,14 @@ trait InputTrait
             }
         }
 
-        $this->attributes['aria-labelledby'] = $labelled;
+        if (count($labelled)) {
+            $this->attributes['aria-labelledby'] = $labelled;
+        }
+
+        //Generate the datalist attribute
+        if (!empty($this->datalist) && $this->datalist->count() > 0) {
+            $this->attributes['list'] = $this->datalist->id();
+        }
 
         return parent::attrToHtml();
     }
@@ -150,6 +159,18 @@ trait InputTrait
         }
 
         return $name;
+    }
+
+    /**
+     * Set the datalist associated with this input
+     *
+     * @param Datalist $datalist
+     */
+    public function setDatalist(Datalist $datalist)
+    {
+        $this->datalist = $datalist;
+
+        return $this;
     }
 
     /**

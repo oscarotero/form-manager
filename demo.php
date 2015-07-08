@@ -39,11 +39,17 @@ $form = F::Form([
 
 $form->fieldsets([
     'personal' => [
-        'nome' => F::text()->label('O teu nome')->addValidator(function ($input) {
-            if ($input->val() !== 'Lolo') {
-                throw new InvalidValueException("Nome non valido, debe ser Lolo");
-            }
-        }),
+        'nome' => F::text()
+            ->label('O teu nome')
+            ->addValidator(function ($input) {
+                if ($input->val() !== 'Lolo') {
+                    throw new InvalidValueException("Nome non valido, debe ser Lolo");
+                }
+            })
+            ->datalist([
+                'Lolo' => 'Lolo',
+                'Manolo' => 'Manolo',
+            ]),
         'apelido' => F::text()->label('O teu apelido'),
         'idade' => F::select()
             ->options([

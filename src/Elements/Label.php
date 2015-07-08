@@ -13,20 +13,10 @@ class Label extends Element
      * Label constructor.
      *
      * @param DataElementInterface $input      The input associated to this label
-     * @param null|array           $attributes Html attributes of this label
-     * @param null|string          $html       String content of the label
      */
-    public function __construct(DataElementInterface $input, array $attributes = null, $html = null)
+    public function __construct(DataElementInterface $input)
     {
         $this->setInput($input);
-
-        if ($attributes !== null) {
-            $this->attr($attributes);
-        }
-
-        if ($html !== null) {
-            $this->html = $html;
-        }
     }
 
     /**
@@ -60,9 +50,7 @@ class Label extends Element
             return '';
         }
 
-        if ($this->input) {
-            $this->attr('for', $this->input->id());
-        }
+        $this->attr('for', $this->input->id());
 
         return parent::toHtml($prepend, $append);
     }

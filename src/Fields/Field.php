@@ -4,6 +4,7 @@ namespace FormManager\Fields;
 use FormManager\Traits\RenderTrait;
 use FormManager\TreeInterface;
 use FormManager\Elements\Label;
+use FormManager\Elements\Datalist;
 
 /**
  * Class to manage the combination of input + label.
@@ -24,6 +25,7 @@ abstract class Field implements TreeInterface
 
     protected $_errorLabel;
     protected $labelPosition = 1; // LABEL_BEFORE
+    protected $datalistAllowed = true;
 
     /**
      * Init the labels and errorLabels
@@ -33,7 +35,11 @@ abstract class Field implements TreeInterface
     {
         if ($this->labelPosition !== static::LABEL_NONE) {
             $this->label = new Label($this->input);
-            $this->_errorLabel = new Label($this->input, ['class' => 'error']);
+            $this->_errorLabel = (new Label($this->input))->attr('class', 'error');
+        }
+
+        if ($this->datalistAllowed) {
+            $this->datalist = new Datalist($this->input);
         }
     }
 
@@ -102,11 +108,37 @@ abstract class Field implements TreeInterface
      */
     public function label($html = null)
     {
+        if (empty($this->label)) {
+            throw new \BadMethodCallException('No label allowed for this field');
+        }
+
         if ($html === null) {
             return $this->label->html();
         }
 
         $this->label->html($html);
+
+        return $this;
+    }
+
+    /**
+     * Creates/edit/returns the content of the datalist associated with the input.
+     *
+     * @param null|array $options
+     *
+     * @return $this
+     */
+    public function datalist(array $options = null)
+    {
+        if (empty($this->datalist)) {
+            throw new \BadMethodCallException('No datalist allowed for this field');
+        }
+
+        if ($options === null) {
+            return $this->datalist->options();
+        }
+
+        $this->datalist->options($options);
 
         return $this;
     }
@@ -157,13 +189,13 @@ abstract class Field implements TreeInterface
     protected function defaultRender($prepend = '', $append = '')
     {
         if ($this->labelPosition === static::LABEL_NONE) {
-            return "{$prepend}{$this->input}{$append}";
+            return "{$prepend}{$this->input}{$this->datalist}{$append}";
         }
 
         if ($this->labelPosition === static::LABEL_BEFORE) {
-            return "{$prepend}{$this->label} {$this->input} {$this->errorLabel}{$append}";
+            return "{$prepend}{$this->label} {$this->input}{$this->datalist} {$this->errorLabel}{$append}";
         }
 
-        return "{$prepend}{$this->input} {$this->label} {$this->errorLabel}{$append}";
+        return "{$prepend}{$this->input}{$this->datalist} {$this->label} {$this->errorLabel}{$append}";
     }
 }
