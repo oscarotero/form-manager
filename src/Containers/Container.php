@@ -37,6 +37,8 @@ abstract class Container extends ElementContainer implements DataElementInterfac
             $child->load(isset($value[$key]) ? $value[$key] : null);
         }
 
+        $this->valid = null;
+
         return $this;
     }
 
@@ -63,6 +65,8 @@ abstract class Container extends ElementContainer implements DataElementInterfac
             $child->val(isset($value[$key]) ? $value[$key] : null);
         }
 
+        $this->valid = null;
+
         return $this;
     }
 
@@ -73,19 +77,17 @@ abstract class Container extends ElementContainer implements DataElementInterfac
      */
     public function isValid()
     {
-        $valid = true;
+        if (!$this->validate()) {
+            return false;
+        }
 
         foreach ($this->children as $child) {
             if (!$child->isValid()) {
-                $valid = false;
+                return false;
             }
         }
 
-        if (!$this->validate()) {
-            $valid = false;
-        }
-
-        return $valid;
+        return true;
     }
 
     /**
@@ -97,7 +99,7 @@ abstract class Container extends ElementContainer implements DataElementInterfac
     {
         $elements = [];
 
-        if ($this->error() !== null) {
+        if (!$this->isValid()) {
             $elements[] = $this;
         }
 
@@ -106,7 +108,7 @@ abstract class Container extends ElementContainer implements DataElementInterfac
                 foreach ($child->getElementsWithErrors() as $element) {
                     $elements[] = $element;
                 }
-            } elseif ($child->error() !== null) {
+            } elseif (!$child->isValid()) {
                 $elements[] = $child;
             }
         }

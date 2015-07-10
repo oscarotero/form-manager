@@ -28,6 +28,8 @@ class Collection extends Group
             $offset = count($this->children);
         }
 
+        $this->valid = null;
+
         parent::offsetSet($offset, $value);
     }
 
@@ -47,6 +49,7 @@ class Collection extends Group
     public function load($value = null)
     {
         $this->children = [];
+        $this->valid = null;
 
         if ($value) {
             foreach ($value as $k => $v) {
@@ -67,12 +70,14 @@ class Collection extends Group
         }
 
         $this->children = [];
+        $this->valid = null;
 
         if ($value) {
             foreach ($value as $v) {
                 $this->pushVal($v);
             }
         }
+
 
         return $this;
     }

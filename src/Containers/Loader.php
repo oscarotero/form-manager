@@ -27,6 +27,7 @@ class Loader extends Group
         }
 
         $this['field']->val($value);
+        $this->valid = null;
 
         return $this;
     }

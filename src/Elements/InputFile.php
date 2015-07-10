@@ -48,6 +48,7 @@ class InputFile extends Input implements DataElementInterface
         }
 
         $this->value = $value;
+        $this->valid = null;
 
         return $this;
     }

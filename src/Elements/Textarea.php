@@ -20,6 +20,7 @@ class Textarea extends Element implements DataElementInterface
             return $this->html;
         }
 
+        $this->valid = null;
         $this->html = $value;
 
         return $this;
@@ -34,8 +35,6 @@ class Textarea extends Element implements DataElementInterface
             return static::escape($this->html);
         }
 
-        $this->html = $html;
-
-        return $this;
+        return $this->val($html);
     }
 }

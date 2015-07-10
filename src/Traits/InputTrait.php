@@ -29,7 +29,9 @@ trait InputTrait
             $value = array($value);
         }
 
-        return $this->attr('value', $value);
+        $this->attr('value', $value);
+
+        return $this;
     }
 
     /**
@@ -140,6 +142,8 @@ trait InputTrait
             if (class_exists($class) && method_exists($class, 'onAdd')) {
                 $value = $class::onAdd($this, $value);
             }
+
+            $this->valid = null;
         }
 
         return parent::attr($name, $value);

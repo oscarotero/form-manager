@@ -19,7 +19,7 @@ class InputDatetimeLocalTest extends BaseTest
 
         $input->val('Mon, 15 Aug 2005 15:52:01 +0000');
         $this->assertTrue($input->isValid());
-        $this->assertEquals('2005-08-15T15:52:01', $input->val());
+        $this->assertEquals('Mon, 15 Aug 2005 15:52:01 +0000', $input->val());
     }
 
     public function testMinMaxDatetime()

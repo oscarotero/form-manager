@@ -29,6 +29,7 @@ class ValidationTest extends BaseTest
         ]);
 
         $this->assertFalse($form->isValid());
+
         $this->assertEquals('The passwords does not match', $form->error());
 
         $this->assertCount(1, $form->getElementsWithErrors());

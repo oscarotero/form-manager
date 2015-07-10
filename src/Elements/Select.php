@@ -158,6 +158,8 @@ class Select extends ElementContainer implements DataElementInterface
             $this->value = $this->valPlain($value);
         }
 
+        $this->valid = null;
+
         return $this;
     }
 

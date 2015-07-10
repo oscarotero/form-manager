@@ -25,10 +25,10 @@ class InputRadio extends InputCheckbox implements DataElementInterface
     public function val($value = null)
     {
         if ($value === null) {
-            return $this->attr('checked') ? $this->attributes['value'] : null;
+            return $this->attr('checked') ? $this->attr('value') : null;
         }
 
-        $this->attributes['value'] = $value;
+        $this->attr('value', $value);
 
         return $this;
     }

@@ -11,6 +11,7 @@ trait NodeTreeTrait
     protected $sanitizer;
     protected $validators = [];
     protected $error;
+    protected $valid;
     protected $key;
 
     /**
@@ -91,6 +92,7 @@ trait NodeTreeTrait
     public function validate()
     {
         $this->error = null;
+        $this->valid = true;
 
         try {
             foreach ($this->validators as $validator) {
@@ -98,11 +100,10 @@ trait NodeTreeTrait
             }
         } catch (InvalidValueException $exception) {
             $this->error($exception->getMessage());
-
-            return false;
+            $this->valid = false;
         }
 
-        return true;
+        return $this->valid;
     }
 
     /**
@@ -112,7 +113,11 @@ trait NodeTreeTrait
      */
     public function isValid()
     {
-        return $this->validate();
+        if ($this->valid === null) {
+            $this->validate();
+        }
+
+        return $this->valid;
     }
 
     /**
@@ -122,6 +127,10 @@ trait NodeTreeTrait
      */
     public function error($error = null)
     {
+        if ($this->valid === null) {
+            $this->validate();
+        }
+
         if ($error === null) {
             return $this->error;
         }

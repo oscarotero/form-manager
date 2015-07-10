@@ -52,6 +52,8 @@ class Choose extends Container
             }
         }
 
+        $this->valid = null;
+
         return $this;
     }
 
@@ -60,12 +62,12 @@ class Choose extends Container
      */
     public function validate()
     {
+        $this->valid = true;
         $value = $this->val();
 
         if (!empty($value) && !isset($this[$value])) {
             $this->error(static::$error_message);
-
-            return false;
+            return $this->valid = false;
         }
 
         return parent::validate();

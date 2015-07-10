@@ -8,8 +8,6 @@ class Datetime
 {
     public static $error_message = 'This value is not a valid datetime';
 
-    protected static $format = 'Y-m-d\TH:i:sP';
-
     /**
      * Validates the input value according to this attribute.
      *
@@ -26,7 +24,5 @@ class Datetime
         if (!($date = date_create($value))) {
             throw new InvalidValueException(sprintf(static::$error_message, $value));
         }
-
-        $input->val($date->format(static::$format));
     }
 }

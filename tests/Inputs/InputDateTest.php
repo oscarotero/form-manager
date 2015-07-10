@@ -19,7 +19,7 @@ class InputDateTest extends BaseTest
 
         $input->val('Mon, 15 Aug 2005');
         $this->assertTrue($input->isValid());
-        $this->assertEquals('2005-08-15', $input->val());
+        $this->assertEquals('Mon, 15 Aug 2005', $input->val());
 
         $input->max('2005-08-14');
         $this->assertFalse($input->isValid());
