@@ -5,7 +5,7 @@ use FormManager\InputInterface;
 
 class InputDate extends InputDatetime implements InputInterface
 {
-	protected $attributes = ['type' => 'date'];
+    protected $attributes = ['type' => 'date'];
     protected $format = 'Y-m-d';
 
     public function __construct()

@@ -127,7 +127,7 @@ abstract class Field implements TreeInterface
      *
      * @param null|array $options
      *
-     * @return self
+     * @return self|array
      */
     public function datalist(array $options = null)
     {

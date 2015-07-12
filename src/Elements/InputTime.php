@@ -5,7 +5,7 @@ use FormManager\InputInterface;
 
 class InputTime extends InputDatetime implements InputInterface
 {
-	protected $attributes = ['type' => 'time'];
+    protected $attributes = ['type' => 'time'];
     protected $format = 'H:i:s';
 
     public function __construct()

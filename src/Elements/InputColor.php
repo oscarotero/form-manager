@@ -5,7 +5,7 @@ use FormManager\InputInterface;
 
 class InputColor extends Input implements InputInterface
 {
-	protected $attributes = ['type' => 'color'];
+    protected $attributes = ['type' => 'color'];
 
     public function __construct()
     {

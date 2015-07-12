@@ -78,7 +78,6 @@ class Collection extends Group
             }
         }
 
-
         return $this;
     }
 

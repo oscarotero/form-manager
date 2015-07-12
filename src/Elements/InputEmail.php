@@ -5,7 +5,7 @@ use FormManager\InputInterface;
 
 class InputEmail extends Input implements InputInterface
 {
-	protected $attributes = ['type' => 'email'];
+    protected $attributes = ['type' => 'email'];
 
     public function __construct()
     {

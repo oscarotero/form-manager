@@ -50,7 +50,7 @@ class Datalist extends ElementContainer
      *
      * @param null|array $options null to getter, array to setter
      *
-     * @return mixed
+     * @return self|array
      */
     public function options(array $options = null)
     {

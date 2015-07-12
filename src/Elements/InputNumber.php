@@ -5,7 +5,7 @@ use FormManager\InputInterface;
 
 class InputNumber extends Input implements InputInterface
 {
-	protected $attributes = ['type' => 'number'];
+    protected $attributes = ['type' => 'number'];
 
     public function __construct()
     {

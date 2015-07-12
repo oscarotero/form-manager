@@ -5,7 +5,7 @@ use FormManager\InputInterface;
 
 class InputUrl extends Input implements InputInterface
 {
-	protected $attributes = ['type' => 'url'];
+    protected $attributes = ['type' => 'url'];
 
     public function __construct()
     {
