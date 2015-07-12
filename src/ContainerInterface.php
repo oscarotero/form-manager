@@ -69,6 +69,13 @@ interface ContainerInterface extends ElementInterface
     public function val($value = null);
 
     /**
+     * Executes all validators and returns whether the value is valid or not.
+     *
+     * @return boolean
+     */
+    public function validate();
+
+    /**
      * Checks if the value is valid.
      *
      * @return boolean
@@ -76,7 +83,7 @@ interface ContainerInterface extends ElementInterface
     public function isValid();
 
     /**
-     * Set/Get the error message.
+     * Set/Get the current error message.
      *
      * @param null|string $error null to getter, string to setter
      *

@@ -85,9 +85,9 @@ trait ContainerTrait
     }
 
     /**
-     * Executes all validators and returns whether the value is valid or not.
+     * @see FormManager\ContainerInterface
      *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function validate()
     {
@@ -127,10 +127,6 @@ trait ContainerTrait
      */
     public function error($error = null)
     {
-        if ($this->valid === null) {
-            $this->validate();
-        }
-
         if ($error === null) {
             return $this->error;
         }
