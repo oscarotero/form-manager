@@ -12,7 +12,7 @@ interface FactoryInterface
      * @param string $name
      * @param array  $arguments
      *
-     * @return null|DataElementInterface
+     * @return mixed
      */
     public function get($name, array $arguments);
 }
