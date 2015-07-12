@@ -16,7 +16,7 @@ class Form extends Group
      * @param array|null $post
      * @param array|null $files
      *
-     * @return $this
+     * @return self
      */
     public function loadFromGlobals(array $get = null, array $post = null, array $files = null)
     {
@@ -37,7 +37,7 @@ class Form extends Group
      *
      * @param ServerRequestInterface $request
      *
-     * @return $this
+     * @return self
      */
     public function loadFromPsr7(ServerRequestInterface $request)
     {
@@ -169,7 +169,7 @@ class Form extends Group
         }
 
         //render the fieldsets
-        if ($this->fieldsets) {
+        if (!empty($this->fieldsets)) {
             foreach ($this->fieldsets as $fieldset) {
                 $html .= (string) $fieldset;
             }

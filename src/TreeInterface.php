@@ -16,7 +16,7 @@ interface TreeInterface
      *
      * @param null|ElementInterface $parent
      *
-     * @return $this
+     * @return self
      */
     public function setParent(TreeInterface $parent = null);
 

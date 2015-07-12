@@ -79,7 +79,7 @@ class Element implements ElementInterface
      * @param string $name
      * @param array  $arguments
      *
-     * @return $this
+     * @return self
      */
     public function __call($name, $arguments)
     {
@@ -270,7 +270,7 @@ class Element implements ElementInterface
      *
      * @param string $name The data name
      *
-     * @return $this
+     * @return self
      */
     public function removeData($name = null)
     {
@@ -310,7 +310,7 @@ class Element implements ElementInterface
      *
      * @param array|string $class The class or classes names.
      *
-     * @return $this
+     * @return self
      */
     public function addClass($class)
     {
@@ -336,7 +336,7 @@ class Element implements ElementInterface
      *
      * @param array|string $class The class or classes names
      *
-     * @return $this
+     * @return self
      */
     public function removeClass($class)
     {
@@ -383,7 +383,7 @@ class Element implements ElementInterface
      * @param string|array $name
      * @param mixed        $value
      *
-     * @return $this
+     * @return self
      */
     public function set($name, $value = null)
     {

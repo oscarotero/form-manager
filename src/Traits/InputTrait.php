@@ -63,7 +63,7 @@ trait InputTrait
     /**
      * Checks the input (used in some inputs like radio/checkboxes).
      *
-     * @return $this
+     * @return self
      */
     public function check()
     {
@@ -73,7 +73,7 @@ trait InputTrait
     /**
      * Unchecks the input  (used in some inputs like radio/checkboxes).
      *
-     * @return $this
+     * @return self
      */
     public function uncheck()
     {

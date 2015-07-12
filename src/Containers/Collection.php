@@ -87,7 +87,7 @@ class Collection extends Group
      *
      * @param mixed $template The new template
      *
-     * @return $this
+     * @return self
      */
     public function setTemplate($template)
     {

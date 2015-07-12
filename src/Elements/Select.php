@@ -120,7 +120,7 @@ class Select extends ElementContainer implements InputInterface
      *
      * @param boolean $allow
      *
-     * @return $this
+     * @return self
      */
     public function allowNewValues($allow = true)
     {

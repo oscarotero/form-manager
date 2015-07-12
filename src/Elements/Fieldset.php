@@ -11,22 +11,6 @@ class Fieldset extends ElementContainer
     protected $name = 'fieldset';
 
     /**
-     * Returns the element path
-     *
-     * @see NodeTreeTrait
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        if ($this->parent) {
-            return $this->parent->getPath();
-        }
-
-        return '';
-    }
-
-    /**
      * @see TreeInterface
      *
      * {@inheritdoc}

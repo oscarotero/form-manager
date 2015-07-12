@@ -11,7 +11,7 @@ interface ContainerInterface extends ElementInterface
      *
      * @param mixed $key
      *
-     * @return $this
+     * @return self
      */
     public function setKey($key);
 
@@ -28,7 +28,7 @@ interface ContainerInterface extends ElementInterface
      *
      * @param callable $validator
      *
-     * @return $this
+     * @return self
      */
     public function addValidator(callable $validator);
 
@@ -37,7 +37,7 @@ interface ContainerInterface extends ElementInterface
      *
      * @param callable $validator
      *
-     * @return $this
+     * @return self
      */
     public function removeValidator($validator);
 
@@ -46,7 +46,7 @@ interface ContainerInterface extends ElementInterface
      *
      * @param callable $sanitizer
      *
-     * @return $this
+     * @return self
      */
     public function sanitize(callable $sanitizer);
 
@@ -55,7 +55,7 @@ interface ContainerInterface extends ElementInterface
      *
      * @param mixed $value The GET/POST/FILES values merged in an unique array
      *
-     * @return $this
+     * @return self
      */
     public function load($value = null);
 

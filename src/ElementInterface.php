@@ -21,7 +21,7 @@ interface ElementInterface extends TreeInterface
      *
      * @param string $name The attribute name
      *
-     * @return $this
+     * @return self
      */
     public function removeAttr($name);
 
@@ -30,7 +30,7 @@ interface ElementInterface extends TreeInterface
      *
      * @param string $id The new id
      *
-     * @return $this
+     * @return self
      */
     public function id($id = null);
 }

@@ -199,7 +199,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      *
      * @param array $children
      *
-     * @return $this
+     * @return self
      */
     public function add(array $children)
     {
@@ -213,7 +213,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     /**
      * Removes all children
      *
-     * @return $this
+     * @return self
      */
     public function clear()
     {

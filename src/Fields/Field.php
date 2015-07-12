@@ -104,7 +104,7 @@ abstract class Field implements TreeInterface
      *
      * @param null|string $html
      *
-     * @return $this
+     * @return self
      */
     public function label($html = null)
     {
@@ -126,7 +126,7 @@ abstract class Field implements TreeInterface
      *
      * @param null|array $options
      *
-     * @return $this
+     * @return self
      */
     public function datalist(array $options = null)
     {

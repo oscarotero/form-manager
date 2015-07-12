@@ -25,7 +25,7 @@ abstract class Container extends ElementContainer implements ContainerInterface
      *
      * @param mixed $value The GET/POST/FILES value
      *
-     * @return $this
+     * @return self
      */
     public function load($value = null)
     {
