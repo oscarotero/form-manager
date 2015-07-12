@@ -22,6 +22,7 @@ abstract class Field implements TreeInterface
 
     public $input;
     public $label;
+    public $datalist;
 
     protected $_errorLabel;
     protected $labelPosition = 1; // LABEL_BEFORE

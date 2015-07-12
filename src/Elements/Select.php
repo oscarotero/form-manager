@@ -105,7 +105,7 @@ class Select extends ElementContainer implements InputInterface
         }
 
         //render the optgroups
-        if ($this->optgroups) {
+        if (!empty($this->optgroups)) {
             foreach ($this->optgroups as $optgroup) {
                 $html .= (string) $optgroup;
             }
