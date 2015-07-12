@@ -5,17 +5,17 @@ use FormManager\Elements\Label;
 use FormManager\Elements\Datalist;
 
 /**
- * Class with common methods for all inputs with DataElementInterface.
+ * Class with common methods for all inputs with InputInterface.
  */
 trait InputTrait
 {
-    use NodeTreeTrait;
+    use ContainerTrait;
 
     protected $labels = [];
     protected $datalist;
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\InputInterface
      *
      * {@inheritdoc}
      */
@@ -35,7 +35,7 @@ trait InputTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\InputInterface
      *
      * {@inheritdoc}
      */
@@ -114,7 +114,7 @@ trait InputTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\InputInterface
      *
      * {@inheritdoc}
      */
@@ -166,9 +166,9 @@ trait InputTrait
     }
 
     /**
-     * Set the datalist associated with this input
+     * @see FormManager\InputInterface
      *
-     * @param Datalist $datalist
+     * {@inheritdoc}
      */
     public function setDatalist(Datalist $datalist)
     {

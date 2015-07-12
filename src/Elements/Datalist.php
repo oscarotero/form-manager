@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
 class Datalist extends ElementContainer
 {
@@ -11,9 +11,9 @@ class Datalist extends ElementContainer
     /**
      * Datalist constructor.
      *
-     * @param DataElementInterface $input The input associated to this datalist
+     * @param InputInterface $input The input associated to this datalist
      */
-    public function __construct(DataElementInterface $input)
+    public function __construct(InputInterface $input)
     {
         $this->setInput($input);
     }
@@ -32,9 +32,9 @@ class Datalist extends ElementContainer
     /**
      * Sets the input associated to this datalist.
      *
-     * @param DataElementInterface $input The input instance
+     * @param InputInterface $input The input instance
      */
-    public function setInput(DataElementInterface $input)
+    public function setInput(InputInterface $input)
     {
         //Ensure the datalist and input have ids defined
         $this->id();

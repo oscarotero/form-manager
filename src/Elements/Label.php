@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
 class Label extends Element
 {
@@ -12,9 +12,9 @@ class Label extends Element
     /**
      * Label constructor.
      *
-     * @param DataElementInterface $input The input associated to this label
+     * @param InputInterface $input The input associated to this label
      */
-    public function __construct(DataElementInterface $input)
+    public function __construct(InputInterface $input)
     {
         $this->setInput($input);
     }
@@ -22,9 +22,9 @@ class Label extends Element
     /**
      * Sets a new input associated to this label.
      *
-     * @param DataElementInterface $input The input instance
+     * @param InputInterface $input The input instance
      */
-    public function setInput(DataElementInterface $input)
+    public function setInput(InputInterface $input)
     {
         //Ensure the label and input have ids defined
         $this->id();

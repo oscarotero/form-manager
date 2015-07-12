@@ -2,9 +2,9 @@
 namespace FormManager\Elements;
 
 use FormManager\Traits\InputTrait;
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class Input extends Element implements DataElementInterface
+class Input extends Element implements InputInterface
 {
     use InputTrait;
 

@@ -1,14 +1,14 @@
 <?php
 namespace FormManager\Attributes;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
 class Accept implements AttributeInterface
 {
     /**
      * {@inheritdoc}
      */
-    public static function onAdd(DataElementInterface $input, $value)
+    public static function onAdd(InputInterface $input, $value)
     {
         $input->addValidator('FormManager\\Validators\\Accept::validate');
 
@@ -18,7 +18,7 @@ class Accept implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public static function onRemove(DataElementInterface $input)
+    public static function onRemove(InputInterface $input)
     {
         $input->removeValidator('FormManager\\Validators\\Accept::validate');
     }

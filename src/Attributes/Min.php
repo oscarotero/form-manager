@@ -1,16 +1,16 @@
 <?php
 namespace FormManager\Attributes;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
 class Min extends Max implements AttributeInterface
 {
     /**
      * Add the validator for this input.
      *
-     * @param DataElementInterface $input
+     * @param InputInterface $input
      */
-    protected static function addValidator(DataElementInterface $input)
+    protected static function addValidator(InputInterface $input)
     {
         $input->addValidator('FormManager\\Validators\\Min::validate');
     }
@@ -18,9 +18,9 @@ class Min extends Max implements AttributeInterface
     /**
      * Add the validator for this date-time input.
      *
-     * @param DataElementInterface $input
+     * @param InputInterface $input
      */
-    protected static function addDatetimeValidator(DataElementInterface $input)
+    protected static function addDatetimeValidator(InputInterface $input)
     {
         $input->addValidator('FormManager\\Validators\\Min::validateDatetime');
     }
@@ -28,7 +28,7 @@ class Min extends Max implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public static function onRemove(DataElementInterface $input)
+    public static function onRemove(InputInterface $input)
     {
         $input->removeValidator('FormManager\\Validators\\Min::validateDatetime');
         $input->removeValidator('FormManager\\Validators\\Min::validate');

@@ -1,14 +1,14 @@
 <?php
 namespace FormManager\Attributes;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
 class Maxlength implements AttributeInterface
 {
     /**
      * {@inheritdoc}
      */
-    public static function onAdd(DataElementInterface $input, $value)
+    public static function onAdd(InputInterface $input, $value)
     {
         if (!is_int($value) || ($value < 0)) {
             throw new \InvalidArgumentException('The maxlength value must be a non-negative integer');
@@ -22,7 +22,7 @@ class Maxlength implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public static function onRemove(DataElementInterface $input)
+    public static function onRemove(InputInterface $input)
     {
         $input->removeValidator('FormManager\\Validators\\Maxlength::validate');
     }

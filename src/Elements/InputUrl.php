@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputUrl extends Input implements DataElementInterface
+class InputUrl extends Input implements InputInterface
 {
 	protected $attributes = ['type' => 'url'];
 

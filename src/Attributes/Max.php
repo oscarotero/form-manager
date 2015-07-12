@@ -1,14 +1,14 @@
 <?php
 namespace FormManager\Attributes;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
 class Max implements AttributeInterface
 {
     /**
      * {@inheritdoc}
      */
-    public static function onAdd(DataElementInterface $input, $value)
+    public static function onAdd(InputInterface $input, $value)
     {
         switch ($input->attr('type')) {
             case 'datetime':
@@ -38,9 +38,9 @@ class Max implements AttributeInterface
     /**
      * Add the validator for this input.
      *
-     * @param DataElementInterface $input
+     * @param InputInterface $input
      */
-    protected static function addValidator(DataElementInterface $input)
+    protected static function addValidator(InputInterface $input)
     {
         $input->addValidator('FormManager\\Validators\\Max::validate');
     }
@@ -48,9 +48,9 @@ class Max implements AttributeInterface
     /**
      * Add the validator for this date-time input.
      *
-     * @param DataElementInterface $input
+     * @param InputInterface $input
      */
-    protected static function addDatetimeValidator(DataElementInterface $input)
+    protected static function addDatetimeValidator(InputInterface $input)
     {
         $input->addValidator('FormManager\\Validators\\Max::validateDatetime');
     }
@@ -58,7 +58,7 @@ class Max implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public static function onRemove(DataElementInterface $input)
+    public static function onRemove(InputInterface $input)
     {
         $input->removeValidator('FormManager\\Validators\\Max::validateDatetime');
         $input->removeValidator('FormManager\\Validators\\Max::validate');

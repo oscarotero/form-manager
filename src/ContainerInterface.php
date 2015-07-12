@@ -2,9 +2,9 @@
 namespace FormManager;
 
 /**
- * Interface used by all elements that contains data.
+ * Interface used by all container elements
  */
-interface DataElementInterface extends ElementInterface
+interface ContainerInterface extends ElementInterface
 {
     /**
      * Set the key used to calculate the path of this node.

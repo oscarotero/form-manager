@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputNumber extends Input implements DataElementInterface
+class InputNumber extends Input implements InputInterface
 {
 	protected $attributes = ['type' => 'number'];
 

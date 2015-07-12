@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputColor extends Input implements DataElementInterface
+class InputColor extends Input implements InputInterface
 {
 	protected $attributes = ['type' => 'color'];
 

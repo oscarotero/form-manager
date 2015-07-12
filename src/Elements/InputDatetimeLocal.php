@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputDatetimeLocal extends InputDatetime implements DataElementInterface
+class InputDatetimeLocal extends InputDatetime implements InputInterface
 {
 	protected $attributes = ['type' => 'datetime-local'];
     protected $format = 'Y-m-d\TH:i:s';

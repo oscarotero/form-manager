@@ -3,9 +3,9 @@ namespace FormManager\Elements;
 
 use FormManager\InvalidValueException;
 use FormManager\Traits\InputTrait;
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class Select extends ElementContainer implements DataElementInterface
+class Select extends ElementContainer implements InputInterface
 {
     use InputTrait;
 

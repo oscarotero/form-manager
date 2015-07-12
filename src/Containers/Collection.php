@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Containers;
 
-use FormManager\DataElementInterface;
+use FormManager\ContainerInterface;
 use FormManager\Builder as F;
 
 class Collection extends Group
@@ -107,7 +107,7 @@ class Collection extends Group
      *
      * @param mixed $index The index used to generate the input name
      *
-     * @return DataElementInterface The cloned field
+     * @return ContainerInterface The cloned field
      */
     public function getTemplate($index = '::n::')
     {

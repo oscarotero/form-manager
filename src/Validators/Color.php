@@ -1,7 +1,7 @@
 <?php
 namespace FormManager\Validators;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 use FormManager\InvalidValueException;
 
 class Color
@@ -11,11 +11,11 @@ class Color
     /**
      * Validates the input value according to this attribute.
      *
-     * @param DataElementInterface $input The input to validate
+     * @param InputInterface $input The input to validate
      *
      * @throws InvalidValueException If the value is not valid
      */
-    public static function validate(DataElementInterface $input)
+    public static function validate(InputInterface $input)
     {
         $value = $input->val();
 

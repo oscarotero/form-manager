@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputEmail extends Input implements DataElementInterface
+class InputEmail extends Input implements InputInterface
 {
 	protected $attributes = ['type' => 'email'];
 

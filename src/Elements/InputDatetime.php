@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputDatetime extends Input implements DataElementInterface
+class InputDatetime extends Input implements InputInterface
 {
     protected $attributes = ['type' => 'datetime'];
     protected $format = 'Y-m-d\TH:i:sP';
@@ -14,7 +14,7 @@ class InputDatetime extends Input implements DataElementInterface
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\InputInterface
      *
      * {@inheritdoc}
      */

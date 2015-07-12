@@ -1,16 +1,16 @@
 <?php
 namespace FormManager\Containers;
 
-use FormManager\Traits\NodeTreeTrait;
+use FormManager\Traits\ContainerTrait;
 use FormManager\Traits\RenderTrait;
-use FormManager\DataElementInterface;
+use FormManager\ContainerInterface;
 use FormManager\Elements\ElementContainer;
 
-abstract class Container extends ElementContainer implements DataElementInterface
+abstract class Container extends ElementContainer implements ContainerInterface
 {
     protected $name = 'div';
 
-    use NodeTreeTrait;
+    use ContainerTrait;
     use RenderTrait;
 
     public function __construct(array $children = null)

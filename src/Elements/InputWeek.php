@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputWeek extends InputDatetime implements DataElementInterface
+class InputWeek extends InputDatetime implements InputInterface
 {
 	protected $attributes = ['type' => 'week'];
     protected $format = 'Y-\WW';

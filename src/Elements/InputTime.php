@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputTime extends InputDatetime implements DataElementInterface
+class InputTime extends InputDatetime implements InputInterface
 {
 	protected $attributes = ['type' => 'time'];
     protected $format = 'H:i:s';

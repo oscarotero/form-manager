@@ -2,9 +2,9 @@
 namespace FormManager\Elements;
 
 use Psr\Http\Message\UploadedFileInterface;
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputFile extends Input implements DataElementInterface
+class InputFile extends Input implements InputInterface
 {
     protected $attributes = ['type' => 'file'];
     protected $value;
@@ -15,7 +15,7 @@ class InputFile extends Input implements DataElementInterface
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\InputInterface
      *
      * {@inheritdoc}
      */

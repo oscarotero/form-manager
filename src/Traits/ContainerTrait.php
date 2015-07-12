@@ -4,9 +4,9 @@ namespace FormManager\Traits;
 use FormManager\InvalidValueException;
 
 /**
- * Trait with common methods for all elements with FormManager\DataElementInterface.
+ * Trait with common methods for all elements with FormManager\ContainerInterface.
  */
-trait NodeTreeTrait
+trait ContainerTrait
 {
     protected $sanitizer;
     protected $validators = [];
@@ -15,7 +15,7 @@ trait NodeTreeTrait
     protected $key;
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\ContainerInterface
      *
      * {@inheritdoc}
      */
@@ -27,7 +27,7 @@ trait NodeTreeTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\ContainerInterface
      *
      * {@inheritdoc}
      */
@@ -59,7 +59,7 @@ trait NodeTreeTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\ContainerInterface
      *
      * {@inheritdoc}
      */
@@ -71,7 +71,7 @@ trait NodeTreeTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\ContainerInterface
      *
      * {@inheritdoc}
      */
@@ -107,7 +107,7 @@ trait NodeTreeTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\ContainerInterface
      *
      * {@inheritdoc}
      */
@@ -121,7 +121,7 @@ trait NodeTreeTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\ContainerInterface
      *
      * {@inheritdoc}
      */
@@ -141,7 +141,7 @@ trait NodeTreeTrait
     }
 
     /**
-     * @see FormManager\DataElementInterface
+     * @see FormManager\ContainerInterface
      *
      * {@inheritdoc}
      */

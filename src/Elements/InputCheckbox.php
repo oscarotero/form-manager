@@ -1,9 +1,9 @@
 <?php
 namespace FormManager\Elements;
 
-use FormManager\DataElementInterface;
+use FormManager\InputInterface;
 
-class InputCheckbox extends Input implements DataElementInterface
+class InputCheckbox extends Input implements InputInterface
 {
     protected $attributes = ['type' => 'checkbox', 'value' => 'on'];
 
