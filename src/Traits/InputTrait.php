@@ -178,9 +178,9 @@ trait InputTrait
     }
 
     /**
-     * Add a new label to this input
+     * @see FormManager\InputInterface
      *
-     * @param Label $label
+     * {@inheritdoc}
      */
     public function addLabel(Label $label)
     {
@@ -190,9 +190,9 @@ trait InputTrait
     }
 
     /**
-     * Remove the label from this input
+     * @see FormManager\InputInterface
      *
-     * @param Label $label
+     * {@inheritdoc}
      */
     public function removeLabel(Label $label)
     {
