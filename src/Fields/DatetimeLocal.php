@@ -7,10 +7,7 @@ class DatetimeLocal extends Field
 {
     public function __construct()
     {
-        $this->input = (new Elements\InputDatetime())
-            ->attr('type', 'datetime-local')
-            ->format('Y-m-d\TH:i:s')
-            ->addValidator('FormManager\\Validators\\DatetimeLocal::validate');
+        $this->input = new Elements\InputDatetimeLocal();
 
         parent::__construct();
     }

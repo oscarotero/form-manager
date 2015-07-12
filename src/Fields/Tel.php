@@ -7,8 +7,7 @@ class Tel extends Field
 {
     public function __construct()
     {
-        $this->input = (new Elements\Input())
-            ->attr('type', 'tel');
+        $this->input = (new Elements\Input())->attr('type', 'tel');
 
         parent::__construct();
     }

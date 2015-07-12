@@ -7,9 +7,7 @@ class Url extends Field
 {
     public function __construct()
     {
-        $this->input = (new Elements\Input())
-            ->attr('type', 'url')
-            ->addValidator('FormManager\\Validators\\Url::validate');
+        $this->input = new Elements\InputUrl();
 
         parent::__construct();
     }

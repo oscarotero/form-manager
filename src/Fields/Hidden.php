@@ -10,8 +10,7 @@ class Hidden extends Field
         $this->labelPosition = static::LABEL_NONE;
         $this->datalistAllowed = false;
 
-        $this->input = (new Elements\Input())
-            ->attr('type', 'hidden');
+        $this->input = (new Elements\Input())->attr('type', 'hidden');
 
         parent::__construct();
     }

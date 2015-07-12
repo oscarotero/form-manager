@@ -7,8 +7,7 @@ class Text extends Field
 {
     public function __construct()
     {
-        $this->input = (new Elements\Input())
-            ->attr('type', 'text');
+        $this->input = (new Elements\Input())->attr('type', 'text');
 
         parent::__construct();
     }

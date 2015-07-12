@@ -7,9 +7,7 @@ class Range extends Field
 {
     public function __construct()
     {
-        $this->input = (new Elements\Input())
-            ->attr('type', 'range')
-            ->addValidator('FormManager\\Validators\\Number::validate');
+        $this->input = (new Elements\InputNumber())->attr('type', 'range');
 
         parent::__construct();
     }

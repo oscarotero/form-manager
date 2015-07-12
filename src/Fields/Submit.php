@@ -10,8 +10,7 @@ class Submit extends Field
         $this->labelPosition = static::LABEL_NONE;
         $this->datalistAllowed = false;
 
-        $this->input = (new Elements\Button())
-            ->attr('type', 'submit');
+        $this->input = (new Elements\Button())->attr('type', 'submit');
 
         parent::__construct();
     }

@@ -9,8 +9,7 @@ class Password extends Field
     {
         $this->datalistAllowed = false;
 
-        $this->input = (new Elements\Input())
-            ->attr('type', 'password');
+        $this->input = (new Elements\Input())->attr('type', 'password');
 
         parent::__construct();
     }

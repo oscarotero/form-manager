@@ -7,8 +7,7 @@ class Search extends Field
 {
     public function __construct()
     {
-        $this->input = (new Elements\Input())
-            ->attr('type', 'search');
+        $this->input = (new Elements\Input())->attr('type', 'search');
 
         parent::__construct();
     }
