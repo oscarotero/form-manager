@@ -7,6 +7,7 @@ namespace FormManager;
 class Builder
 {
     protected static $factories = [];
+    protected $instanceFactories = [];
 
     /**
      * Add a factory class to the builder.
@@ -16,6 +17,18 @@ class Builder
     public static function addFactory(FactoryInterface $factory)
     {
         array_unshift(static::$factories, $factory);
+    }
+
+    /**
+     * Constructor to use the Builder as a instance mode, instead static mode
+     *
+     * @param FactoryInterface|null $factory $factory
+     */
+    public function __construct(FactoryInterface $factory = null)
+    {
+        if ($factory !== null) {
+            $this->add($factory);
+        }
     }
 
     /**
@@ -33,6 +46,33 @@ class Builder
                 return $item;
             }
         }
+    }
+
+    /**
+     * Magic method to create instances using the API $builder->whatever().
+     *
+     * @param string $name
+     * @param array  $arguments
+     *
+     * @return null|DataElementInterface
+     */
+    public function __call($name, $arguments)
+    {
+        foreach ($this->instanceFactories as $factory) {
+            if (($item = $factory->get($name, $arguments)) !== null) {
+                return $item;
+            }
+        }
+    }
+
+    /**
+     * Add a factory class to the builder.
+     *
+     * @param FactoryInterface $factory
+     */
+    public function add(FactoryInterface $factory)
+    {
+        array_unshift($this->instanceFactories, $factory);
     }
 }
 
