@@ -2,7 +2,7 @@
 use FormManager\Builder;
 use FormManager\Factory;
 
-class LocalesTest extends BaseTest
+class BuilderTest extends BaseTest
 {
 	protected $builder;
 	protected $emptyBuilder;
