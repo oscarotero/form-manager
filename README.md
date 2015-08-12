@@ -630,3 +630,27 @@ $editUser = F::editUserForm();
 ```
 
 Note: Each time you register a new factory, it will be prepended to the already registered ones, so if you register fields/containers called "Form", "Textarea", etc, they will be used instead the default. This allows extend them.
+
+
+## Builder instances
+
+The static builder is fine for most cases, but sometimes you need to combine differents builders with different factories. So you can create instances:
+
+```php
+use FormManager\Builder;
+use FormManager\Factory;
+
+//Create a builder instance adding the default FormManager factory:
+$b1 = new Builder(new Factory());
+
+//Create another builder instance with your custom factory:
+$b2 = new Builder();
+$b2->add(new MyCustomFactory());
+
+//Now, you're ready to combine them:
+$form = $b1->form([
+	'name' => $b1->text(),
+	'description' => $b2->textarea(),
+	'email' => Builder::email()
+]);
+```
