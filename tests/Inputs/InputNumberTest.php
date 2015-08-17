@@ -21,7 +21,7 @@ class InputNumberTest extends BaseTest
         $this->assertTrue($number->isValid());
 
         $number->required();
- 
+
         $this->assertFalse($number->isValid());
     }
 }

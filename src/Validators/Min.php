@@ -17,7 +17,7 @@ class Min
      */
     public static function validate(InputInterface $input)
     {
-        $value = $input->val();
+        $value = (string) $input->val();
         $attr = $input->attr('min');
 
         if (!empty($attr) && $value !== '' && ($value < $attr)) {
@@ -34,7 +34,7 @@ class Min
      */
     public static function validateDatetime(InputInterface $input)
     {
-        $value = $input->val();
+        $value = (string) $input->val();
         $attr = $input->attr('min');
 
         if (!empty($attr) && $value !== '' && (strtotime($value) < strtotime($attr))) {
