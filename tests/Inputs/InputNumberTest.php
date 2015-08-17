@@ -13,4 +13,15 @@ class InputNumberTest extends BaseTest
         $this->_testMaxlength(Builder::number(), 12345, 123456);
         $this->_testMaxlength(Builder::number(), 12.34, 12.345);
     }
+
+    public function testEmptyWithMinValue()
+    {
+        $number = Builder::number()->min(1)->val('');
+
+        $this->assertTrue($number->isValid());
+
+        $number->required();
+ 
+        $this->assertFalse($number->isValid());
+    }
 }

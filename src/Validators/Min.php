@@ -20,7 +20,7 @@ class Min
         $value = $input->val();
         $attr = $input->attr('min');
 
-        if (!empty($attr) && ($value < $attr)) {
+        if (!empty($attr) && $value !== '' && ($value < $attr)) {
             throw new InvalidValueException(sprintf(static::$error_message, $attr));
         }
     }
@@ -37,7 +37,7 @@ class Min
         $value = $input->val();
         $attr = $input->attr('min');
 
-        if (!empty($attr) && (strtotime($value) < strtotime($attr))) {
+        if (!empty($attr) && $value !== '' && (strtotime($value) < strtotime($attr))) {
             throw new InvalidValueException(sprintf(static::$error_message, $attr));
         }
     }
