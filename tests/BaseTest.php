@@ -1,4 +1,5 @@
 <?php
+
 use FormManager\Inputs\Input;
 use FormManager\InvalidValueException;
 use FormManager\Builder;

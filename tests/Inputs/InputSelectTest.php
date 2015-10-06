@@ -1,4 +1,5 @@
 <?php
+
 use FormManager\Builder;
 
 class InputSelectTest extends BaseTest

@@ -1,4 +1,5 @@
 <?php
+
 $menu_examples = [];
 foreach (glob(__DIR__.'/example/*.php') as $examplePath) {
     $exampleSlug = basename($examplePath);
@@ -7,11 +8,11 @@ foreach (glob(__DIR__.'/example/*.php') as $examplePath) {
     $exampleName = ucwords(str_replace('-', ' ', $exampleSlug));
 
     $menu_examples[] = '<li>';
-    $menu_examples[]     = '<a href  ="index.php';
-    $menu_examples[]     = '?'.http_build_query(['example' => $exampleSlug]);
-    $menu_examples[]     = '">';
-    $menu_examples[]     = $exampleName;
-    $menu_examples[]     = '</a>';
+    $menu_examples[] = '<a href  ="index.php';
+    $menu_examples[] = '?'.http_build_query(['example' => $exampleSlug]);
+    $menu_examples[] = '">';
+    $menu_examples[] = $exampleName;
+    $menu_examples[] = '</a>';
     $menu_examples[] = '</li>';
 }
 

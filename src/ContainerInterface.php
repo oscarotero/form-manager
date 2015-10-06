@@ -1,8 +1,9 @@
 <?php
+
 namespace FormManager;
 
 /**
- * Interface used by all container elements
+ * Interface used by all container elements.
  */
 interface ContainerInterface extends ElementInterface
 {
@@ -71,14 +72,14 @@ interface ContainerInterface extends ElementInterface
     /**
      * Executes all validators and returns whether the value is valid or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function validate();
 
     /**
      * Checks if the value is valid.
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid();
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\InputInterface;
@@ -8,7 +9,7 @@ class InputCheckbox extends Input implements InputInterface
     protected $attributes = ['type' => 'checkbox', 'value' => 'on'];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($value = null)
     {
@@ -20,7 +21,7 @@ class InputCheckbox extends Input implements InputInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {
@@ -38,7 +39,7 @@ class InputCheckbox extends Input implements InputInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function check()
     {
@@ -46,7 +47,7 @@ class InputCheckbox extends Input implements InputInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function uncheck()
     {

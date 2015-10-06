@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Fields;
 
 use FormManager\Traits\RenderTrait;
@@ -30,7 +31,7 @@ abstract class Field implements TreeInterface
 
     /**
      * Init the labels and errorLabels
-     * This method is protected to force to extend it
+     * This method is protected to force to extend it.
      */
     protected function __construct()
     {
@@ -45,7 +46,7 @@ abstract class Field implements TreeInterface
     }
 
     /**
-     * Magic method to return the errorLabel with the error message
+     * Magic method to return the errorLabel with the error message.
      *
      * @param string $name
      *

@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Containers;
 
 class Choose extends Container
@@ -15,7 +16,7 @@ class Choose extends Container
     public function offsetSet($offset, $value)
     {
         if ($value instanceof Container) {
-            throw new \InvalidArgumentException("This element only accepts inputs");
+            throw new \InvalidArgumentException('This element only accepts inputs');
         }
 
         $value->val($offset);
@@ -24,7 +25,7 @@ class Choose extends Container
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($value = null)
     {
@@ -34,7 +35,7 @@ class Choose extends Container
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {
@@ -58,7 +59,7 @@ class Choose extends Container
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validate()
     {

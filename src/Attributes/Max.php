@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Attributes;
 
 use FormManager\InputInterface;

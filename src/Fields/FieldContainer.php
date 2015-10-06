@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Fields;
 
 use FormManager\Elements\Element;
@@ -28,7 +29,7 @@ abstract class FieldContainer extends Field implements Iterator, ArrayAccess, Co
      *
      * @see Iterator
      *
-     * @return integer|null
+     * @return int|null
      */
     public function key()
     {
@@ -64,7 +65,7 @@ abstract class FieldContainer extends Field implements Iterator, ArrayAccess, Co
      *
      * @see Iterator
      *
-     * @return boolean
+     * @return bool
      */
     public function valid()
     {
@@ -78,7 +79,7 @@ abstract class FieldContainer extends Field implements Iterator, ArrayAccess, Co
      *
      * @param mixed $offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -92,7 +93,7 @@ abstract class FieldContainer extends Field implements Iterator, ArrayAccess, Co
      *
      * @param mixed $offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetGet($offset)
     {
@@ -129,7 +130,7 @@ abstract class FieldContainer extends Field implements Iterator, ArrayAccess, Co
      *
      * @see Countable
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {

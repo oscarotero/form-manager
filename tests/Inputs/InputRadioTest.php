@@ -1,4 +1,5 @@
 <?php
+
 use FormManager\Builder;
 
 class InputRadioTest extends BaseTest

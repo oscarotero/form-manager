@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Containers;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,7 +34,7 @@ class Form extends Group
     }
 
     /**
-     * Load the form values from a PSR-7 ServerRequest
+     * Load the form values from a PSR-7 ServerRequest.
      *
      * @param ServerRequestInterface $request
      *

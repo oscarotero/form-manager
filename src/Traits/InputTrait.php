@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Traits;
 
 use FormManager\Elements\Label;
@@ -150,7 +151,7 @@ trait InputTrait
     }
 
     /**
-     * Generate the right name attribute for this input
+     * Generate the right name attribute for this input.
      *
      * @return string
      */

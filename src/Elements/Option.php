@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 /**
@@ -36,7 +37,7 @@ class Option extends Element
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function check()
     {
@@ -44,7 +45,7 @@ class Option extends Element
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function uncheck()
     {

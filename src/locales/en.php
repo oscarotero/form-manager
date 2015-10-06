@@ -1,4 +1,5 @@
 <?php
+
 use FormManager\Validators;
 
 Validators\Accept::$error_message = 'The mime type of this input must be %s';

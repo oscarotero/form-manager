@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Validators;
 
 class Time extends Datetime

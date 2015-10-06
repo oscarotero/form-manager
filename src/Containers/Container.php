@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Containers;
 
 use FormManager\Traits\ContainerTrait;
@@ -73,7 +74,7 @@ abstract class Container extends ElementContainer implements ContainerInterface
     /**
      * Checks whether all input values are valid.
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid()
     {
@@ -104,7 +105,7 @@ abstract class Container extends ElementContainer implements ContainerInterface
         }
 
         foreach ($this->children as $child) {
-            if ($child instanceof Container) {
+            if ($child instanceof self) {
                 foreach ($child->getElementsWithErrors() as $element) {
                     $elements[] = $element;
                 }
@@ -117,7 +118,7 @@ abstract class Container extends ElementContainer implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see ElementContainer::toHtml
      */

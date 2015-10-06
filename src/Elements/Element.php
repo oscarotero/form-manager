@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\TreeInterface;
@@ -28,7 +29,7 @@ class Element implements ElementInterface
      */
     public static function __callStatic($name, $arguments)
     {
-        $element = new Element();
+        $element = new self();
 
         $element->setElementName($name, !empty($arguments[0]));
 
@@ -48,7 +49,7 @@ class Element implements ElementInterface
     }
 
     /**
-     * Creates a html attribute
+     * Creates a html attribute.
      *
      * @param string $name
      * @param mixed  $value
@@ -69,7 +70,7 @@ class Element implements ElementInterface
             $value = implode(' ', $value);
         }
 
-        return " {$name}=\"".static::escape($value)."\"";
+        return " {$name}=\"".static::escape($value).'"';
     }
 
     /**
@@ -107,8 +108,8 @@ class Element implements ElementInterface
     /**
      * Changes the name of the element.
      *
-     * @param string  $name  The element name
-     * @param boolean $close True if the element must be closed
+     * @param string $name  The element name
+     * @param bool   $close True if the element must be closed
      */
     public function setElementName($name, $close)
     {
@@ -288,7 +289,7 @@ class Element implements ElementInterface
      *
      * @param string $class The class name to check
      *
-     * @return boolean
+     * @return bool
      */
     public function hasClass($class)
     {

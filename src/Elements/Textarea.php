@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\Traits\InputTrait;
@@ -12,7 +13,7 @@ class Textarea extends Element implements InputInterface
     protected $close = true;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {
@@ -27,7 +28,7 @@ class Textarea extends Element implements InputInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function html($html = null)
     {

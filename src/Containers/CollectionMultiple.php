@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Containers;
 
 use FormManager\Builder as F;
@@ -17,7 +18,7 @@ class CollectionMultiple extends Collection
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function add(array $children)
     {

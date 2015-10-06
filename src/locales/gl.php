@@ -1,4 +1,5 @@
 <?php
+
 use FormManager\Validators;
 
 Validators\Accept::$error_message = 'O tipo de arquivo neste campo debe ser %s';

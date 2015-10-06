@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\TreeInterface;
@@ -18,7 +19,7 @@ class Optgroup extends Fieldset
     public function setParent(TreeInterface $parent = null)
     {
         if (!($parent instanceof Select)) {
-            throw new \Exception("Optgroups only can belong to Select instances");
+            throw new \Exception('Optgroups only can belong to Select instances');
         }
 
         return parent::setParent($parent);

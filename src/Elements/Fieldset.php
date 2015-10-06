@@ -1,10 +1,11 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\TreeInterface;
 
 /**
- * Class to manage a fieldset
+ * Class to manage a fieldset.
  */
 class Fieldset extends ElementContainer
 {

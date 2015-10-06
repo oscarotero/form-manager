@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Fields;
 
 use FormManager\Elements;

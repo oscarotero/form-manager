@@ -1,4 +1,5 @@
 <?php
+
 use FormManager\Builder;
 
 class InputDatetimeTest extends BaseTest

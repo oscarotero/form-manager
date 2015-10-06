@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Validators;
 
 use Psr\Http\Message\UploadedFileInterface;

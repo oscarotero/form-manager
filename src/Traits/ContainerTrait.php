@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Traits;
 
 use FormManager\InvalidValueException;

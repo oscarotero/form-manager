@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager;
 
 /**
@@ -26,7 +27,7 @@ interface ElementInterface extends TreeInterface
     public function removeAttr($name);
 
     /**
-     * Returns or generate an id for this element
+     * Returns or generate an id for this element.
      *
      * @param string $id The new id
      *

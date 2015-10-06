@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__.'/src/autoloader.php';
 
 ini_set('error_reporting', E_ALL);
@@ -43,7 +44,7 @@ $form->fieldsets([
             ->label('O teu nome')
             ->addValidator(function ($input) {
                 if ($input->val() !== 'Lolo') {
-                    throw new InvalidValueException("Nome non valido, debe ser Lolo");
+                    throw new InvalidValueException('Nome non valido, debe ser Lolo');
                 }
             })
             ->datalist([

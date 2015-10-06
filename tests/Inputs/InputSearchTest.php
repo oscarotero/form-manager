@@ -1,4 +1,5 @@
 <?php
+
 use FormManager\Builder;
 
 class InputSearchTest extends BaseTest

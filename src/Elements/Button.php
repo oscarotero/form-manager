@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\Traits\InputTrait;

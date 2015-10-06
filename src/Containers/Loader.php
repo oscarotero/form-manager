@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Containers;
 
 class Loader extends Group
@@ -18,7 +19,7 @@ class Loader extends Group
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {

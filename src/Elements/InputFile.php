@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use Psr\Http\Message\UploadedFileInterface;
@@ -27,7 +28,7 @@ class InputFile extends Input implements InputInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {

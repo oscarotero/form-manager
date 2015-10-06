@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Containers;
 
 use FormManager\ContainerInterface;
@@ -34,7 +35,7 @@ class Collection extends Group
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function add(array $children)
     {
@@ -44,7 +45,7 @@ class Collection extends Group
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($value = null)
     {
@@ -61,7 +62,7 @@ class Collection extends Group
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {

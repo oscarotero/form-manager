@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\TreeInterface;
@@ -54,7 +55,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      *
      * @see Iterator
      *
-     * @return integer|null
+     * @return int|null
      */
     public function key()
     {
@@ -104,7 +105,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      *
      * @param mixed $offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -118,7 +119,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      *
      * @param mixed $offset
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetGet($offset)
     {
@@ -165,7 +166,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      *
      * @see Countable
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
@@ -182,7 +183,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     public function html($html = null)
     {
         if ($html !== null) {
-            throw new \InvalidArgumentException("Element containers cannot store html");
+            throw new \InvalidArgumentException('Element containers cannot store html');
         }
 
         $html = '';
@@ -211,7 +212,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     }
 
     /**
-     * Removes all children
+     * Removes all children.
      *
      * @return self
      */

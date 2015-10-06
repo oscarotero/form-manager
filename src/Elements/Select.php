@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\InvalidValueException;
@@ -118,7 +119,7 @@ class Select extends ElementContainer implements InputInterface
      * Set true to allow values non defined in the $options array
      * Useful to insert dinamically new values.
      *
-     * @param boolean $allow
+     * @param bool $allow
      *
      * @return self
      */
@@ -130,7 +131,7 @@ class Select extends ElementContainer implements InputInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {

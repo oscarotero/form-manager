@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager;
 
 /**
@@ -20,7 +21,7 @@ class Builder
     }
 
     /**
-     * Constructor to use the Builder as a instance mode, instead static mode
+     * Constructor to use the Builder as a instance mode, instead static mode.
      *
      * @param FactoryInterface|null $factory $factory
      */

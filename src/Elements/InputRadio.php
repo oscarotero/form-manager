@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Elements;
 
 use FormManager\InputInterface;
@@ -8,7 +9,7 @@ class InputRadio extends InputCheckbox implements InputInterface
     protected $attributes = ['type' => 'radio'];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load($value = null)
     {
@@ -20,7 +21,7 @@ class InputRadio extends InputCheckbox implements InputInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function val($value = null)
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace FormManager\Validators;
 
 class Email extends Url
