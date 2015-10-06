@@ -28,7 +28,7 @@ class InputCheckbox extends Input implements InputInterface
             return ($this->attr('checked') ? $this->attr('value') : null);
         }
 
-        if (($this->attr('value') == $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+        if (((string) $this->attr('value') === (string) $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
             $this->check();
         } else {
             $this->uncheck();
