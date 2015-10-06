@@ -13,7 +13,7 @@ class InputCheckbox extends Input implements InputInterface
      */
     public function load($value = null)
     {
-        if (($this->attr('value') == $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+        if ($this->evalValue($value)) {
             $this->check();
         } else {
             $this->uncheck();
@@ -29,7 +29,7 @@ class InputCheckbox extends Input implements InputInterface
             return ($this->attr('checked') ? $this->attr('value') : null);
         }
 
-        if (((string) $this->attr('value') === (string) $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN)) {
+        if ($this->evalValue($value)) {
             $this->check();
         } else {
             $this->uncheck();
@@ -52,5 +52,10 @@ class InputCheckbox extends Input implements InputInterface
     public function uncheck()
     {
         return $this->removeAttr('checked');
+    }
+
+    private function evalValue($value)
+    {
+        return ((string) $this->attr('value') === (string) $value) || filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 }

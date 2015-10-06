@@ -12,26 +12,39 @@ class InputCheckboxTest extends BaseTest
         $this->_testCheckUncheck(Builder::checkbox());
     }
 
-    public function testBoolean()
+    public function booleanProvider()
+    {
+        return [
+            [0, false],
+            [1, true],
+            ['off', false],
+            ['on', true],
+            ['0', false],
+            ['1', true],
+        ];
+    }
+
+    /**
+     * @dataProvider booleanProvider
+     */
+    public function testBoolean($value, $checked)
     {
         $input = Builder::checkbox();
 
-        $input->val(0);
-        $this->assertNotTrue($input->attr('checked'));
+        $input->val($value);
 
-        $input->val(1);
-        $this->assertTrue($input->attr('checked'));
+        if ($checked) {
+            $this->assertTrue($input->attr('checked'));
+        } else {
+            $this->assertNotTrue($input->attr('checked'));
+        }
 
-        $input->val('off');
-        $this->assertNotTrue($input->attr('checked'));
+        $input->load($value);
 
-        $input->val('on');
-        $this->assertTrue($input->attr('checked'));
-
-        $input->val('0');
-        $this->assertNotTrue($input->attr('checked'));
-
-        $input->val('1');
-        $this->assertTrue($input->attr('checked'));
+        if ($checked) {
+            $this->assertTrue($input->attr('checked'));
+        } else {
+            $this->assertNotTrue($input->attr('checked'));
+        }
     }
 }
