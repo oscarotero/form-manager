@@ -147,16 +147,11 @@ class Select extends ElementContainer implements InputInterface
             }
         }
 
-        foreach ($this->children as $option) {
-            $option->uncheck();
-        }
-
         if (is_array($value)) {
-            $this->value = $this->valArray($value);
-        } elseif (is_object($value)) {
-            throw new InvalidValueException('Value must be an array or string');
+            $this->value = $this->applyValues($value);
         } else {
-            $this->value = $this->valPlain($value);
+            $value = $this->applyValues((array) $value);
+            $this->value = $value[0];
         }
 
         $this->valid = null;
@@ -164,8 +159,14 @@ class Select extends ElementContainer implements InputInterface
         return $this;
     }
 
-    private function valArray($value)
+    private function applyValues(array $value)
     {
+        //Uncheck all
+        foreach ($this->children as $option) {
+            $option->uncheck();
+        }
+
+        //Normalize values
         $value = array_keys(array_flip($value));
 
         //check the selected values
@@ -179,23 +180,6 @@ class Select extends ElementContainer implements InputInterface
             }
 
             $this->children[$val]->check();
-        }
-
-        return $value;
-    }
-
-    private function valPlain($value)
-    {
-        if (preg_match('/^[\d]+$/', $value)) {
-            $value = intval($value);
-        }
-
-        //check the selected values
-        if ($this->allowNewValues && !isset($this->children[$value])) {
-            $this[$value] = $value;
-            $this->children[$value]->check();
-        } elseif (isset($this->children[$value])) {
-            $this->children[$value]->check();
         }
 
         return $value;

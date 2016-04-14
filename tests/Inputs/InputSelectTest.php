@@ -21,6 +21,7 @@ class InputSelectTest extends BaseTest
             0 => 'Zero',
             1 => 'One',
             2 => 'Two',
+            '002' => 'Two',
         ]);
 
         $select->val('three');
@@ -31,6 +32,14 @@ class InputSelectTest extends BaseTest
 
         $select->val('1');
         $this->assertTrue($select->isValid());
+
+        $select->val('2');
+        $this->assertTrue($select->isValid());
+        $this->assertSame(2, $select->val());
+
+        $select->val('002');
+        $this->assertTrue($select->isValid());
+        $this->assertSame('002', $select->val());
     }
 
     public function testAllowNewValues()
