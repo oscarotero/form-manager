@@ -372,6 +372,10 @@ class Element implements ElementInterface
         }
 
         foreach ($this->data as $name => $value) {
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+
             $html .= static::getHtmlAttribute("data-{$name}", $value);
         }
 
