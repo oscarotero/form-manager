@@ -7,7 +7,7 @@ use FormManager\InvalidValueException;
 
 class Datetime
 {
-    public static $error_message = 'This value is not a valid datetime';
+    public static $error_message = 'This value is not a valid';
 
     /**
      * Validates the input value according to this attribute.

@@ -2,7 +2,7 @@
 
 namespace FormManager\Elements;
 
-use FormManager\TreeInterface;
+use FormManager\ElementInterface;
 
 /**
  * Class to manage an optgroup of a select.
@@ -12,11 +12,11 @@ class Optgroup extends Fieldset
     protected $name = 'optgroup';
 
     /**
-     * @see TreeInterface
+     * @see ElementInterface
      *
      * {@inheritdoc}
      */
-    public function setParent(TreeInterface $parent = null)
+    public function setParent(ElementInterface $parent = null)
     {
         if (!($parent instanceof Select)) {
             throw new \Exception('Optgroups only can belong to Select instances');

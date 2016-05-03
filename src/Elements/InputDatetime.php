@@ -6,11 +6,11 @@ use FormManager\InputInterface;
 
 class InputDatetime extends Input implements InputInterface
 {
-    protected $attributes = ['type' => 'datetime'];
-    protected $format = 'Y-m-d\TH:i:sP';
+    protected $format;
 
-    public function __construct()
+    public function __construct($format)
     {
+        $this->format = $format;
         $this->addValidator('FormManager\\Validators\\Datetime::validate');
     }
 

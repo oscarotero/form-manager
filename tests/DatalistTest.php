@@ -10,6 +10,6 @@ class DatalistTest extends BaseTest
         $input->datalist->id('my-datalist-id');
 
         $this->assertEquals('my-id', $input->attr('id'));
-        $this->assertEquals(' <input type="text" id="my-id" list="my-datalist-id"><datalist id="my-datalist-id"><option value="Hello">World</option></datalist> ', (string) $input);
+        $this->assertEquals('<div> <input type="text" id="my-id" list="my-datalist-id"><datalist id="my-datalist-id"><option value="Hello">World</option></datalist> </div>', (string) $input);
     }
 }

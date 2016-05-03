@@ -17,10 +17,10 @@ class InputUrlTest extends BaseTest
         $input = Builder::url();
 
         $input->val('invalid-url');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('http://valid-url.com');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
         $this->assertEquals('http://valid-url.com', $input->val());
     }
 }

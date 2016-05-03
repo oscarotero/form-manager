@@ -2,14 +2,12 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\InputNumber;
 
 class Number extends Field
 {
     public function __construct()
     {
-        $this->input = new Elements\InputNumber();
-
-        parent::__construct();
+        parent::__construct((new InputNumber())->attr('type', 'number'));
     }
 }

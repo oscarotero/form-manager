@@ -17,10 +17,10 @@ class InputEmailTest extends BaseTest
         $input = Builder::email();
 
         $input->val('invalid-email');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('valid@email.com');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
         $this->assertEquals('valid@email.com', $input->val());
     }
 }

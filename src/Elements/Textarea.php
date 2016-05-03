@@ -2,13 +2,10 @@
 
 namespace FormManager\Elements;
 
-use FormManager\Traits\InputTrait;
 use FormManager\InputInterface;
 
-class Textarea extends Element implements InputInterface
+class Textarea extends Input implements InputInterface
 {
-    use InputTrait;
-
     protected $name = 'textarea';
     protected $close = true;
 

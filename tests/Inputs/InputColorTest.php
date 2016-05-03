@@ -16,13 +16,13 @@ class InputColorTest extends BaseTest
         $input = Builder::color();
 
         $input->val('red');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('11234f');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('#11234f');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
         $this->assertEquals('#11234f', $input->val());
     }
 }

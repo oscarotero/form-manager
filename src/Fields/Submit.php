@@ -2,18 +2,13 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Button;
 
 class Submit extends Field
 {
     public function __construct()
     {
-        $this->labelPosition = static::LABEL_NONE;
-        $this->datalistAllowed = false;
-
-        $this->input = (new Elements\Button())->attr('type', 'submit');
-
-        parent::__construct();
+        parent::__construct((new Button())->attr('type', 'submit'));
     }
 
     /**
@@ -24,5 +19,15 @@ class Submit extends Field
     public function label($html = null)
     {
         return $this->__call('html', func_get_args());
+    }
+
+    /**
+     * {@inheritdoc}
+     * 
+     * @see RenderTrait
+     */
+    protected function defaultRender($prepend = '', $append = '')
+    {
+        return "{$prepend} {$this->input} {$append}";
     }
 }

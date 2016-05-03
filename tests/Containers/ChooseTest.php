@@ -1,7 +1,7 @@
 <?php
 
 use FormManager\Builder;
-use FormManager\Containers\Choose;
+use FormManager\Fields\Choose;
 
 class ChooseTest extends BaseTest
 {
@@ -14,7 +14,7 @@ class ChooseTest extends BaseTest
             'value4' => Builder::radio()->label('Value 4'),
         ]);
 
-        $this->assertInstanceOf('FormManager\\Containers\\Choose', $field);
+        $this->assertInstanceOf('FormManager\\Fields\\Choose', $field);
         $this->assertInstanceOf('FormManager\\Fields\\Radio', $field['value1']);
 
         return $field;
@@ -28,13 +28,13 @@ class ChooseTest extends BaseTest
         $field->val('value1');
 
         $this->assertEquals('value1', $field->val());
-        $this->assertTrue($field->isValid());
+        $this->assertTrue($field->validate());
         $this->assertTrue($field['value1']->attr('checked'));
         $this->assertNull($field['value2']->attr('checked'));
 
         $field->val('invalid-value');
 
-        $this->assertFalse($field->isValid());
+        $this->assertFalse($field->validate());
         $this->assertEquals('invalid-value', $field->val());
     }
 }

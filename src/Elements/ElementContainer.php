@@ -2,7 +2,7 @@
 
 namespace FormManager\Elements;
 
-use FormManager\TreeInterface;
+use FormManager\ElementInterface;
 use Iterator;
 use ArrayAccess;
 use Countable;
@@ -20,6 +20,8 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      */
     public function __clone()
     {
+        parent::__clone();
+        
         foreach ($this->children as $key => $child) {
             $this->children[$key] = clone $child;
             $this->children[$key]->setParent($this);
@@ -29,11 +31,11 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     /**
      * Returns the index of an element.
      *
-     * @param TreeInterface $child
+     * @param ElementInterface $child
      *
      * @return mixed
      */
-    public function indexOf(TreeInterface $child)
+    public function indexOf(ElementInterface $child)
     {
         return array_search($child, $this->children, true);
     }
@@ -136,8 +138,8 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
      */
     public function offsetSet($offset, $value)
     {
-        if (!($value instanceof TreeInterface)) {
-            throw new \InvalidArgumentException('This value must be an instance of FormManager\\TreeInterface');
+        if (!($value instanceof ElementInterface)) {
+            throw new \InvalidArgumentException('This value must be an instance of FormManager\\ElementInterface');
         }
 
         $value->setParent($this);

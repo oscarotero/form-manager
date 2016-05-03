@@ -2,16 +2,22 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Input;
 
 class Password extends Field
 {
     public function __construct()
     {
-        $this->datalistAllowed = false;
+        parent::__construct((new Input())->attr('type', 'password'));
+    }
 
-        $this->input = (new Elements\Input())->attr('type', 'password');
-
-        parent::__construct();
+    /**
+     * {@inheritdoc}
+     * 
+     * @see RenderTrait
+     */
+    protected function defaultRender($prepend = '', $append = '')
+    {
+        return "{$prepend}{$this->label} {$this->input} {$this->errorLabel}{$append}";
     }
 }

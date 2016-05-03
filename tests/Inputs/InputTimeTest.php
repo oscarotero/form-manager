@@ -16,22 +16,22 @@ class InputTimeTest extends BaseTest
         $input = Builder::time();
 
         $input->val('38:34:32');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('18:34:32');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
         $this->assertEquals('18:34:32', $input->val());
 
         $input->max('18:34:31');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->max('18:34:32');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->max('18:34:33');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->min('18:34:33');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
     }
 }

@@ -2,16 +2,12 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Textarea;
 
 class Textarea extends Field
 {
     public function __construct()
     {
-        $this->datalistAllowed = false;
-
-        $this->input = new Elements\Textarea();
-
-        parent::__construct();
+        parent::__construct(new Textarea());
     }
 }

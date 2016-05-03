@@ -1,7 +1,7 @@
 <?php
 
 use FormManager\Builder;
-use FormManager\Containers\Group;
+use FormManager\Fields\Group;
 
 class GroupTest extends BaseTest
 {
@@ -14,7 +14,7 @@ class GroupTest extends BaseTest
             'image' => Builder::file()->label('Image'),
         ]);
 
-        $this->assertInstanceOf('FormManager\\Containers\\Group', $field);
+        $this->assertInstanceOf('FormManager\\Fields\\Group', $field);
         $this->assertInstanceOf('FormManager\\Fields\\Text', $field['name']);
 
         return $field;

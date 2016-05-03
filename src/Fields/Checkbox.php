@@ -2,16 +2,22 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\InputCheckbox;
 
 class Checkbox extends Field
 {
     public function __construct()
     {
-        $this->labelPosition = static::LABEL_AFTER;
+        parent::__construct(new InputCheckbox());
+    }
 
-        $this->input = new Elements\InputCheckbox();
-
-        parent::__construct();
+    /**
+     * {@inheritdoc}
+     * 
+     * @see RenderTrait
+     */
+    protected function defaultRender($prepend = '', $append = '')
+    {
+        return "{$prepend}{$this->input} {$this->label} {$this->errorLabel}{$append}";
     }
 }

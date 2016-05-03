@@ -59,9 +59,9 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($element->get('var2'));
     }
 
-    protected function _testField($field, $hasLabel = true, $isContainer = false)
+    protected function _testField($field, $isContainer = false)
     {
-        $this->assertInstanceOf('FormManager\\TreeInterface', $field);
+        $this->assertInstanceOf('FormManager\\FieldInterface', $field);
 
         if ($isContainer) {
             $this->assertInstanceOf('FormManager\\Fields\\FieldContainer', $field);
@@ -74,15 +74,10 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         //Error labels
         $field->required();
 
-        $field->isValid();
+        $field->validate();
 
-        if ($hasLabel) {
-            $this->assertInstanceOf('FormManager\\Elements\\Label', $field->label);
-            $this->assertInstanceOf('FormManager\\Elements\\Label', $field->errorLabel);
-        } else {
-            $this->assertNull($field->label);
-            $this->assertNull($field->errorLabel);
-        }
+        $this->assertInstanceOf('FormManager\\Elements\\Label', $field->label);
+        $this->assertInstanceOf('FormManager\\Elements\\Label', $field->errorLabel);
     }
 
     protected function _testRequired($input, $value = null)
@@ -91,7 +86,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
         $input->val($value);
 
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
     }
 
     protected function _testCheckUncheck($input)
@@ -116,23 +111,23 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
     protected function _testNumber($input)
     {
         $input->val('not a number');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('25');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
         $this->assertEquals('25', $input->val());
 
         $input->val('25.5');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->val('');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->val('0');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->val('0.00');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
     }
 
     protected function _testMinMax($input)
@@ -141,22 +136,22 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $input->max(20);
 
         $input->val(10);
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->val(20);
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->val(9);
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val(21);
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val(9.99);
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val(20.01);
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
     }
 
     protected function _testMaxlength($input, $success = 'strin', $fail = 'string', $max = 5)
@@ -164,10 +159,10 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $input->maxlength($max);
 
         $input->val($success);
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->val($fail);
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
     }
 
     protected function _testPattern($input)
@@ -175,18 +170,18 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $input->pattern('[0-9]');
 
         $input->val('0');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
 
         $input->val('a');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->pattern('/[a-z]{2}/');
 
         $input->val('/a/');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('/ab/');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
     }
 
     protected function _testValidator($input)
@@ -197,11 +192,11 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
             };
         });
 
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->removeAttr('pattern');
         $input->val('dave');
 
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
     }
 }

@@ -8,7 +8,8 @@ namespace FormManager\Traits;
 trait RenderTrait
 {
     protected $render;
-    protected $rendering = false;
+    protected $wrapper;
+    private $rendering; 
 
     /**
      * @see FormManager\DataElementInterface
@@ -32,34 +33,25 @@ trait RenderTrait
      */
     public function toHtml($prepend = '', $append = '')
     {
-        if ($this->rendering === false) {
-            $this->rendering = true;
+        if ($this->rendering) {
+            throw new \RuntimeException('Recursive rendering');
+        }
 
-            if ($this->render) {
-                $html = call_user_func($this->render, $this, $prepend, $append);
-            } else {
-                $html = $this->customRender($prepend, $append);
-            }
+        $this->rendering = true;
 
-            $this->rendering = false;
+        if (empty($this->render)) {
+            $html = $this->defaultRender($prepend, $append);
+        } else {
+            $html = call_user_func($this->render, $this, $prepend, $append);
+        }
 
+        $this->rendering = false;
+
+        if (empty($this->wrapper)) {
             return $html;
         }
 
-        return $this->defaultRender($prepend, $append);
-    }
-
-    /**
-     * The custom render used on extend this object.
-     *
-     * @param string $prepend Optional string prepended to html content
-     * @param string $append  Optional string appended to html content
-     *
-     * @return string
-     */
-    protected function customRender($prepend = '', $append = '')
-    {
-        return $this->defaultRender($prepend, $append);
+        return $this->wrapper->toHtml($html);
     }
 
     /**

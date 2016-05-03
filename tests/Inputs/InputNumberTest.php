@@ -19,10 +19,10 @@ class InputNumberTest extends BaseTest
     {
         $number = Builder::number()->min(1)->val('');
 
-        $this->assertTrue($number->isValid());
+        $this->assertTrue($number->validate());
 
         $number->required();
 
-        $this->assertFalse($number->isValid());
+        $this->assertFalse($number->validate());
     }
 }

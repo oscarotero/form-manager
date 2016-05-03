@@ -1,6 +1,6 @@
 <?php
 
-namespace FormManager\Containers;
+namespace FormManager\Fields;
 
 class Loader extends Group
 {

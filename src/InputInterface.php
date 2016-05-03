@@ -8,7 +8,7 @@ use FormManager\Elements\Label;
 /**
  * Interface used by all input elements.
  */
-interface InputInterface extends ContainerInterface
+interface InputInterface extends FieldInterface
 {
     /**
      * Set the datalist associated with this input.

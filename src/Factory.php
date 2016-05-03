@@ -12,7 +12,6 @@ class Factory implements FactoryInterface
     protected $cache = [];
     protected $namespaces = [
         'FormManager\\Fields\\',
-        'FormManager\\Containers\\',
     ];
 
     /**

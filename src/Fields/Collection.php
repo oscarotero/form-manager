@@ -1,8 +1,7 @@
 <?php
 
-namespace FormManager\Containers;
+namespace FormManager\Fields;
 
-use FormManager\ContainerInterface;
 use FormManager\Builder as F;
 
 class Collection extends Group
@@ -29,8 +28,6 @@ class Collection extends Group
             $offset = count($this->children);
         }
 
-        $this->valid = null;
-
         parent::offsetSet($offset, $value);
     }
 
@@ -50,7 +47,6 @@ class Collection extends Group
     public function load($value = null)
     {
         $this->children = [];
-        $this->valid = null;
 
         if ($value) {
             foreach ($value as $k => $v) {
@@ -71,7 +67,6 @@ class Collection extends Group
         }
 
         $this->children = [];
-        $this->valid = null;
 
         if ($value) {
             foreach ($value as $v) {
@@ -94,7 +89,7 @@ class Collection extends Group
         if (is_array($template)) {
             $template = F::group($template);
         } elseif (!($template instanceof Group)) {
-            throw new \InvalidArgumentException('Invalid type of the template. Only arrays and FormManager\\Containers\\Group are allowed');
+            throw new \InvalidArgumentException('Invalid type of the template. Only arrays and FormManager\\Fields\\Group are allowed');
         }
 
         $this->template = $template;

@@ -1,2 +1,6 @@
-[16-Jun-2015 17:57:15 Europe/Madrid] PHP Fatal error:  Call to a member function attr() on null in /Volumes/Documentos/www/form-manager/demo.php on line 19
-[16-Jun-2015 17:58:48 Europe/Madrid] PHP Fatal error:  Call to a member function getParent() on string in /Volumes/Documentos/www/form-manager/demo.php on line 19
+[03-May-2016 21:54:43 UTC] PHP Notice:  Undefined variable: form in /Volumes/Documentos/www/form-manager/demo.php on line 41
+[03-May-2016 21:54:43 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fieldsets() on unknown in /Volumes/Documentos/www/form-manager/demo.php:41
+Stack trace:
+#0 {main}
+  thrown in /Volumes/Documentos/www/form-manager/demo.php on line 41
+[03-May-2016 22:16:17 UTC] PHP Fatal error:  Method FormManager\Fields\Select::__toString() must not throw an exception, caught RuntimeException: Recursive rendering in /Volumes/Documentos/www/form-manager/demo.php on line 0

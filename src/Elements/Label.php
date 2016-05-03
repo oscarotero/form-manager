@@ -47,7 +47,7 @@ class Label extends Element
     public function toHtml($prepend = '', $append = '')
     {
         //Do not print empty labels
-        if (strlen($this->html.$prepend.$append) === 0) {
+        if (strlen($this->html().$prepend.$append) === 0) {
             return '';
         }
 

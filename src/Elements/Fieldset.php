@@ -2,7 +2,8 @@
 
 namespace FormManager\Elements;
 
-use FormManager\TreeInterface;
+use FormManager\ElementInterface;
+use FormManager\Fields\Form;
 
 /**
  * Class to manage a fieldset.
@@ -12,20 +13,20 @@ class Fieldset extends ElementContainer
     protected $name = 'fieldset';
 
     /**
-     * @see TreeInterface
+     * @see ElementInterface
      *
      * {@inheritdoc}
      */
-    public function setParent(TreeInterface $parent = null)
+    public function setParent(ElementInterface $parent = null)
     {
+        if (!($parent instanceof Form)) {
+            throw new \Exception('Fieldset only can belong to Form instances');
+        }
+
         $this->parent = $parent;
 
-        //Add the options to the select
-        foreach ($this->children as $offset => $value) {
-            $parent->offsetSet($offset, $value);
-
-            //Keep the parent to this
-            $value->setParent($this);
+        foreach ($this->children as $child) {
+            $child->setParent($parent);
         }
 
         return $this;
@@ -36,12 +37,12 @@ class Fieldset extends ElementContainer
      */
     public function offsetSet($offset, $value)
     {
+        //Add child to itself
+        parent::offsetSet($offset, $value);
+
         //Add the child to the parent
         if ($this->parent) {
             $this->parent->offsetSet($offset, $value);
         }
-
-        //Add child to itself
-        parent::offsetSet($offset, $value);
     }
 }

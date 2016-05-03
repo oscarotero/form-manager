@@ -1,7 +1,7 @@
 <?php
 
 use FormManager\Builder;
-use FormManager\Containers\Collection;
+use FormManager\Fields\Collection;
 
 class CollectionTest extends BaseTest
 {
@@ -14,8 +14,8 @@ class CollectionTest extends BaseTest
             'image' => Builder::file()->label('Image'),
         ]);
 
-        $this->assertInstanceOf('FormManager\\Containers\\Collection', $field);
-        $this->assertInstanceOf('FormManager\\Containers\\Group', $field->template);
+        $this->assertInstanceOf('FormManager\\Fields\\Collection', $field);
+        $this->assertInstanceOf('FormManager\\Fields\\Group', $field->template);
 
         return $field;
     }
@@ -69,6 +69,6 @@ class CollectionTest extends BaseTest
         $template['name']->id('my-id');
         $template['name']->label->id('my-label-id');
 
-        $this->assertEquals('<label id="my-label-id" for="my-id">Name</label> <input type="text" id="my-id" name="key[::n::][name]" aria-labelledby="my-label-id"> ', (string) $template['name']);
+        $this->assertEquals('<div><label id="my-label-id" for="my-id">Name</label> <input type="text" id="my-id" name="key[::n::][name]" aria-labelledby="my-label-id"> </div>', (string) $template['name']);
     }
 }

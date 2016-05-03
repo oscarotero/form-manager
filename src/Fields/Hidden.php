@@ -2,17 +2,22 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Input;
 
 class Hidden extends Field
 {
     public function __construct()
     {
-        $this->labelPosition = static::LABEL_NONE;
-        $this->datalistAllowed = false;
+        parent::__construct((new Input())->attr('type', 'hidden'));
+    }
 
-        $this->input = (new Elements\Input())->attr('type', 'hidden');
-
-        parent::__construct();
+    /**
+     * {@inheritdoc}
+     * 
+     * @see RenderTrait
+     */
+    protected function defaultRender($prepend = '', $append = '')
+    {
+        return "{$prepend}{$this->input}{$this->errorLabel}{$append}";
     }
 }

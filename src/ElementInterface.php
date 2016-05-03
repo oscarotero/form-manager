@@ -5,8 +5,13 @@ namespace FormManager;
 /**
  * Interface used by all html elements.
  */
-interface ElementInterface extends TreeInterface
+interface ElementInterface
 {
+    /**
+     * Magic method to convert to html.
+     */
+    public function __toString();
+
     /**
      * Set/Get an attribute value.
      *
@@ -31,7 +36,30 @@ interface ElementInterface extends TreeInterface
      *
      * @param string $id The new id
      *
-     * @return self
+     * @return string
      */
     public function id($id = null);
+
+    /**
+     * Set the element parent.
+     *
+     * @param null|ElementInterface $parent
+     *
+     * @return self
+     */
+    public function setParent(ElementInterface $parent = null);
+
+    /**
+     * Returns the element parent.
+     *
+     * @return null|ElementInterface
+     */
+    public function getParent();
+
+    /**
+     * Returns the form element.
+     *
+     * @return null|Fields\Form
+     */
+    public function getForm();
 }

@@ -1,7 +1,7 @@
 <?php
 
 use FormManager\Builder;
-use FormManager\Containers\CollectionMultiple;
+use FormManager\Fields\CollectionMultiple;
 
 class CollectionMultipleTest extends BaseTest
 {
@@ -22,8 +22,8 @@ class CollectionMultipleTest extends BaseTest
             ],
         ]);
 
-        $this->assertInstanceOf('FormManager\\Containers\\CollectionMultiple', $field);
-        $this->assertInstanceOf('FormManager\\Containers\\Group', $field->template['section']);
+        $this->assertInstanceOf('FormManager\\Fields\\CollectionMultiple', $field);
+        $this->assertInstanceOf('FormManager\\Fields\\Group', $field->template['section']);
 
         return $field;
     }

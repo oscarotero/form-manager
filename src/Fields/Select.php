@@ -2,20 +2,26 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Select;
 
 class Select extends FieldContainer
 {
     public function __construct(array $options = null)
     {
-        $this->datalistAllowed = false;
-
-        $this->input = new Elements\Select();
+        parent::__construct(new Select());
 
         if ($options) {
             $this->input->options($options);
         }
+    }
 
-        parent::__construct();
+    /**
+     * {@inheritdoc}
+     * 
+     * @see RenderTrait
+     */
+    protected function defaultRender($prepend = '', $append = '')
+    {
+        return "{$prepend}{$this->label} {$this->input} {$this->errorLabel}{$append}";
     }
 }

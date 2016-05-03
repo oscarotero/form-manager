@@ -2,14 +2,15 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Input;
 
 class Email extends Field
 {
     public function __construct()
     {
-        $this->input = new Elements\InputEmail();
+        parent::__construct(new Input());
 
-        parent::__construct();
+        $this->input->attr('type', 'email');
+        $this->input->addValidator('FormManager\\Validators\\Email::validate');
     }
 }

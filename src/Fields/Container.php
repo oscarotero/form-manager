@@ -1,18 +1,18 @@
 <?php
 
-namespace FormManager\Containers;
+namespace FormManager\Fields;
 
-use FormManager\Traits\ContainerTrait;
+use FormManager\Traits\ValidateTrait;
 use FormManager\Traits\RenderTrait;
-use FormManager\ContainerInterface;
-use FormManager\Elements\ElementContainer;
+use FormManager\Traits\StructureTrait;
+use FormManager\FieldInterface;
+use FormManager\Elements\Div;
 
-abstract class Container extends ElementContainer implements ContainerInterface
+abstract class Container extends Div implements FieldInterface
 {
-    protected $name = 'div';
-
-    use ContainerTrait;
     use RenderTrait;
+    use ValidateTrait;
+    use StructureTrait;
 
     public function __construct(array $children = null)
     {
@@ -72,26 +72,6 @@ abstract class Container extends ElementContainer implements ContainerInterface
     }
 
     /**
-     * Checks whether all input values are valid.
-     *
-     * @return bool
-     */
-    public function isValid()
-    {
-        if (!$this->validate()) {
-            return false;
-        }
-
-        foreach ($this->children as $child) {
-            if (!$child->isValid()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * Returns all childrens contaning errors.
      *
      * @return array
@@ -100,7 +80,7 @@ abstract class Container extends ElementContainer implements ContainerInterface
     {
         $elements = [];
 
-        if (!$this->isValid()) {
+        if (strlen($this->error())) {
             $elements[] = $this;
         }
 
@@ -109,7 +89,7 @@ abstract class Container extends ElementContainer implements ContainerInterface
                 foreach ($child->getElementsWithErrors() as $element) {
                     $elements[] = $element;
                 }
-            } elseif (!$child->isValid()) {
+            } elseif (strlen($child->error())) {
                 $elements[] = $child;
             }
         }

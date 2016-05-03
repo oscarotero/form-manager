@@ -2,9 +2,8 @@
 
 namespace FormManager\Elements;
 
-use FormManager\TreeInterface;
 use FormManager\ElementInterface;
-use FormManager\Containers\Form;
+use FormManager\Fields\Form;
 
 /**
  * Class to manage an html element.
@@ -21,20 +20,6 @@ class Element implements ElementInterface
     protected $data = [];
     protected $vars = [];
     protected $html;
-
-    /**
-     * Magic method to create new instances using the API Element::div(bool $close).
-     *
-     * @return Element
-     */
-    public static function __callStatic($name, $arguments)
-    {
-        $element = new self();
-
-        $element->setElementName($name, !empty($arguments[0]));
-
-        return $element;
-    }
 
     /**
      * Escapes a property value.
@@ -89,6 +74,16 @@ class Element implements ElementInterface
         return $this;
     }
 
+    public function __debugInfo()
+    {
+        return [
+            'attributes' => $this->attributes,
+            'data' => $this->data,
+            'vars' => $this->vars,
+            'html' => $this->html,
+        ];
+    }
+
     /**
      * @see ElementInterface
      *
@@ -103,6 +98,14 @@ class Element implements ElementInterface
         }
 
         return $string;
+    }
+
+    /**
+     * Magic method to clone the elements.
+     */
+    public function __clone()
+    {
+        $this->removeAttr('id');
     }
 
     /**
@@ -128,11 +131,11 @@ class Element implements ElementInterface
     }
 
     /**
-     * @see TreeInterface
+     * @see ElementInterface
      *
      * {@inheritdoc}
      */
-    public function setParent(TreeInterface $parent = null)
+    public function setParent(ElementInterface $parent = null)
     {
         $this->parent = $parent;
 
@@ -140,7 +143,7 @@ class Element implements ElementInterface
     }
 
     /**
-     * @see TreeInterface
+     * @see ElementInterface
      *
      * {@inheritdoc}
      */
@@ -441,6 +444,7 @@ class Element implements ElementInterface
      */
     public function toHtml($prepend = '', $append = '')
     {
+
         $html = $this->openHtml();
 
         if ($this->close) {

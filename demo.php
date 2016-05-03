@@ -38,6 +38,7 @@ $form = F::Form([
     'enviar' => F::submit()->html('Enviar'),
 ]);
 
+
 $form->fieldsets([
     'personal' => [
         'nome' => F::text()
@@ -59,10 +60,11 @@ $form->fieldsets([
             ])
             ->label('Idade')
             ->render(function ($input) {
-                return '<p>'.$input.'</p>';
+                return "<p>{$input->label} {$input->input}</p>";
             }),
     ],
 ]);
+/*
 
 $form['nome']->errorLabel->class('my-error');
 
@@ -71,5 +73,5 @@ $form->loadFromGlobals();
 if (!$form->isValid()) {
     echo 'Invalid values';
 }
-
+*/
 echo $form;

@@ -2,14 +2,16 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Input;
 
 class Url extends Field
 {
     public function __construct()
     {
-        $this->input = new Elements\InputUrl();
+        $input = (new Input())
+            ->attr('type', 'url')
+            ->addValidator('FormManager\\Validators\\Url::validate');
 
-        parent::__construct();
+        parent::__construct($input);
     }
 }

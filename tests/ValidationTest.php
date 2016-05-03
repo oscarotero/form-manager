@@ -29,7 +29,7 @@ class ValidationTest extends BaseTest
             'repeat_password' => '12345',
         ]);
 
-        $this->assertFalse($form->isValid());
+        $this->assertFalse($form->validate());
 
         $this->assertEquals('The passwords does not match', $form->error());
 
@@ -37,7 +37,7 @@ class ValidationTest extends BaseTest
 
         $form['repeat_password']->val('1234');
 
-        $this->assertTrue($form->isValid());
+        $this->assertTrue($form->validate());
         $this->assertNull($form->error());
 
         $this->assertCount(0, $form->getElementsWithErrors());

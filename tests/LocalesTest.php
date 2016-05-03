@@ -11,7 +11,7 @@ class LocalesTest extends BaseTest
 
         FormManager\Validators\Required::$error_message = $message;
 
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $this->assertEquals($message, $input->error());
     }

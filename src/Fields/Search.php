@@ -2,14 +2,12 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\Input;
 
 class Search extends Field
 {
     public function __construct()
     {
-        $this->input = (new Elements\Input())->attr('type', 'search');
-
-        parent::__construct();
+        parent::__construct((new Input())->attr('type', 'search'));
     }
 }

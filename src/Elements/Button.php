@@ -2,13 +2,10 @@
 
 namespace FormManager\Elements;
 
-use FormManager\Traits\InputTrait;
 use FormManager\InputInterface;
 
-class Button extends Element implements InputInterface
+class Button extends Input implements InputInterface
 {
-    use InputTrait;
-
     protected $name = 'button';
     protected $close = true;
 }

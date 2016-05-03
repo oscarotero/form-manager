@@ -3,9 +3,9 @@
 namespace FormManager;
 
 /**
- * Interface used by all container elements.
+ * Interface used by all elements in the form.
  */
-interface ContainerInterface extends ElementInterface
+interface FieldInterface extends ElementInterface
 {
     /**
      * Set the key used to calculate the path of this node.
@@ -70,25 +70,18 @@ interface ContainerInterface extends ElementInterface
     public function val($value = null);
 
     /**
-     * Executes all validators and returns whether the value is valid or not.
+     * Checks if the value is valid.
      *
      * @return bool
      */
     public function validate();
 
     /**
-     * Checks if the value is valid.
-     *
-     * @return bool
-     */
-    public function isValid();
-
-    /**
      * Set/Get the current error message.
      *
      * @param null|string $error null to getter, string to setter
      *
-     * @return mixed
+     * @return string|self
      */
     public function error($error = null);
 }

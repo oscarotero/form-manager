@@ -2,14 +2,12 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\InputFile;
 
 class File extends Field
 {
     public function __construct()
     {
-        $this->input = new Elements\InputFile();
-
-        parent::__construct();
+        parent::__construct(new InputFile());
     }
 }

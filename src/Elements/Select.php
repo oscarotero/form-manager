@@ -3,12 +3,16 @@
 namespace FormManager\Elements;
 
 use FormManager\InvalidValueException;
-use FormManager\Traits\InputTrait;
+use FormManager\Traits\ValidateTrait;
+use FormManager\Traits\StructureTrait;
+use FormManager\Traits\LabelTrait;
 use FormManager\InputInterface;
 
 class Select extends ElementContainer implements InputInterface
 {
-    use InputTrait;
+    use ValidateTrait;
+    use StructureTrait;
+    use LabelTrait;
 
     protected $name = 'select';
     protected $value;
@@ -18,6 +22,62 @@ class Select extends ElementContainer implements InputInterface
     public function __construct()
     {
         $this->addValidator('FormManager\\Validators\\Select::validate');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attr($name = null, $value = null)
+    {
+        if (is_string($name)) {
+            if ($value === null) {
+                if ($name === 'name' && $this->getParent()) {
+                    return $this->getNameAttr();
+                }
+
+                return parent::attr($name);
+            }
+
+            if ($name === 'name' && $this->getParent()) {
+                throw new \InvalidArgumentException('The attribute "name" is read only!');
+            }
+
+            $value = $this->attrToValidator($name, $value);
+        }
+
+        return parent::attr($name, $value);
+    }
+
+    /**
+     * Generate the right name attribute for this input.
+     *
+     * @return string
+     */
+    private function getNameAttr()
+    {
+        $name = $this->getPath();
+
+        if ($this->attr('multiple')) {
+            $name .= '[]';
+        }
+
+        return $name;
+    }
+
+    /**
+     * Generate the right name attribute for this input.
+     *
+     * @return string
+     */
+    protected function generateName()
+    {
+        $name = $this->getPath();
+
+        if ($this->attr('multiple')) {
+            $name .= '[]';
+        }
+
+        return $name;
     }
 
     public function offsetSet($offset, $value)
@@ -47,6 +107,32 @@ class Select extends ElementContainer implements InputInterface
         foreach ($options as $offset => $option) {
             $this->offsetSet($offset, $option);
         }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see InputInterface
+     */
+    public function load($value = null)
+    {
+        if ($this->sanitizer === null) {
+            $this->val($value === null ? '' : $value);
+
+            return $this;
+        }
+
+        if ($this->attr('multiple') && is_array($value)) {
+            foreach ($value as &$val) {
+                $val = call_user_func($this->sanitizer, $val);
+            }
+        } else {
+            $value = call_user_func($this->sanitizer, $value);
+        }
+
+        $this->val($value === null ? '' : $value);
 
         return $this;
     }

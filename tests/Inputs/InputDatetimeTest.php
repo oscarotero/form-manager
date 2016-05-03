@@ -16,10 +16,10 @@ class InputDatetimeTest extends BaseTest
         $input = Builder::datetime();
 
         $input->val('2005-33-14T15:52:01+00:00');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('Mon, 15 Aug 2005 15:52:01 +0000');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
         $this->assertEquals('Mon, 15 Aug 2005 15:52:01 +0000', $input->val());
     }
 
@@ -41,9 +41,9 @@ class InputDatetimeTest extends BaseTest
         $input->max('2005-08-14T15:52:01+00:00');
 
         $input->val('Mon, 15 Aug 2005 15:52:01 +0000');
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->val('Mon, 15 Aug 2004 15:52:01 +0000');
-        $this->assertTrue($input->isValid());
+        $this->assertTrue($input->validate());
     }
 }

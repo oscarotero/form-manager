@@ -26,24 +26,24 @@ class InputSelectTest extends BaseTest
         ]);
 
         $select->val('three');
-        $this->assertFalse($select->isValid());
+        $this->assertFalse($select->validate());
 
         $select->val('One');
-        $this->assertFalse($select->isValid());
+        $this->assertFalse($select->validate());
 
         $select->val('1');
-        $this->assertTrue($select->isValid());
+        $this->assertTrue($select->validate());
 
         $select->val('2');
-        $this->assertTrue($select->isValid());
+        $this->assertTrue($select->validate());
         $this->assertSame(2, $select->val());
 
         $select->val('002');
-        $this->assertTrue($select->isValid());
+        $this->assertTrue($select->validate());
         $this->assertSame('002', $select->val());
 
         $select->val('000');
-        $this->assertTrue($select->isValid());
+        $this->assertTrue($select->validate());
         $this->assertSame('000', $select->val());
     }
 
@@ -52,7 +52,7 @@ class InputSelectTest extends BaseTest
         $select = Builder::select()->allowNewValues();
 
         $select->val('new-value');
-        $this->assertTrue($select->isValid());
+        $this->assertTrue($select->validate());
         $this->assertSame($select->val(), 'new-value');
         $this->assertCount(1, $select->options());
 

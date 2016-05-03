@@ -2,17 +2,22 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements;
+use FormManager\Elements\InputRadio;
 
 class Radio extends Field
 {
     public function __construct()
     {
-        $this->labelPosition = static::LABEL_AFTER;
-        $this->datalistAllowed = false;
+        parent::__construct(new InputRadio());
+    }
 
-        $this->input = new Elements\InputRadio();
-
-        parent::__construct();
+    /**
+     * {@inheritdoc}
+     * 
+     * @see RenderTrait
+     */
+    protected function defaultRender($prepend = '', $append = '')
+    {
+        return "{$prepend}{$this->input} {$this->label} {$this->errorLabel}{$append}";
     }
 }

@@ -23,7 +23,7 @@ class InputFileTest extends BaseTest
             'error' => 1,
         ));
 
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
         $this->assertEquals('The uploaded file exceeds the upload_max_filesize directive in php.ini', $input->error());
     }
 
@@ -34,7 +34,7 @@ class InputFileTest extends BaseTest
 
         $input = Builder::file()->val($val);
 
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
         $this->assertEquals('The uploaded file exceeds the upload_max_filesize directive in php.ini', $input->error());
     }
 
@@ -51,11 +51,11 @@ class InputFileTest extends BaseTest
             'error' => 0,
         ));
 
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->accept('image/jpeg');
 
-        $this->assertTrue($input->isValid(), $input->error());
+        $this->assertTrue($input->validate(), $input->error());
     }
 
     public function testMimeTypePsr()
@@ -65,10 +65,10 @@ class InputFileTest extends BaseTest
 
         $input = Builder::file()->accept('image/png')->val($val);
 
-        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->validate());
 
         $input->accept('image/jpeg');
 
-        $this->assertTrue($input->isValid(), $input->error());
+        $this->assertTrue($input->validate(), $input->error());
     }
 }

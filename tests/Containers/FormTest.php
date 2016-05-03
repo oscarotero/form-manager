@@ -1,7 +1,7 @@
 <?php
 
 use FormManager\Builder;
-use FormManager\Containers\Form;
+use FormManager\Fields\Form;
 use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\UploadedFile;
 
@@ -107,7 +107,7 @@ class FormTest extends BaseTest
         );
 
         $form->val($data);
-        $this->assertTrue($form->isValid());
+        $this->assertTrue($form->validate());
     }
 
     /**
@@ -151,7 +151,7 @@ class FormTest extends BaseTest
 
         $form->loadFromGlobals(array(), $__post, $__files);
 
-        $this->assertTrue($form->isValid());
+        $this->assertTrue($form->validate());
     }
 
     /**
@@ -192,7 +192,7 @@ class FormTest extends BaseTest
             ->withParsedBody($__post);
 
         $form->loadFromPsr7($request);
-        $this->assertTrue($form->isValid());
+        $this->assertTrue($form->validate());
     }
 
     public function testFieldsets()

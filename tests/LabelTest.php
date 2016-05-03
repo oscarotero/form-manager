@@ -10,7 +10,7 @@ class LabelTest extends BaseTest
         $input->label->id('my-label-id');
 
         $this->assertEquals('my-id', $input->attr('id'));
-        $this->assertEquals('<label id="my-label-id" for="my-id">Hello</label> <input type="text" id="my-id" aria-labelledby="my-label-id"> ', (string) $input);
+        $this->assertEquals('<div><label id="my-label-id" for="my-id">Hello</label> <input type="text" id="my-id" aria-labelledby="my-label-id"> </div>', (string) $input);
     }
 
     public function testTwo()
@@ -19,6 +19,6 @@ class LabelTest extends BaseTest
         $input->label->id('my-label-id');
 
         $this->assertEquals('my-id', $input->attr('id'));
-        $this->assertEquals('<label id="my-label-id" for="my-id">Hello</label> <input type="text" id="my-id" aria-labelledby="my-label-id"> ', (string) $input);
+        $this->assertEquals('<div><label id="my-label-id" for="my-id">Hello</label> <input type="text" id="my-id" aria-labelledby="my-label-id"> </div>', (string) $input);
     }
 }

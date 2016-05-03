@@ -3,60 +3,33 @@
 namespace FormManager\Fields;
 
 use FormManager\Traits\RenderTrait;
-use FormManager\TreeInterface;
+use FormManager\InputInterface;
+use FormManager\ElementInterface;
+use FormManager\FieldInterface;
+use FormManager\Elements;
+use FormManager\Elements\Element;
 use FormManager\Elements\Label;
 use FormManager\Elements\Datalist;
 
 /**
- * Class to manage the combination of input + label.
- *
- * @property null|Label $label
- * @property null|Label $errorLabel
+ * Class to manage the combination of an input with other elements.
  */
-abstract class Field implements TreeInterface
+abstract class Field implements FieldInterface
 {
     use RenderTrait;
-
-    const LABEL_NONE = 0;
-    const LABEL_BEFORE = 1;
-    const LABEL_AFTER = 2;
 
     public $input;
     public $label;
     public $datalist;
+    public $errorLabel;
 
-    protected $_errorLabel;
-    protected $labelPosition = 1; // LABEL_BEFORE
-    protected $datalistAllowed = true;
-
-    /**
-     * Init the labels and errorLabels
-     * This method is protected to force to extend it.
-     */
-    protected function __construct()
+    protected function __construct(InputInterface $input)
     {
-        if ($this->labelPosition !== static::LABEL_NONE) {
-            $this->label = new Label($this->input);
-            $this->_errorLabel = (new Label($this->input))->attr('class', 'error');
-        }
-
-        if ($this->datalistAllowed) {
-            $this->datalist = new Datalist($this->input);
-        }
-    }
-
-    /**
-     * Magic method to return the errorLabel with the error message.
-     *
-     * @param string $name
-     *
-     * @return Label|null
-     */
-    public function __get($name)
-    {
-        if ($name === 'errorLabel' && $this->labelPosition !== static::LABEL_NONE) {
-            return $this->_errorLabel->html($this->input->error() ?: '');
-        }
+        $this->input = $input;
+        $this->label = new Elements\Label($this->input);
+        $this->errorLabel = new Elements\ErrorLabel($this->input);
+        $this->datalist = new Elements\Datalist($this->input);
+        $this->wrapper = new Elements\Div();
     }
 
     /**
@@ -65,20 +38,26 @@ abstract class Field implements TreeInterface
     public function __clone()
     {
         $this->input = clone $this->input;
-        $this->input->removeAttr('id');
 
-        if ($this->labelPosition !== static::LABEL_NONE) {
+        if ($this->label) {
             $this->input->removeLabel($this->label);
-            $this->input->removeLabel($this->_errorLabel);
-
             $this->label = clone $this->label;
-            $this->_errorLabel = clone $this->_errorLabel;
-
-            $this->label->removeAttr('id');
-            $this->_errorLabel->removeAttr('id');
-
             $this->label->setInput($this->input);
-            $this->_errorLabel->setInput($this->input);
+        }
+
+        if ($this->errorLabel) {
+            $this->input->removeLabel($this->errorLabel);
+            $this->errorLabel = clone $this->errorLabel;
+            $this->errorLabel->setInput($this->input);
+        }
+
+        if ($this->datalist) {
+            $this->datalist = clone $this->datalist;
+            $this->datalist->setInput($this->input);
+        }
+
+        if ($this->wrapper) {
+            $this->wrapper = clone $this->wrapper;
         }
     }
 
@@ -148,7 +127,7 @@ abstract class Field implements TreeInterface
     /**
      * {@inheritdoc}
      *
-     * @see TreeInterface
+     * @see FieldInterface
      */
     public function __toString()
     {
@@ -158,46 +137,174 @@ abstract class Field implements TreeInterface
     /**
      * {@inheritdoc}
      *
-     * @see TreeInterface
+     * @see FieldInterface
      */
-    public function setParent(TreeInterface $parent = null)
+    public function attr($name = null, $value = null)
     {
-        return $this->__call('setParent', func_get_args());
+        return $this->__call('attr', func_get_args());
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see TreeInterface
+     * @see FieldInterface
+     */
+    public function removeAttr($name)
+    {
+        $this->input->removeAttr($name);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function id($id = null)
+    {
+        return $this->__call('id', func_get_args());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function setParent(ElementInterface $parent = null)
+    {
+        $this->input->setParent($parent);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
      */
     public function getParent()
     {
-        return $this->__call('getParent', func_get_args());
+        return $this->input->getParent();
     }
 
     /**
      * {@inheritdoc}
      *
-     * @see TreeInterface
+     * @see FieldInterface
      */
     public function getForm()
     {
-        return $this->__call('getForm', func_get_args());
+        return $this->input->getForm();
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function setKey($key)
+    {
+        $this->input->setKey($key);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function getPath()
+    {
+        return $this->input->getPath();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function addValidator(callable $validator)
+    {
+        $this->input->addValidator($validator);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function removeValidator($validator)
+    {
+        $this->input->removeValidator($validator);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function sanitize(callable $sanitizer)
+    {
+        $this->input->sanitize($sanitizer);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function load($value = null)
+    {
+        $this->input->load($value);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function val($value = null)
+    {
+        return $this->__call('val', func_get_args());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function validate()
+    {
+        return $this->input->validate();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see FieldInterface
+     */
+    public function error($error = null)
+    {
+        return $this->__call('error', func_get_args());
+    }
+
+    /**
+     * {@inheritdoc}
+     * 
+     * @see RenderTrait
      */
     protected function defaultRender($prepend = '', $append = '')
     {
-        if ($this->labelPosition === static::LABEL_NONE) {
-            return "{$prepend}{$this->input}{$this->datalist}{$append}";
-        }
-
-        if ($this->labelPosition === static::LABEL_BEFORE) {
-            return "{$prepend}{$this->label} {$this->input}{$this->datalist} {$this->errorLabel}{$append}";
-        }
-
-        return "{$prepend}{$this->input}{$this->datalist} {$this->label} {$this->errorLabel}{$append}";
+        return "{$prepend}{$this->label} {$this->input}{$this->datalist} {$this->errorLabel}{$append}";
     }
 }

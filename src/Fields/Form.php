@@ -1,6 +1,6 @@
 <?php
 
-namespace FormManager\Containers;
+namespace FormManager\Fields;
 
 use Psr\Http\Message\ServerRequestInterface;
 use FormManager\Elements\Fieldset;
@@ -131,8 +131,7 @@ class Form extends Group
 
         foreach ($fieldsets as $name => $fieldset) {
             if (!($fieldset instanceof Fieldset)) {
-                $fieldset = (new Fieldset())
-                    ->add($fieldset);
+                $fieldset = (new Fieldset())->add($fieldset);
             }
 
             $this->fieldsets[$name] = $fieldset->setParent($this);
@@ -162,7 +161,7 @@ class Form extends Group
 
         $html = '';
 
-        //render the fieldsets not belonging to form
+        //render the children not belonging to a fieldset
         foreach ($this->children as $fieldset) {
             if ($fieldset->getParent() === $this) {
                 $html .= (string) $fieldset;
