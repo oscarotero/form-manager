@@ -15,8 +15,6 @@ class Input extends Element implements InputInterface
     use LabelTrait;
 
     protected $name = 'input';
-    protected $labels = [];
-    protected $datalist;
 
     /**
      * {@inheritdoc}

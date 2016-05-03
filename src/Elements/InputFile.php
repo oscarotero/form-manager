@@ -49,7 +49,6 @@ class InputFile extends Input implements InputInterface
         }
 
         $this->value = $value;
-        $this->valid = null;
 
         return $this;
     }

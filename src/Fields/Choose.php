@@ -15,10 +15,6 @@ class Choose extends Container
      */
     public function offsetSet($offset, $value)
     {
-        if ($value instanceof Container) {
-            throw new \InvalidArgumentException('This element only accepts inputs');
-        }
-
         $value->val($offset);
 
         parent::offsetSet($offset, $value);
@@ -47,13 +43,11 @@ class Choose extends Container
 
         foreach ($this as $v => $input) {
             if ($v == $value) {
-                $input->check();
+                $input->attr('checked', true);
             } else {
-                $input->uncheck();
+                $input->removeAttr('checked');
             }
         }
-
-        $this->valid = null;
 
         return $this;
     }
@@ -63,13 +57,11 @@ class Choose extends Container
      */
     public function validate()
     {
-        $this->valid = true;
         $value = $this->val();
 
         if (!empty($value) && !isset($this[$value])) {
             $this->error(static::$error_message);
-
-            return $this->valid = false;
+            return false;
         }
 
         return parent::validate();

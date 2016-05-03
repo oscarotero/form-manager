@@ -20,13 +20,13 @@ class Fieldset extends ElementContainer
     public function setParent(ElementInterface $parent = null)
     {
         if (!($parent instanceof Form)) {
-            throw new \Exception('Fieldset only can belong to Form instances');
+            throw new \Exception(sprintf('Fieldset only can belong to Form instances. (%s)', get_class($parent)));
         }
 
         $this->parent = $parent;
 
-        foreach ($this->children as $child) {
-            $child->setParent($parent);
+        foreach ($this->children as $name => $child) {
+            $this->parent->offsetSet($name, $child);
         }
 
         return $this;
@@ -41,7 +41,7 @@ class Fieldset extends ElementContainer
         parent::offsetSet($offset, $value);
 
         //Add the child to the parent
-        if ($this->parent) {
+        if ($this->parent instanceof Form) {
             $this->parent->offsetSet($offset, $value);
         }
     }

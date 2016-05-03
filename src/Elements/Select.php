@@ -240,8 +240,6 @@ class Select extends ElementContainer implements InputInterface
             $this->value = $value[0];
         }
 
-        $this->valid = null;
-
         return $this;
     }
 

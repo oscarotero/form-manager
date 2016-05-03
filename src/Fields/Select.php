@@ -2,13 +2,13 @@
 
 namespace FormManager\Fields;
 
-use FormManager\Elements\Select;
+use FormManager\Elements\Select as SelectElement;
 
 class Select extends FieldContainer
 {
     public function __construct(array $options = null)
     {
-        parent::__construct(new Select());
+        parent::__construct(new SelectElement());
 
         if ($options) {
             $this->input->options($options);

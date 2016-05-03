@@ -124,6 +124,14 @@ trait ValidateTrait
         return $this;
     }
 
+    /**
+     * Check an attribute before add it
+     * 
+     * @param string $name
+     * @param mixed  $value
+     * 
+     * @return mixed
+     */
     private function attrToValidator($name, $value)
     {
         $class = 'FormManager\\Attributes\\'.ucfirst($name);

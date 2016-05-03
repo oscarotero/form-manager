@@ -38,8 +38,6 @@ abstract class Container extends Div implements FieldInterface
             $child->load(isset($value[$key]) ? $value[$key] : null);
         }
 
-        $this->valid = null;
-
         return $this;
     }
 
@@ -65,8 +63,6 @@ abstract class Container extends Div implements FieldInterface
         foreach ($this->children as $key => $child) {
             $child->val(isset($value[$key]) ? $value[$key] : null);
         }
-
-        $this->valid = null;
 
         return $this;
     }

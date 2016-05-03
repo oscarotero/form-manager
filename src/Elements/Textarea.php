@@ -18,7 +18,6 @@ class Textarea extends Input implements InputInterface
             return $this->html;
         }
 
-        $this->valid = null;
         $this->html = $value;
 
         return $this;
