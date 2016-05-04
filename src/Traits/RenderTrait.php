@@ -7,8 +7,9 @@ namespace FormManager\Traits;
  */
 trait RenderTrait
 {
-    protected $render;
-    protected $wrapper;
+    public $wrapper;
+
+    private $render;
     private $rendering; 
 
     /**

@@ -13,11 +13,13 @@ class Label extends Element
     /**
      * Label constructor.
      *
-     * @param InputInterface $input The input associated to this label
+     * @param InputInterface|null $input The input associated to this label
      */
-    public function __construct(InputInterface $input)
+    public function __construct(InputInterface $input = null)
     {
-        $this->setInput($input);
+        if ($input) {
+            $this->setInput($input);
+        }
     }
 
     /**
@@ -51,7 +53,9 @@ class Label extends Element
             return '';
         }
 
-        $this->attr('for', $this->input->id());
+        if ($this->input) {
+            $this->attr('for', $this->input->id());
+        }
 
         return parent::toHtml($prepend, $append);
     }
