@@ -31,7 +31,7 @@ class Pattern
 
         $attr = str_replace('/', '\\/', $input->attr('pattern'));
 
-        if (!empty($attr) && !empty($value) && !filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/^{$attr}\$/")))) {
+        if (!empty($attr) && !empty($value) && !filter_var($value, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => "/^{$attr}\$/"]])) {
             throw new InvalidValueException(sprintf(static::$error_message, $attr));
         }
     }
