@@ -81,12 +81,6 @@ echo $name; //<input type="text" class="my-input" required>
 
 //print the input with extra attributes
 echo $name->addClass('text-input')->placeholder('Your name');
-
-//You can customize the render function:
-$name->render(function($input)
-{
-	return '<div class="field">'.$input.'</div>';
-});
 ```
 
 ### Working with data
@@ -100,7 +94,7 @@ $url = F::url();
 $url->required();
 
 //Check if the value is valid
-if (!$url->isValid()) {
+if (!$url->validate()) {
 	echo $url->error(); //This value is required
 }
 
@@ -108,7 +102,7 @@ if (!$url->isValid()) {
 $url->val('invalid-url');
 
 //check the value and get the error
-if (!$url->isValid()) {
+if (!$url->validate()) {
 	echo $url->error(); //This value is not a valid url
 }
 ```
@@ -176,6 +170,9 @@ echo $name;
 
 //Print label and inputs separately
 echo $name->label . '<br>' . $name->input;
+
+//Use errorLabel to print a secondary label with the validation error:
+echo $name->label . '<br>' . $name->input . $name->errorLabel;
 ```
 
 ### Datalist
@@ -192,15 +189,34 @@ $name->datalist([
 ]);
 ```
 
-## Containers
+### Custom renders
 
-Containers are objects that contain other elements (fields or other containers). Technically, they are html elements (by default `<div></div>`) so they have the same methods than inputs to set/get/remove attributes.
+You can configure how each field must be rendered. First, you need to know all properties of each field:
 
-There are various types of containers, deppending of the data scheme:
+* `$field->input` The input/select/textarea element
+* `$field->label` The label element
+* `$field->errorLabel` A secondary label with the validation error
+* `$field->datalist` An optional datalist instance
+* `$field->wrapper` A div element containing all the stuff above
+
+
+```php
+$field->render(function ($field) {
+	$html = (string) $field->label;
+	$html .= '<p>'.$field->input.$field->errorLabel.'</p>';
+	$html .= $field->datalist;
+
+	return $html;
+});
+```
+
+## Special fields
+
+In addition with regular fields (the html5 equivalents: text, textarea, select, datetime, etc...) there are some special fields useful to create more complicate data schemes:
 
 ### Group
 
-A group is a simple container to store fields/containers by name. The following example shows a group of three fields:
+A group is a simple field to store other fields under a name. The following example shows a group of three fields:
 
 ```php
 $date = F::group([
@@ -231,7 +247,7 @@ $date->addClass('field-day')->attr(['id' => 'date-field']);
 
 ### Choose
 
-This container stores fields with the same name but different values. Useful for radio inputs or to define various submit buttons.
+This field stores other fields with the same name but different values. Useful for radio inputs or to define various submit buttons.
 
 ```php
 //Create a choose container
@@ -366,8 +382,8 @@ foreach ($templates as $name => $template) {
 
 ## Loader
 
-The main aim of the loader container is separate the way to load the data with the way to store and keep this data once it's loaded. Let's say for example, an input type file: if a file is loaded, the value is an array with the same structure than any $_FILES value, but if user doesn't upload anything, the value is empty. So, what is supposed to do in this case? remove the file or keep the previous value?
-The loader container has two fields: a "loader" field and a "field" field. The first one is responsive to load the new values (for example, it can be an input type file) and the second keeps the previous value (for example, it can be an input type hidden, or text, etc). Let's see an example:
+The main aim of the loader field is to separate the way to load the data with the way to store and keep this data once it's loaded. Let's say for example, an input type file: if a file is loaded, the value is an array with the same structure than any $_FILES value, but if user doesn't upload anything, the value is empty. So, what is supposed to do in this case? remove the file or keep the previous value?
+The loader field has two fields: a "loader" field and a "field" field. The first one is responsive to load the new values (for example, it can be an input type file) and the second keeps the previous value (for example, it can be an input type hidden, or text, etc). Let's see an example:
 
 ```php
 $fileUpload = F::loader([
@@ -396,7 +412,7 @@ echo ($fileUpload->val() === $_FILES['file-upload']); //true
 
 ## Forms
 
-We need a form to put all this things together. The form is just another container, in fact, it's like a [Group](#group).
+We need a form to put all this things together. The form is just another field, in fact, it's like a [Group](#group).
 
 ```php
 $form = F::form();
@@ -567,13 +583,13 @@ $date = F::form([
 ]);
 ```
 
-Other example is save all forms of your app under a namespace:
+Other usage is to save all forms of your app under a namespace:
 
 ```php
 namespace MyApp\Forms;
 
 use FormManager\Builder as F;
-use FormManager\Containers\Form;
+use FormManager\Fields\Form;
 
 class EditUserForm extends Form
 {
