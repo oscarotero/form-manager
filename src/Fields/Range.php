@@ -4,7 +4,7 @@ namespace FormManager\Fields;
 
 use FormManager\Elements\InputNumber;
 
-class Range extends Number
+class Range extends Field
 {
     public function __construct()
     {
