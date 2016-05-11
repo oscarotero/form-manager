@@ -268,4 +268,37 @@ class Select extends ElementContainer implements InputInterface
 
         return $value;
     }
+
+    /**
+     * Calculate the input name on print.
+     *
+     * {@inheritdoc}
+     */
+    protected function attrToHtml()
+    {
+        //Generate the name
+        if ($this->getParent()) {
+            $this->attributes['name'] = $this->getPath();
+        }
+
+        //Generate the aria attributes for labels http://www.html5accessibility.com/tests/mulitple-labels.html
+        $labelled = [];
+
+        foreach ($this->labels as $label) {
+            if ($label->html()) {
+                $labelled[] = $label->id();
+            }
+        }
+
+        if (count($labelled)) {
+            $this->attributes['aria-labelledby'] = $labelled;
+        }
+
+        //Generate the datalist attribute
+        if (!empty($this->datalist) && $this->datalist->count() > 0) {
+            $this->attributes['list'] = $this->datalist->id();
+        }
+
+        return parent::attrToHtml();
+    }
 }
