@@ -11,8 +11,10 @@ use FormManager\Elements\Div;
 abstract class Container extends Div implements FieldInterface
 {
     use RenderTrait;
-    use ValidateTrait;
     use StructureTrait;
+    use ValidateTrait {
+        validate as private validateThis;
+    }
 
     public function __construct(array $children = null)
     {
@@ -101,5 +103,23 @@ abstract class Container extends Div implements FieldInterface
     protected function defaultRender($prepend = '', $append = '')
     {
         return parent::toHtml($prepend, $append);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see InputInterface
+     */
+    public function validate()
+    {
+        $result = $this->validateThis();
+
+        foreach ($this->children as $child) {
+            if ($child->validate() === false) {
+                $result = false;
+            }
+        }
+
+        return $result;
     }
 }

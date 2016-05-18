@@ -64,14 +64,11 @@ $form->fieldsets([
             }),
     ],
 ]);
-/*
-
-$form['nome']->errorLabel->class('my-error');
 
 $form->loadFromGlobals();
 
-if (!$form->isValid()) {
-    echo 'Invalid values';
+if (!$form->validate()) {
+    echo '<h1>Invalid values</h1>';
 }
-*/
+
 echo $form;
