@@ -277,8 +277,8 @@ class Select extends ElementContainer implements InputInterface
     protected function attrToHtml()
     {
         //Generate the name
-        if ($this->getParent()) {
-            $this->attributes['name'] = $this->getPath();
+        if (($name = $this->getPath()) !== null) {
+            $this->attributes['name'] = $name;
         }
 
         //Generate the aria attributes for labels http://www.html5accessibility.com/tests/mulitple-labels.html
