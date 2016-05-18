@@ -3,7 +3,6 @@
 namespace FormManager\Elements;
 
 use FormManager\InputInterface;
-use FormManager\InvalidValueException;
 use FormManager\Traits\ValidateTrait;
 use FormManager\Traits\StructureTrait;
 use FormManager\Traits\LabelTrait;

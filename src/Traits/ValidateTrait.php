@@ -125,7 +125,7 @@ trait ValidateTrait
     }
 
     /**
-     * Check an attribute before add it
+     * Check an attribute before add it.
      * 
      * @param string $name
      * @param mixed  $value
@@ -144,7 +144,7 @@ trait ValidateTrait
     }
 
     /**
-     * Required method to load/return values
+     * Required method to load/return values.
      * 
      * @see ElementInterface
      */

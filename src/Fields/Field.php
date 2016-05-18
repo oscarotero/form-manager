@@ -7,7 +7,6 @@ use FormManager\InputInterface;
 use FormManager\ElementInterface;
 use FormManager\FieldInterface;
 use FormManager\Elements;
-use FormManager\Elements\Element;
 use FormManager\Elements\Label;
 use FormManager\Elements\Datalist;
 

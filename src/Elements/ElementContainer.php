@@ -21,7 +21,7 @@ class ElementContainer extends Element implements Iterator, ArrayAccess, Countab
     public function __clone()
     {
         parent::__clone();
-        
+
         foreach ($this->children as $key => $child) {
             $this->children[$key] = clone $child;
             $this->children[$key]->setParent($this);

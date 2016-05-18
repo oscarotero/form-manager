@@ -10,7 +10,7 @@ trait RenderTrait
     public $wrapper;
 
     private $render;
-    private $rendering; 
+    private $rendering;
 
     /**
      * @see FormManager\DataElementInterface

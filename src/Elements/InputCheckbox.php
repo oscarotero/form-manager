@@ -26,7 +26,7 @@ class InputCheckbox extends Input implements InputInterface
     public function val($value = null)
     {
         if ($value === null) {
-            return ($this->attr('checked') ? $this->attr('value') : null);
+            return $this->attr('checked') ? $this->attr('value') : null;
         }
 
         if ($this->evalValue($value)) {

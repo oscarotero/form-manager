@@ -444,7 +444,6 @@ class Element implements ElementInterface
      */
     public function toHtml($prepend = '', $append = '')
     {
-
         $html = $this->openHtml();
 
         if ($this->close) {

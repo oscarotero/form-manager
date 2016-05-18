@@ -38,7 +38,6 @@ $form = F::Form([
     'enviar' => F::submit()->html('Enviar'),
 ]);
 
-
 $form->fieldsets([
     'personal' => [
         'nome' => F::text()

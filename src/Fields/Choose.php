@@ -61,6 +61,7 @@ class Choose extends Container
 
         if (!empty($value) && !isset($this[$value])) {
             $this->error(static::$error_message);
+
             return false;
         }
 
