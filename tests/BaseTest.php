@@ -59,7 +59,7 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($element->get('var2'));
     }
 
-    protected function _testField($field, $isContainer = false)
+    protected function _testField($field, $isContainer = false, $hasLabel = true)
     {
         $this->assertInstanceOf('FormManager\\FieldInterface', $field);
 
@@ -76,8 +76,10 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
         $field->validate();
 
-        $this->assertInstanceOf('FormManager\\Elements\\Label', $field->label);
-        $this->assertInstanceOf('FormManager\\Elements\\Label', $field->errorLabel);
+        if ($hasLabel) {
+            $this->assertInstanceOf('FormManager\\Elements\\Label', $field->label);
+            $this->assertInstanceOf('FormManager\\Elements\\Label', $field->errorLabel);
+        }
     }
 
     protected function _testRequired($input, $value = null)

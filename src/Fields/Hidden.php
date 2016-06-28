@@ -8,7 +8,7 @@ class Hidden extends Field
 {
     public function __construct()
     {
-        parent::__construct((new Input())->attr('type', 'hidden'));
+        $this->input = (new Input())->attr('type', 'hidden');
     }
 
     /**
@@ -18,6 +18,6 @@ class Hidden extends Field
      */
     protected function defaultRender($prepend = '', $append = '')
     {
-        return "{$prepend}{$this->input}{$this->errorLabel}{$append}";
+        return "{$prepend}{$this->input}{$append}";
     }
 }
