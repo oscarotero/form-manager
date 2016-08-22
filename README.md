@@ -123,7 +123,7 @@ $name->addValidator('isDave');
 
 $name->val('tom');
 
-if (!$name->isValid()) {
+if (!$name->validate()) {
 	echo $name->error(); //This value must be "dave"
 }
 
@@ -509,7 +509,7 @@ $form->loadFromGlobals();
 $form->loadFromGlobals($_my_GET, $_my_POST, $_my_FILES);
 
 //Check the errors
-if (!$form->isValid()) {
+if (!$form->validate()) {
 	echo 'there are errors in the form';
 }
 ```
