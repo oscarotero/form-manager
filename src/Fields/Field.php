@@ -19,8 +19,9 @@ abstract class Field implements FieldInterface
 
     public $input;
     public $label;
-    public $datalist;
     public $errorLabel;
+    public $datalist;
+    public $wrapper;
 
     protected function __construct(InputInterface $input)
     {
@@ -97,6 +98,42 @@ abstract class Field implements FieldInterface
         }
 
         $this->label->html($html);
+
+        return $this;
+    }
+
+    /**
+     * Adds html attributes to the label
+     *
+     * @param array $attrs
+     *
+     * @return self
+     */
+    public function attrLabel(array $attrs)
+    {
+        if (empty($this->label)) {
+            throw new \BadMethodCallException('No label allowed for this field');
+        }
+
+        $this->label->attr($attrs);
+
+        return $this;
+    }
+
+    /**
+     * Adds html attributes to the wrapper
+     *
+     * @param array $attrs
+     *
+     * @return self
+     */
+    public function attrWrapper(array $attrs)
+    {
+        if (empty($this->wrapper)) {
+            throw new \BadMethodCallException('No wrapper allowed for this field');
+        }
+
+        $this->wrapper->attr($attrs);
 
         return $this;
     }
