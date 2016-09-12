@@ -108,7 +108,7 @@ abstract class Field implements FieldInterface
      *
      * @return self
      */
-    public function attrLabel(array $attrs)
+    public function labelAttr(array $attrs)
     {
         if (empty($this->label)) {
             throw new \BadMethodCallException('No label allowed for this field');
@@ -126,7 +126,7 @@ abstract class Field implements FieldInterface
      *
      * @return self
      */
-    public function attrWrapper(array $attrs)
+    public function wrapperAttr(array $attrs)
     {
         if (empty($this->wrapper)) {
             throw new \BadMethodCallException('No wrapper allowed for this field');
