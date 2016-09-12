@@ -21,7 +21,6 @@ abstract class Field implements FieldInterface
     public $label;
     public $errorLabel;
     public $datalist;
-    public $wrapper;
 
     protected function __construct(InputInterface $input)
     {
