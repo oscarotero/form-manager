@@ -10,7 +10,7 @@ class Url extends Field
     {
         $input = (new Input())
             ->attr('type', 'url')
-            ->addValidator('FormManager\\Validators\\Url::validate');
+            ->addValidator(\FormManager\Validators\Url::class, 'FormManager\\Validators\\Url::validate');
 
         parent::__construct($input);
     }

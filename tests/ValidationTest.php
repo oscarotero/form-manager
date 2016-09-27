@@ -13,7 +13,7 @@ class ValidationTest extends BaseTest
             'email' => Builder::email()->label('Email'),
             'password' => Builder::password()->label('Password'),
             'repeat_password' => Builder::password()->label('Repeat password'),
-        ])->addValidator(function ($form) {
+        ])->addValidator('pasword_match', function ($form) {
             $password1 = $form['password']->val();
             $password2 = $form['repeat_password']->val();
 

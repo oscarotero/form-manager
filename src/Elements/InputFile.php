@@ -12,7 +12,7 @@ class InputFile extends Input implements InputInterface
 
     public function __construct()
     {
-        $this->addValidator('FormManager\\Validators\\File::validate');
+        $this->addValidator(\FormManager\Validators\File::class, 'FormManager\\Validators\\File::validate');
     }
 
     /**

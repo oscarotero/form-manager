@@ -11,7 +11,7 @@ class Accept implements AttributeInterface
      */
     public static function onAdd(InputInterface $input, $value)
     {
-        $input->addValidator('FormManager\\Validators\\Accept::validate');
+        $input->addValidator(\FormManager\Validators\Accept::class, 'FormManager\\Validators\\Accept::validate');
 
         return $value;
     }

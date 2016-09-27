@@ -15,7 +15,7 @@ class Required
             throw new \InvalidArgumentException('The required value must be a boolean');
         }
 
-        $input->addValidator('FormManager\\Validators\\Required::validate');
+        $input->addValidator(\FormManager\Validators\Required::class, 'FormManager\\Validators\\Required::validate');
 
         return $value;
     }

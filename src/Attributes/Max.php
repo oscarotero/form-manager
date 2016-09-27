@@ -6,6 +6,9 @@ use FormManager\InputInterface;
 
 class Max implements AttributeInterface
 {
+
+    const VALIDATE_DATE_TIME = "validateDatetime";
+
     /**
      * {@inheritdoc}
      */
@@ -43,7 +46,7 @@ class Max implements AttributeInterface
      */
     protected static function addValidator(InputInterface $input)
     {
-        $input->addValidator('FormManager\\Validators\\Max::validate');
+        $input->addValidator(\FormManager\Validators\Max::class, 'FormManager\\Validators\\Max::validate');
     }
 
     /**
@@ -53,7 +56,7 @@ class Max implements AttributeInterface
      */
     protected static function addDatetimeValidator(InputInterface $input)
     {
-        $input->addValidator('FormManager\\Validators\\Max::validateDatetime');
+        $input->addValidator(self::VALIDATE_DATE_TIME,'FormManager\\Validators\\Max::validateDatetime');
     }
 
     /**

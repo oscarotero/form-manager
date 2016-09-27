@@ -11,7 +11,7 @@ class InputDatetime extends Input implements InputInterface
     public function __construct($format)
     {
         $this->format = $format;
-        $this->addValidator('FormManager\\Validators\\Datetime::validate');
+        $this->addValidator(\FormManager\Validators\Datetime::class, 'FormManager\\Validators\\Datetime::validate');
     }
 
     /**

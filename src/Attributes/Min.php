@@ -6,6 +6,9 @@ use FormManager\InputInterface;
 
 class Min extends Max implements AttributeInterface
 {
+
+    const VALIDATE_DATE_TIME = "validateDatetimeMin";
+
     /**
      * Add the validator for this input.
      *
@@ -13,7 +16,7 @@ class Min extends Max implements AttributeInterface
      */
     protected static function addValidator(InputInterface $input)
     {
-        $input->addValidator('FormManager\\Validators\\Min::validate');
+        $input->addValidator(\FormManager\Validators\Min::class, 'FormManager\\Validators\\Min::validate');
     }
 
     /**
@@ -23,7 +26,7 @@ class Min extends Max implements AttributeInterface
      */
     protected static function addDatetimeValidator(InputInterface $input)
     {
-        $input->addValidator('FormManager\\Validators\\Min::validateDatetime');
+        $input->addValidator(self::VALIDATE_DATE_TIME, 'FormManager\\Validators\\Min::validateDatetime');
     }
 
     /**
