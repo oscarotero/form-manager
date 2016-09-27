@@ -11,7 +11,7 @@ class Pattern implements AttributeInterface
      */
     public static function onAdd(InputInterface $input, $value)
     {
-        $input->addValidator('FormManager\\Validators\\Pattern::validate');
+        $input->addValidator(\FormManager\Validators\Pattern::class, 'FormManager\\Validators\\Pattern::validate');
 
         return $value;
     }

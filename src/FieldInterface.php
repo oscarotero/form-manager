@@ -31,7 +31,7 @@ interface FieldInterface extends ElementInterface
      *
      * @return self
      */
-    public function addValidator(callable $validator);
+    public function addValidator($name, callable $validator);
 
     /**
      * Removes a validator.

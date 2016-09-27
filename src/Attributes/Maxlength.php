@@ -2,6 +2,7 @@
 
 namespace FormManager\Attributes;
 
+use FormManager\Fields\Form;
 use FormManager\InputInterface;
 
 class Maxlength implements AttributeInterface
@@ -15,7 +16,7 @@ class Maxlength implements AttributeInterface
             throw new \InvalidArgumentException('The maxlength value must be a non-negative integer');
         }
 
-        $input->addValidator('FormManager\\Validators\\Maxlength::validate');
+        $input->addValidator(\FormManager\Validators\Maxlength::class, 'FormManager\\Validators\\Maxlength::validate');
 
         return $value;
     }

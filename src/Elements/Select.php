@@ -20,7 +20,7 @@ class Select extends ElementContainer implements InputInterface
 
     public function __construct()
     {
-        $this->addValidator('FormManager\\Validators\\Select::validate');
+        $this->addValidator(\FormManager\Validators\Select::class, 'FormManager\\Validators\\Select::validate');
     }
 
     /**

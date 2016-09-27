@@ -8,7 +8,7 @@ class InputNumber extends Input implements InputInterface
 {
     public function __construct()
     {
-        $this->addValidator('FormManager\\Validators\\Number::validate');
+        $this->addValidator(\FormManager\Validators\Number::class, 'FormManager\\Validators\\Number::validate');
     }
 
     /**

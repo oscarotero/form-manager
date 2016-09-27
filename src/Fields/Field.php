@@ -260,9 +260,9 @@ abstract class Field implements FieldInterface
      *
      * @see FieldInterface
      */
-    public function addValidator(callable $validator)
+    public function addValidator($name, callable $validator)
     {
-        $this->input->addValidator($validator);
+        $this->input->addValidator($name, $validator);
 
         return $this;
     }

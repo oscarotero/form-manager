@@ -2,6 +2,7 @@
 
 namespace FormManager\Traits;
 
+use FormManager\Exception\ItemNotFoundException;
 use FormManager\InvalidValueException;
 
 /**
@@ -21,7 +22,6 @@ trait ValidateTrait
     public function sanitize(callable $sanitizer)
     {
         $this->sanitizer = $sanitizer;
-
         return $this;
     }
 
@@ -30,10 +30,13 @@ trait ValidateTrait
      *
      * @see InputInterface
      */
-    public function addValidator(callable $validator)
+    public function addValidator($name, callable $validator)
     {
-        $this->validators[] = $validator;
-
+        if($name != null){
+            $this->validators[$name] = $validator;
+        }else{
+            array_push($this->validators, $validator);
+        }
         return $this;
     }
 
@@ -44,10 +47,16 @@ trait ValidateTrait
      */
     public function removeValidator($validator)
     {
-        if (($key = array_search($validator, $this->validators)) !== false) {
+        if (isset($this->validators[$validator])) {
+            unset($this->validators[$validator]);
+        }elseif (($key = array_search($validator, $this->validators)) !== false) {
             unset($this->validators[$key]);
+        }else{
+            throw new ItemNotFoundException(sprintf(
+                "Validator with name %s not found",
+                $validator
+            ));
         }
-
         return $this;
     }
 
@@ -126,15 +135,15 @@ trait ValidateTrait
 
     /**
      * Check an attribute before add it.
-     * 
+     *
      * @param string $name
-     * @param mixed  $value
-     * 
+     * @param mixed $value
+     *
      * @return mixed
      */
     private function attrToValidator($name, $value)
     {
-        $class = 'FormManager\\Attributes\\'.ucfirst($name);
+        $class = 'FormManager\\Attributes\\' . ucfirst($name);
 
         if (class_exists($class) && method_exists($class, 'onAdd')) {
             $value = $class::onAdd($this, $value);
@@ -145,7 +154,7 @@ trait ValidateTrait
 
     /**
      * Required method to load/return values.
-     * 
+     *
      * @see ElementInterface
      */
     abstract public function attr($name = null, $value = null);
