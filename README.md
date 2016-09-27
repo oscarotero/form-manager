@@ -111,15 +111,14 @@ The inputs can handle custom validators:
 ```php
 $name = F::text();
 
-function isDave($input)
-{
-	if ($input->val() !== 'dave') {
-		throw new FormManager\InvalidValueException('This value must be "dave"');
-	}
-}
+
 
 //Add custom validators
-$name->addValidator('isDave');
+$name->addValidator('isDave', function($input) {
+    if ($input->val() !== 'dave') {
+        throw new FormManager\InvalidValueException('This value must be "dave"');
+    }
+});
 
 $name->val('tom');
 
@@ -128,7 +127,8 @@ if (!$name->validate()) {
 }
 
 //Remove the validator
-$name->removeValidator('isDave');
+$name->removeValidator('isDave'); //remove validator
+echo $name->error(); // no error displayed
 ```
 
 The `load()` method is like `val()` but it handles the data sent by the client:
@@ -604,15 +604,14 @@ class EditUserForm extends Form
 		]);
 
 		//Add a validator to check the password
-		$this->addValidator('password-check', function($form)
-		{
-			$password1 = $form['password']->val();
-			$password2 = $form['repeat_password']->val();
-
-			if ($password1 !== $password2) {
-				throw new FormManager\InvalidValueException('The passwords does not match');
-			}
-		});
+		$this->addValidator('password-check', function ($form) {
+            $password1 = $form['password']->val();
+            $password2 = $form['repeat_password']->val();
+        
+            if ($password1 !== $password2) {
+                throw new FormManager\InvalidValueException('The passwords does not match');
+            }
+        });
 	}
 }
 ```
