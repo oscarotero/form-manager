@@ -63,22 +63,6 @@ class Select extends ElementContainer implements InputInterface
         return $name;
     }
 
-    /**
-     * Generate the right name attribute for this input.
-     *
-     * @return string
-     */
-    protected function generateName()
-    {
-        $name = $this->getPath();
-
-        if ($this->attr('multiple')) {
-            $name .= '[]';
-        }
-
-        return $name;
-    }
-
     public function offsetSet($offset, $value)
     {
         if ($value instanceof Option) {
@@ -277,7 +261,7 @@ class Select extends ElementContainer implements InputInterface
     {
         //Generate the name
         if (($name = $this->getPath()) !== null) {
-            $this->attributes['name'] = $name;
+            $this->attributes['name'] = $this->getNameAttr();
         }
 
         //Generate the aria attributes for labels http://www.html5accessibility.com/tests/mulitple-labels.html

@@ -40,6 +40,22 @@ class Input extends Element implements InputInterface
     }
 
     /**
+     * Generate the right name attribute for this input.
+     *
+     * @return string
+     */
+    private function getNameAttr()
+    {
+        $name = $this->getPath();
+
+        if ($this->attr('multiple')) {
+            $name .= '[]';
+        }
+
+        return $name;
+    }
+
+    /**
      * Calculate the input name on print.
      *
      * {@inheritdoc}
@@ -48,7 +64,7 @@ class Input extends Element implements InputInterface
     {
         //Generate the name
         if (($name = $this->getPath()) !== null) {
-            $this->attributes['name'] = $name;
+            $this->attributes['name'] = $this->getNameAttr();
         }
 
         //Generate the aria attributes for labels http://www.html5accessibility.com/tests/mulitple-labels.html
