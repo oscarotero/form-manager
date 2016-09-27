@@ -189,19 +189,28 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($input->validate());
     }
 
+    /**
+     * @expectedException FormManager\Exception\ItemNotFoundException
+     */
     protected function _testValidator($input)
     {
-        $input->addValidator(function ($input) {
-            if ($input->val() !== 'dave') {
-                throw new InvalidValueException('This value must be "dave"');
-            };
+        $input->addValidator('isDave', function($input){
+            if($input->val() != 'dave'){
+                throw new InvalidValueException('This value must be dave');
+            }
         });
-
-        $this->assertFalse($input->validate());
 
         $input->removeAttr('pattern');
         $input->val('dave');
+        $this->assertTrue($input->validate());
 
+        $input->val('notDave');
+        $this->assertFalse($input->validate());
+
+        $input->removeValidator('isDave');
+        $input->val('notDave');
         $this->assertTrue($input->validate());
     }
+
+
 }
