@@ -73,11 +73,11 @@ class Accept
      * Validate the file extension
      *
      * @param string $name The original file name
-     * @param string $extensions Allowed extensions
+     * @param array $extensions Allowed extensions
      *
      * @return bool
      */
-    protected static function validateExtension($name, $extensions)
+    protected static function validateExtension($name, array $extensions)
     {
         if (empty($extensions)) {
             return;
@@ -97,11 +97,11 @@ class Accept
      * Validate the file mimetype
      *
      * @param string $file The original file path
-     * @param string $mimes Allowed mimetypes
+     * @param array $mimes Allowed mimetypes
      *
      * @return bool
      */
-    protected static function validateMime($file, $mimes)
+    protected static function validateMime($file, array $mimes)
     {
         if (empty($mimes)) {
             return;
