@@ -87,7 +87,7 @@ class Accept
         $original = '.'.end($original);
 
         foreach ($extensions as $extension) {
-            if ($original = $extension) {
+            if ($original === $extension) {
                 return true;
             }
         }
@@ -108,7 +108,7 @@ class Accept
         }
 
         array_walk($mimes, function (&$value) {
-            $value = str_replace('*', '.*', "|^{$value}\$|i");
+            $value = strtolower(str_replace('*', '.*', "|^{$value}\$|"));
         });
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
