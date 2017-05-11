@@ -38,6 +38,26 @@ class InputFileTest extends BaseTest
         $this->assertEquals('The uploaded file exceeds the upload_max_filesize directive in php.ini', $input->error());
     }
 
+    public function testExtension()
+    {
+        $input = Builder::file();
+
+        $input->accept('.png');
+
+        $input->val(array(
+            'name' => 'image.jpg',
+            'type' => 'image/jpeg',
+            'tmp_name' => dirname(__DIR__).'/image.jpg',
+            'error' => 0,
+        ));
+
+        $this->assertFalse($input->validate());
+
+        $input->accept('.jpeg,.jpg');
+
+        $this->assertTrue($input->validate(), $input->error());
+    }
+
     public function testMimeType()
     {
         $input = Builder::file();
@@ -68,6 +88,26 @@ class InputFileTest extends BaseTest
         $this->assertFalse($input->validate());
 
         $input->accept('image/jpeg');
+
+        $this->assertTrue($input->validate(), $input->error());
+    }
+
+    public function testMixed()
+    {
+        $input = Builder::file();
+
+        $input->accept('.png,image/png');
+
+        $input->val(array(
+            'name' => 'image.jpg',
+            'type' => 'image/jpeg',
+            'tmp_name' => dirname(__DIR__).'/image.jpg',
+            'error' => 0,
+        ));
+
+        $this->assertFalse($input->validate());
+
+        $input->accept('.png,image/jpeg,.jpeg,.jpg');
 
         $this->assertTrue($input->validate(), $input->error());
     }

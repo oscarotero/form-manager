@@ -27,40 +27,98 @@ class Accept
                 return;
             }
 
-            return static::validateMime($value->getStream()->getMetadata('uri'), $input->attr('accept'));
+            return static::validateName(
+                $value->getStream()->getMetadata('uri'),
+                $value->getClientFilename(),
+                $input->attr('accept')
+            );
         }
 
         if (empty($value['tmp_name'])) {
             return true;
         }
 
-        static::validateMime($value['tmp_name'], $input->attr('accept'));
+        static::validateName($value['tmp_name'], $value['name'], $input->attr('accept'));
     }
 
     /**
-     * Get and validate the mimetype.
+     * Validate the file extension and mimetype
      *
      * @param string $file The file path
+     * @param string $name The original file name
      * @param string $attr The value of the accept attribute
+     *
+     * @throws InvalidValueException If the value is not valid
      */
-    protected static function validateMime($file, $attr)
+    protected static function validateName($file, $name, $attr)
     {
-        $accept = array_map('trim', explode(',', $attr));
+        $accept = array_map('trim', explode(',', strtolower($attr)));
 
-        array_walk($accept, function (&$value) {
-            $value = str_replace('*', '.*', "|^{$value}\$|i");
+        $extensions = array_filter($accept, function($value) {
+            return !strstr($value, '/');
+        });
+
+        $mimes = array_filter($accept, function($value) {
+            return strstr($value, '/');
+        });
+
+        if (static::validateExtension($name, $extensions) || static::validateMime($file, $mimes)) {
+            return;
+        }
+
+        throw new InvalidValueException(sprintf(static::$error_message, $attr));
+    }
+
+    /**
+     * Validate the file extension
+     *
+     * @param string $name The original file name
+     * @param array $extensions Allowed extensions
+     *
+     * @return bool
+     */
+    protected static function validateExtension($name, array $extensions)
+    {
+        if (empty($extensions)) {
+            return;
+        }
+
+        $original = explode('.', $name);
+        $original = '.'.end($original);
+
+        foreach ($extensions as $extension) {
+            if ($original === $extension) {
+                return true;
+            }
+        }
+    }
+
+    /**
+     * Validate the file mimetype
+     *
+     * @param string $file The original file path
+     * @param array $mimes Allowed mimetypes
+     *
+     * @return bool
+     */
+    protected static function validateMime($file, array $mimes)
+    {
+        if (empty($mimes)) {
+            return;
+        }
+
+        array_walk($mimes, function (&$value) {
+            $value = strtolower(str_replace('*', '.*', "|^{$value}\$|"));
         });
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $file);
         finfo_close($finfo);
 
-        foreach ($accept as $pattern) {
+        foreach ($mimes as $pattern) {
             if (preg_match($pattern, $mime)) {
-                return;
+                return true;
             }
         }
-
-        throw new InvalidValueException(sprintf(static::$error_message, $attr));
     }
 }
