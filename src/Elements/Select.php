@@ -234,7 +234,7 @@ class Select extends ElementContainer implements InputInterface
         }
 
         //Normalize values
-        $value = array_keys(array_flip($value));
+        $value = array_unique(array_values($value));
 
         //check the selected values
         foreach ($value as $val) {
