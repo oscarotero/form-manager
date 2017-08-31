@@ -36,7 +36,7 @@ class InputSelectTest extends BaseTest
 
         $select->val('2');
         $this->assertTrue($select->validate());
-        $this->assertSame(2, $select->val());
+        $this->assertSame('2', $select->val());
 
         $select->val('002');
         $this->assertTrue($select->validate());
@@ -69,7 +69,7 @@ class InputSelectTest extends BaseTest
         $this->assertCount(4, $select->options());
 
         $select->val('1');
-        $this->assertSame($select->val(), 1);
+        $this->assertSame($select->val(), '1');
         $this->assertCount(4, $select->options());
     }
 
