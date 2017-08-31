@@ -98,7 +98,7 @@ class InputSelectTest extends BaseTest
 
         $select->val(['1', '0']);
 
-        $this->assertSame([1, 0], $select->val());
+        $this->assertSame(['1', '0'], $select->val());
 
         $select->val(2);
 
