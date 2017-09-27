@@ -19,6 +19,10 @@ class Required
      */
     public static function validate(InputInterface $input)
     {
+        if (!$input->attr('required')) {
+            return;
+        }
+
         $value = $input->val();
 
         if ($input->attr('type') === 'file') {
@@ -27,10 +31,6 @@ class Required
             } else {
                 $value = isset($value['size']) ? $value['size'] : null;
             }
-        }
-
-        if (!$input->attr('required')) {
-            return;
         }
 
         if ((is_array($value) && empty($value)) || (!is_array($value) && (strlen($value) === 0))) {
