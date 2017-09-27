@@ -29,10 +29,12 @@ class Required
             }
         }
 
-        $attr = $input->attr('required');
+        if (!$input->attr('required')) {
+            return;
+        }
 
-        if (!empty($attr) && empty($value) && (strlen($value) === 0)) {
-            throw new InvalidValueException(sprintf(static::$error_message, $attr));
+        if ((is_array($value) && empty($value)) || (!is_array($value) && (strlen($value) === 0))) {
+            throw new InvalidValueException(static::$error_message);
         }
     }
 }
