@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace FormManager;
+namespace FormManager\Nodes;
 
 /**
  * Class representing a generic HTML node element

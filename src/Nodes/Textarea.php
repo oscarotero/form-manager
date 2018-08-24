@@ -1,8 +1,7 @@
 <?php
+declare(strict_types = 1);
 
-namespace FormManager;
-
-use Exception;
+namespace FormManager\Nodes;
 
 /**
  * Class representing a HTML textarea element
