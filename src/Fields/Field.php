@@ -184,9 +184,9 @@ abstract class Field implements FieldInterface
      *
      * @see FieldInterface
      */
-    public function removeAttr($name)
+    public function removeAttribute($name)
     {
-        $this->input->removeAttr($name);
+        $this->input->removeAttribute($name);
 
         return $this;
     }

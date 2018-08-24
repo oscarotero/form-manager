@@ -49,6 +49,6 @@ class Option extends Element
      */
     public function uncheck()
     {
-        return $this->removeAttr('selected');
+        return $this->removeAttribute('selected');
     }
 }

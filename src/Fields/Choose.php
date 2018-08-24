@@ -45,7 +45,7 @@ class Choose extends Container
             if ($v == $value) {
                 $input->attr('checked', true);
             } else {
-                $input->removeAttr('checked');
+                $input->removeAttribute('checked');
             }
         }
 

@@ -51,7 +51,7 @@ class InputCheckbox extends Input implements InputInterface
      */
     public function uncheck()
     {
-        return $this->removeAttr('checked');
+        return $this->removeAttribute('checked');
     }
 
     private function evalValue($value)

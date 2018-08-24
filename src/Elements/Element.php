@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace FormManager\Elements;
 
@@ -23,12 +24,8 @@ class Element implements ElementInterface
 
     /**
      * Escapes a property value.
-     *
-     * @param string $value
-     *
-     * @return string
      */
-    protected static function escape($value)
+    protected static function escape(string $value): string
     {
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
@@ -36,12 +33,9 @@ class Element implements ElementInterface
     /**
      * Creates a html attribute.
      *
-     * @param string $name
      * @param mixed  $value
-     *
-     * @return string
      */
-    protected static function getHtmlAttribute($name, $value)
+    protected static function getHtmlAttribute(string $name, $value): string
     {
         if (($value === null) || ($value === false)) {
             return '';
@@ -61,20 +55,15 @@ class Element implements ElementInterface
     /**
      * Magic method to convert methods in attributes
      * Ex: ->id('my-id') converts to ->attr('id', 'my-id').
-     *
-     * @param string $name
-     * @param array  $arguments
-     *
-     * @return self
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments): self
     {
         $this->attr($name, (array_key_exists(0, $arguments) ? $arguments[0] : true));
 
         return $this;
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'attributes' => $this->attributes,
@@ -105,7 +94,7 @@ class Element implements ElementInterface
      */
     public function __clone()
     {
-        $this->removeAttr('id');
+        $this->removeAttribute('id');
     }
 
     /**
@@ -205,7 +194,7 @@ class Element implements ElementInterface
      *
      * {@inheritdoc}
      */
-    public function removeAttr($name)
+    public function removeAttribute($name)
     {
         if (isset($this->attributes[$name])) {
             unset($this->attributes[$name]);

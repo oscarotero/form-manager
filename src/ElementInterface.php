@@ -29,7 +29,7 @@ interface ElementInterface
      *
      * @return self
      */
-    public function removeAttr($name);
+    public function removeAttribute($name);
 
     /**
      * Returns or generate an id for this element.
