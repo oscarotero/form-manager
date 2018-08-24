@@ -5,6 +5,7 @@ namespace FormManager\Tests;
 
 use FormManager\Nodes\InputText;
 use FormManager\Nodes\Textarea;
+use FormManager\Nodes\Select;
 use FormManager\Nodes\Button;
 use PHPUnit\Framework\TestCase;
 
@@ -66,6 +67,21 @@ class InputTest extends TestCase
         $textarea->name = 'foo';
         $textarea->value = 'Bar';
         $this->assertEquals('<textarea name="foo">Bar</textarea>', (string) $textarea);
+    }
+
+    public function testSelect()
+    {
+        $select = new Select([
+            1 => 'One',
+            2 => 'Two',
+        ]);
+
+        $this->assertEquals('<select><option value="1">One</option><option value="2">Two</option></select>', (string) $select);
+
+        $select->name = 'foo';
+        $select->value = 2;
+
+        $this->assertEquals('<select name="foo"><option value="1">One</option><option value="2" selected>Two</option></select>', (string) $select);
     }
 
     public function testButton()

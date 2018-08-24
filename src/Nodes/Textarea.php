@@ -18,7 +18,7 @@ class Textarea extends Node
     public function __get(string $name)
     {
         if ($name === 'value') {
-            return $this->innerHtml;
+            return $this->innerHTML;
         }
 
         return parent::__get($name);
@@ -27,7 +27,7 @@ class Textarea extends Node
     public function __set(string $name, $value)
     {
         if ($name === 'value') {
-            $this->innerHtml = self::escape($value);
+            $this->innerHTML = self::escape($value);
             return;
         }
 

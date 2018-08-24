@@ -31,7 +31,7 @@ class Node
     private $attributes = [];
     private $variables = [];
 
-    public $innerHtml;
+    public $innerHTML;
 
     public function __construct(string $nodeName)
     {
@@ -45,7 +45,7 @@ class Node
                 return $this->getOpeningTag().implode('', $this->childNodes).$this->getClosingTag();
             }
 
-            return $this->getOpeningTag().$this->innerHtml.$this->getClosingTag();
+            return $this->getOpeningTag().$this->innerHTML.$this->getClosingTag();
         } catch (\Exception $exception) {
             return '<pre>'.(string) $exception.'</pre>';
         }
@@ -101,6 +101,15 @@ class Node
         return $this;
     }
 
+    public function setAttributes(array $attributes): self
+    {
+        foreach ($attributes as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
+
+        return $this;
+    }
+
     public function getAttribute(string $name)
     {
         return $this->attributes[$name] ?? null;
@@ -142,7 +151,7 @@ class Node
             $attributes[] = static::getHtmlAttribute($name, $value);
         }
 
-        $attributes = implode(' ', $attributes);
+        $attributes = implode(' ', array_filter($attributes));
 
         return sprintf('<%s%s>', $this->nodeName, $attributes === '' ? '' : " {$attributes}");
     }
@@ -198,6 +207,6 @@ class Node
             }
         }
 
-        return sprintf('%s="%s"', $name, static::escape($value));
+        return sprintf('%s="%s"', $name, static::escape((string) $value));
     }
 }
