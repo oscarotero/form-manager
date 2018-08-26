@@ -13,7 +13,7 @@ use RuntimeException;
  */
 abstract class ValidatorFactory
 {
-	public static function createValidator(Node $node, array $rules)
+	public static function createValidator(Node $node, array $rules): Validatable
 	{
 		$validator = [];
 
@@ -23,6 +23,10 @@ abstract class ValidatorFactory
 			}
 
 			$validator[] = self::$name($node);
+		}
+
+		if (empty($validator)) {
+			return new Rules\AlwaysValid();
 		}
 
 		return new Rules\AllOf(...$validator);

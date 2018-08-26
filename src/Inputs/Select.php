@@ -10,11 +10,6 @@ use FormManager\Node;
  */
 class Select extends Input
 {
-    const INTR_VALIDATORS = [];
-
-    const ATTR_VALIDATORS = [
-    ];
-
     public function __construct(array $options = [])
     {
         parent::__construct('select');
@@ -30,12 +25,37 @@ class Select extends Input
 
     protected function setValue($value)
     {
+        if ($this->getAttribute('multiple')) {
+            return $this->setMultipleValues((array) $value);
+        }
+
         $this->value = null;
 
         foreach ($this->getChildNodes() as $option) {
-            if ($option->value == $value) {
-                $this->value = $value;
+            if ((string) $option->value === (string) $value) {
+                $this->value = $option->value;
                 $option->selected = true;
+            } else {
+                $option->selected = false;
+            }
+        }
+    }
+
+    protected function setMultipleValues(array $values)
+    {
+        $this->value = [];
+
+        $values = array_map(
+            function ($value) {
+                return (string) $value;
+            },
+            $values
+        );
+
+        foreach ($this->getChildNodes() as $option) {
+            if (in_array((string) $option->value, $values, true)) {
+                $option->selected = true;
+                $this->value[] = $option->value;
             } else {
                 $option->selected = false;
             }

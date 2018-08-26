@@ -12,5 +12,21 @@ class Checkbox extends Input
     {
         parent::__construct('input');
         $this->setAttribute('type', 'checkbox');
+        $this->setAttribute('value', 'on');
+    }
+
+    protected function setValue($value)
+    {
+    	if (
+    		((string) $this->getAttribute('value') === (string) $value) || 
+    		filter_var($value, FILTER_VALIDATE_BOOLEAN)
+    	) {
+    		$this->value = true;
+    		$this->setAttribute('checked', true);
+    		return;
+    	}
+
+		$this->value = null;
+		$this->removeAttribute('checked');
     }
 }

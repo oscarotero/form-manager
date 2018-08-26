@@ -5,6 +5,7 @@ namespace FormManager\Inputs;
 
 use FormManager\Node;
 use FormManager\ValidatorFactory;
+use Respect\Validation\Validatable;
 
 /**
  * Class representing a generic form input
@@ -52,7 +53,7 @@ abstract class Input extends Node
         return $this;
     }
 
-    public function getValidator()
+    public function getValidator(): Validatable
     {
         $validators = static::INTR_VALIDATORS;
 
@@ -69,7 +70,7 @@ abstract class Input extends Node
     {
         $value = $this->value;
 
-        if ($value === null || $value === '') {
+        if ($value === null || $value === '' || $value === []) {
             return !$this->required;
         }
 

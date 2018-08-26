@@ -8,14 +8,21 @@ namespace FormManager\Inputs;
  */
 class Radio extends Input
 {
-	const INTR_VALIDATORS = [];
-
-	const ATTR_VALIDATORS = [
-	];
-	
     public function __construct()
     {
         parent::__construct('input');
         $this->setAttribute('type', 'radio');
+    }
+
+    protected function setValue($value)
+    {
+    	if (!empty($value) && (string) $this->getAttribute('value') === (string) $value) {
+    		$this->value = $value;
+    		$this->setAttribute('checked', true);
+    		return;
+    	}
+
+		$this->value = null;
+		$this->removeAttribute('checked');
     }
 }
