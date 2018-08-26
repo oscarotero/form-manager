@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace FormManager\Tests;
 
-use FormManager\Nodes\Node;
+use FormManager\Node;
 use PHPUnit\Framework\TestCase;
 
 class NodeTest extends TestCase
