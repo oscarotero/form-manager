@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace FormManager;
 
 use FormManager\Node;
-use Respect\Validation\Rules;
+use FormManager\Rules;
 use Respect\Validation\Validatable;
+use Respect\Validation\Validator as v;
 use RuntimeException;
 
 /**
@@ -26,95 +27,99 @@ abstract class ValidatorFactory
 		}
 
 		if (empty($validator)) {
-			return new Rules\AlwaysValid();
+			return v::alwaysValid();
 		}
 
-		return new Rules\AllOf(...$validator);
+		return v::allOf(...$validator);
 	}
 
 	public static function number(): Validatable
 	{
-		return new Rules\Numeric();
+		return v::numeric();
 	}
 
 	public static function url(): Validatable
 	{
-		return new Rules\Url();
+		return v::url();
 	}
 
 	public static function email(): Validatable
 	{
-		return new Rules\Email();
+		return v::email();
 	}
 
 	public static function color(): Validatable
 	{
-		return new Rules\Regex('/^#[a-f0-9]{6}$/');
+		return v::regex('/^#[a-f0-9]{6}$/');
 	}
 
 	public static function date(): Validatable
 	{
-		return new Rules\Date('Y-m-d');
+		return v::date()->date('Y-m-d');
 	}
 
 	public static function datetimeLocal(): Validatable
 	{
-		return new Rules\Date('Y-m-d\TH:i:s');
+		return v::date()->date('Y-m-d\TH:i:s');
 	}
 
 	public static function month(): Validatable
 	{
-		return new Rules\Date('Y-m');
+		return v::date()->date('Y-m');
 	}
 
 	public static function week(): Validatable
 	{
-		//Y-\WW ([0-9999] W[1-52])
-		return new Rules\Regex('/^\d{1,4}-W([1-9]|[1-4][0-9]|5[0-2])$/');
+		return v::date()->regex('/^\d+-W\d+$/');
 	}
 
 	public static function time(Node $node): Validatable
 	{
-		return $node->step ? new Rules\Date('H:i:s') : new Rules\Date('H:i');
+		return v::date()->date($node->step ? 'H:i:s' : 'H:i');
 	}
 
 	public static function file(): Validatable
 	{
-		return new Rules\ArrayType();
+		return new Rules\UploadedFile();
 	}
 
 	public static function maxlength(Node $node): ?Validatable
 	{
-    	return $node->maxlength ? new Rules\Length(null, $node->maxlength) : null;
+    	return $node->maxlength ? v::length(null, $node->maxlength) : null;
 	}
 
 	public static function minlength(Node $node): ?Validatable
 	{
-    	return $node->minlength ? new Rules\Length($node->minlength, null) : null;
+    	return $node->minlength ? v::length($node->minlength, null) : null;
 	}
 
 	public static function max(Node $node): ?Validatable
 	{
-    	return $node->max ? new Rules\Max($node->max) : null;
+    	return $node->max ? v::max($node->max) : null;
 	}
 
 	public static function min(Node $node): ?Validatable
 	{
-    	return $node->min ? new Rules\Min($node->min) : null;
+    	return $node->min ? v::min($node->min) : null;
 	}
 
 	public static function step(Node $node): ?Validatable
 	{
-    	return $node->step ? new Rules\Multiple($node->step) : null;
+    	return $node->step ? v::multiple($node->step) : null;
 	}
 
 	public static function pattern(Node $node): ?Validatable
 	{
 		if ($node->pattern) {
     		$regex = sprintf('/^%s$/u', str_replace('/', '\\/', $node->pattern));
-    		return new Rules\Regex($regex);
+    		return v::regex($regex);
     	}
 
     	return null;
+	}
+
+	public static function accept(Node $node): ?Validatable
+	{
+		return $node->accept ? new Rules\AcceptFile($node->accept) : null;
 	}
 }

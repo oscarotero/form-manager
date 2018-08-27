@@ -13,8 +13,7 @@ class MonthTest extends TestCase
     {
         return [
             [true, null, []],
-            // https://github.com/Respect/Validation/issues/1083
-            // [false, '2014-13', []],
+            [false, '2014-13', []],
             [true, '2014-09', []],
             [false, '2014-09', ['max' => '2014-08']],
             [true, '2014-09', ['max' => '2014-09']],

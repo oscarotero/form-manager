@@ -12,10 +12,10 @@ class WeekTest extends TestCase
     {
         return [
             [true, null, []],
-            [true, '2014-W1', []],
+            [true, '2014-W01', []],
             [true, '2014-W16', []],
             [true, '2014-W52', []],
-            [false, '2014-W53', []],
+            [false, '2014-W54', []],
             [false, '2014-W15', ['max' => '2014-W14']],
             [true, '2013-W15', ['max' => '2014-W14']],
             [true, '2014-W15', ['min' => '2014-W14']],
