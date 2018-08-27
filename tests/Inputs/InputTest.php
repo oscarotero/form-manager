@@ -54,8 +54,9 @@ class InputTest extends TestCase
     public function testInputTypes(string $class, string $type)
     {
         $class = "FormManager\\Inputs\\{$class}";
-        $input = new $class($type);
+        $input = new $class(['class' => 'foo']);
         $this->assertEquals($type, $input->getAttribute('type'));
+        $this->assertEquals('foo', $input->getAttribute('class'));
     }
 
     public function testLabel()

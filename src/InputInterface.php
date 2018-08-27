@@ -1,39 +1,14 @@
 <?php
+declare(strict_types = 1);
 
 namespace FormManager;
 
-use FormManager\Elements\Datalist;
-use FormManager\Elements\Label;
-
 /**
- * Interface used by all input elements.
+ * Interface representing an input element
  */
-interface InputInterface extends FieldInterface
+interface InputInterface extends NodeInterface
 {
-    /**
-     * Set the datalist associated with this input.
-     *
-     * @param Datalist $datalist
-     *
-     * @return self
-     */
-    public function setDatalist(Datalist $datalist);
+    public function setName(string $name): InputInterface;
 
-    /**
-     * Add a new label to this input.
-     *
-     * @param Label $label
-     *
-     * @return self
-     */
-    public function addLabel(Label $label);
-
-    /**
-     * Remove the label from this input.
-     *
-     * @param Label $label
-     *
-     * @return self
-     */
-    public function removeLabel(Label $label);
+    public function setValue($value): InputInterface;
 }

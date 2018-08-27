@@ -16,9 +16,9 @@ class Text extends Input
         'pattern',
 	];
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct('input');
+        parent::__construct('input', $attributes);
         $this->setAttribute('type', 'text');
     }
 }

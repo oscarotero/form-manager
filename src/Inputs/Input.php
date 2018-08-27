@@ -4,19 +4,21 @@ declare(strict_types = 1);
 namespace FormManager\Inputs;
 
 use FormManager\Node;
+use FormManager\InputInterface;
 use FormManager\ValidatorFactory;
 use Respect\Validation\Validatable;
 
 /**
  * Class representing a generic form input
  */
-abstract class Input extends Node
+abstract class Input extends Node implements InputInterface
 {
     const INTR_VALIDATORS = [];
     const ATTR_VALIDATORS = [];
 
     private static $idIndex = 0;
     protected $value;
+    protected $format = '{label} {input}';
     public $label;
 
     public function __get(string $name)
@@ -38,19 +40,30 @@ abstract class Input extends Node
         return parent::__set($name, $value);
     }
 
-    public function setLabel(string $text, array $attributes)
+    public function __toString()
     {
-        $this->label = new Node('label');
-        $this->label->innerHTML = $text;
-        $this->label->setAttributes($attributes);
+        if ($this->label) {
+            return strtr($this->format, [
+                '{label}' => (string) $this->label,
+                '{input}' => parent::__toString()
+            ]);
+        }
+
+        parent::__toString();
+    }
+
+    public function createLabel(string $text, array $attributes = []): Node
+    {
+        $label = new Node('label', $attributes);
+        $label->innerHTML = $text;
 
         if (!$this->getAttribute('id')) {
             $this->setAttribute('id', 'id-input-'.(++self::$idIndex));
         }
 
-        $this->label->setAttribute('for', $this->getAttribute('id'));
+        $label->setAttribute('for', $this->getAttribute('id'));
 
-        return $this;
+        return $label;
     }
 
     public function getValidator(): Validatable
@@ -77,9 +90,32 @@ abstract class Input extends Node
         return $this->getValidator()->validate($value);
     }
 
-    protected function setValue($value)
+    public function setValue($value): InputInterface
     {
         $this->value = $value;
         $this->setAttribute('value', $value);
+
+        return $this;
+    }
+
+    public function setName(string $name): InputInterface
+    {
+        $this->setAttribute('name', $name);
+
+        return $this;
+    }
+
+    public function setLabel(string $text, array $attributes = [])
+    {
+        $this->label = $this->createLabel($text, $attributes);
+
+        return $this;
+    }
+
+    public function setFormat(string $format): self
+    {
+        $this->format = strtr($format, ['{format}' => $this->format]);
+
+        return $this;
     }
 }

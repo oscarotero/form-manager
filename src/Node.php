@@ -6,7 +6,7 @@ namespace FormManager;
 /**
  * Class representing a generic HTML node element
  */
-class Node
+class Node implements NodeInterface
 {
     const SELF_CLOSING_TAGS = [
         'area',
@@ -33,9 +33,10 @@ class Node
 
     public $innerHTML;
 
-    public function __construct(string $nodeName)
+    public function __construct(string $nodeName, array $attributes = [])
     {
         $this->nodeName = $nodeName;
+        $this->setAttributes($attributes);
     }
 
     public function __toString()
@@ -56,8 +57,7 @@ class Node
         $this->removeAttribute('id');
 
         foreach ($this->childNodes as $k => $child) {
-            $this->childNodes[$k] = clone $child;
-            $this->childNodes[$k]->parentNode = $this;
+            $this->childNodes[$k] = (clone $child)->setParentNode($this);
         }
     }
 
@@ -76,9 +76,16 @@ class Node
         return $this->nodeName;
     }
 
-    public function getParentNode(): ?Node
+    public function getParentNode(): ?NodeInterface
     {
         return $this->parentNode;
+    }
+
+    public function setParentNode(NodeInterface $node): NodeInterface
+    {
+        $this->parentNode = $node;
+
+        return $this;
     }
 
     public function getChildNodes(): array
@@ -86,10 +93,9 @@ class Node
         return $this->childNodes;
     }
 
-    public function appendChild(Node $node): self
+    public function appendChild(NodeInterface $node): self
     {
-        $this->childNodes[] = $node;
-        $node->parentNode = $this;
+        $this->childNodes[] = $node->setParentNode($this);
 
         return $this;
     }

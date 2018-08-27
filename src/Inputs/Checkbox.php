@@ -3,30 +3,33 @@ declare(strict_types = 1);
 
 namespace FormManager\Inputs;
 
+use FormManager\InputInterface;
+
 /**
  * Class representing a HTML input[type="checkbox"] element
  */
 class Checkbox extends Input
 {
-    public function __construct()
+    protected $format = '{input} {label}';
+
+    public function __construct(array $attributes = [])
     {
-        parent::__construct('input');
+        parent::__construct('input', $attributes);
         $this->setAttribute('type', 'checkbox');
         $this->setAttribute('value', 'on');
     }
 
-    protected function setValue($value)
+    public function setValue($value): InputInterface
     {
     	if (
     		((string) $this->getAttribute('value') === (string) $value) || 
     		filter_var($value, FILTER_VALIDATE_BOOLEAN)
     	) {
     		$this->value = true;
-    		$this->setAttribute('checked', true);
-    		return;
+    		return $this->setAttribute('checked', true);
     	}
 
 		$this->value = null;
-		$this->removeAttribute('checked');
+		return $this->removeAttribute('checked');
     }
 }

@@ -2,49 +2,40 @@
 
 namespace FormManager;
 
-use ReflectionClass;
+use InvalidArgumentException;
 
 /**
- * Basic form-manager factory.
+ * Factory class to create all nodes.
  */
-class Factory implements FactoryInterface
+class Factory
 {
-    protected $cache = [];
-    protected $namespaces = [
-        'FormManager\\Fields\\',
-    ];
+    const INPUTS_NAMESPACE = 'FormManager\\Inputs\\';
+    const GROUPS_NAMESPACE = 'FormManager\\Groups\\';
 
     /**
-     * {@inheritdoc}
+     * Factory to create input nodes
      */
-    public function get($name, array $arguments)
+    public static function __callStatic(string $name, $arguments)
     {
-        if (($class = $this->getClass($name)) !== false) {
-            return empty($arguments) ? $class->newInstance() : $class->newInstanceArgs($arguments);
-        }
-    }
-
-    /**
-     * Search a class in the namespaces.
-     *
-     * @param string $name The class name
-     *
-     * @return false|ReflectionClass
-     */
-    protected function getClass($name)
-    {
-        if (isset($this->cache[$name])) {
-            return $this->cache[$name];
+        if ($name === 'form') {
+            return new Form(...$arguments);
         }
 
-        foreach ($this->namespaces as $namespace) {
-            $class = $namespace.ucfirst($name);
+        $class = self::INPUTS_NAMESPACE.ucfirst($name);
 
-            if (class_exists($class)) {
-                return $this->cache[$name] = new ReflectionClass($class);
-            }
+        if (class_exists($class)) {
+            return new $class(...$arguments);
         }
 
-        return $this->cache[$name] = false;
+        $class = self::GROUPS_NAMESPACE.ucfirst($name);
+
+        if (class_exists($class)) {
+            return new $class(...$arguments);
+        }
+
+        throw new InvalidArgumentException(
+            sprintf('Input %s not found', $name)
+        );
+        
     }
 }

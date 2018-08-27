@@ -8,9 +8,11 @@ namespace FormManager\Inputs;
  */
 class Hidden extends Input
 {
-    public function __construct()
+	protected $format = '{input}';
+
+    public function __construct(array $attributes = [])
     {
-        parent::__construct('input');
+        parent::__construct('input', $attributes);
         $this->setAttribute('type', 'hidden');
     }
 }

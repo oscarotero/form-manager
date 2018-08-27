@@ -8,9 +8,12 @@ namespace FormManager\Inputs;
  */
 class Submit extends Input
 {
-    public function __construct()
+	protected $format = '{input}';
+
+    public function __construct($innerHTML, array $attributes = [])
     {
-        parent::__construct('button');
+        parent::__construct('button', $attributes);
         $this->setAttribute('type', 'submit');
+        $this->innerHTML = $innerHTML;
     }
 }

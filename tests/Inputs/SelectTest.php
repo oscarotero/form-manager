@@ -51,4 +51,50 @@ class SelectTest extends TestCase
         $this->assertSame($isValid, $input->isValid());
         $this->assertSame($expectedValue, $input->value);
     }
+
+    public function testOptgroups()
+    {
+        $select = new Select([
+            'Section 1' => [
+                1 => 'One',
+                2 => 'Two',
+            ],
+            'Section 2' => [
+                3 => 'Three',
+                4 => 'Four',
+            ],
+        ]);
+
+        $this->assertCount(2, $select->getChildNodes());
+        $select->value = 3;
+        $this->assertSame(3, $select->value);
+
+        $expetedHtml = '<select><optgroup label="Section 1"><option value="1">One</option><option value="2">Two</option></optgroup><optgroup label="Section 2"><option value="3" selected>Three</option><option value="4">Four</option></optgroup></select>';
+
+        $this->assertSame($expetedHtml, (string) $select);
+    }
+
+    public function testAllowNewValues()
+    {
+        $select = new Select([]);
+        $select->allowNewValues();
+        $select->multiple = true;
+        $select->value = ['one', 2];
+
+        $this->assertCount(2, $select->getChildNodes());
+
+        list($one, $two) = $select->getChildNodes();
+
+        $this->assertSame('one', $one->value);
+        $this->assertSame('one', $one->innerHTML);
+
+        $this->assertSame(2, $two->value);
+        $this->assertSame('2', $two->innerHTML);
+
+        $this->assertEquals(['one', 2], $select->value);
+
+        $select->allowNewValues(false);
+        $select->value = [3];
+        $this->assertEquals([], $select->value);
+    }
 }

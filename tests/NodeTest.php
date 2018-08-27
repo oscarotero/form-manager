@@ -37,6 +37,9 @@ class NodeTest extends TestCase
         $node->appendChild(new Node('p'));
         $this->assertCount(1, $node->getChildNodes());
         $this->assertSame($node, $node->getChildNodes()[0]->getParentNode());
+
+        $node = new Node('div', ['class' => 'foo']);
+        $this->assertEquals('<div class="foo"></div>', (string) $node);
     }
 
     public function attributesProvider()

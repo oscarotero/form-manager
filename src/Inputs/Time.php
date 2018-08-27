@@ -18,9 +18,9 @@ class Time extends Input
 		'min',
 	];
 	
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct('input');
+        parent::__construct('input', $attributes);
         $this->setAttribute('type', 'time');
     }
 }
