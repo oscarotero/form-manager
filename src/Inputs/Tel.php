@@ -8,14 +8,14 @@ namespace FormManager\Inputs;
  */
 class Tel extends Input
 {
-	const INTR_VALIDATORS = [];
+    const INTR_VALIDATORS = [];
 
-	const ATTR_VALIDATORS = [
-		'maxlength',
+    const ATTR_VALIDATORS = [
+        'maxlength',
         'minlength',
         'pattern',
-	];
-	
+    ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct('input', $attributes);

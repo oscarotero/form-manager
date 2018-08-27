@@ -21,15 +21,15 @@ class Checkbox extends Input
 
     public function setValue($value): InputInterface
     {
-    	if (
-    		((string) $this->getAttribute('value') === (string) $value) || 
-    		filter_var($value, FILTER_VALIDATE_BOOLEAN)
-    	) {
-    		$this->value = true;
-    		return $this->setAttribute('checked', true);
-    	}
+        if (
+            ((string) $this->getAttribute('value') === (string) $value) ||
+            filter_var($value, FILTER_VALIDATE_BOOLEAN)
+        ) {
+            $this->value = true;
+            return $this->setAttribute('checked', true);
+        }
 
-		$this->value = null;
-		return $this->removeAttribute('checked');
+        $this->value = null;
+        return $this->removeAttribute('checked');
     }
 }

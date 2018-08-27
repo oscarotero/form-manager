@@ -335,7 +335,7 @@ abstract class Field implements FieldInterface
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @see RenderTrait
      */
     protected function defaultRender($prepend = '', $append = '')

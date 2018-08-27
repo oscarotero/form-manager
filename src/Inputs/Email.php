@@ -8,16 +8,16 @@ namespace FormManager\Inputs;
  */
 class Email extends Input
 {
-	const INTR_VALIDATORS = [
-		'email'
-	];
+    const INTR_VALIDATORS = [
+        'email'
+    ];
 
-	const ATTR_VALIDATORS = [
-		'maxlength',
+    const ATTR_VALIDATORS = [
+        'maxlength',
         'minlength',
         'pattern',
-	];
-	
+    ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct('input', $attributes);

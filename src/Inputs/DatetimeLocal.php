@@ -8,16 +8,16 @@ namespace FormManager\Inputs;
  */
 class DatetimeLocal extends Input
 {
-	const INTR_VALIDATORS = [
-		'datetimeLocal'
-	];
+    const INTR_VALIDATORS = [
+        'datetimeLocal'
+    ];
 
-	const ATTR_VALIDATORS = [
-		// 'step',
-		'max',
-		'min',
-	];
-	
+    const ATTR_VALIDATORS = [
+        // 'step',
+        'max',
+        'min',
+    ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct('input', $attributes);

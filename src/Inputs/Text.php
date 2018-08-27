@@ -8,13 +8,13 @@ namespace FormManager\Inputs;
  */
 class Text extends Input
 {
-	const INTR_VALIDATORS = [];
+    const INTR_VALIDATORS = [];
 
-	const ATTR_VALIDATORS = [
-		'maxlength',
+    const ATTR_VALIDATORS = [
+        'maxlength',
         'minlength',
         'pattern',
-	];
+    ];
 
     public function __construct(array $attributes = [])
     {

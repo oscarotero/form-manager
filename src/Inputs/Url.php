@@ -12,11 +12,11 @@ class Url extends Input
         'url'
     ];
 
-	const ATTR_VALIDATORS = [
+    const ATTR_VALIDATORS = [
         'maxlength',
         'minlength',
         'pattern',
-	];
+    ];
 
     public function __construct(array $attributes = [])
     {

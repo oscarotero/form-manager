@@ -8,16 +8,16 @@ namespace FormManager\Inputs;
  */
 class Time extends Input
 {
-	const INTR_VALIDATORS = [
-		'time',
-	];
+    const INTR_VALIDATORS = [
+        'time',
+    ];
 
-	const ATTR_VALIDATORS = [
-		// 'step',
-		'max',
-		'min',
-	];
-	
+    const ATTR_VALIDATORS = [
+        // 'step',
+        'max',
+        'min',
+    ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct('input', $attributes);

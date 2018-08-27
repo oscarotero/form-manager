@@ -15,11 +15,11 @@ class AcceptFile extends AbstractRule
     {
         $accept = array_map('trim', explode(',', strtolower($accept)));
 
-        $this->extensions = array_filter($accept, function($value) {
+        $this->extensions = array_filter($accept, function ($value) {
             return !strstr($value, '/');
         });
 
-        $this->mimes = array_filter($accept, function($value) {
+        $this->mimes = array_filter($accept, function ($value) {
             return strstr($value, '/');
         });
 
@@ -47,7 +47,7 @@ class AcceptFile extends AbstractRule
             return true;
         }
 
-        return $this->checkExtension($file['name']) 
+        return $this->checkExtension($file['name'])
             && $this->checkMime($file['tmp_name']);
     }
 

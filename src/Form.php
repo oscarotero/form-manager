@@ -12,39 +12,39 @@ use InvalidArgumentException;
  */
 class Form extends Node implements ArrayAccess
 {
-	private $inputs = [];
+    private $inputs = [];
 
-	public function __construct(array $attributes = [])
-	{
-		parent::__construct('form', $attributes);
-	}
-
-	public function offsetSet($name, $input)
+    public function __construct(array $attributes = [])
     {
-    	// if (!($input instanceof Input)) {
-    		// throw new InvalidArgumentException(
-    		// 	sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
-    		// );
-    	// }
-
-    	$input->setName($name);
-    	$this->inputs[$name] = $input;
-    	$this->appendChild($input);
+        parent::__construct('form', $attributes);
     }
 
-	public function offsetGet($name)
+    public function offsetSet($name, $input)
     {
-    	return $this->inputs[$name] ?? null;
+        // if (!($input instanceof Input)) {
+        // throw new InvalidArgumentException(
+        // 	sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
+        // );
+        // }
+
+        $input->setName($name);
+        $this->inputs[$name] = $input;
+        $this->appendChild($input);
     }
 
-	public function offsetUnset($name)
+    public function offsetGet($name)
     {
-    	unset($this->inputs[$name]);
+        return $this->inputs[$name] ?? null;
     }
 
-	public function offsetExists($name)
+    public function offsetUnset($name)
     {
-    	return isset($this->inputs[$name]);
+        unset($this->inputs[$name]);
+    }
+
+    public function offsetExists($name)
+    {
+        return isset($this->inputs[$name]);
     }
 
     private function addOption($value, string $label = null, Node $parent = null)

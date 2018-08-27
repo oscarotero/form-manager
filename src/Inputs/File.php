@@ -8,14 +8,14 @@ namespace FormManager\Inputs;
  */
 class File extends Input
 {
-	const INTR_VALIDATORS = [
-		'file'
-	];
+    const INTR_VALIDATORS = [
+        'file'
+    ];
 
-	const ATTR_VALIDATORS = [
-		'accept',
-	];
-	
+    const ATTR_VALIDATORS = [
+        'accept',
+    ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct('input', $attributes);

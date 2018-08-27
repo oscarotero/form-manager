@@ -23,7 +23,7 @@ class Submit extends Field
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @see RenderTrait
      */
     protected function defaultRender($prepend = '', $append = '')

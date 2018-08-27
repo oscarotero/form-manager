@@ -17,7 +17,7 @@ class Select extends FieldContainer
 
     /**
      * {@inheritdoc}
-     * 
+     *
      * @see RenderTrait
      */
     protected function defaultRender($prepend = '', $append = '')

@@ -8,16 +8,16 @@ namespace FormManager\Inputs;
  */
 class Week extends Input
 {
-	const INTR_VALIDATORS = [
-		'week'
-	];
+    const INTR_VALIDATORS = [
+        'week'
+    ];
 
-	const ATTR_VALIDATORS = [
-		// 'step',
-		'max',
-		'min',
-	];
-	
+    const ATTR_VALIDATORS = [
+        // 'step',
+        'max',
+        'min',
+    ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct('input', $attributes);

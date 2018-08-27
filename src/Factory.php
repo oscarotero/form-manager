@@ -36,6 +36,5 @@ class Factory
         throw new InvalidArgumentException(
             sprintf('Input %s not found', $name)
         );
-        
     }
 }

@@ -8,9 +8,9 @@ namespace FormManager\Inputs;
  */
 class Color extends Input
 {
-	const INTR_VALIDATORS = [
-		'color',
-	];
+    const INTR_VALIDATORS = [
+        'color',
+    ];
 
     public function __construct(array $attributes = [])
     {

@@ -54,11 +54,11 @@ class Accept
     {
         $accept = array_map('trim', explode(',', strtolower($attr)));
 
-        $extensions = array_filter($accept, function($value) {
+        $extensions = array_filter($accept, function ($value) {
             return !strstr($value, '/');
         });
 
-        $mimes = array_filter($accept, function($value) {
+        $mimes = array_filter($accept, function ($value) {
             return strstr($value, '/');
         });
 
