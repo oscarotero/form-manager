@@ -42,7 +42,7 @@ class Node implements NodeInterface
     public function __toString()
     {
         try {
-            if ($this->childNodes) {
+            if (!empty($this->childNodes)) {
                 return $this->getOpeningTag().implode('', $this->childNodes).$this->getClosingTag();
             }
 
@@ -154,7 +154,7 @@ class Node implements NodeInterface
         $attributes = [];
 
         foreach ($this->attributes as $name => $value) {
-            $attributes[] = static::getHtmlAttribute($name, $value);
+            $attributes[] = self::getHtmlAttribute($name, $value);
         }
 
         $attributes = implode(' ', array_filter($attributes));
