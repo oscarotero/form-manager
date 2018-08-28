@@ -25,7 +25,7 @@ class ValidationError
                 $required->assert($value);
             }
 
-            if ($value !== '' && $value !== null && ($value !== [] || !$input->multiple)) {
+            if ($value !== '' && $value !== null && ($value !== [] || !$input->getAttribute('multiple'))) {
                 $input->getValidator()->assert($value);
             }
         } catch (NestedValidationException $exception) {

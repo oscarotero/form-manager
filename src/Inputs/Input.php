@@ -21,6 +21,7 @@ abstract class Input extends Node implements InputInterface
 
     protected $format = '{label} {input}';
     protected $labels = [];
+    protected $error;
 
     public $label;
 

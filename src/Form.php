@@ -86,18 +86,4 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
 
         return $value;
     }
-
-    private function addOption($value, string $label = null, Node $parent = null)
-    {
-        $option = new Node('option', compact('value'));
-        $option->innerHTML = $label ?: (string) $value;
-
-        $this->options[] = $option;
-
-        if ($parent) {
-            $parent->appendChild($option);
-        } else {
-            $this->appendChild($option);
-        }
-    }
 }
