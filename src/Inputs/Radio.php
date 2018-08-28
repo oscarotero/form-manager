@@ -12,10 +12,14 @@ class Radio extends Input
 {
     protected $format = '{input} {label}';
 
-    public function __construct(array $attributes = [])
+    public function __construct(string $label = null, array $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'radio');
+
+        if (isset($label)) {
+            $this->setLabel($label);
+        }
     }
 
     public function setValue($value): InputInterface

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace FormManager\Tests\Inputs;
 
 use FormManager\Inputs\Text;
+use FormManager\Inputs\Input;
 use FormManager\Inputs\Textarea;
 use FormManager\Inputs\Select;
 use FormManager\Inputs\Submit;
@@ -39,7 +40,6 @@ class InputTest extends TestCase
             ['Radio', 'radio'],
             ['Range', 'range'],
             ['Search', 'search'],
-            ['Submit', 'submit'],
             ['Tel', 'tel'],
             ['Text', 'text'],
             ['Time', 'time'],
@@ -54,9 +54,8 @@ class InputTest extends TestCase
     public function testInputTypes(string $class, string $type)
     {
         $class = "FormManager\\Inputs\\{$class}";
-        $input = new $class(['class' => 'foo']);
+        $input = new $class();
         $this->assertEquals($type, $input->getAttribute('type'));
-        $this->assertEquals('foo', $input->getAttribute('class'));
     }
 
     public function testLabel()
@@ -64,8 +63,29 @@ class InputTest extends TestCase
         $input = new Text();
         $input->setLabel('Hello world', ['class' => 'is-error']);
 
-        $this->assertEquals('<input type="text" id="id-input-1">', (string) $input);
+        $this->assertEquals(
+            '<label class="is-error" for="id-input-1">Hello world</label> <input type="text" id="id-input-1">',
+            (string) $input
+        );
         $this->assertEquals('<label class="is-error" for="id-input-1">Hello world</label>', (string) $input->label);
+    }
+
+    public function testLabelAndId()
+    {
+        Input::resetIdIndex();
+        $input = new Text('Hello world');
+
+        $this->assertEquals(
+            '<label for="id-input-1">Hello world</label> <input type="text" id="id-input-1">',
+            (string) $input
+        );
+
+        $input->id = 'foo';
+
+        $this->assertEquals(
+            '<label for="foo">Hello world</label> <input type="text" id="foo">',
+            (string) $input
+        );
     }
 
     public function testTextarea()
@@ -96,13 +116,39 @@ class InputTest extends TestCase
 
     public function testSubmit()
     {
-        $button = new Submit();
+        $button = new Submit('Send');
 
         $this->assertEquals('submit', $button->type);
-        $this->assertEquals('<button type="submit"></button>', (string) $button);
+        $this->assertEquals('<button type="submit">Send</button>', (string) $button);
 
         $button->name = 'foo';
         $button->value = 'Bar';
-        $this->assertEquals('<button type="submit" name="foo" value="Bar"></button>', (string) $button);
+        $this->assertEquals('<button type="submit" name="foo" value="Bar">Send</button>', (string) $button);
+    }
+
+    public function testRender()
+    {
+        $input = new Text();
+        $this->assertSame('<input type="text">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="text" id="foo">',
+            (string) $input
+        );
+
+        $input->setFormat('{label} <div>{input}</div>');
+        $this->assertSame(
+            '<label for="foo">Click here</label> <div><input type="text" id="foo"></div>',
+            (string) $input
+        );
+
+        $input->setFormat('<div>{format}</div>');
+        $this->assertSame(
+            '<div><label for="foo">Click here</label> <div><input type="text" id="foo"></div></div>',
+            (string) $input
+        );
     }
 }

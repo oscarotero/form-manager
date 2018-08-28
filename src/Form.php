@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace FormManager;
 
-use FormManager\Inputs\Input;
+use FormManager\InputInterface;
 use ArrayAccess;
 use InvalidArgumentException;
 
@@ -21,11 +21,11 @@ class Form extends Node implements ArrayAccess
 
     public function offsetSet($name, $input)
     {
-        // if (!($input instanceof Input)) {
-        // throw new InvalidArgumentException(
-        // 	sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
-        // );
-        // }
+        if (!($input instanceof InputInterface)) {
+            throw new InvalidArgumentException(
+            	sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
+            );
+        }
 
         $input->setName($name);
         $this->inputs[$name] = $input;

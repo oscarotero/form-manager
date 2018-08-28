@@ -31,4 +31,18 @@ class EmailTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Email();
+        $this->assertSame('<input type="email">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="email" id="foo">',
+            (string) $input
+        );
+    }
 }

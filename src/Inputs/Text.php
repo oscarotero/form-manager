@@ -16,9 +16,13 @@ class Text extends Input
         'pattern',
     ];
 
-    public function __construct(array $attributes = [])
+    public function __construct(string $label = null, array $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'text');
+
+        if (isset($label)) {
+            $this->setLabel($label);
+        }
     }
 }

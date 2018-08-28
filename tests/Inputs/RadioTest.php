@@ -35,4 +35,18 @@ class RadioTest extends TestCase
             $this->assertNull($input->checked);
         }
     }
+
+    public function testRender()
+    {
+        $input = new Radio();
+        $this->assertSame('<input type="radio">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<input type="radio" id="foo"> <label for="foo">Click here</label>',
+            (string) $input
+        );
+    }
 }

@@ -10,10 +10,13 @@ class Submit extends Input
 {
     protected $format = '{input}';
 
-    public function __construct($innerHTML, array $attributes = [])
+    public function __construct(string $label = null, array $attributes = [])
     {
         parent::__construct('button', $attributes);
         $this->setAttribute('type', 'submit');
-        $this->innerHTML = $innerHTML;
+
+        if (isset($label)) {
+            $this->innerHTML = $label;
+        }
     }
 }

@@ -18,9 +18,13 @@ class Url extends Input
         'pattern',
     ];
 
-    public function __construct(array $attributes = [])
+    public function __construct(string $label = null, array $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'url');
+
+        if (isset($label)) {
+            $this->setLabel($label);
+        }
     }
 }

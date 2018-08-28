@@ -36,4 +36,18 @@ class TextTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Text();
+        $this->assertSame('<input type="text">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="text" id="foo">',
+            (string) $input
+        );
+    }
 }

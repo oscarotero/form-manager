@@ -97,4 +97,18 @@ class SelectTest extends TestCase
         $select->value = [3];
         $this->assertEquals([], $select->value);
     }
+
+    public function testRender()
+    {
+        $input = new Select(['foo' => 'bar']);
+        $this->assertSame('<select><option value="foo">bar</option></select>', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <select id="foo"><option value="foo">bar</option></select>',
+            (string) $input
+        );
+    }
 }

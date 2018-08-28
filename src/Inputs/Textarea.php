@@ -17,9 +17,13 @@ class Textarea extends Input
         'minlength',
     ];
 
-    public function __construct(array $attributes = [])
+    public function __construct(string $label = null, array $attributes = [])
     {
         parent::__construct('textarea', $attributes);
+
+        if (isset($label)) {
+            $this->setLabel($label);
+        }
     }
 
     public function setValue($value): InputInterface

@@ -26,4 +26,18 @@ class HiddenTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Hidden();
+        $this->assertSame('<input type="hidden">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<input type="hidden" id="foo">',
+            (string) $input
+        );
+    }
 }

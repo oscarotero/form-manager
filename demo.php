@@ -42,6 +42,19 @@ $form['color'] = f::radioGroup([
     'red' => 'Vermello',
     'blue' => 'Azul',
 ]);
+
+$form['user'] = f::group([
+    'name' => f::text('nome'),
+    'age' => f::number('idade'),
+    'direction' => f::group([
+        'line1' => f::text('Line 1'),
+        'line2' => f::text('Line 2'),
+        'type' => f::radioGroup([
+            'rua' => 'Rúa',
+            'avenida' => 'Avenida',
+        ])
+    ])
+])
 ?>
 
 <!DOCTYPE html>

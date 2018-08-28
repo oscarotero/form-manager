@@ -12,9 +12,13 @@ class Color extends Input
         'color',
     ];
 
-    public function __construct(array $attributes = [])
+    public function __construct(string $label = null, array $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'color');
+
+        if (isset($label)) {
+            $this->setLabel($label);
+        }
     }
 }

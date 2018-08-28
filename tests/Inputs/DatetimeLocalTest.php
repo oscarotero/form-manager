@@ -31,4 +31,18 @@ class DatetimeLocalTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new DatetimeLocal();
+        $this->assertSame('<input type="datetime-local">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="datetime-local" id="foo">',
+            (string) $input
+        );
+    }
 }

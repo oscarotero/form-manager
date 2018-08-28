@@ -18,4 +18,18 @@ class TelTest extends TextTest
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Tel();
+        $this->assertSame('<input type="tel">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="tel" id="foo">',
+            (string) $input
+        );
+    }
 }

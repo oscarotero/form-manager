@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace FormManager\Inputs;
 
 use FormManager\Node;
+use FormManager\InputInterface;
 
 /**
  * Class representing a HTML textarea element
@@ -13,17 +14,21 @@ class Select extends Input
     private $allowNewValues = false;
     private $options = [];
 
-    public function __construct(array $options, array $attributes = [])
+    public function __construct(array $options, string $label = null, array $attributes = [])
     {
         parent::__construct('select', $attributes);
 
-        foreach ($options as $value => $label) {
-            if (is_array($label)) {
-                $this->addOptgroup($value, $label);
+        foreach ($options as $value => $text) {
+            if (is_array($text)) {
+                $this->addOptgroup($value, $text);
                 continue;
             }
 
-            $this->addOption($value, (string) $label);
+            $this->addOption($value, (string) $text);
+        }
+
+        if (isset($label)) {
+            $this->setLabel($label);
         }
     }
 
@@ -34,14 +39,15 @@ class Select extends Input
         return $this;
     }
 
-    protected function setValue($value)
+    public function setValue($value): InputInterface
     {
         if ($this->allowNewValues) {
             $this->addNewValues((array) $value);
         }
 
         if ($this->getAttribute('multiple')) {
-            return $this->setMultipleValues((array) $value);
+            $this->setMultipleValues((array) $value);
+            return $this;
         }
 
         $this->value = null;
@@ -54,6 +60,8 @@ class Select extends Input
                 $option->selected = false;
             }
         }
+
+        return $this;
     }
 
     protected function setMultipleValues(array $values)

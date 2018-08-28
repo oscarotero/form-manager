@@ -32,4 +32,18 @@ class MonthTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Month();
+        $this->assertSame('<input type="month">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="month" id="foo">',
+            (string) $input
+        );
+    }
 }

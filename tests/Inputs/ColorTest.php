@@ -33,4 +33,18 @@ class ColorTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Color();
+        $this->assertSame('<input type="color">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="color" id="foo">',
+            (string) $input
+        );
+    }
 }

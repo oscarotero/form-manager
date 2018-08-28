@@ -18,4 +18,18 @@ class PasswordTest extends TextTest
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Password();
+        $this->assertSame('<input type="password">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="password" id="foo">',
+            (string) $input
+        );
+    }
 }

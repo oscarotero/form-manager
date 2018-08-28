@@ -53,4 +53,18 @@ class FileTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new File();
+        $this->assertSame('<input type="file">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="file" id="foo">',
+            (string) $input
+        );
+    }
 }

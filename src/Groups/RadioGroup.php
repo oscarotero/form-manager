@@ -11,7 +11,7 @@ use ArrayAccess;
 /**
  * Class representing a group of input[type="radio"] elements
  */
-class RadioGroup implements InputInterface
+class RadioGroup implements InputInterface, ArrayAccess
 {
     private $parentNode;
     private $name = '';

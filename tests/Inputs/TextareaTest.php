@@ -34,4 +34,18 @@ class TextareaTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Textarea();
+        $this->assertSame('<textarea></textarea>', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <textarea id="foo"></textarea>',
+            (string) $input
+        );
+    }
 }

@@ -18,9 +18,13 @@ class Date extends Input
         'min',
     ];
     
-    public function __construct(array $attributes = [])
+    public function __construct(string $label = null, array $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'date');
+
+        if (isset($label)) {
+            $this->setLabel($label);
+        }
     }
 }

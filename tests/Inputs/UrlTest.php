@@ -34,4 +34,18 @@ class UrlTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Url();
+        $this->assertSame('<input type="url">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="url" id="foo">',
+            (string) $input
+        );
+    }
 }

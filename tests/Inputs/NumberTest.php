@@ -38,4 +38,18 @@ class NumberTest extends TestCase
 
         $this->assertSame($isValid, $input->isValid());
     }
+
+    public function testRender()
+    {
+        $input = new Number();
+        $this->assertSame('<input type="number">', (string) $input);
+
+        $input->id = 'foo';
+        $input->setLabel('Click here');
+
+        $this->assertSame(
+            '<label for="foo">Click here</label> <input type="number" id="foo">',
+            (string) $input
+        );
+    }
 }

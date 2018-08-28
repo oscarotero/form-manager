@@ -17,9 +17,17 @@ abstract class Input extends Node implements InputInterface
     const ATTR_VALIDATORS = [];
 
     private static $idIndex = 0;
+
     protected $value;
     protected $format = '{label} {input}';
+    protected $labels = [];
+
     public $label;
+
+    public static function resetIdIndex($index = 0)
+    {
+        self::$idIndex = $index;
+    }
 
     public function __get(string $name)
     {
@@ -37,6 +45,11 @@ abstract class Input extends Node implements InputInterface
             return;
         }
 
+        if ($name === 'id') {
+            $this->setId($value);
+            return;
+        }
+
         return parent::__set($name, $value);
     }
 
@@ -49,7 +62,7 @@ abstract class Input extends Node implements InputInterface
             ]);
         }
 
-        parent::__toString();
+        return parent::__toString();
     }
 
     public function createLabel(string $text, array $attributes = []): Node
@@ -63,7 +76,7 @@ abstract class Input extends Node implements InputInterface
 
         $label->setAttribute('for', $this->getAttribute('id'));
 
-        return $label;
+        return $this->labels[] = $label;
     }
 
     public function getValidator(): Validatable
@@ -108,6 +121,17 @@ abstract class Input extends Node implements InputInterface
     public function setLabel(string $text, array $attributes = [])
     {
         $this->label = $this->createLabel($text, $attributes);
+
+        return $this;
+    }
+
+    public function setId(string $id): InputInterface
+    {
+        $this->setAttribute('id', $id);
+
+        foreach ($this->labels as $label) {
+            $label->setAttribute('for', $id);
+        }
 
         return $this;
     }
