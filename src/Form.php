@@ -8,6 +8,7 @@ use ArrayAccess;
 use IteratorAggregate;
 use ArrayIterator;
 use InvalidArgumentException;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class representing a form
@@ -65,7 +66,7 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         return isset($this->inputs[$name]);
     }
 
-    public function setValue($value): InputInterface
+    public function setValue($value): self
     {
         $value = (array) $value;
 
@@ -85,5 +86,35 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         }
 
         return $value;
+    }
+
+    public function loadFromServerRequest(ServerRequestInterface $serverRequest): self
+    {
+        $method = $this->getAttribute('method') ?: 'get';
+
+        if (strtolower($method) === 'post') {
+            return $this->setValue(array_replace_recursive(
+                (array) $serverRequest->getParsedBody(),
+                $serverRequest->getUploadedFiles()
+            ));
+        }
+
+        return $this->setValue($request->getQueryParams());
+    }
+
+    public function loadFromArray(array $get, array $post = [], array $files = []): self
+    {
+        $method = $this->getAttribute('method') ?: 'get';
+
+        if (strtolower($method) === 'post') {
+            return $this->setValue(array_replace_recursive($post, $files));
+        }
+
+        return $this->setValue($get);
+    }
+
+    public function loadFromGlobals(): self
+    {
+        return $this->loadFromArray($_GET, $_POST, $_FILES);
     }
 }

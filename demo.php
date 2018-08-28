@@ -8,97 +8,62 @@ ini_set('display_startup_errors', 1);
 
 use FormManager\Factory as f;
 
-$inputs = [
-    'Checkbox',
-    'Color',
-    'Date',
-    'DatetimeLocal',
-    'Email',
-    'File',
-    'Hidden',
-    'Month',
-    'Number',
-    'Password',
-    'Radio',
-    'Range',
-    'Search',
-    'Tel',
-    'Text',
-    'Textarea',
-    'Time',
-    'Url',
-    'Week',
-];
-
-$form = f::form();
-
-foreach ($inputs as $input) {
-    $form[$input] = f::$input()->setLabel($input)->setFormat('<div>{format}</div>');
-}
-
-$form['select'] = f::select([
-    '' => 'None',
-    1 => 'One',
-    2 => 'Two',
-], 'Select an option');
-
-$form['color'] = f::radioGroup([
-    'red' => 'Vermello',
-    'blue' => 'Azul',
-]);
-
-$form['user'] = f::group([
-    'name' => f::text('nome'),
-    'age' => f::number('idade'),
-    'direction' => f::group([
-        'line1' => f::text('Line 1'),
-        'line2' => f::text('Line 2'),
-        'type' => f::radioGroup([
-            'rua' => 'Rúa',
-            'avenida' => 'Avenida',
+$form = f::form([
+    'accept' => f::checkbox('I am a human'),
+    'color' => f::color('My favorite color'),
+    'birthday' => f::date('My birthday'),
+    'now' => f::datetimeLocal('Current time'),
+    'email' => f::email('My email'),
+    'file' => f::file('Avatar'),
+    'id' => f::hidden(23),
+    'holidays' => f::month('Best holiday month'),
+    'siblings' => f::number('Sisters and brothers'),
+    'password' => f::password('Your password'),
+    'genre' => f::radioGroup([
+        'm' => 'Male',
+        'f' => 'Female',
+        'o' => 'Other',
+    ]),
+    'size' => f::range('How tall are you?'),
+    'search' => f::search('Search'),
+    'phone' => f::tel('Telephone number'),
+    'name' => f::text('Name'),
+    'address' => f::group([
+        'line1' => f::textarea('Address line 1'),
+        'line2' => f::textarea('Address line 2'),
+    ]),
+    'dinner' => f::time('Dinner hour'),
+    'site' => f::url('Your web page'),
+    'week' => f::week('The best week of your life'),
+    'language' => f::select([
+        'php' => 'PHP',
+        'js' => 'Javascript',
+        'python' => 'Python',
+    ], 'Favorite programing language'),
+    'images' => f::groupCollection(
+        f::group([
+            'file' => f::file('Image file'),
+            'caption' => f::text('Caption'),
         ])
-    ])
+    ),
+    'bio' => f::multipleGroupCollection([
+        'text' => f::group([
+            'title' => f::text('Title'),
+            'text' => f::textarea('Body'),
+        ]),
+        'image' => f::group([
+            'file' => f::file('Image'),
+            'caption' => f::text('Caption'),
+        ]),
+        'button' => f::group([
+            'text' => f::text('Text'),
+            'url' => f::url('Url'),
+        ]),
+    ]),
+    '' => f::submit('Send')
 ]);
 
-$form['images'] = f::groupCollection(
-    f::group([
-        'file' => f::file('Image file'),
-        'caption' => f::text('Caption'),
-    ])
-)->setValue([
-        [
-            'file' => 'foo',
-            'caption' => 'bar',
-        ],[
-            'file' => 'foo',
-            'caption' => 'bar2',
-        ],
-    ]);
-
-$form['body'] = f::multipleGroupCollection([
-    'text' => f::group([
-        'text' => f::textarea('Texto')
-    ]),
-    'image' => f::group([
-        'image' => f::file('Arquivo')
-    ]),
-    'age' => f::group([
-        'years' => f::range('Anos')
-    ]),
-])->setValue([
-    [
-        'type' => 'text',
-        'text' => 'Ola'
-    ],[
-        'type' => 'text',
-        'text' => 'Ola 2'
-    ],[
-        'type' => 'age',
-        'years' => 50
-    ]
-]);
-
-$form[''] = f::submit('Send');
+$form->loadFromGlobals();
 ?>
 
 <!DOCTYPE html>
