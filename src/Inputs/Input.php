@@ -6,6 +6,7 @@ namespace FormManager\Inputs;
 use FormManager\Node;
 use FormManager\InputInterface;
 use FormManager\ValidatorFactory;
+use FormManager\ValidationError;
 use Respect\Validation\Validatable;
 
 /**
@@ -52,6 +53,16 @@ abstract class Input extends Node implements InputInterface
         return parent::__set($name, $value);
     }
 
+    public function setAttribute(string $name, $value): Node
+    {
+        return parent::setAttribute($name, $value);
+    }
+
+    public function removeAttribute($name): Node
+    {
+        return parent::removeAttribute($name);
+    }
+
     public function __toString()
     {
         if ($this->label) {
@@ -91,15 +102,18 @@ abstract class Input extends Node implements InputInterface
         return ValidatorFactory::createValidator($this, $validators);
     }
 
-    public function isValid()
+    public function isValid(): bool
     {
-        $value = $this->getValue();
-
-        if ($value === null || $value === '' || $value === []) {
-            return !$this->required;
+        if ($this->error === null) {
+            $this->error = ValidationError::assert($this) ?: false;
         }
 
-        return $this->getValidator()->validate($value);
+        return $this->error === false;
+    }
+
+    public function getError(): ?ValidationError
+    {
+        return $this->error ?: null;
     }
 
     public function setValue($value): InputInterface

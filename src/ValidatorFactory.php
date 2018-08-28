@@ -83,6 +83,15 @@ abstract class ValidatorFactory
         return new Rules\UploadedFile();
     }
 
+    public static function required(Node $node): ?Validatable
+    {
+        if (!$node->required) {
+            return null;
+        }
+
+        return $node->multiple ? v::notEmpty() : v::notOptional();
+    }
+
     public static function maxlength(Node $node): ?Validatable
     {
         return $node->maxlength ? v::length(null, $node->maxlength) : null;
