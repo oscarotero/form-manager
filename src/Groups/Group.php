@@ -18,7 +18,7 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
     private $name = '';
     private $inputs = [];
 
-    public function __construct(array $inputs = [])
+    public function __construct(iterable $inputs = [])
     {
         foreach ($inputs as $name => $input) {
             $this->offsetSet($name, $input);

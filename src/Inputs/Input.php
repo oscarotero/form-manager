@@ -114,7 +114,11 @@ abstract class Input extends Node implements InputInterface
 
     public function getError(): ?ValidationError
     {
-        return $this->error ?: null;
+        if ($this->isValid()) {
+            return null;
+        }
+
+        return $this->error;
     }
 
     public function setValue($value): InputInterface
@@ -136,7 +140,7 @@ abstract class Input extends Node implements InputInterface
         return $this;
     }
 
-    public function setLabel(string $text, array $attributes = [])
+    public function setLabel(string $text, array $attributes = []): self
     {
         $this->label = $this->createLabel($text, $attributes);
 

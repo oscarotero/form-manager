@@ -16,7 +16,7 @@ class File extends Input
         'accept',
     ];
     
-    public function __construct(string $label = null, array $attributes = [])
+    public function __construct(string $label = null, iterable $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'file');

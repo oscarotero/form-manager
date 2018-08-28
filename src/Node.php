@@ -33,7 +33,7 @@ class Node implements NodeInterface
 
     public $innerHTML;
 
-    public function __construct(string $nodeName, array $attributes = [])
+    public function __construct(string $nodeName, iterable $attributes = [])
     {
         $this->nodeName = $nodeName;
         $this->setAttributes($attributes);
@@ -107,7 +107,7 @@ class Node implements NodeInterface
         return $this;
     }
 
-    public function setAttributes(array $attributes): self
+    public function setAttributes(iterable $attributes): self
     {
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);

@@ -19,7 +19,7 @@ class Textarea extends Input
         'minlength',
     ];
 
-    public function __construct(string $label = null, array $attributes = [])
+    public function __construct(string $label = null, iterable $attributes = [])
     {
         parent::__construct('textarea', $attributes);
 

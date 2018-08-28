@@ -22,7 +22,7 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
     private $groups = [];
     private $values = [];
 
-    public function __construct(array $groups)
+    public function __construct(iterable $groups)
     {
         foreach ($groups as $key => $group) {
             if (!($group instanceof Group)) {

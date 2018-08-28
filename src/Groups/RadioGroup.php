@@ -19,7 +19,7 @@ class RadioGroup implements InputInterface, ArrayAccess, IteratorAggregate
     private $name = '';
     private $radios = [];
 
-    public function __construct(array $radios = [])
+    public function __construct(iterable $radios = [])
     {
         foreach ($radios as $value => $input) {
             if (is_string($input)) {

@@ -7,7 +7,7 @@ Created by Oscar Otero <http://oscarotero.com> <oom@oscarotero.com>
 
 ## Installation:
 
-This package needs Php7 and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
+This package needs php7.1 or greater and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
 
 ```
 composer require form-manager/form-manager

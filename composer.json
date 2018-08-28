@@ -18,7 +18,7 @@
 		"issues": "https://github.com/oscarotero/form-manager/issues"
 	},
 	"require": {
-		"php": "^7.0.0",
+		"php": "^7.1",
 		"respect/validation": "^1.1"
 	},
 	"require-dev": {

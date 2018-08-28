@@ -41,7 +41,7 @@ class AcceptFile extends AbstractRule
         return false;
     }
 
-    private function validateArray(array $file)
+    private function validateArray(array $file): bool
     {
         if (empty($file['tmp_name'])) {
             return true;
@@ -51,7 +51,7 @@ class AcceptFile extends AbstractRule
             && $this->checkMime($file['tmp_name']);
     }
 
-    private function validatePsr7(UploadedFileInterface $file)
+    private function validatePsr7(UploadedFileInterface $file): bool
     {
         if ($file->getError() === UPLOAD_ERR_NO_FILE) {
             return true;

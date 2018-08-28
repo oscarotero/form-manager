@@ -30,7 +30,7 @@ class UploadedFile extends AbstractRule
         return false;
     }
 
-    private function validateArray(array $file)
+    private function validateArray(array $file): bool
     {
         if (!array_key_exists('name', $file)) {
             return false;
@@ -47,7 +47,7 @@ class UploadedFile extends AbstractRule
         return $this->checkErrorType($file['error'] ?? null);
     }
 
-    private function validatePsr7(UploadedFileInterface $file)
+    private function validatePsr7(UploadedFileInterface $file): bool
     {
         return $this->checkErrorType($file->getError());
     }

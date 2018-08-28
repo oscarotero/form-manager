@@ -14,7 +14,7 @@ class Select extends Input
     private $allowNewValues = false;
     private $options = [];
 
-    public function __construct(array $options, string $label = null, array $attributes = [])
+    public function __construct(iterable $options, string $label = null, iterable $attributes = [])
     {
         parent::__construct('select', $attributes);
 
@@ -74,7 +74,7 @@ class Select extends Input
         return $values[0] ?? null;
     }
 
-    protected function setMultipleValues(array $values)
+    private function setMultipleValues(iterable $values)
     {
         $values = array_map(
             function ($value) {
@@ -88,7 +88,7 @@ class Select extends Input
         }
     }
 
-    protected function addNewValues(array $values)
+    private function addNewValues(iterable $values)
     {
         foreach ($values as $value) {
             foreach ($this->options as $option) {
@@ -101,7 +101,7 @@ class Select extends Input
         }
     }
 
-    private function addOptgroup($label, array $options)
+    private function addOptgroup($label, iterable $options)
     {
         $optgroup = new Node('optgroup', compact('label'));
 

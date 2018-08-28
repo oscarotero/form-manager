@@ -10,7 +10,7 @@ class Hidden extends Input
 {
     protected $format = '{input}';
 
-    public function __construct(array $attributes = [])
+    public function __construct(iterable $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'hidden');
