@@ -10,6 +10,8 @@ use FormManager\InputInterface;
  */
 class Textarea extends Input
 {
+    private $value;
+
     const INTR_VALIDATORS = [];
 
     const ATTR_VALIDATORS = [
@@ -32,5 +34,10 @@ class Textarea extends Input
         $this->innerHTML = self::escape((string) $value);
 
         return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
     }
 }

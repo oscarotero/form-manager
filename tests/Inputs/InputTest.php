@@ -60,6 +60,7 @@ class InputTest extends TestCase
 
     public function testLabel()
     {
+        Input::resetIdIndex();
         $input = new Text();
         $input->setLabel('Hello world', ['class' => 'is-error']);
 

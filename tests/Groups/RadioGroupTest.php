@@ -47,4 +47,36 @@ class RadioGroupTest extends TestCase
             (string) $input
         );
     }
+
+    public function testClone()
+    {
+        $input = new RadioGroup([
+            'name' => new Radio('One'),
+        ]);
+
+        $input['name']->id = 'foo';
+
+        $input2 = clone $input;
+        $input2['name']->id = 'bar';
+
+        $this->assertSame('foo', $input['name']->id);
+        $this->assertSame('bar', $input2['name']->id);
+    }
+
+    public function testIterator()
+    {
+        $group = new RadioGroup([
+            'name' => new Radio(),
+            'surname' => new Radio(),
+            'address' => new Radio(),
+        ]);
+
+        $keys = [];
+
+        foreach ($group as $name => $input) {
+            $keys[] = $name;
+        }
+
+        $this->assertEquals(['name', 'surname', 'address'], $keys);
+    }
 }

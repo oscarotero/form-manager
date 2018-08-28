@@ -44,4 +44,36 @@ class GroupTest extends TestCase
             (string) $input
         );
     }
+
+    public function testClone()
+    {
+        $input = new Group([
+            'name' => new Text(),
+        ]);
+
+        $input['name']->id = 'foo';
+
+        $input2 = clone $input;
+        $input2['name']->id = 'bar';
+
+        $this->assertSame('foo', $input['name']->id);
+        $this->assertSame('bar', $input2['name']->id);
+    }
+
+    public function testIterator()
+    {
+        $group = new Group([
+            'name' => new Text(),
+            'surname' => new Text(),
+            'address' => new Text(),
+        ]);
+
+        $keys = [];
+
+        foreach ($group as $name => $input) {
+            $keys[] = $name;
+        }
+
+        $this->assertEquals(['name', 'surname', 'address'], $keys);
+    }
 }

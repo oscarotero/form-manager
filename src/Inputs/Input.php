@@ -18,7 +18,6 @@ abstract class Input extends Node implements InputInterface
 
     private static $idIndex = 0;
 
-    protected $value;
     protected $format = '{label} {input}';
     protected $labels = [];
 
@@ -32,7 +31,7 @@ abstract class Input extends Node implements InputInterface
     public function __get(string $name)
     {
         if ($name === 'value') {
-            return $this->value;
+            return $this->getValue();
         }
 
         return parent::__get($name);
@@ -94,7 +93,7 @@ abstract class Input extends Node implements InputInterface
 
     public function isValid()
     {
-        $value = $this->value;
+        $value = $this->getValue();
 
         if ($value === null || $value === '' || $value === []) {
             return !$this->required;
@@ -105,10 +104,14 @@ abstract class Input extends Node implements InputInterface
 
     public function setValue($value): InputInterface
     {
-        $this->value = $value;
         $this->setAttribute('value', $value);
 
         return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->getAttribute('value');
     }
 
     public function setName(string $name): InputInterface

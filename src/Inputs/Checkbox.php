@@ -29,11 +29,14 @@ class Checkbox extends Input
             ((string) $this->getAttribute('value') === (string) $value) ||
             filter_var($value, FILTER_VALIDATE_BOOLEAN)
         ) {
-            $this->value = true;
             return $this->setAttribute('checked', true);
         }
 
-        $this->value = null;
         return $this->removeAttribute('checked');
+    }
+
+    public function getValue()
+    {
+        return $this->getAttribute('checked') ? $this->getAttribute('value') : null;
     }
 }

@@ -5,25 +5,43 @@ namespace FormManager;
 
 use FormManager\InputInterface;
 use ArrayAccess;
+use IteratorAggregate;
+use ArrayIterator;
 use InvalidArgumentException;
 
 /**
  * Class representing a form
  */
-class Form extends Node implements ArrayAccess
+class Form extends Node implements ArrayAccess, IteratorAggregate
 {
     private $inputs = [];
 
-    public function __construct(array $attributes = [])
+    public function __construct(array $inputs = [], array $attributes = [])
     {
         parent::__construct('form', $attributes);
+
+        foreach ($inputs as $name => $input) {
+            $this->offsetSet($name, $input);
+        }
+    }
+
+    public function __clone()
+    {
+        foreach ($this->inputs as $k => $input) {
+            $this->inputs[$k] = (clone $input)->setParentNode($this);
+        }
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->inputs);
     }
 
     public function offsetSet($name, $input)
     {
         if (!($input instanceof InputInterface)) {
             throw new InvalidArgumentException(
-            	sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
+                sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
             );
         }
 
@@ -45,6 +63,28 @@ class Form extends Node implements ArrayAccess
     public function offsetExists($name)
     {
         return isset($this->inputs[$name]);
+    }
+
+    public function setValue($value): InputInterface
+    {
+        $value = (array) $value;
+
+        foreach ($this->inputs as $name => $input) {
+            $input->setValue($value[$name] ?? null);
+        }
+
+        return $this;
+    }
+
+    public function getValue()
+    {
+        $value = [];
+
+        foreach ($this->inputs as $name => $input) {
+            $value[$name] = $input->getValue();
+        }
+
+        return $value;
     }
 
     private function addOption($value, string $label = null, Node $parent = null)

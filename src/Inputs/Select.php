@@ -50,24 +50,32 @@ class Select extends Input
             return $this;
         }
 
-        $this->value = null;
-
         foreach ($this->options as $option) {
-            if ((string) $option->value === (string) $value) {
-                $this->value = $option->value;
-                $option->selected = true;
-            } else {
-                $option->selected = false;
-            }
+            $option->selected = (string) $option->value === (string) $value;
         }
 
         return $this;
     }
 
+    public function getValue()
+    {
+        $values = [];
+
+        foreach ($this->options as $option) {
+            if ($option->getAttribute('selected')) {
+                $values[] = $option->getAttribute('value');
+            }
+        }
+
+        if ($this->getAttribute('multiple')) {
+            return $values;
+        }
+
+        return $values[0] ?? null;
+    }
+
     protected function setMultipleValues(array $values)
     {
-        $this->value = [];
-
         $values = array_map(
             function ($value) {
                 return (string) $value;
@@ -76,12 +84,7 @@ class Select extends Input
         );
 
         foreach ($this->options as $option) {
-            if (in_array((string) $option->value, $values, true)) {
-                $option->selected = true;
-                $this->value[] = $option->value;
-            } else {
-                $option->selected = false;
-            }
+            $option->selected = in_array((string) $option->value, $values, true);
         }
     }
 

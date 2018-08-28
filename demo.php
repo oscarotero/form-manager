@@ -22,8 +22,6 @@ $inputs = [
     'Radio',
     'Range',
     'Search',
-    // 'Select',
-    //'Submit',
     'Tel',
     'Text',
     'Textarea',
@@ -37,6 +35,12 @@ $form = f::form();
 foreach ($inputs as $input) {
     $form[$input] = f::$input()->setLabel($input)->setFormat('<div>{format}</div>');
 }
+
+$form['select'] = f::select([
+    '' => 'None',
+    1 => 'One',
+    2 => 'Two',
+], 'Select an option');
 
 $form['color'] = f::radioGroup([
     'red' => 'Vermello',
@@ -54,7 +58,47 @@ $form['user'] = f::group([
             'avenida' => 'Avenida',
         ])
     ])
-])
+]);
+
+$form['images'] = f::groupCollection(
+    f::group([
+        'file' => f::file('Image file'),
+        'caption' => f::text('Caption'),
+    ])
+)->setValue([
+        [
+            'file' => 'foo',
+            'caption' => 'bar',
+        ],[
+            'file' => 'foo',
+            'caption' => 'bar2',
+        ],
+    ]);
+
+$form['body'] = f::multipleGroupCollection([
+    'text' => f::group([
+        'text' => f::textarea('Texto')
+    ]),
+    'image' => f::group([
+        'image' => f::file('Arquivo')
+    ]),
+    'age' => f::group([
+        'years' => f::range('Anos')
+    ]),
+])->setValue([
+    [
+        'type' => 'text',
+        'text' => 'Ola'
+    ],[
+        'type' => 'text',
+        'text' => 'Ola 2'
+    ],[
+        'type' => 'age',
+        'years' => 50
+    ]
+]);
+
+$form[''] = f::submit('Send');
 ?>
 
 <!DOCTYPE html>

@@ -7,15 +7,16 @@ use FormManager\NodeInterface;
 use FormManager\InputInterface;
 use FormManager\Inputs\Radio;
 use ArrayAccess;
+use IteratorAggregate;
+use ArrayIterator;
 
 /**
  * Class representing a group of input[type="radio"] elements
  */
-class RadioGroup implements InputInterface, ArrayAccess
+class RadioGroup implements InputInterface, ArrayAccess, IteratorAggregate
 {
     private $parentNode;
     private $name = '';
-    private $value;
     private $radios = [];
 
     public function __construct(array $radios = [])
@@ -27,6 +28,18 @@ class RadioGroup implements InputInterface, ArrayAccess
 
             $this->offsetSet($value, $input);
         }
+    }
+
+    public function __clone()
+    {
+        foreach ($this->radios as $k => $radio) {
+            $this->radios[$k] = (clone $radio)->setParentNode($this);
+        }
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->radios);
     }
 
     public function offsetSet($value, $radio)
@@ -60,8 +73,6 @@ class RadioGroup implements InputInterface, ArrayAccess
 
     public function setValue($value): InputInterface
     {
-        $this->value = null;
-
         foreach ($this->radios as $radio) {
             if ((string) $radio->value === (string) $value) {
                 $this->radio = $radio->value;
@@ -72,6 +83,19 @@ class RadioGroup implements InputInterface, ArrayAccess
         }
 
         return $this;
+    }
+
+    public function getValue()
+    {
+        foreach ($this->radios as $radio) {
+            $value = $radio->getValue();
+
+            if ($value !== null) {
+                return $value;
+            }
+        }
+
+        return $value;
     }
 
     public function setName(string $name): InputInterface

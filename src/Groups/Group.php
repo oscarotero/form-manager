@@ -6,11 +6,13 @@ namespace FormManager\Groups;
 use FormManager\NodeInterface;
 use FormManager\InputInterface;
 use ArrayAccess;
+use IteratorAggregate;
+use ArrayIterator;
 
 /**
  * Class representing a group of inputs of any type
  */
-class Group implements InputInterface, ArrayAccess
+class Group implements InputInterface, ArrayAccess, IteratorAggregate
 {
     private $parentNode;
     private $name = '';
@@ -21,6 +23,18 @@ class Group implements InputInterface, ArrayAccess
         foreach ($inputs as $name => $input) {
             $this->offsetSet($name, $input);
         }
+    }
+
+    public function __clone()
+    {
+        foreach ($this->inputs as $k => $input) {
+            $this->inputs[$k] = (clone $input)->setParentNode($this);
+        }
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->inputs);
     }
 
     public function offsetSet($name, $input)
@@ -59,6 +73,17 @@ class Group implements InputInterface, ArrayAccess
         }
 
         return $this;
+    }
+
+    public function getValue()
+    {
+        $value = [];
+
+        foreach ($this->inputs as $name => $input) {
+            $value[$name] = $input->getValue();
+        }
+
+        return $value;
     }
 
     public function setName(string $name): InputInterface

@@ -25,11 +25,14 @@ class Radio extends Input
     public function setValue($value): InputInterface
     {
         if (!empty($value) && (string) $this->getAttribute('value') === (string) $value) {
-            $this->value = $value;
             return $this->setAttribute('checked', true);
         }
 
-        $this->value = null;
         return $this->removeAttribute('checked');
+    }
+
+    public function getValue()
+    {
+        return $this->getAttribute('checked') ? $this->getAttribute('value') : null;
     }
 }
