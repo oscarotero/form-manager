@@ -7,7 +7,7 @@ Created by Oscar Otero <http://oscarotero.com> <oom@oscarotero.com>
 
 ## Installation:
 
-This package needs php>=5.4 and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
+This package needs Php7 and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
 
 ```
 composer require form-manager/form-manager
@@ -20,7 +20,7 @@ composer require form-manager/form-manager
 FormManager is namespaced, but you only need to import a single class into your context:
 
 ```php
-use FormManager\Builder as F;
+use FormManager\Factory as F;
 ```
 
 ### Create a field
@@ -31,43 +31,30 @@ All HTML5 field types are supported.
 //Create an input type="text" element
 $name = F::text();
 
-//Use the jQuery syntax to set/get/remove attributes:
-$name->attr('name', 'username');
+//Create the input with a label
+$name = F::text('Please, introduce your name');
 
-$name->attr([
-	'maxlength' => 50,
-	'required' => true
+//Or with extra attributes
+$name = F::text('Please, introduce your name', ['class' => 'name-field']);
+
+//Add or remove 1 attribute
+$name->setAttribute('id', 'username');
+$name->removeAttribute('class');
+
+//Add several attributes
+$name->setAttributes([
+	'tabindex' => 2,
+	'required' => true,
+	'maxlength' => 50
 ]);
 
-$maxlength = $name->attr('maxlength');
+//Set a value
+$name->setValue('MyName');
 
-$name->removeAttr('required');
-
-//Get/set values
-$name->val('MyName');
-
-//Get/set css classes
-$name->addClass('cool-input');
-$name->removeClass('cool-input');
-
-//Get/set/remove data-* attributes
-$name->data('id', 23);
-$name->data([
-	'name' => 'value',
-	'foo' => 'bar'
-]);
-$foo = $name->data('foo');
-
-$name->removeData('id');
-
-$name->removeData(); //Remove all data
-
-//You can chain various methods:
-$email = F::email()->addClass('cool-input')->id('my-email')->val('my@email.com');
-
-//And use the __call() magic method to add attributes:
-$email->required(); //same than $email->attr('required', true);
-$email->required(false); //same than $email->attr('required', false);
+//Validate the value
+if (!$name->isValid()) {
+	echo 'name not valid';
+}
 ```
 
 ### Generate the html code
