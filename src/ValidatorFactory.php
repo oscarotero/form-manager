@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace FormManager;
 
-use FormManager\Node;
+use FormManager\Inputs\Input;
 use FormManager\Rules;
 use Respect\Validation\Validatable;
 use Respect\Validation\Validator as v;
@@ -14,23 +14,28 @@ use RuntimeException;
  */
 abstract class ValidatorFactory
 {
-    public static function createValidator(Node $node, array $rules): Validatable
+    public static function createValidator(Input $input, array $rules): Validatable
     {
-        $validator = [];
+        $validators = [];
+        $name = $input->getAttribute('name');
 
-        foreach ($rules as $name) {
-            if (!method_exists(self::class, $name) || $name === __METHOD__) {
-                throw new RuntimeException(sprintf('Invalid validator name "%s"', $name));
+        foreach ($rules as $method) {
+            if (!method_exists(self::class, $method) || $method === __METHOD__) {
+                throw new RuntimeException(sprintf('Invalid validator name "%s"', $method));
             }
 
-            $validator[] = self::$name($node);
+            $validator = self::$method($input);
+
+            if ($validator) {
+                if (!empty($name)) {
+                    $validator->setName($name);
+                }
+
+                $validators[] = $validator;
+            }
         }
 
-        if (empty($validator)) {
-            return v::alwaysValid();
-        }
-
-        return v::allOf(...$validator);
+        return v::allOf(...$validators);
     }
 
     public static function number(): Validatable

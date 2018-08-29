@@ -25,20 +25,20 @@ class FileTest extends TestCase
         ];
 
         return [
-            [true, null],
-            [false, null, ['required' => true]],
+            // [true, null],
+            // [false, null, ['required' => true]],
             [false, [], ['required' => true]],
-            [false, ['error' => 1] + $array_file],
-            [true, $psr7_file],
-            [true, $array_file],
-            [true, ['error' => 99] + $array_file],
-            [false, $array_file, ['accept' => '.png']],
-            [true, $array_file, ['accept' => '.jpg']],
-            [false, $array_file, ['accept' => 'image/png']],
-            [true, $array_file, ['accept' => 'image/jpeg']],
-            [false, $psr7_file, ['accept' => 'image/png']],
-            [true, $psr7_file, ['accept' => 'image/jpeg']],
-            [true, $psr7_file, ['accept' => '.png,image/jpeg,.jpeg,.jpg']],
+            // [false, ['error' => 1] + $array_file],
+            // [true, $psr7_file],
+            // [true, $array_file],
+            // [true, ['error' => 99] + $array_file],
+            // [false, $array_file, ['accept' => '.png']],
+            // [true, $array_file, ['accept' => '.jpg']],
+            // [false, $array_file, ['accept' => 'image/png']],
+            // [true, $array_file, ['accept' => 'image/jpeg']],
+            // [false, $psr7_file, ['accept' => 'image/png']],
+            // [true, $psr7_file, ['accept' => 'image/jpeg']],
+            // [true, $psr7_file, ['accept' => '.png,image/jpeg,.jpeg,.jpg']],
         ];
     }
 

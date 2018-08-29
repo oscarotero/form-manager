@@ -7,7 +7,6 @@ use FormManager\Node;
 use FormManager\InputInterface;
 use FormManager\ValidatorFactory;
 use FormManager\ValidationError;
-use Respect\Validation\Validatable;
 
 /**
  * Class representing a generic form input
@@ -90,7 +89,7 @@ abstract class Input extends Node implements InputInterface
         return $this->labels[] = $label;
     }
 
-    public function getValidator(): Validatable
+    public function getValidators(): array
     {
         $validators = static::INTR_VALIDATORS;
 
@@ -100,7 +99,7 @@ abstract class Input extends Node implements InputInterface
             }
         }
 
-        return ValidatorFactory::createValidator($this, $validators);
+        return $validators;
     }
 
     public function isValid(): bool

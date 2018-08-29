@@ -12,17 +12,17 @@ class CheckboxTest extends TestCase
     {
         return [
             [true, null, [], null],
-            // [false, null, ['required' => true], null],
-            // [true, 'on', ['required' => true], true],
-            // [true, 1, ['required' => true], true],
-            // [true, '1', ['required' => true], true],
-            // [true, '0', [], null],
-            // [true, 0, [], null],
-            // [true, true, ['required' => true], true],
-            // [false, false, ['required' => true], null],
-            // [false, 'foo', ['required' => true], null],
-            // [true, 'on', ['required' => true, 'value' => 'foo'], true],
-            // [true, 'foo', ['required' => true, 'value' => 'foo'], true],
+            [false, null, ['required' => true], null],
+            [true, 'on', ['required' => true], true],
+            [true, 1, ['required' => true], true],
+            [true, '1', ['required' => true], true],
+            [true, '0', [], null],
+            [true, 0, [], null],
+            [true, true, ['required' => true], true],
+            [false, false, ['required' => true], null],
+            [false, 'foo', ['required' => true], null],
+            [true, 'on', ['required' => true, 'value' => 'foo'], true],
+            [true, 'foo', ['required' => true, 'value' => 'foo'], true],
         ];
     }
 

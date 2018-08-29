@@ -37,6 +37,6 @@ class Checkbox extends Input
 
     public function getValue()
     {
-        return $this->getAttribute('checked') ? $this->getAttribute('value') : null;
+        return $this->getAttribute('checked') ? true : null;
     }
 }

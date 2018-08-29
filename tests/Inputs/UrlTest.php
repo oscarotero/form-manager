@@ -48,4 +48,23 @@ class UrlTest extends TestCase
             (string) $input
         );
     }
+
+    public function errorProvider()
+    {
+        return [
+            [null, 'web must not be optional']
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message)
+    {
+        $input = new Url(null, ['required' => true, 'name' => 'web']);
+
+        $error = $input->setValue($value)->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }
