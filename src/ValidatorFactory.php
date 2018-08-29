@@ -5,8 +5,8 @@ namespace FormManager;
 
 use FormManager\Inputs\Input;
 use FormManager\Rules;
-use Respect\Validation\Validatable;
-use Respect\Validation\Validator as v;
+use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraint;
 use RuntimeException;
 
 /**
@@ -14,28 +14,23 @@ use RuntimeException;
  */
 abstract class ValidatorFactory
 {
-    public static function createValidator(Input $input, array $rules): Validatable
+    public static function createConstraints(Input $input): array
     {
-        $validators = [];
-        $name = $input->getAttribute('name');
+        $constraints = [];
 
-        foreach ($rules as $method) {
+        foreach ($input->getConstraints() as $method) {
             if (!method_exists(self::class, $method) || $method === __METHOD__) {
                 throw new RuntimeException(sprintf('Invalid validator name "%s"', $method));
             }
 
-            $validator = self::$method($input);
+            $constraint = self::$method($input);
 
-            if ($validator) {
-                if (!empty($name)) {
-                    $validator->setName($name);
-                }
-
-                $validators[] = $validator;
+            if ($constraint) {
+                $constraints[$method] = $constraint;
             }
         }
 
-        return v::allOf(...$validators);
+        return $constraints;
     }
 
     public static function number(): Validatable
@@ -48,9 +43,9 @@ abstract class ValidatorFactory
         return v::url();
     }
 
-    public static function email(): Validatable
+    public static function email(): Constraint
     {
-        return v::email();
+        return new Constraints\Email();
     }
 
     public static function color(): Validatable
@@ -97,14 +92,14 @@ abstract class ValidatorFactory
         return $node->multiple ? v::notEmpty() : v::notOptional();
     }
 
-    public static function maxlength(Node $node): ?Validatable
+    public static function length(Node $node): Constraint
     {
-        return $node->maxlength ? v::length(null, $node->maxlength) : null;
-    }
-
-    public static function minlength(Node $node): ?Validatable
-    {
-        return $node->minlength ? v::length($node->minlength, null) : null;
+        $options = [
+            'min' => $node->minlength ?: null,
+            'max' => $node->maxlength ?: null
+        ];
+        
+        return new Constraints\Length($options);
     }
 
     public static function max(Node $node): ?Validatable
@@ -122,14 +117,11 @@ abstract class ValidatorFactory
         return $node->step ? v::multiple($node->step) : null;
     }
 
-    public static function pattern(Node $node): ?Validatable
+    public static function pattern(Node $node): Constraint
     {
-        if ($node->pattern) {
-            $regex = sprintf('/^%s$/u', str_replace('/', '\\/', $node->pattern));
-            return v::regex($regex);
-        }
+        $regex = sprintf('/^%s$/u', str_replace('/', '\\/', $node->pattern));
 
-        return null;
+        return new Constraints\Regex($regex);
     }
 
     public static function accept(Node $node): ?Validatable

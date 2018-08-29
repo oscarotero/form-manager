@@ -89,13 +89,21 @@ abstract class Input extends Node implements InputInterface
         return $this->labels[] = $label;
     }
 
-    public function getValidators(): array
+    public function getConstraints(): array
     {
         $validators = static::INTR_VALIDATORS;
 
-        foreach (static::ATTR_VALIDATORS as $name) {
-            if ($this->getAttribute($name)) {
-                $validators[] = $name;
+        foreach (static::ATTR_VALIDATORS as $name => $attributes) {
+            if (is_int($name)) {
+                $name = $attributes;
+                $attributes = (array) $attributes;
+            }
+
+            foreach ($attributes as $attribute) {
+                if ($this->getAttribute($attribute)) {
+                    $validators[] = $name;
+                    continue;
+                }
             }
         }
 

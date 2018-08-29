@@ -13,8 +13,7 @@ class Email extends Input
     ];
 
     const ATTR_VALIDATORS = [
-        'maxlength',
-        'minlength',
+        'length' => ['minlength', 'maxlength'],
         'pattern',
     ];
     

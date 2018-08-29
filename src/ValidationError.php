@@ -5,7 +5,8 @@ namespace FormManager;
 
 use FormManager\Inputs\Input;
 use FormManager\ValidatorFactory;
-use Respect\Validation\Exceptions\NestedValidationException;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\ConstraintViolationList;
 use IteratorAggregate;
 use ArrayIterator;
 
@@ -14,50 +15,51 @@ use ArrayIterator;
  */
 class ValidationError implements IteratorAggregate
 {
-    private $exception;
+    private $violations;
 
     public static function assert(Input $input): ?ValidationError
     {
         $value = $input->getValue();
 
-        try {
-            $required = ValidatorFactory::createValidator($input, ['required']);
+        // $required = ValidatorFactory::createValidator($input, ['required']);
 
-            if ($required) {
-                $required->assert($value);
-            }
+        // if ($required) {
+        //     $required->assert($value);
+        // }
 
-            if (self::isEmpty($value, $input->getAttribute('multiple'))) {
-                return null;
-            }
+        // if (self::isEmpty($value, $input->getAttribute('multiple'))) {
+        //     return null;
+        // }
 
-            $validators = $input->getValidators();
+        $constraints = ValidatorFactory::createConstraints($input);
 
-            if (empty($validators)) {
-                return null;
-            }
+        if (!$constraints) {
+            return null;
+        }
 
-            ValidatorFactory::createValidator($input, $validators)->assert($value);
-        } catch (NestedValidationException $exception) {
-            return new static($exception);
+        $validator = Validation::createValidator();
+        $violations = $validator->validate($value, $constraints);
+
+        if (count($violations)) {
+            return new static($violations);
         }
 
         return null;
     }
 
-    public function __construct(NestedValidationException $exception)
+    public function __construct(ConstraintViolationList $violations)
     {
-        $this->exception = $exception;
+        $this->violations = $violations;
     }
 
     public function getIterator()
     {
-        return new ArrayIterator($this->exception->getMessages());
+        return $this->violations->getIterator();
     }
 
     public function __toString()
     {
-        return current($this->exception->getMessages());
+        return $this->violations[0]->getMessage();
     }
 
     private static function isEmpty($value, $multiple): bool
@@ -65,21 +67,5 @@ class ValidationError implements IteratorAggregate
         return $value === ''
             || $value === null
             || ($value === [] && $multiple);
-    }
-
-    public function setTranslator(callable $translator): self
-    {
-        $this->exception->setParam('translator', $translator);
-
-        return $this;
-    }
-
-    public function getAllMessages(array $filter = null): array
-    {
-        if (empty($filter)) {
-            return $this->exception->getMessages();
-        }
-
-        return $this->exception->findMessages($filter);
     }
 }
