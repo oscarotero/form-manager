@@ -19,18 +19,6 @@ class ValidationError implements IteratorAggregate
 
     public static function assert(Input $input): ?ValidationError
     {
-        $value = $input->getValue();
-
-        // $required = ValidatorFactory::createValidator($input, ['required']);
-
-        // if ($required) {
-        //     $required->assert($value);
-        // }
-
-        // if (self::isEmpty($value, $input->getAttribute('multiple'))) {
-        //     return null;
-        // }
-
         $constraints = ValidatorFactory::createConstraints($input);
 
         if (!$constraints) {
@@ -38,7 +26,7 @@ class ValidationError implements IteratorAggregate
         }
 
         $validator = Validation::createValidator();
-        $violations = $validator->validate($value, $constraints);
+        $violations = $validator->validate($input->getValue(), $constraints);
 
         if (count($violations)) {
             return new static($violations);
@@ -60,12 +48,5 @@ class ValidationError implements IteratorAggregate
     public function __toString()
     {
         return $this->violations[0]->getMessage();
-    }
-
-    private static function isEmpty($value, $multiple): bool
-    {
-        return $value === ''
-            || $value === null
-            || ($value === [] && $multiple);
     }
 }

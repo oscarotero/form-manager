@@ -15,6 +15,7 @@ class Email extends Input
     const ATTR_VALIDATORS = [
         'length' => ['minlength', 'maxlength'],
         'pattern',
+        'required',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

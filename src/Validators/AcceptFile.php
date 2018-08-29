@@ -1,12 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace FormManager\Rules;
+namespace FormManager\Validators;
 
-use Respect\Validation\Rules\AbstractRule;
 use Psr\Http\Message\UploadedFileInterface;
 
-class AcceptFile extends AbstractRule
+class AcceptFile
 {
     private $extensions = [];
     private $mimes = [];
@@ -28,17 +27,16 @@ class AcceptFile extends AbstractRule
         });
     }
 
-    public function validate($input)
+    public function __invoke($input, $context)
     {
-        if (is_array($input)) {
-            return $this->validateArray($input);
+        if (empty($input)
+            || (is_array($input) && $this->validateArray($input))
+            || ($input instanceof UploadedFileInterface && $this->validatePsr7($input))
+        ) {
+            return;
         }
 
-        if ($input instanceof UploadedFileInterface) {
-            return $this->validatePsr7($input);
-        }
-
-        return false;
+        $context->buildViolation('Accept error')->addViolation();
     }
 
     private function validateArray(array $file): bool

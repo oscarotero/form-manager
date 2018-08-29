@@ -1,12 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace FormManager\Rules;
+namespace FormManager\Validators;
 
-use Respect\Validation\Rules\AbstractRule;
 use Psr\Http\Message\UploadedFileInterface;
 
-class UploadedFile extends AbstractRule
+class UploadedFile
 {
     const ERROR_TYPES = [
         1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
@@ -17,17 +16,16 @@ class UploadedFile extends AbstractRule
         8 => 'A PHP extension stopped the file upload',
     ];
 
-    public function validate($input)
+    public function __invoke($input, $context)
     {
-        if (is_array($input)) {
-            return $this->validateArray($input);
+        if (empty($input)
+            || (is_array($input) && $this->validateArray($input))
+            || ($input instanceof UploadedFileInterface && $this->validatePsr7($input))
+        ) {
+            return;
         }
 
-        if ($input instanceof UploadedFileInterface) {
-            return $this->validatePsr7($input);
-        }
-
-        return false;
+        $context->buildViolation('File not valid')->addViolation();
     }
 
     private function validateArray(array $file): bool

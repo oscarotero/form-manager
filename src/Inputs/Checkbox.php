@@ -10,6 +10,10 @@ use FormManager\InputInterface;
  */
 class Checkbox extends Input
 {
+    protected const ATTR_VALIDATORS = [
+        'required',
+    ];
+
     protected $format = '{input} {label}';
 
     public function __construct(string $label = null, iterable $attributes = [])

@@ -8,12 +8,13 @@ namespace FormManager\Inputs;
  */
 class File extends Input
 {
-    const INTR_VALIDATORS = [
+    protected const INTR_VALIDATORS = [
         'file'
     ];
 
-    const ATTR_VALIDATORS = [
+    protected const ATTR_VALIDATORS = [
         'accept',
+        'required',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

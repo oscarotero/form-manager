@@ -11,8 +11,8 @@ class EmailTest extends TestCase
     public function valuesProvider(): array
     {
         return [
-            // [true, null, []],
-            // [false, null, ['required' => true]],
+            [true, null, []],
+            [false, null, ['required' => true]],
             [true, 'email@domain.com', []],
             [false, 'email@domain', []],
             [false, 'email@domain.com', ['maxlength' => 4]],

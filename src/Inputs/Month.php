@@ -16,6 +16,7 @@ class Month extends Input
         // 'step',
         'max',
         'min',
+        'required',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

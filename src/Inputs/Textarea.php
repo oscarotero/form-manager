@@ -12,11 +12,9 @@ class Textarea extends Input
 {
     private $value;
 
-    const INTR_VALIDATORS = [];
-
     const ATTR_VALIDATORS = [
-        'maxlength',
-        'minlength',
+        'length' => ['minlength', 'maxlength'],
+        'required',
     ];
 
     public function __construct(string $label = null, iterable $attributes = [])

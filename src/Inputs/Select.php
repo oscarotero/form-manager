@@ -11,6 +11,10 @@ use FormManager\InputInterface;
  */
 class Select extends Input
 {
+    protected const ATTR_VALIDATORS = [
+        'required',
+    ];
+
     private $allowNewValues = false;
     private $options = [];
 

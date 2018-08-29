@@ -12,6 +12,8 @@ class HiddenTest extends TestCase
     {
         return [
             [true, null, []],
+            [true, null, ['required' => true]],
+            [true, 'foo', []],
         ];
     }
 

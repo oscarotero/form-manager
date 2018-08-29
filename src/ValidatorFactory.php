@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace FormManager;
 
 use FormManager\Inputs\Input;
-use FormManager\Rules;
+use FormManager\Validators;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use RuntimeException;
@@ -33,14 +33,14 @@ abstract class ValidatorFactory
         return $constraints;
     }
 
-    public static function number(): Validatable
+    public static function number(): Constraint
     {
-        return v::numeric();
+        return new Constraints\Type('numeric');
     }
 
-    public static function url(): Validatable
+    public static function url(): Constraint
     {
-        return v::url();
+        return new Constraints\Url();
     }
 
     public static function email(): Constraint
@@ -48,48 +48,44 @@ abstract class ValidatorFactory
         return new Constraints\Email();
     }
 
-    public static function color(): Validatable
+    public static function color(): Constraint
     {
-        return v::regex('/^#[a-f0-9]{6}$/');
+        return new Constraints\Regex('/^#[a-f0-9]{6}$/');
     }
 
-    public static function date(): Validatable
+    public static function date(): Constraint
     {
-        return v::date()->date('Y-m-d');
+        return new Constraints\Date();
     }
 
-    public static function datetimeLocal(): Validatable
+    public static function datetimeLocal(): Constraint
     {
-        return v::date()->date('Y-m-d\TH:i:s');
+        return new Constraints\DateTime(['format' => 'Y-m-d?H:i:s']);
     }
 
-    public static function month(): Validatable
+    public static function month(): Constraint
     {
-        return v::date()->date('Y-m');
+        return new Constraints\DateTime(['format' => 'Y-m']);
     }
 
-    public static function week(): Validatable
+    public static function week(): Constraint
     {
-        return v::date()->regex('/^\d+-W\d+$/');
+        return new Constraints\Regex('/^[\d]{4}-W(0[1-9]|[1-4][0-9]|5[1-3])$/');
     }
 
-    public static function time(Node $node): Validatable
+    public static function time(Node $node): Constraint
     {
-        return v::date()->date($node->step ? 'H:i:s' : 'H:i');
+        return new Constraints\Datetime(['format' => $node->step ? 'H:i:s' : 'H:i']);
     }
 
-    public static function file(): Validatable
+    public static function file(): Constraint
     {
-        return new Rules\UploadedFile();
+        return new Constraints\Callback([new Validators\UploadedFile(), '__invoke']);
     }
 
-    public static function required(Node $node): ?Validatable
+    public static function required(Node $node): Constraint
     {
-        if (!$node->required) {
-            return null;
-        }
-
-        return $node->multiple ? v::notEmpty() : v::notOptional();
+        return new Constraints\NotBlank();
     }
 
     public static function length(Node $node): Constraint
@@ -102,19 +98,26 @@ abstract class ValidatorFactory
         return new Constraints\Length($options);
     }
 
-    public static function max(Node $node): ?Validatable
+    public static function max(Node $node): Constraint
     {
-        return $node->max ? v::max($node->max) : null;
+        return new Constraints\LessThanOrEqual($node->max);
     }
 
-    public static function min(Node $node): ?Validatable
+    public static function min(Node $node): Constraint
     {
-        return $node->min ? v::min($node->min) : null;
+        return new Constraints\GreaterThanOrEqual($node->min);
     }
 
-    public static function step(Node $node): ?Validatable
+    public static function step(Node $node): Constraint
     {
-        return $node->step ? v::multiple($node->step) : null;
+        $step = $node->step;
+
+        return new Constraints\Callback(function ($value, $context) use ($step) {
+            if ($value % $step) {
+                $context->buildViolation('The value is not valid')
+                    ->addViolation();
+            }
+        });
     }
 
     public static function pattern(Node $node): Constraint
@@ -124,8 +127,8 @@ abstract class ValidatorFactory
         return new Constraints\Regex($regex);
     }
 
-    public static function accept(Node $node): ?Validatable
+    public static function accept(Node $node): Constraint
     {
-        return $node->accept ? new Rules\AcceptFile($node->accept) : null;
+        return new Constraints\Callback([new Validators\AcceptFile($node->accept), '__invoke']);
     }
 }

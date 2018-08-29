@@ -52,7 +52,7 @@ class UrlTest extends TestCase
     public function errorProvider()
     {
         return [
-            [null, 'web must not be optional']
+            [null, 'This value should not be blank.']
         ];
     }
 
@@ -61,7 +61,7 @@ class UrlTest extends TestCase
      */
     public function testErrors($value, string $message)
     {
-        $input = new Url(null, ['required' => true, 'name' => 'web']);
+        $input = new Url(null, ['required' => true]);
 
         $error = $input->setValue($value)->getError();
 

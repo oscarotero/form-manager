@@ -13,8 +13,8 @@ use FormManager\ValidationError;
  */
 abstract class Input extends Node implements InputInterface
 {
-    const INTR_VALIDATORS = [];
-    const ATTR_VALIDATORS = [];
+    protected const INTR_VALIDATORS = [];
+    protected const ATTR_VALIDATORS = [];
 
     private static $idIndex = 0;
 
