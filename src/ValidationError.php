@@ -6,7 +6,7 @@ namespace FormManager;
 use FormManager\Inputs\Input;
 use FormManager\ValidatorFactory;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use IteratorAggregate;
 use ArrayIterator;
 

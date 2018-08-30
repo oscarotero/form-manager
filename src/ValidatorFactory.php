@@ -123,7 +123,7 @@ abstract class ValidatorFactory
 
     public static function time(Input $input): Constraint
     {
-        if ($input->step) {
+        if ($input->getAttribute('step')) {
             return new Constraints\Time(
                 self::options($input, 'time')
             );
