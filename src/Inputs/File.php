@@ -8,15 +8,12 @@ namespace FormManager\Inputs;
  */
 class File extends Input
 {
-    protected const INTR_VALIDATORS = [
-        'file'
+    protected $validators = [
+        'file',
+        'required' => 'required',
+        'accept' => 'accept',
     ];
 
-    protected const ATTR_VALIDATORS = [
-        'accept',
-        'required',
-    ];
-    
     public function __construct(string $label = null, iterable $attributes = [])
     {
         parent::__construct('input', $attributes);

@@ -8,14 +8,11 @@ namespace FormManager\Inputs;
  */
 class Url extends Input
 {
-    const INTR_VALIDATORS = [
-        'url'
-    ];
-
-    const ATTR_VALIDATORS = [
+    protected $validators = [
+        'url',
+        'required' => 'required',
         'length' => ['minlength', 'maxlength'],
-        'pattern',
-        'required',
+        'pattern' => 'pattern'
     ];
 
     public function __construct(string $label = null, iterable $attributes = [])

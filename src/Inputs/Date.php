@@ -8,15 +8,11 @@ namespace FormManager\Inputs;
  */
 class Date extends Input
 {
-    protected const INTR_VALIDATORS = [
+    protected $validators = [
         'date',
-    ];
-
-    protected const ATTR_VALIDATORS = [
-        // 'step',
-        'max',
-        'min',
-        'required',
+        'required' => 'required',
+        'max' => 'max',
+        'min' => 'min',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

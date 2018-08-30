@@ -8,12 +8,9 @@ namespace FormManager\Inputs;
  */
 class Color extends Input
 {
-    protected const INTR_VALIDATORS = [
+    protected $validators = [
         'color',
-    ];
-
-    protected const ATTR_VALIDATORS = [
-        'required',
+        'required' => 'required',
     ];
 
     public function __construct(string $label = null, iterable $attributes = [])

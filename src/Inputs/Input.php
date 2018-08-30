@@ -13,12 +13,10 @@ use FormManager\ValidationError;
  */
 abstract class Input extends Node implements InputInterface
 {
-    protected const INTR_VALIDATORS = [];
-    protected const ATTR_VALIDATORS = [];
-
     private static $idIndex = 0;
 
-    protected $format = '{label} {input}';
+    protected $validators = [];
+    protected $format = '{{ label }} {{ input }}';
     protected $labels = [];
     protected $error;
 
@@ -67,8 +65,8 @@ abstract class Input extends Node implements InputInterface
     {
         if ($this->label) {
             return strtr($this->format, [
-                '{label}' => (string) $this->label,
-                '{input}' => parent::__toString()
+                '{{ label }}' => (string) $this->label,
+                '{{ input }}' => parent::__toString()
             ]);
         }
 
@@ -91,15 +89,15 @@ abstract class Input extends Node implements InputInterface
 
     public function getConstraints(): array
     {
-        $validators = static::INTR_VALIDATORS;
+        $validators = [];
 
-        foreach (static::ATTR_VALIDATORS as $name => $attributes) {
+        foreach ($this->validators as $name => $attributes) {
             if (is_int($name)) {
-                $name = $attributes;
-                $attributes = (array) $attributes;
+                $validators[] = $attributes;
+                continue;
             }
 
-            foreach ($attributes as $attribute) {
+            foreach ((array) $attributes as $attribute) {
                 if ($this->getAttribute($attribute)) {
                     $validators[] = $name;
                     continue;
@@ -167,7 +165,7 @@ abstract class Input extends Node implements InputInterface
 
     public function setFormat(string $format): self
     {
-        $this->format = strtr($format, ['{format}' => $this->format]);
+        $this->format = strtr($format, ['{{ format }}' => $this->format]);
 
         return $this;
     }

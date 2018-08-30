@@ -140,13 +140,13 @@ class InputTest extends TestCase
             (string) $input
         );
 
-        $input->setFormat('{label} <div>{input}</div>');
+        $input->setFormat('{{ label }} <div>{{ input }}</div>');
         $this->assertSame(
             '<label for="foo">Click here</label> <div><input type="text" id="foo"></div>',
             (string) $input
         );
 
-        $input->setFormat('<div>{format}</div>');
+        $input->setFormat('<div>{{ format }}</div>');
         $this->assertSame(
             '<div><label for="foo">Click here</label> <div><input type="text" id="foo"></div></div>',
             (string) $input

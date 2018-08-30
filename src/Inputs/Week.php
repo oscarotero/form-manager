@@ -8,14 +8,11 @@ namespace FormManager\Inputs;
  */
 class Week extends Input
 {
-    const INTR_VALIDATORS = [
-        'week'
-    ];
-
-    const ATTR_VALIDATORS = [
-        // 'step',
-        'max',
-        'min',
+    protected $validators = [
+        'week',
+        'required' => 'required',
+        'max' => 'max',
+        'min' => 'min',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

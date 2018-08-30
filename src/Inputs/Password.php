@@ -8,12 +8,10 @@ namespace FormManager\Inputs;
  */
 class Password extends Input
 {
-    const INTR_VALIDATORS = [];
-
-    const ATTR_VALIDATORS = [
+    protected $validators = [
+        'required' => 'required',
         'length' => ['minlength', 'maxlength'],
-        'pattern',
-        'required',
+        'pattern' => 'pattern',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

@@ -8,15 +8,12 @@ namespace FormManager\Inputs;
  */
 class Number extends Input
 {
-    const INTR_VALIDATORS = [
+    protected $validators = [
         'number',
-    ];
-
-    const ATTR_VALIDATORS = [
-        'step',
-        'max',
-        'min',
-        'required',
+        'required' => 'required',
+        'step' => 'step',
+        'max' => 'max',
+        'min' => 'min',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

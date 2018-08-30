@@ -10,11 +10,11 @@ use FormManager\InputInterface;
  */
 class Radio extends Input
 {
-    protected const ATTR_VALIDATORS = [
-        'required',
+    protected $validators = [
+        'required' => 'required',
     ];
     
-    protected $format = '{input} {label}';
+    protected $format = '{{ input }} {{ label }}';
 
     public function __construct(string $label = null, iterable $attributes = [])
     {

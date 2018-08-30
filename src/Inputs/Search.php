@@ -8,10 +8,10 @@ namespace FormManager\Inputs;
  */
 class Search extends Input
 {
-    protected const ATTR_VALIDATORS = [
+    protected $validators = [
+        'required' => 'required',
         'length' => ['minlength', 'maxlength'],
-        'pattern',
-        'required',
+        'pattern' => 'pattern',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

@@ -8,14 +8,11 @@ namespace FormManager\Inputs;
  */
 class Email extends Input
 {
-    const INTR_VALIDATORS = [
-        'email'
-    ];
-
-    const ATTR_VALIDATORS = [
+    protected $validators = [
+        'email',
+        'required' => 'required',
         'length' => ['minlength', 'maxlength'],
-        'pattern',
-        'required',
+        'pattern' => 'pattern',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

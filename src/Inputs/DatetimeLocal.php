@@ -8,15 +8,11 @@ namespace FormManager\Inputs;
  */
 class DatetimeLocal extends Input
 {
-    const INTR_VALIDATORS = [
-        'datetimeLocal'
-    ];
-
-    const ATTR_VALIDATORS = [
-        // 'step',
-        'max',
-        'min',
-        'required',
+    protected $validators = [
+        'datetimeLocal',
+        'required' => 'required',
+        'max' => 'max',
+        'min' => 'min',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])
