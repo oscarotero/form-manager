@@ -8,7 +8,7 @@ namespace FormManager\Inputs;
  */
 class Submit extends Input
 {
-    protected $format = '{{ input }}';
+    protected $template = '{{ input }}';
 
     public function __construct(string $label = null, iterable $attributes = [])
     {

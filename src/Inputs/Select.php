@@ -3,33 +3,27 @@ declare(strict_types = 1);
 
 namespace FormManager\Inputs;
 
-use FormManager\Node;
 use FormManager\InputInterface;
+use FormManager\Traits\HasOptionsTrait;
 
 /**
  * Class representing a HTML textarea element
  */
 class Select extends Input
 {
+    use HasOptionsTrait;
+
     protected $validators = [
         'required' => 'required',
     ];
 
     private $allowNewValues = false;
-    private $options = [];
 
     public function __construct(iterable $options, string $label = null, iterable $attributes = [])
     {
         parent::__construct('select', $attributes);
 
-        foreach ($options as $value => $text) {
-            if (is_array($text)) {
-                $this->addOptgroup($value, $text);
-                continue;
-            }
-
-            $this->addOption($value, (string) $text);
-        }
+        $this->addOptions($options);
 
         if (isset($label)) {
             $this->setLabel($label);
@@ -104,31 +98,6 @@ class Select extends Input
             }
 
             $this->addOption($value);
-        }
-    }
-
-    private function addOptgroup($label, iterable $options)
-    {
-        $optgroup = new Node('optgroup', compact('label'));
-
-        foreach ($options as $value => $label) {
-            $this->addOption($value, $label, $optgroup);
-        }
-
-        $this->appendChild($optgroup);
-    }
-
-    private function addOption($value, string $label = null, Node $parent = null)
-    {
-        $option = new Node('option', compact('value'));
-        $option->innerHTML = $label ?: (string) $value;
-
-        $this->options[] = $option;
-
-        if ($parent) {
-            $parent->appendChild($option);
-        } else {
-            $this->appendChild($option);
         }
     }
 }

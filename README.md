@@ -50,610 +50,243 @@ $name->setAttributes([
 
 //Set a value
 $name->setValue('MyName');
+```
+
+### Validation
+
+This library uses internally [symfony/validation](https://symfony.com/doc/current/validation.html) to perform basic html5 validations and error reporting.
+
+```php
+$email = F::email();
+
+$email->setValue('invalid-email');
 
 //Validate the value
-if (!$name->isValid()) {
-	echo 'name not valid';
-}
-```
-
-### Generate the html code
-
-The html code is created automatically on convert the object into a string:
-
-```php
-$name = F::text()->class('my-input')->required();
-
-echo $name; //<input type="text" class="my-input" required>
-
-//print the input with extra attributes
-echo $name->addClass('text-input')->placeholder('Your name');
-```
-
-### Working with data
-
-Inputs can validate the data depending of the type and other validation attributes:
-
-```php
-$url = F::url();
-
-//Set the input as required
-$url->required();
-
-//Check if the value is valid
-if (!$url->validate()) {
-	echo $url->error(); //This value is required
+if ($email->isValid()) {
+	return true;
 }
 
-//set an invalid url
-$url->val('invalid-url');
+//Get errors
+$error = $email->getError();
 
-//check the value and get the error
-if (!$url->validate()) {
-	echo $url->error(); //This value is not a valid url
-}
-```
+//Print the first error message
+echo $error;
 
-The inputs can handle custom validators:
-```php
-$name = F::text();
-
-function isDave($input)
-{
-	if ($input->val() !== 'dave') {
-		throw new FormManager\InvalidValueException('This value must be "dave"');
-	}
+//Iterate through all messages
+foreach ($error as $err) {
+	echo $err->getMessage();
 }
 
-//Add custom validators
-$name->addValidator('isDave');
-
-$name->val('tom');
-
-if (!$name->validate()) {
-	echo $name->error(); //This value must be "dave"
-}
-
-//Remove the validator
-$name->removeValidator('isDave');
-```
-
-The `load()` method is like `val()` but it handles the data sent by the client:
-
-```php
-$name = F::text();
-
-//Add a function to sanitize the data
-$name->sanitize(function($value)
-{
-	return strip_tags($value);
-});
-
-//if you use val(), the value remains as is
-$name->val('<strong>earl</strong>');
-echo $name->val(); //<strong>earl</strong>
-
-//if you use load(), the value will be sanitized
-$name->load('<strong>earl</strong>');
-echo $name->val(); //earl
-```
-
-
-### Labels
-
-You can use labels with your inputs, just use the property `->label` and it will be created automatically. It may also generate an extra label with the error message.
-
-```php
-$name = F::text();
-
-//Define a label
-$name->label('User name');
-
-//And modify the label using the same syntax than inputs:
-$name->label->class('main-label');
-
-//Print all (label + input)
-echo $name;
-
-//Print label and inputs separately
-echo $name->label . '<br>' . $name->input;
-
-//Use errorLabel to print a secondary label with the validation error:
-echo $name->label . '<br>' . $name->input . $name->errorLabel;
-```
-
-### Datalist
-
-[Datalist](http://www.w3.org/TR/html5/forms.html#the-datalist-element) are also allowed, just use the `datalist()` method to set/get values:
-
-```php
-$name = F::search();
-
-//Define the datalist values
-$name->datalist([
-	'female' => 'Female',
-	'male' => 'Male'
+//You can also customize/translate the error messages
+$email->setErrorMessages([
+	'email' => 'The email is not valid',
+	'required' => 'The email is required',
+	'maxlength' => 'The email is too long, it must have {{ limit }} characters or less',
 ]);
+
+//And add more symfony validators
+$ip = F::text();
+$ip->addConstraint(new Constraints\Ip());
 ```
 
-### Custom renders
+See [all constraints supported by symfony](https://symfony.com/doc/current/validation.html#supported-constraints)
 
-You can configure how each field must be rendered. First, you need to know all properties of each field:
 
-* `$field->input` The input/select/textarea element
-* `$field->label` The label element
-* `$field->errorLabel` A secondary label with the validation error
-* `$field->datalist` An optional datalist instance
-* `$field->wrapper` A div element containing all the stuff above
-
+## Render html
 
 ```php
-$field->render(function ($field) {
-	$html = (string) $field->label;
-	$html .= '<p>'.$field->input.$field->errorLabel.'</p>';
-	$html .= $field->datalist;
+$name = F::text('What is your name?', ['name' => 'name']);
 
-	return $html;
-});
+echo $name;
+```
+```html
+<label for="id-input-1">What is your name?</label> <input id="id-input-1" type="text" name="name">
 ```
 
-## Special fields
+Set a custom template:
 
-In addition with regular fields (the html5 equivalents: text, textarea, select, datetime, etc...) there are some special fields useful to create more complicate data schemes:
+```php
+$name->setTemplate('{{ label }} <div class="input-content">{{ input }}</div>');
+echo $name;
+```
+```html
+<label for="id-input-1">What is your name?</label> <div class="input-content"><input id="id-input-1" type="text" name="name"></div>
+```
+
+## Grouping fields
+
+You can group the fields to follow a specific data structure:
 
 ### Group
 
-A group is a simple field to store other fields under a name. The following example shows a group of three fields:
+Groups allow to group a set of inputs under an specific name:
 
 ```php
-$date = F::group([
-	'day' => F::number()->min(1)->max(31)->label('Day'),
-	'month' => F::number()->min(1)->max(12)->label('Month'),
-	'year' => F::number()->min(1900)->max(2013)->label('Year')
+$group = F::group([
+	'name' => F::text('Username'),
+	'email' => F::email('Email'),
+	'password' => F::password('Password'),
 ]);
 
-//Set values to group
-$date->val([
-	'day' => 21,
-	'month' => 6,
-	'year' => 1979
+$group->setValue([
+	'name' => 'oscar',
+	'email' => 'oom@oscarotero.com',
+	'password' => 'supersecret',
 ]);
-
-//Get values
-$values = $date->val();
-
-//Use array syntax to access to the fields by name
-$year = $date['year']->val();
-
-//Add more fields dinamically
-$date['hour'] = F::number()->min(0)->max(23)->label('Hour');
-
-//Add other html attributes to the group:
-$date->addClass('field-day')->attr(['id' => 'date-field']);
 ```
 
-### Choose
+### Radio group
 
-This field stores other fields with the same name but different values. Useful for radio inputs or to define various submit buttons.
+Special case for radios where all inputs share the same name with different values:
 
 ```php
-//Create a choose container
-$colors = F::choose();
-
-//Add some fields. The keys are the values
-$colors->add([
-	'red' => F::radio()->label('Red'),
-	'blue' => F::radio()->label('Blue'),
-	'green' => F::radio()->label('Green')
+$radios = F::radioGroup([
+	'red' => 'Red',
+	'blue' => 'Blue',
+	'green' => 'Green',
 ]);
 
-//Access to the fields by value
-$red_radio = $colors['red'];
-
-//Add more fields dinamically
-$colors['yellow'] = F::radio()->label('Yellow');
-
-//Set the value
-$colors->val('red');
-
-//Get value
-$color_choosen = $colors->val();
+$radios->setValue('blue');
 ```
 
-### Collection
+### Group collection
 
-It's like a [group](#group), but stores a collection of values:
+Is a collection of values using the same group:
 
 ```php
-//Create a collection container
-$people = F::collection([
-	'name' => F::text()->label('Name'),
-	'email' => F::email()->label('email'),
-	'age' => F::number()->label('Age')
+$groupCollection = F::groupCollection(
+	f::group([
+		'name' => F::text('Name'),
+		'genre' => F::radioGroup([
+			'm' => 'Male',
+			'f' => 'Female',
+			'o' => 'Other',
+		]),
+	])
 ]);
 
-//Set two values
-$people->val([
+$groupCollection->setValue([
 	[
-		'name' => 'Xaquín',
-		'email' => 'xaquin@email.com',
-		'age' => '24'
+		'name' => 'Oscar',
+		'genre' => 'm'
 	],[
-		'name' => 'Uxío',
-		'email' => 'uxio@email.com',
-		'age' => '37'
-	]
-]);
-
-//Access to the first group of values:
-$group = $people[0];
-
-//Access to any field
-echo $people[0]['name']->val(); //returns 'Xaquín'
-
-//Push a new value
-$people->pushVal([
-	'name' => 'Manoela',
-	'email' => 'manoela@email.com',
-	'age' => '18'
-]);
-
-//Returns the group container used as template for each value inserted.
-//useful to use the html template in javascript
-
-$template = $people->getTemplate();
-
-echo '<div class="template">'.$template.'</div>';
+		'name' => 'Laura',
+		'genre' => 'f'
+	],
+])
 ```
 
-### CollectionMultiple
+### Multiple group collection
 
-If you need different types of values in your collection, CollectionMultiple is the answer:
+Is a collection of values using various groups, using the field `type` to identify which group is used by each row:
 
 ```php
-//Create a collectionMultiple container
-$article = F::collectionMultiple([
-	'section' => [
-        'title' => F::text()->label('Title'),
-        'text' => F::textarea()->label('Text')
-    ],
-    'picture' => [
-        'caption' => F::text()->label('Caption'),
-        'image' => F::file()->label('Image')
-    ],
-    'quote' => [
-        'text' => F::textarea()->label('Text'),
-        'author' => F::text()->label('Author')
-    ]
+$multipleGroupCollection = F::multipleGroupCollection(
+	'text' => f::group([
+		'type' => F::hidden(),
+		'title' => F::text('Title'),
+		'text' => F::textarea('Body'),
+	]),
+	'image' => f::group([
+		'type' => F::hidden(),
+		'file' => F::file('Image file'),
+		'alt' => F::text('Alt text'),
+		'text' => F::textarea('Caption'),
+	]),
+	'link' => f::group([
+		'type' => F::hidden(),
+		'text' => F::text('Link text'),
+		'href' => F::url('Url'),
+		'target' => F::select([
+			'_blank' => 'New window',
+			'_self' => 'The same window',
+		]),
+	]),
 ]);
 
-//Set values. Note that we need a "type" value to know the type of each row
-$article->val([
+$multipleGroupCollection->setValue([
 	[
-		'type' => 'section',
-		'title' => 'This is the section title',
-        'text' => 'Lorem ipsum...',
+		'type' => 'text',
+		'title' => 'Welcome to my page',
+		'text' => 'I hope you like it',
 	],[
-		'type' => 'quote',
-		'text' => 'You have to learn the rules of the game. And then you have to play better than anyone else.',
-		'author' => 'Albert Einstein'
-	]
+		'type' => 'image',
+		'file' => 'avatar.jpg',
+		'alt' => 'Image of mine',
+		'text' => 'This is my photo',
+	],[
+		'type' => 'link',
+		'text' => 'Go to my webpage',
+		'href' => 'https://oscarotero.com',
+		'target' => '_self',
+	],
 ]);
-
-// Note that a hidden input will be created for you to store the group type
-$article[0]['type']->val(); //section
-$article[0]['type']->attr('type'); //hidden
-
-//Push more values
-$article->pushVal([
-	'type' => 'section',
-	'title' => 'This is another section',
-    'text' => 'The world of dogs are better than the cats because...'
-]);
-
-//Add new types
-$article->add([
-	'video' => [
-		'title' => F::text()->label('Title'),
-		'video' => F::url()->label('Youtube url')
-	]
-]);
-
-//Returns an array with all templates used
-$templates = $article->getTemplate();
-
-foreach ($templates as $name => $template) {
-	echo '<div class="template-'.$name.'">'.$template.'</div>';
-}
 ```
 
-## Loader
+## Datalist
 
-The main aim of the loader field is to separate the way to load the data with the way to store and keep this data once it's loaded. Let's say for example, an input type file: if a file is loaded, the value is an array with the same structure than any $_FILES value, but if user doesn't upload anything, the value is empty. So, what is supposed to do in this case? remove the file or keep the previous value?
-The loader field has two fields: a "loader" field and a "field" field. The first one is responsive to load the new values (for example, it can be an input type file) and the second keeps the previous value (for example, it can be an input type hidden, or text, etc). Let's see an example:
+[Datalist](http://www.w3.org/TR/html5/forms.html#the-datalist-element) are also allowed, just use the `createDatalist()` method:
 
 ```php
-$fileUpload = F::loader([
-    'loader' => F::file()->label('Upload a file here'),
-    'field' => F::hidden() //this hidden input stores the old value
+$query = F::search();
+
+$datalist = $query->createDatalist([
+	'female' => 'Female',
+	'male' => 'Male'
 ]);
 
-//Set a value
-$fileUpload->val('my-file.png');
-
-//we have this value
-echo $fileUpload->val(); //my-file.png
-
-//load empty data
-$fileUpload->load(null);
-
-//Nothing was loaded, so we keep the old value
-echo $fileUpload->val(); //my-file.png
-
-//load new value
-$fileUpload->load($_FILES['file-upload']);
-
-//we have the new value
-echo ($fileUpload->val() === $_FILES['file-upload']); //true
+echo $query;
+echo $datalist;
 ```
 
 ## Forms
 
-We need a form to put all this things together. The form is just another field, in fact, it's like a [Group](#group).
+We need a form to put all this things together.
 
 ```php
-$form = F::form();
-
-//Set the form attributes:
-$form->attr([
-	'action' => 'test.php',
-	'method' => 'post'
+$loginForm = F::form([
+	'username' => F::text('User name'),
+	'password' => F::password('Password'),
+	'' => F::submit('Login'),
 ]);
 
-//Add some fields and containers
-$form->add([
-	'name' => F::text()->maxlength(50)->required()->label('Your name'),
-	'email' => F::email()->label('Your email'),
-	'telephone' => F::tel()->label('Telephone number'),
-
-	'gender' => F::choose([
-		'm' => F::radio()->label('Male'),
-		'f' => F::radio()->label('Female')
-	]),
-	
-	'born' => F::group([
-		'day' => F::number()->min(1)->max(31)->label('Day'),
-		'month' => F::number()->min(1)->max(12)->label('Month'),
-		'year' => F::number()->min(1900)->max(2013)->label('Year')
-	]),
-
-	'language' => F::select()->options(array(
-		'gl' => 'Galician',
-		'es' => 'Spanish',
-		'en' => 'English'
-	))->label('Language'),
-
-	'friends' => F::collection([
-		'name' => F::text()->label('Name'),
-		'email' => F::email()->label('email'),
-		'age' => F::number()->label('Age')
-	]),
-
-	'action' => F::choose([
-		'save' => F::submit()->html('Save changes'),
-		'duplicate' => F::submit()->html('Save changes')
-	])
+$loginForm->setAttributes([
+	'action' => 'login.php',
+	'method' => 'post',
 ]);
 
-//You can also add new fields using the array syntax (the key will be the input name):
-$form['new-input'] = F::range()->min(0)->max(100)->val(50);
+//Load data from globals $_GET, $_POST, $_FILES
+$loginForm->loadFromGlobals();
+
+//Load data passing the arrays
+$loginForm->loadFromArray($_GET, $_POST, $_FILES);
+
+//Or load from PSR-7 server request
+$loginForm->loadFromServerRequest($serverRequest);
+
+//Get loaded data
+$data = $loginForm->getValue();
 
 //Print the form
-echo $form;
+echo $loginForm;
 
-//Access to the fields using key names
-echo $form['website'];
+//Access to specific inputs:
+echo $loginForm->getOpeningTag();
+echo '<h2>Login:</h2>';
 
-//Or fields inside fields
-echo $form['born']['day'];
+echo $loginForm['username'];
+echo '<hr>';
+echo $loginForm['password'];
+echo '<hr>';
+echo $loginForm[''];
+echo $loginForm->getClosingTag();
 
-//Set the values to all fields:
-$form->val([
-	'name' => 'Oscar',
-	'email' => 'oom@oscarotero.com',
-	'gender' => 'm',
-	'born' => [
-		'day' => 21,
-		'month' => 6,
-		'year' => 1979
-	],
-	'language' => 'gl',
-	'friends' => [
-		[
-			'name' => 'Friend 1',
-			'email' => 'friend1@email.com',
-			'age' => 25,
-		],[
-			'name' => 'Friend 2',
-			'email' => 'friend2@email.com',
-			'age' => 30,
-		],[
-			'name' => 'Friend 3',
-			'email' => 'friend3@email.com',
-			'age' => 35,
-		]
-	],
-	'action' => 'save'
-]);
+//Iterate with all inputs
+echo $loginForm->getOpeningTag();
+echo '<h2>Login:</h2>';
 
-//Get the values
-$values = $form->val();
-
-//To load the raw values from globals $_GET, $_POST and $_FILES:
-$form->loadFromGlobals();
-
-//Or specify your own globals
-$form->loadFromGlobals($_my_GET, $_my_POST, $_my_FILES);
-
-//Check the errors
-if (!$form->validate()) {
-	echo 'there are errors in the form';
+foreach ($loginForm as $input) {
+	echo "<div>{$input}</div>";
 }
-```
-
-## Builder
-
-The `Builder` class is used to ease the creation of fields and containers. For example, instead of this:
-
-```php
-use FormManager\Containers\Form;
-use FormManager\Inputs\Text;
-use FormManager\Inputs\Textarea;
-
-$form = new Form([
-	'name' => new Text(),
-	'bio' => new Textarea(),
-]);
-```
-
-You can do simply this:
-
-```php
-use FormManager\Builder as F;
-
-$form = F::form([
-	'name' => F::text(),
-	'bio' => F::textarea()
-]);
-```
-
-The `FormManager\Builder` handles the instantation of all theses classes for you using factories. By default, it contains the `FormManager\Factory`, responsible of instantation of all fields and containers.
-
-But you can add your owns factories, creating classes implementing `FormManager\FactoryInterface`.
-
-This is useful for a lot of things. For example, to create custom fields:
-
-```php
-use FormManager\Builder as F;
-use FormManager\FactoryInterface;
-
-class CustomFields implements FactoryInterface
-{
-	/**
-	 * Method required by the interface
-	 */
-	public function get($name, array $arguments)
-	{
-		if (method_exists($this, $name)) {
-			return $this->$name();
-		}
-	}
-
-	public function Year()
-	{
-		return F::number()->min(1900)->max(date('Y'));
-	}
-}
-```
-
-Use it in your app:
-
-```php
-use FormManager\Builder as F;
-
-F::addFactory(new CustomFields());
-
-$date = F::form([
-	'name' => F::text(),
-	'born-year' => F::year(),
-	'dead-year' => F::year(),
-]);
-```
-
-Other usage is to save all forms of your app under a namespace:
-
-```php
-namespace MyApp\Forms;
-
-use FormManager\Builder as F;
-use FormManager\Fields\Form;
-
-class EditUserForm extends Form
-{
-	public function __construct()
-	{
-
-		$this->add([
-			'name' => F::text()->maxlength(200)->label('Name'),
-			'email' => F::email()->label('Email'),
-			'password' => F::password()->label('Password'),
-			'repeat_password' => F::password()->label('Repeat password')
-		]);
-
-		//Add a validator to check the password
-		$this->addValidator('password-check', function($form)
-		{
-			$password1 = $form['password']->val();
-			$password2 = $form['repeat_password']->val();
-
-			if ($password1 !== $password2) {
-				throw new FormManager\InvalidValueException('The passwords does not match');
-			}
-		});
-	}
-}
-```
-
-And create a factory
-
-```php
-use FormManager\FactoryInterface;
-
-class MyForms implements FactoryInterface
-{
-	public function get($name, array $arguments)
-	{
-		$class = 'MyApp\\Forms\\'.ucfirst($name);
-
-		if (class_exists($class)) {
-			return new $class();
-		}
-	}
-}
-```
-
-Use it:
-
-```php
-use FormManager\Builder as F;
-
-F::addFactory(new MyForms());
-
-$editUser = F::editUserForm();
-```
-
-Note: Each time you register a new factory, it will be prepended to the already registered ones, so if you register fields/containers called "Form", "Textarea", etc, they will be used instead the default. This allows extend them.
-
-
-## Builder instances
-
-The static builder is fine for most cases, but sometimes you need to combine differents builders with different factories. So you can create instances:
-
-```php
-use FormManager\Builder;
-use FormManager\Factory;
-
-//Create a builder instance adding the default FormManager factory:
-$b1 = new Builder(new Factory());
-
-//Create another builder instance with your custom factory:
-$b2 = new Builder();
-$b2->add(new MyCustomFactory());
-
-//Now, you're ready to combine them:
-$form = $b1->form([
-	'name' => $b1->text(),
-	'description' => $b2->textarea(),
-	'email' => Builder::email()
-]);
+echo $loginForm->getClosingTag();
 ```

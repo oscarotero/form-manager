@@ -19,6 +19,11 @@ abstract class ValidatorFactory
         $constraints = [];
 
         foreach ($input->getConstraints() as $method) {
+            if ($method instanceof Constraint) {
+                $constraints[] = $method;
+                continue;
+            }
+
             if (!method_exists(self::class, $method)) {
                 throw new RuntimeException(sprintf('Invalid validator name "%s"', $method));
             }
@@ -26,7 +31,7 @@ abstract class ValidatorFactory
             $constraint = self::$method($input);
 
             if ($constraint) {
-                $constraints[$method] = $constraint;
+                $constraints[] = $constraint;
             }
         }
 

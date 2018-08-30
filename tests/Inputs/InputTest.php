@@ -8,6 +8,7 @@ use FormManager\Inputs\Input;
 use FormManager\Inputs\Textarea;
 use FormManager\Inputs\Select;
 use FormManager\Inputs\Submit;
+use Symfony\Component\Validator\Constraints;
 use PHPUnit\Framework\TestCase;
 
 class InputTest extends TestCase
@@ -140,16 +141,48 @@ class InputTest extends TestCase
             (string) $input
         );
 
-        $input->setFormat('{{ label }} <div>{{ input }}</div>');
+        $input->setTemplate('{{ label }} <div>{{ input }}</div>');
         $this->assertSame(
             '<label for="foo">Click here</label> <div><input type="text" id="foo"></div>',
             (string) $input
         );
 
-        $input->setFormat('<div>{{ format }}</div>');
+        $input->setTemplate('<div>{{ template }}</div>');
         $this->assertSame(
             '<div><label for="foo">Click here</label> <div><input type="text" id="foo"></div></div>',
             (string) $input
+        );
+    }
+
+    public function testCustomConstraint()
+    {
+        $input = new Text();
+        $input->addConstraint(new Constraints\Ip());
+
+        $input->setValue('invalid-ip');
+        $this->assertFalse($input->isValid());
+
+        $error = $input->getError();
+        $this->assertSame('This is not a valid IP address.', (string) $error);
+
+        $input->setValue('10.34.29.109');
+        $this->assertTrue($input->isValid());
+    }
+
+    public function testDatalist()
+    {
+        Input::resetIdIndex();
+
+        $input = new Text();
+        $datalist = $input->createDatalist([
+            'One' => 'One',
+            'Two' => 'Two',
+        ]);
+
+        $this->assertSame($datalist->id, $input->list);
+        $this->assertSame(
+            '<datalist id="id-datalist-1"><option value="One">One</option><option value="Two">Two</option></datalist>',
+            (string) $datalist
         );
     }
 }

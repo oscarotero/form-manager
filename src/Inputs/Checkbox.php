@@ -10,7 +10,7 @@ use FormManager\InputInterface;
  */
 class Checkbox extends Input
 {
-    protected $format = '{{ input }} {{ label }}';
+    protected $template = '{{ input }} {{ label }}';
     protected $validators = [
         'required' => 'required',
     ];

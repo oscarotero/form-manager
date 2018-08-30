@@ -4,9 +4,11 @@ declare(strict_types = 1);
 namespace FormManager\Inputs;
 
 use FormManager\Node;
+use FormManager\Datalist;
 use FormManager\InputInterface;
 use FormManager\ValidatorFactory;
 use FormManager\ValidationError;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * Class representing a generic form input
@@ -16,7 +18,7 @@ abstract class Input extends Node implements InputInterface
     private static $idIndex = 0;
 
     protected $validators = [];
-    protected $format = '{{ label }} {{ input }}';
+    protected $template = '{{ label }} {{ input }}';
     protected $labels = [];
     protected $error;
     protected $errorMessages = [];
@@ -65,7 +67,7 @@ abstract class Input extends Node implements InputInterface
     public function __toString()
     {
         if ($this->label) {
-            return strtr($this->format, [
+            return strtr($this->template, [
                 '{{ label }}' => (string) $this->label,
                 '{{ input }}' => parent::__toString()
             ]);
@@ -80,12 +82,25 @@ abstract class Input extends Node implements InputInterface
         $label->innerHTML = $text;
 
         if (!$this->getAttribute('id')) {
-            $this->setAttribute('id', 'id-input-'.(++self::$idIndex));
+            $this->setAttribute('id', self::generateId('id-input'));
         }
 
         $label->setAttribute('for', $this->getAttribute('id'));
 
         return $this->labels[] = $label;
+    }
+
+    public function createDatalist(array $options, array $attributes = []): Node
+    {
+        $datalist = new Datalist($options, $attributes);
+
+        if (!$datalist->getAttribute('id')) {
+            $datalist->setAttribute('id', self::generateId('id-datalist'));
+        }
+
+        $this->setAttribute('list', $datalist->getAttribute('id'));
+
+        return $datalist;
     }
 
     public function getConstraints(): array
@@ -107,6 +122,13 @@ abstract class Input extends Node implements InputInterface
         }
 
         return $validators;
+    }
+
+    public function addConstraint(Constraint $constraint): self
+    {
+        $this->validators[] = $constraint;
+
+        return $this;
     }
 
     public function isValid(): bool
@@ -173,10 +195,15 @@ abstract class Input extends Node implements InputInterface
         return $this;
     }
 
-    public function setFormat(string $format): self
+    public function setTemplate(string $template): self
     {
-        $this->format = strtr($format, ['{{ format }}' => $this->format]);
+        $this->template = strtr($template, ['{{ template }}' => $this->template]);
 
         return $this;
+    }
+
+    private static function generateId(string $prefix): string
+    {
+        return sprintf('%s-%s', $prefix, ++self::$idIndex);
     }
 }

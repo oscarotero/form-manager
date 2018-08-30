@@ -8,7 +8,7 @@ namespace FormManager\Inputs;
  */
 class Hidden extends Input
 {
-    protected $format = '{{ input }}';
+    protected $template = '{{ input }}';
 
     public function __construct($value = null, iterable $attributes = [])
     {

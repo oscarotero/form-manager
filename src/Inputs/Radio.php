@@ -14,7 +14,7 @@ class Radio extends Input
         'required' => 'required',
     ];
     
-    protected $format = '{{ input }} {{ label }}';
+    protected $template = '{{ input }} {{ label }}';
 
     public function __construct(string $label = null, iterable $attributes = [])
     {
