@@ -21,7 +21,7 @@ class ValidationError implements IteratorAggregate
     {
         $constraints = ValidatorFactory::createConstraints($input);
 
-        if (!$constraints) {
+        if (empty($constraints)) {
             return null;
         }
 
@@ -35,7 +35,7 @@ class ValidationError implements IteratorAggregate
         return null;
     }
 
-    public function __construct(ConstraintViolationList $violations)
+    public function __construct(ConstraintViolationListInterface $violations)
     {
         $this->violations = $violations;
     }

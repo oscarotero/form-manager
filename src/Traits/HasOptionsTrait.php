@@ -38,7 +38,7 @@ trait HasOptionsTrait
         $this->appendChild($optgroup);
     }
 
-    private function addOption($value, string $label = null, NodeInterface $parent = null)
+    private function addOption($value, string $label = null, Node $parent = null)
     {
         $option = new Node('option', compact('value'));
         $option->innerHTML = $label ?: (string) $value;

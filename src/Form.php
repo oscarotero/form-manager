@@ -99,7 +99,7 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
             ));
         }
 
-        return $this->setValue($request->getQueryParams());
+        return $this->setValue($serverRequest->getQueryParams());
     }
 
     public function loadFromArray(array $get, array $post = [], array $files = []): self

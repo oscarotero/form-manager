@@ -154,13 +154,15 @@ abstract class ValidatorFactory
     public static function length(Input $input): Constraint
     {
         $options = [];
+        $minlength = $input->getAttribute('minlength');
+        $maxlength = $input->getAttribute('maxlength');
 
-        if ($input->minlength) {
-            $options += self::options($input, 'minlength', ['min' => $input->minlength], 'minMessage');
+        if (!empty($minlength)) {
+            $options += self::options($input, 'minlength', ['min' => $minlength], 'minMessage');
         }
 
-        if ($input->maxlength) {
-            $options += self::options($input, 'maxlength', ['max' => $input->maxlength], 'maxMessage');
+        if (!empty($maxlength)) {
+            $options += self::options($input, 'maxlength', ['max' => $maxlength], 'maxMessage');
         }
 
         return new Constraints\Length($options);
@@ -169,27 +171,27 @@ abstract class ValidatorFactory
     public static function max(Input $input): Constraint
     {
         return new Constraints\LessThanOrEqual(
-            self::options($input, 'max', ['value' => $input->max])
+            self::options($input, 'max', ['value' => $input->getAttribute('max')])
         );
     }
 
     public static function min(Input $input): Constraint
     {
         return new Constraints\GreaterThanOrEqual(
-            self::options($input, 'min', ['value' => $input->min])
+            self::options($input, 'min', ['value' => $input->getAttribute('min')])
         );
     }
 
     public static function step(Input $input): Constraint
     {
         return new Constraints\Callback(
-            [new Validators\Step(self::options($input, 'step', ['step' => $input->step])), '__invoke']
+            [new Validators\Step(self::options($input, 'step', ['step' => $input->getAttribute('step')])), '__invoke']
         );
     }
 
     public static function pattern(Input $input): Constraint
     {
-        $pattern = sprintf('/^%s$/u', str_replace('/', '\\/', $input->pattern));
+        $pattern = sprintf('/^%s$/u', str_replace('/', '\\/', $input->getAttribute('pattern')));
 
         return new Constraints\Regex(
             self::options($input, 'pattern', ['pattern' => $pattern])
@@ -199,7 +201,7 @@ abstract class ValidatorFactory
     public static function accept(Input $input): Constraint
     {
         return new Constraints\Callback(
-            [new Validators\AcceptFile(self::options($input, 'accept', ['accept' => $input->accept])), '__invoke']
+            [new Validators\AcceptFile(self::options($input, 'accept', ['accept' => $input->getAttribute('accept')])), '__invoke']
         );
     }
 }
