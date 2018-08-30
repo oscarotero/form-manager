@@ -29,6 +29,8 @@ class Checkbox extends Input
 
     public function setValue($value): InputInterface
     {
+        $this->error = null;
+
         if (
             ((string) $this->getAttribute('value') === (string) $value) ||
             filter_var($value, FILTER_VALIDATE_BOOLEAN)

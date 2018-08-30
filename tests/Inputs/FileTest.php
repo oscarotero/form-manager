@@ -67,4 +67,60 @@ class FileTest extends TestCase
             (string) $input
         );
     }
+
+    public function errorProvider()
+    {
+        $file = dirname(__DIR__).'/image.jpg';
+        $size = filesize($file);
+
+        $psr7_file = new UploadedFile($file, $size, 0, 'image.jpg', 'image/jpeg');
+
+        return [
+            [
+                null,
+                'This value should not be blank.'
+            ],
+            [
+                null,
+                'This is required!',
+                ['required' => 'This is required!']
+            ],
+            [
+                'foo',
+                'This value is not a valid file.',
+            ],
+            [
+                'foo',
+                'Not valid file',
+                ['file' => 'Not valid file']
+            ],
+            [
+                $psr7_file,
+                'This file type is not valid.',
+            ],
+            [
+                $psr7_file,
+                'Only png files are supported',
+                ['accept' => 'Only png files are supported']
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new File(null, [
+            'required' => true,
+            'accept' => 'image/png',
+        ]);
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }

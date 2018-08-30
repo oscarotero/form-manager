@@ -50,4 +50,66 @@ class TextTest extends TestCase
             (string) $input
         );
     }
+
+    public function errorProvider()
+    {
+        return [
+            [
+                null,
+                'This value should not be blank.'
+            ],
+            [
+                null,
+                'This is required!',
+                ['required' => 'This is required!']
+            ],
+            [
+                'foobar',
+                'This value is too short. It should have 15 characters or more.'
+            ],
+            [
+                'foobar',
+                'This value should have at least 15 characters',
+                ['minlength' => 'This value should have at least {{ limit }} characters']
+            ],
+            [
+                'fooooooooooooooooobar',
+                'This value is too long. It should have 20 characters or less.'
+            ],
+            [
+                'fooooooooooooooooobar',
+                'This value cannot have more than 20 characters',
+                ['maxlength' => 'This value cannot have more than {{ limit }} characters']
+            ],
+            [
+                'fooooooooooobar',
+                'This value is not valid.',
+            ],
+            [
+                'fooooooooooobar',
+                'The value must end with "baz"',
+                ['pattern' => 'The value must end with "baz"']
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new Text(null, [
+            'required' => true,
+            'minlength' => 15,
+            'maxlength' => 20,
+            'pattern' => '.*baz',
+        ]);
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }

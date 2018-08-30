@@ -32,4 +32,24 @@ class RangeTest extends NumberTest
             (string) $input
         );
     }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new Range(null, [
+            'required' => true,
+            'min' => 1,
+            'max' => 10,
+            'step' => 5,
+        ]);
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }

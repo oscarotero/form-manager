@@ -46,4 +46,65 @@ class TimeTest extends TestCase
             (string) $input
         );
     }
+
+    public function errorProvider()
+    {
+        return [
+            [
+                null,
+                'This value should not be blank.'
+            ],
+            [
+                null,
+                'This is required!',
+                ['required' => 'This is required!']
+            ],
+            [
+                'foo',
+                'This value is not a valid time.',
+            ],
+            [
+                'foo',
+                'Not valid time',
+                ['time' => 'Not valid time']
+            ],
+            [
+                '11:00',
+                'This value should be greater than or equal to "12:00".'
+            ],
+            [
+                '11:00',
+                'This value should be at least "12:00"',
+                ['min' => 'This value should be at least {{ compared_value }}']
+            ],
+            [
+                '15:00',
+                'This value should be less than or equal to "14:59".'
+            ],
+            [
+                '15:00',
+                'This value cannot be greater than "14:59"',
+                ['max' => 'This value cannot be greater than {{ compared_value }}']
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new Time(null, [
+            'required' => true,
+            'min' => '12:00',
+            'max' => '14:59',
+        ]);
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }

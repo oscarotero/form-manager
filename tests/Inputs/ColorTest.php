@@ -47,4 +47,45 @@ class ColorTest extends TestCase
             (string) $input
         );
     }
+
+    public function errorProvider()
+    {
+        return [
+            [
+                null,
+                'This value should not be blank.'
+            ],
+            [
+                null,
+                'This is required!',
+                ['required' => 'This is required!']
+            ],
+            [
+                'foo',
+                'This value is not a valid color.',
+            ],
+            [
+                'foo',
+                'Not valid color',
+                ['color' => 'Not valid color']
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new Color(null, [
+            'required' => true,
+        ]);
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }

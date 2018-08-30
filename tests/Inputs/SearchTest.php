@@ -32,4 +32,24 @@ class SearchTest extends TextTest
             (string) $input
         );
     }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new Search(null, [
+            'required' => true,
+            'minlength' => 15,
+            'maxlength' => 20,
+            'pattern' => '.*baz',
+        ]);
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }

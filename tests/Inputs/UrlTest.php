@@ -52,18 +52,70 @@ class UrlTest extends TestCase
     public function errorProvider()
     {
         return [
-            [null, 'This value should not be blank.']
+            [
+                null,
+                'This value should not be blank.'
+            ],
+            [
+                null,
+                'This is required!',
+                ['required' => 'This is required!']
+            ],
+            [
+                'foo',
+                'This value is not a valid URL.',
+            ],
+            [
+                'foo',
+                'Not valid url',
+                ['url' => 'Not valid url']
+            ],
+            [
+                'http://a.co',
+                'This value is too short. It should have 15 characters or more.'
+            ],
+            [
+                'http://a.co',
+                'This value should have at least 15 characters',
+                ['minlength' => 'This value should have at least {{ limit }} characters']
+            ],
+            [
+                'http://aaaaaaaaaaa.com',
+                'This value is too long. It should have 20 characters or less.'
+            ],
+            [
+                'http://aaaaaaaaaaa.com',
+                'This value cannot have more than 20 characters',
+                ['maxlength' => 'This value cannot have more than {{ limit }} characters']
+            ],
+            [
+                'http://aaaaaaa.com',
+                'This value is not valid.',
+            ],
+            [
+                'http://aaaaaaa.com',
+                'The value must be a .gal domain',
+                ['pattern' => 'The value must be a .gal domain']
+            ],
         ];
     }
 
     /**
      * @dataProvider errorProvider
      */
-    public function testErrors($value, string $message)
+    public function testErrors($value, string $message, array $errorMessages = [])
     {
-        $input = new Url(null, ['required' => true]);
+        $input = new Url(null, [
+            'required' => true,
+            'minlength' => 15,
+            'maxlength' => 20,
+            'pattern' => '.*\.gal',
+        ]);
 
-        $error = $input->setValue($value)->getError();
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
 
         $this->assertSame($message, (string) $error);
     }

@@ -19,6 +19,7 @@ abstract class Input extends Node implements InputInterface
     protected $format = '{{ label }} {{ input }}';
     protected $labels = [];
     protected $error;
+    protected $errorMessages = [];
 
     public $label;
 
@@ -117,17 +118,26 @@ abstract class Input extends Node implements InputInterface
         return $this->error === false;
     }
 
+    public function setErrorMessages(array $messages): self
+    {
+        $this->errorMessages = $messages;
+
+        return $this;
+    }
+
+    public function getErrorMessages(): array
+    {
+        return $this->errorMessages;
+    }
+
     public function getError(): ?ValidationError
     {
-        if ($this->isValid()) {
-            return null;
-        }
-
-        return $this->error;
+        return $this->isValid() ? null : $this->error;
     }
 
     public function setValue($value): InputInterface
     {
+        $this->error = null;
         $this->setAttribute('value', $value);
 
         return $this;

@@ -7,12 +7,17 @@ use Psr\Http\Message\UploadedFileInterface;
 
 class AcceptFile
 {
+    private $options = [];
     private $extensions = [];
     private $mimes = [];
 
-    public function __construct(string $accept)
+    public function __construct(array $options = [])
     {
-        $accept = array_map('trim', explode(',', strtolower($accept)));
+        $this->options = $options + [
+            'message' => 'This file type is not valid.'
+        ];
+
+        $accept = array_map('trim', explode(',', strtolower($this->options['accept'])));
 
         $this->extensions = array_filter($accept, function ($value) {
             return !strstr($value, '/');
@@ -36,7 +41,7 @@ class AcceptFile
             return;
         }
 
-        $context->buildViolation('Accept error')->addViolation();
+        $context->buildViolation($this->options['message'])->addViolation();
     }
 
     private function validateArray(array $file): bool

@@ -7,6 +7,8 @@ use Psr\Http\Message\UploadedFileInterface;
 
 class UploadedFile
 {
+    private $options;
+
     const ERROR_TYPES = [
         1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
         2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
@@ -15,6 +17,13 @@ class UploadedFile
         7 => 'Failed to write file to disk',
         8 => 'A PHP extension stopped the file upload',
     ];
+
+    public function __construct(array $options = [])
+    {
+        $this->options = $options + [
+            'message' => 'This value is not a valid file.'
+        ];
+    }
 
     public function __invoke($input, $context)
     {
@@ -25,7 +34,7 @@ class UploadedFile
             return;
         }
 
-        $context->buildViolation('File not valid')->addViolation();
+        $context->buildViolation($this->options['message'])->addViolation();
     }
 
     private function validateArray(array $file): bool

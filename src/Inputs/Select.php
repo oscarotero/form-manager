@@ -45,6 +45,8 @@ class Select extends Input
 
     public function setValue($value): InputInterface
     {
+        $this->error = null;
+        
         if ($this->allowNewValues) {
             $this->addNewValues((array) $value);
         }

@@ -11,9 +11,9 @@ class Range extends Input
     protected $validators = [
         'number',
         'required' => 'required',
-        'step' => 'step',
         'max' => 'max',
         'min' => 'min',
+        'step' => 'step',
     ];
     
     public function __construct(string $label = null, iterable $attributes = [])

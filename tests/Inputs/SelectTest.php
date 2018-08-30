@@ -111,4 +111,42 @@ class SelectTest extends TestCase
             (string) $input
         );
     }
+
+    public function errorProvider()
+    {
+        return [
+            [
+                null,
+                'This value should not be blank.'
+            ],
+            [
+                null,
+                'This is required!',
+                ['required' => 'This is required!']
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new Select(
+            [
+                1 => 'One'
+            ],
+            null,
+            [
+                'required' => true,
+            ]
+        );
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }

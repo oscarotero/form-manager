@@ -48,4 +48,56 @@ class TextareaTest extends TestCase
             (string) $input
         );
     }
+
+    public function errorProvider()
+    {
+        return [
+            [
+                null,
+                'This value should not be blank.'
+            ],
+            [
+                null,
+                'This is required!',
+                ['required' => 'This is required!']
+            ],
+            [
+                'foobar',
+                'This value is too short. It should have 15 characters or more.'
+            ],
+            [
+                'foobar',
+                'This value should have at least 15 characters',
+                ['minlength' => 'This value should have at least {{ limit }} characters']
+            ],
+            [
+                'fooooooooooooooooobar',
+                'This value is too long. It should have 20 characters or less.'
+            ],
+            [
+                'fooooooooooooooooobar',
+                'This value cannot have more than 20 characters',
+                ['maxlength' => 'This value cannot have more than {{ limit }} characters']
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider errorProvider
+     */
+    public function testErrors($value, string $message, array $errorMessages = [])
+    {
+        $input = new Textarea(null, [
+            'required' => true,
+            'minlength' => 15,
+            'maxlength' => 20
+        ]);
+
+        $error = $input
+            ->setValue($value)
+            ->setErrorMessages($errorMessages)
+            ->getError();
+
+        $this->assertSame($message, (string) $error);
+    }
 }
