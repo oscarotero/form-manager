@@ -3,17 +3,18 @@
 [![Build Status](https://travis-ci.org/oscarotero/form-manager.png?branch=master)](https://travis-ci.org/oscarotero/form-manager)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/form-manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarotero/form-manager/?branch=master)
 
-Created by Oscar Otero <http://oscarotero.com> <oom@oscarotero.com>
+> ### Note: this is the documentation of FormManager 4.x 
+> For v3.x version [Click here](https://github.com/oscarotero/form-manager/tree/v3)
 
 ## Installation:
 
-This package needs `PHP>=7.1` and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
+This package requires `PHP>=7.1` and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
 
 ```
 composer require form-manager/form-manager
 ```
 
-## Namespace import
+## Create a field
 
 FormManager is namespaced, but you only need to import a single class into your context:
 
@@ -21,9 +22,7 @@ FormManager is namespaced, but you only need to import a single class into your 
 use FormManager\Factory as F;
 ```
 
-### Create a field
-
-All HTML5 field types are supported.
+Use the imported factory to create all form elements:
 
 ```php
 //Create an input type="text" element
@@ -35,11 +34,9 @@ $name = F::text('Please, introduce your name');
 //Or with extra attributes
 $name = F::text('Please, introduce your name', ['class' => 'name-field']);
 
-//Add or remove 1 attribute
-$name->setAttribute('id', 'username');
+//Add or remove attributes
+$name->setAttribute('title', 'This is the name input');
 $name->removeAttribute('class');
-
-//Add several attributes
 $name->setAttributes([
     'required',
     'readonly',
@@ -47,11 +44,18 @@ $name->setAttributes([
     'maxlength' => 50
 ]);
 
-//Set a value
+//Set the value
 $name->setValue('MyName');
+
+//Use magic properties to get/set/remove attributes
+$name->class = 'name-field';
+$name->required = false;
+unset($name->readonly);
 ```
 
 ### List of all available inputs:
+
+All HTML5 field types are supported:
 
 * `F::checkbox($label, $attributes)`
 * `F::color($label, $attributes)`
@@ -79,7 +83,7 @@ $name->setValue('MyName');
 
 ## Validation
 
-This library uses internally [symfony/validation](https://symfony.com/doc/current/validation.html) to perform basic html5 validations and error reporting.
+This library uses internally [symfony/validation](https://symfony.com/doc/current/validation.html) to perform basic html5 validations and error reporting. HTML5 validation attributes like `required`, `maxlength`, `minlength`, `pattern`, etc are supported, in addition to intrinsic validations assigned to each input like email, url, date, etc.
 
 ```php
 $email = F::email();
@@ -128,7 +132,7 @@ echo $name;
 <label for="id-input-1">What is your name?</label> <input id="id-input-1" type="text" name="name">
 ```
 
-Set a custom template:
+Set a custom template using `{{ label }}` and `{{ input }}` placeholders:
 
 ```php
 $name->setTemplate('{{ label }} <div class="input-content">{{ input }}</div>');
@@ -138,13 +142,23 @@ echo $name;
 <label for="id-input-1">What is your name?</label> <div class="input-content"><input id="id-input-1" type="text" name="name"></div>
 ```
 
+If you want to wrap the previous template in a custom html, use the `{{ template }}` placeholder:
+
+```php
+$name->setTemplate('<fieldset>{{ template }}</fieldset>');
+echo $name;
+```
+```html
+<fieldset><label for="id-input-1">What is your name?</label> <div class="input-content"><input id="id-input-1" type="text" name="name"></div></fieldset>
+```
+
 ## Grouping fields
 
-You can group the fields to follow a specific data structure:
+Group the fields to follow a specific data structure:
 
 ### Group
 
-Groups allow to group a set of inputs under an specific name:
+Groups allow to place a set of inputs under an specific name:
 
 ```php
 $group = F::group([
@@ -284,7 +298,7 @@ $loginForm->setAttributes([
 $loginForm->loadFromGlobals();
 
 //Load data passing the arrays
-$loginForm->loadFromArray($_GET, $_POST, $_FILES);
+$loginForm->loadFromArrays($_GET, $_POST, $_FILES);
 
 //Or load from PSR-7 server request
 $loginForm->loadFromServerRequest($serverRequest);

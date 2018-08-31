@@ -102,7 +102,7 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         return $this->setValue($serverRequest->getQueryParams());
     }
 
-    public function loadFromArray(array $get, array $post = [], array $files = []): self
+    public function loadFromArrays(array $get, array $post = [], array $files = []): self
     {
         $method = $this->getAttribute('method') ?: 'get';
 
@@ -115,6 +115,6 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
 
     public function loadFromGlobals(): self
     {
-        return $this->loadFromArray($_GET, $_POST, $_FILES);
+        return $this->loadFromArrays($_GET, $_POST, $_FILES);
     }
 }

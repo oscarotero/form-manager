@@ -38,7 +38,19 @@ class NodeTest extends TestCase
         $this->assertCount(1, $node->getChildNodes());
         $this->assertSame($node, $node->getChildNodes()[0]->getParentNode());
 
-        $node = new Node('div', ['class' => 'foo']);
+        $node = new Node('div', ['class' => 'foo', 'editable']);
+        $this->assertEquals('<div class="foo" editable></div>', (string) $node);
+        $this->assertTrue(isset($node->editable));
+        $this->assertFalse(empty($node->editable));
+
+        unset($node->editable);
+        $this->assertEquals('<div class="foo"></div>', (string) $node);
+        $this->assertFalse(isset($node->editable));
+        $this->assertTrue(empty($node->editable));
+
+        $node->setAttribute('editable', false);
+        $this->assertFalse(isset($node->editable));
+        $this->assertTrue(empty($node->editable));
         $this->assertEquals('<div class="foo"></div>', (string) $node);
     }
 

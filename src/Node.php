@@ -71,6 +71,16 @@ class Node implements NodeInterface
         $this->setAttribute($name, $value);
     }
 
+    public function __unset(string $name)
+    {
+        $this->removeAttribute($name);
+    }
+
+    public function __isset(string $name)
+    {
+        return self::isset($this->getAttribute($name));
+    }
+
     public function getNodeName(): string
     {
         return $this->nodeName;
@@ -192,7 +202,7 @@ class Node implements NodeInterface
      */
     private static function getHtmlAttribute(string $name, $value): string
     {
-        if (($value === null) || ($value === false)) {
+        if (!self::isset($value)) {
             return '';
         }
 
@@ -219,5 +229,10 @@ class Node implements NodeInterface
         }
 
         return sprintf('%s="%s"', $name, static::escape((string) $value));
+    }
+
+    private static function isset($value): bool
+    {
+        return ($value !== null) && ($value !== false);
     }
 }
