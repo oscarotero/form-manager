@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.org/oscarotero/form-manager.png?branch=master)](https://travis-ci.org/oscarotero/form-manager)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/form-manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarotero/form-manager/?branch=master)
 
-> ### Note: this is the documentation of FormManager 4.x 
-> For v3.x version [Click here](https://github.com/oscarotero/form-manager/tree/v3)
+> ### Note: this is the documentation of FormManager 6.x 
+> For v5.x version [Click here](https://github.com/oscarotero/form-manager/tree/v3)
 
 ## Installation:
 
