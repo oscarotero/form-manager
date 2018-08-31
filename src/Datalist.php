@@ -17,6 +17,6 @@ class Datalist extends Node
     {
         parent::__construct('datalist', $attributes);
 
-        $this->addOptions($options);
+        $this->setOptions($options);
     }
 }

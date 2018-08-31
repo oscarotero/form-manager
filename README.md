@@ -41,8 +41,9 @@ $name->removeAttribute('class');
 
 //Add several attributes
 $name->setAttributes([
+    'required',
+    'readonly',
     'tabindex' => 2,
-    'required' => true,
     'maxlength' => 50
 ]);
 
@@ -65,7 +66,7 @@ $name->setValue('MyName');
 * `F::radio($label, $attributes)`
 * `F::range($label, $attributes)`
 * `F::search($label, $attributes)`
-* `F::select($options, $label, $attributes)`
+* `F::select($label, $options, $attributes)`
 * `F::submit($label, $attributes)`
 * `F::tel($label, $attributes)`
 * `F::text($label, $attributes)`

@@ -37,7 +37,7 @@ class SelectTest extends TestCase
      */
     public function testInput(bool $isValid, $value, array $attributes, $expectedValue)
     {
-        $input = new Select([
+        $input = new Select(null, [
             '' => 'Empty',
             1 => 'One',
             '2' => 'Two',
@@ -54,7 +54,7 @@ class SelectTest extends TestCase
 
     public function testOptgroups()
     {
-        $select = new Select([
+        $select = new Select(null, [
             'Section 1' => [
                 1 => 'One',
                 2 => 'Two',
@@ -76,7 +76,7 @@ class SelectTest extends TestCase
 
     public function testAllowNewValues()
     {
-        $select = new Select([]);
+        $select = new Select();
         $select->allowNewValues();
         $select->multiple = true;
         $select->value = ['one', 2];
@@ -100,7 +100,7 @@ class SelectTest extends TestCase
 
     public function testRender()
     {
-        $input = new Select(['foo' => 'bar']);
+        $input = (new Select())->setOptions(['foo' => 'bar']);
         $this->assertSame('<select><option value="foo">bar</option></select>', (string) $input);
 
         $input->id = 'foo';
@@ -133,10 +133,10 @@ class SelectTest extends TestCase
     public function testErrors($value, string $message, array $errorMessages = [])
     {
         $input = new Select(
+            null,
             [
                 1 => 'One'
             ],
-            null,
             [
                 'required' => true,
             ]

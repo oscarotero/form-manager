@@ -110,6 +110,11 @@ class Node implements NodeInterface
     public function setAttributes(iterable $attributes): self
     {
         foreach ($attributes as $name => $value) {
+            if (is_int($name)) {
+                $this->setAttribute($value, true);
+                continue;
+            }
+
             $this->setAttribute($name, $value);
         }
 

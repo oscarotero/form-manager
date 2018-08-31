@@ -23,6 +23,8 @@ class InputTest extends TestCase
         $input->name = 'foo';
         $input->value = 'Bar';
         $this->assertEquals('<input type="text" name="foo" value="Bar">', (string) $input);
+        $input->setAttributes(['required', 'readonly', 'id' => 'foo']);
+        $this->assertEquals('<input type="text" name="foo" value="Bar" required readonly id="foo">', (string) $input);
     }
 
     public function typesProvider(): array
@@ -103,7 +105,7 @@ class InputTest extends TestCase
 
     public function testSelect()
     {
-        $select = new Select([
+        $select = new Select(null, [
             1 => 'One',
             2 => 'Two',
         ]);

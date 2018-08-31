@@ -19,11 +19,13 @@ class Select extends Input
 
     private $allowNewValues = false;
 
-    public function __construct(iterable $options, string $label = null, iterable $attributes = [])
+    public function __construct(string $label = null, iterable $options = [], iterable $attributes = [])
     {
         parent::__construct('select', $attributes);
 
-        $this->addOptions($options);
+        if ($options) {
+            $this->setOptions($options);
+        }
 
         if (isset($label)) {
             $this->setLabel($label);

@@ -11,7 +11,10 @@ This library was rewritten and a lot of breaking changes were included.
 
 ### Changed
 
-- Support for `php >= 7.1`
+- Minimum requirement is `php >= 7.1`
 - Use of `symfony/validator` to validate the values
 - Removed a lot of logic and html features. Focus only in inputs and data structure.
 - Better error messages and easy to customize and translate
+- Replaced jQuery inspired API for a DOM inspired API. For example, use `$input->getAttribute()` and `$input->setAttribute()` instead `$input->attr()`.
+- Removed magic methods to add attributes in benefit of magic properties. For example, instead `$input->required()`, use `$input->required = true` or `$input->setAttribute('required', true)`.
+- Added the ability of define label and properties in the input constructors. For example: `F::text('Write your name', ['required'])` instead `F::text()->label('Write your name')->required()`

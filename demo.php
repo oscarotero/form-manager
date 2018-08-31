@@ -36,11 +36,12 @@ $form = f::form([
     'dinner' => f::time('Dinner hour'),
     'site' => f::url('Your web page'),
     'week' => f::week('The best week of your life'),
-    'language' => f::select([
-        'php' => 'PHP',
-        'js' => 'Javascript',
-        'python' => 'Python',
-    ], 'Favorite programing language'),
+    'language' => f::select('Favorite programing language')
+        ->setOptions([
+            'php' => 'PHP',
+            'js' => 'Javascript',
+            'python' => 'Python',
+        ]),
     'images' => f::groupCollection(
         f::group([
             'file' => f::file('Image file'),

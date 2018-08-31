@@ -15,8 +15,10 @@ trait HasOptionsTrait
 
     abstract public function appendChild(NodeInterface $node): Node;
 
-    private function addOptions(iterable $options)
+    public function setOptions(iterable $options): self
     {
+        $this->options = [];
+
         foreach ($options as $value => $text) {
             if (is_array($text)) {
                 $this->addOptgroup($value, $text);
@@ -25,6 +27,8 @@ trait HasOptionsTrait
 
             $this->addOption($value, (string) $text);
         }
+
+        return $this;
     }
 
     private function addOptgroup($label, iterable $options)
