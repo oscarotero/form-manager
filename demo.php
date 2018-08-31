@@ -7,6 +7,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 use FormManager\Factory as f;
+use FormManager\Input;
 
 $form = f::form([
     'accept' => f::checkbox('I am a human'),
@@ -14,7 +15,7 @@ $form = f::form([
     'birthday' => f::date('My birthday'),
     'now' => f::datetimeLocal('Current time'),
     'email' => f::email('My email'),
-    'file' => f::file('Avatar'),
+    'file' => f::file('Avatar', ['accept' => '.png']),
     'id' => f::hidden(23),
     'holidays' => f::month('Best holiday month'),
     'siblings' => f::number('Sisters and brothers'),
@@ -45,33 +46,64 @@ $form = f::form([
             'file' => f::file('Image file'),
             'caption' => f::text('Caption'),
         ])
-    ),
+    )->setValue([[]]),
     'bio' => f::multipleGroupCollection([
         'text' => f::group([
+            'type' => f::hidden('text'),
             'title' => f::text('Title'),
             'text' => f::textarea('Body'),
         ]),
         'image' => f::group([
+            'type' => f::hidden('image'),
             'file' => f::file('Image'),
             'caption' => f::text('Caption'),
         ]),
         'button' => f::group([
+            'type' => f::hidden('image'),
             'text' => f::text('Text'),
             'url' => f::url('Url'),
         ]),
-    ]),
+    ])->setValue([['type' => 'text']]),
     '' => f::submit('Send')
 ]);
 
-$form->loadFromGlobals();
+$form->method = 'POST';
+
+if ($_POST) {
+    $form->loadFromGlobals();
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Demo</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+        }
+        pre {
+            background: #eee;
+            color: #999;
+            padding: 1em;
+            overflow: auto;
+        }
+    </style>
 </head>
 <body>
-    <?= $form ?>
+    <?= $form->getOpeningTag() ?>
+    <?php foreach ($form as $field): ?>
+    <div>
+        <?= $field ?>
+        <?php
+        if ($field instanceof Input) {
+            $field->getError();
+        }
+        ?>
+        <pre><?= htmlspecialchars((string) $field) ?></pre>
+    </div>
+    <?php endforeach ?>
+    <?= $form->getClosingTag() ?>
 </body>
 </html>

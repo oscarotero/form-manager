@@ -74,7 +74,7 @@ class RadioGroup implements InputInterface, ArrayAccess, IteratorAggregate
     public function setValue($value): InputInterface
     {
         foreach ($this->radios as $radio) {
-            $radio->checked = (string) $radio->value === (string) $value;
+            $radio->setValue($value);
         }
 
         return $this;
