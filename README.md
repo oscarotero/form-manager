@@ -188,6 +188,19 @@ $radios = F::radioGroup([
 $radios->setValue('blue');
 ```
 
+### Submit group
+
+Special case to group several submit buttons under the same name but different values:
+
+```php
+$buttons = F::submitGroup([
+    'save' => 'Save the row',
+    'duplicate' => 'Save as new row',
+]);
+
+$buttons->setName('action');
+```
+
 ### Group collection
 
 Is a collection of values using the same group:

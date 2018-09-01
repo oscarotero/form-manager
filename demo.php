@@ -65,7 +65,10 @@ $form = f::form([
             'url' => f::url('Url'),
         ]),
     ])->setValue([['type' => 'text']]),
-    '' => f::submit('Send')
+    'action' => f::submitGroup([
+        'save' => 'Save',
+        'duplicate' => 'Duplicate'
+    ])
 ]);
 
 $form->method = 'POST';
@@ -106,5 +109,7 @@ if ($_POST) {
     </div>
     <?php endforeach ?>
     <?= $form->getClosingTag() ?>
+
+    <pre><?php print_r($form->getValue()) ?></pre>
 </body>
 </html>
