@@ -13,4 +13,6 @@ interface InputInterface extends NodeInterface
     public function setValue($value): InputInterface;
 
     public function getValue();
+
+    public function isValid(): bool;
 }

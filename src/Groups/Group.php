@@ -86,6 +86,17 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
         return $value;
     }
 
+    public function isValid(): bool
+    {
+        foreach ($this->inputs as $input) {
+            if (!$input->isValid()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function setName(string $name): InputInterface
     {
         $this->name = $name;

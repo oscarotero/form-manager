@@ -30,8 +30,8 @@ class GroupCollection implements InputInterface, ArrayAccess, Countable, Iterato
     {
         $this->group = clone $this->group;
 
-        foreach ($this->values as $k => $group) {
-            $this->values[$k] = (clone $group)->setParentNode($this);
+        foreach ($this->values as $index => $input) {
+            $this->values[$index] = (clone $input)->setParentNode($this);
         }
     }
 
@@ -90,13 +90,24 @@ class GroupCollection implements InputInterface, ArrayAccess, Countable, Iterato
         return $value;
     }
 
+    public function isValid(): bool
+    {
+        foreach ($this->values as $group) {
+            if (!$group->isValid()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function setName(string $name): InputInterface
     {
         $this->name = $name;
         $this->group->setName("{$name}[]");
 
-        foreach ($this->values as $index => $group) {
-            $group->setName("{$name}[{$index}]");
+        foreach ($this->values as $index => $input) {
+            $input->setName("{$name}[{$index}]");
         }
 
         return $this;

@@ -107,6 +107,17 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
         return $value;
     }
 
+    public function isValid(): bool
+    {
+        foreach ($this->values as $input) {
+            if (!$input->isValid()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function setName(string $name): InputInterface
     {
         $this->name = $name;
