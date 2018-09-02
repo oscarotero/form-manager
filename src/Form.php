@@ -88,6 +88,17 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         return $value;
     }
 
+    public function isValid(): bool
+    {
+        foreach ($this->inputs as $input) {
+            if (!$input->isValid()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function loadFromServerRequest(ServerRequestInterface $serverRequest): self
     {
         $method = $this->getAttribute('method') ?: 'get';
