@@ -12,6 +12,7 @@ class NumberTest extends TestCase
     {
         return [
             [true, null, []],
+            [true, '', []],
             [false, '', ['required' => true]],
             [false, 'aaa', []],
             [true, 0, ['required' => true]],

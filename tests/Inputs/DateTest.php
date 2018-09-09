@@ -12,6 +12,7 @@ class DateTest extends TestCase
     {
         return [
             [true, null, []],
+            [true, '', []],
             [false, '', ['required' => true]],
             [true, '2018-06-21', []],
             [false, '2018-66-21', []],

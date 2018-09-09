@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace FormManager\Inputs;
 
+use FormManager\InputInterface;
+
 /**
  * Class representing a HTML input[type="number"] element
  */
@@ -24,5 +26,14 @@ class Number extends Input
         if (isset($label)) {
             $this->setLabel($label);
         }
+    }
+
+    public function setValue($value): InputInterface
+    {
+        if ($value === '') {
+            $value = null;
+        }
+
+        return parent::setValue($value);
     }
 }

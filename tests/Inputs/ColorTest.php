@@ -12,6 +12,7 @@ class ColorTest extends TestCase
     {
         return [
             [true, null, []],
+            [true, '', []],
             [true, '#333333', []],
             [false, '#333', []],
             [false, '333333', []],

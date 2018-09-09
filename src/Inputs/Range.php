@@ -6,23 +6,11 @@ namespace FormManager\Inputs;
 /**
  * Class representing a HTML input[type="range"] element
  */
-class Range extends Input
+class Range extends Number
 {
-    protected $validators = [
-        'number',
-        'required' => 'required',
-        'max' => 'max',
-        'min' => 'min',
-        'step' => 'step',
-    ];
-    
     public function __construct(string $label = null, iterable $attributes = [])
     {
-        parent::__construct('input', $attributes);
+        parent::__construct($label, $attributes);
         $this->setAttribute('type', 'range');
-
-        if (isset($label)) {
-            $this->setLabel($label);
-        }
     }
 }
