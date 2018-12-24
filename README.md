@@ -4,7 +4,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/form-manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarotero/form-manager/?branch=master)
 
 > ### Note: this is the documentation of FormManager 6.x 
-> For v5.x version [Click here](https://github.com/oscarotero/form-manager/tree/v3)
+> For v5.x version [Click here](https://github.com/oscarotero/form-manager/tree/v5)
 
 ## Installation:
 

@@ -9,8 +9,10 @@ use InvalidArgumentException;
  */
 class Factory
 {
-    const INPUTS_NAMESPACE = 'FormManager\\Inputs\\';
-    const GROUPS_NAMESPACE = 'FormManager\\Groups\\';
+    const NAMESPACES = [
+        'FormManager\\Inputs\\',
+        'FormManager\\Groups\\',
+    ];
 
     /**
      * Factory to create input nodes
@@ -21,16 +23,12 @@ class Factory
             return new Form(...$arguments);
         }
 
-        $class = self::INPUTS_NAMESPACE.ucfirst($name);
+        foreach (self::NAMESPACES as $namespace) {
+            $class = $namespace.ucfirst($name);
 
-        if (class_exists($class)) {
-            return new $class(...$arguments);
-        }
-
-        $class = self::GROUPS_NAMESPACE.ucfirst($name);
-
-        if (class_exists($class)) {
-            return new $class(...$arguments);
+            if (class_exists($class)) {
+                return new $class(...$arguments);
+            }
         }
 
         throw new InvalidArgumentException(
