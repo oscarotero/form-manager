@@ -211,24 +211,25 @@ class Node implements NodeInterface
         }
 
         if (is_array($value)) {
-            switch ($name) {
-                case 'class':
-                case 'aria-labelledby':
-                    $value = implode(' ', $value);
-                    break;
-
-                case 'accept':
-                case 'accept-charset':
-                    $value = implode(', ', $value);
-                    break;
-
-                default:
-                    $value = json_encode($value);
-                    break;
-            }
+            $value = self::convertAttributeArrayValue($name, $value);
         }
 
         return sprintf('%s="%s"', $name, static::escape((string) $value));
+    }
+
+    private static function convertAttributeArrayValue(string $name, array $value): string
+    {
+        //data-* attributes
+        if (stripos($name, 'data-') === 0) {
+            return json_encode($value);
+        }
+
+        //accept or accept-charset attributes
+        if (stripos($name, 'accept') === 0) {
+            return implode(', ', $value);
+        }
+
+        return implode(' ', $value);
     }
 
     private static function isset($value): bool
