@@ -1,7 +1,7 @@
 # FormManager
 
-[![Build Status](https://travis-ci.org/oscarotero/form-manager.png?branch=master)](https://travis-ci.org/oscarotero/form-manager)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/form-manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarotero/form-manager/?branch=master)
+[![Build Status](https://travis-ci.org/oscarotero/form-manager.png?branch=v5)](https://travis-ci.org/oscarotero/form-manager)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarotero/form-manager/badges/quality-score.png?b=v5)](https://scrutinizer-ci.com/g/oscarotero/form-manager/?branch=v5)
 
 Created by Oscar Otero <http://oscarotero.com> <oom@oscarotero.com>
 
