@@ -82,7 +82,7 @@ class GroupTest extends TestCase
         $group = new Group();
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The element "name" must implement');
+        $this->expectExceptionMessage('The element "name" must implement FormManager\InputInterface');
 
         $group['name'] = new \StdClass();
     }
