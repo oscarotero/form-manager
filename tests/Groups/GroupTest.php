@@ -76,4 +76,14 @@ class GroupTest extends TestCase
 
         $this->assertEquals(['name', 'surname', 'address'], $keys);
     }
+
+    public function testInvalidInput()
+    {
+        $group = new Group();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The element "name" must implement');
+
+        $group['name'] = new \StdClass();
+    }
 }
