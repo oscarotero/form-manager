@@ -8,6 +8,7 @@ use FormManager\InputInterface;
 use ArrayAccess;
 use IteratorAggregate;
 use ArrayIterator;
+use InvalidArgumentException;
 
 /**
  * Class representing a group of inputs of any type
