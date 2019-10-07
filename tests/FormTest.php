@@ -78,14 +78,14 @@ class FormTest extends TestCase
 
     public function testIsValidFalse()
     {
-
         $input1 = $this->createMock(Text::class);
         $input2 = $this->createMock(Text::class);
 
         $input1->expects($this->any())->method('isValid')->willReturn(false);
         $input2->expects($this->any())->method('isValid')->willReturn(true);
 
-        $form = new Form([
+        $form = new Form(
+            [
             'text' => $input1,
             'test' => $input2]
         );
@@ -95,14 +95,14 @@ class FormTest extends TestCase
 
     public function testIsValidTrue()
     {
-
         $input1 = $this->createMock(Text::class);
         $input2 = $this->createMock(Text::class);
 
         $input1->expects($this->any())->method('isValid')->willReturn(true);
         $input2->expects($this->any())->method('isValid')->willReturn(true);
 
-        $form = new Form([
+        $form = new Form(
+            [
                 'text' => $input1,
                 'test' => $input2]
         );
@@ -156,6 +156,6 @@ class FormTest extends TestCase
     public function testLoadFromArray()
     {
         $this->form->setAttribute('method', 'post');
-        $this->assertInstanceOf(Form::class, $this->form->loadFromArrays([],[],[]));
+        $this->assertInstanceOf(Form::class, $this->form->loadFromArrays([], [], []));
     }
 }
