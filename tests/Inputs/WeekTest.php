@@ -25,6 +25,7 @@ class WeekTest extends TestCase
 
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
      */
     public function testInput(bool $isValid, $value, array $attributes)
     {
@@ -54,12 +55,12 @@ class WeekTest extends TestCase
         return [
             [
                 null,
-                'This value should not be blank.'
+                'This value should not be blank.',
             ],
             [
                 null,
                 'This is required!',
-                ['required' => 'This is required!']
+                ['required' => 'This is required!'],
             ],
             [
                 'foo',
@@ -68,31 +69,32 @@ class WeekTest extends TestCase
             [
                 'foo',
                 'Not valid week',
-                ['week' => 'Not valid week']
+                ['week' => 'Not valid week'],
             ],
             [
                 '1999-W01',
-                'This value should be greater than or equal to "2000-W01".'
+                'This value should be greater than or equal to "2000-W01".',
             ],
             [
                 '1999-W01',
                 'This value should be at least "2000-W01"',
-                ['min' => 'This value should be at least {{ compared_value }}']
+                ['min' => 'This value should be at least {{ compared_value }}'],
             ],
             [
                 '2000-W11',
-                'This value should be less than or equal to "2000-W09".'
+                'This value should be less than or equal to "2000-W09".',
             ],
             [
                 '2000-W11',
                 'This value cannot be greater than "2000-W09"',
-                ['max' => 'This value cannot be greater than {{ compared_value }}']
+                ['max' => 'This value cannot be greater than {{ compared_value }}'],
             ],
         ];
     }
 
     /**
      * @dataProvider errorProvider
+     * @param mixed $value
      */
     public function testErrors($value, string $message, array $errorMessages = [])
     {

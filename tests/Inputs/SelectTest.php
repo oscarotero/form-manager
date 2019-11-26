@@ -34,6 +34,8 @@ class SelectTest extends TestCase
 
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
+     * @param mixed $expectedValue
      */
     public function testInput(bool $isValid, $value, array $attributes, $expectedValue)
     {
@@ -117,25 +119,26 @@ class SelectTest extends TestCase
         return [
             [
                 null,
-                'This value should not be blank.'
+                'This value should not be blank.',
             ],
             [
                 null,
                 'This is required!',
-                ['required' => 'This is required!']
+                ['required' => 'This is required!'],
             ],
         ];
     }
 
     /**
      * @dataProvider errorProvider
+     * @param mixed $value
      */
     public function testErrors($value, string $message, array $errorMessages = [])
     {
         $input = new Select(
             null,
             [
-                1 => 'One'
+                1 => 'One',
             ],
             [
                 'required' => true,

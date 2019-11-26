@@ -9,6 +9,7 @@ class PasswordTest extends TextTest
 {
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
      */
     public function testInput(bool $isValid, $value, array $attributes)
     {
@@ -35,6 +36,7 @@ class PasswordTest extends TextTest
 
     /**
      * @dataProvider errorProvider
+     * @param mixed $value
      */
     public function testErrors($value, string $message, array $errorMessages = [])
     {

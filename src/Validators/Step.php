@@ -10,7 +10,7 @@ class Step
     public function __construct(array $options = [])
     {
         $this->options = $options + [
-            'message' => 'This number is not valid.'
+            'message' => 'This number is not valid.',
         ];
     }
 

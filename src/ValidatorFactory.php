@@ -4,10 +4,9 @@ declare(strict_types = 1);
 namespace FormManager;
 
 use FormManager\Inputs\Input;
-use FormManager\Validators;
-use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Constraint;
 use RuntimeException;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints;
 
 /**
  * Helper to build the validators
@@ -58,7 +57,7 @@ abstract class ValidatorFactory
         return new Constraints\Type(
             self::options($input, 'number', [
                 'type' => 'numeric',
-                'message' => 'This value is not a valid number.'
+                'message' => 'This value is not a valid number.',
             ])
         );
     }
@@ -82,7 +81,7 @@ abstract class ValidatorFactory
         return new Constraints\Regex(
             self::options($input, 'color', [
                 'pattern' => '/^#[a-f0-9]{6}$/',
-                'message' => 'This value is not a valid color.'
+                'message' => 'This value is not a valid color.',
             ])
         );
     }
@@ -106,7 +105,7 @@ abstract class ValidatorFactory
         return new Constraints\DateTime(
             self::options($input, 'month', [
                 'format' => 'Y-m',
-                'message' => 'This value is not a valid month.'
+                'message' => 'This value is not a valid month.',
             ])
         );
     }
@@ -116,7 +115,7 @@ abstract class ValidatorFactory
         return new Constraints\Regex(
             self::options($input, 'week', [
                 'pattern' => '/^[\d]{4}-W(0[1-9]|[1-4][0-9]|5[1-3])$/',
-                'message' => 'This value is not a valid week.'
+                'message' => 'This value is not a valid week.',
             ])
         );
     }
@@ -132,7 +131,7 @@ abstract class ValidatorFactory
         return new Constraints\Datetime(
             self::options($input, 'time', [
                 'format' => 'H:i',
-                'message' => 'This value is not a valid time.'
+                'message' => 'This value is not a valid time.',
             ])
         );
     }

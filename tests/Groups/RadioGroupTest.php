@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace FormManager\Tests\Groups;
 
+use FormManager\Groups\RadioGroup;
 use FormManager\Inputs\Input;
 use FormManager\Inputs\Radio;
-use FormManager\Groups\RadioGroup;
 use PHPUnit\Framework\TestCase;
 
 class RadioGroupTest extends TestCase

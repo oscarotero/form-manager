@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace FormManager\Tests\Inputs;
 
 use FormManager\Inputs\File;
-use PHPUnit\Framework\TestCase;
 use Nyholm\Psr7\UploadedFile;
+use PHPUnit\Framework\TestCase;
 
 class FileTest extends TestCase
 {
@@ -44,6 +44,7 @@ class FileTest extends TestCase
 
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
      */
     public function testInput(bool $isValid, $value, array $attributes = [])
     {
@@ -78,12 +79,12 @@ class FileTest extends TestCase
         return [
             [
                 null,
-                'This value should not be blank.'
+                'This value should not be blank.',
             ],
             [
                 null,
                 'This is required!',
-                ['required' => 'This is required!']
+                ['required' => 'This is required!'],
             ],
             [
                 'foo',
@@ -92,7 +93,7 @@ class FileTest extends TestCase
             [
                 'foo',
                 'Not valid file',
-                ['file' => 'Not valid file']
+                ['file' => 'Not valid file'],
             ],
             [
                 $psr7_file,
@@ -101,13 +102,14 @@ class FileTest extends TestCase
             [
                 $psr7_file,
                 'Only png files are supported',
-                ['accept' => 'Only png files are supported']
+                ['accept' => 'Only png files are supported'],
             ],
         ];
     }
 
     /**
      * @dataProvider errorProvider
+     * @param mixed $value
      */
     public function testErrors($value, string $message, array $errorMessages = [])
     {

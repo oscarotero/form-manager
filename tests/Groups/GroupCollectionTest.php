@@ -3,10 +3,9 @@ declare(strict_types = 1);
 
 namespace FormManager\Tests\Groups;
 
-use FormManager\Inputs\Input;
-use FormManager\Inputs\Text;
 use FormManager\Groups\Group;
 use FormManager\Groups\GroupCollection;
+use FormManager\Inputs\Text;
 use PHPUnit\Framework\TestCase;
 
 class GroupCollectionTest extends TestCase
@@ -27,7 +26,7 @@ class GroupCollectionTest extends TestCase
             [
                 'name' => 'Foo',
                 'surname' => 'Bar',
-            ]
+            ],
         ]);
 
         $this->assertCount(1, $input);

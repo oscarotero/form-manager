@@ -67,8 +67,8 @@ $form = f::form([
     ])->setValue([['type' => 'text']]),
     'action' => f::submitGroup([
         'save' => 'Save',
-        'duplicate' => 'Duplicate'
-    ])
+        'duplicate' => 'Duplicate',
+    ]),
 ]);
 
 $form->method = 'POST';
@@ -96,20 +96,20 @@ if ($_POST) {
     </style>
 </head>
 <body>
-    <?= $form->getOpeningTag() ?>
+    <?= $form->getOpeningTag(); ?>
     <?php foreach ($form as $field): ?>
     <div>
-        <?= $field ?>
+        <?= $field; ?>
         <?php
         if ($field instanceof Input) {
             $field->getError();
         }
         ?>
-        <pre><?= htmlspecialchars((string) $field) ?></pre>
+        <pre><?= htmlspecialchars((string) $field); ?></pre>
     </div>
-    <?php endforeach ?>
-    <?= $form->getClosingTag() ?>
+    <?php endforeach; ?>
+    <?= $form->getClosingTag(); ?>
 
-    <pre><?php print_r($form->getValue()) ?></pre>
+    <pre><?php print_r($form->getValue()); ?></pre>
 </body>
 </html>

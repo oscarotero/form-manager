@@ -22,7 +22,7 @@ class Node implements NodeInterface
         'param',
         'source',
         'track',
-        'wbr'
+        'wbr',
     ];
 
     private $nodeName;
@@ -145,6 +145,7 @@ class Node implements NodeInterface
 
     /**
      * Set an arbitrary variable.
+     * @param null|mixed $value
      */
     public function setVariable(string $name, $value = null): self
     {
@@ -199,6 +200,7 @@ class Node implements NodeInterface
 
     /**
      * Creates a html attribute.
+     * @param mixed $value
      */
     private static function getHtmlAttribute(string $name, $value): string
     {

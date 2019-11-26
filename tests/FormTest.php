@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace FormManager\Tests;
 
-use FormManager\Form;
-use FormManager\Inputs\Text;
-use FormManager\Groups\Group;
-use PHPUnit\Framework\TestCase;
-use InvalidArgumentException;
 use ArrayIterator;
+use FormManager\Form;
+use FormManager\Groups\Group;
+use FormManager\Inputs\Text;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
 class FormTest extends TestCase
@@ -17,7 +17,7 @@ class FormTest extends TestCase
 
     public function setUp()
     {
-        $this->form =  new Form([
+        $this->form = new Form([
             'text' => (new Text('Name'))->setValue('Oscar'),
             'address' => new Group([
                 'line1' => (new Text('Line 1'))->setValue('Santaia de Gorgullos'),
@@ -68,7 +68,7 @@ class FormTest extends TestCase
             'address' => [
                 'line1' => 'test',
                 'line2' => 'test',
-            ]
+            ],
         ];
         $form = $this->form;
         $form->setValue($newValue);
@@ -87,7 +87,7 @@ class FormTest extends TestCase
         $form = new Form(
             [
             'text' => $input1,
-            'test' => $input2]
+            'test' => $input2, ]
         );
 
         $this->assertEquals(false, $form->isValid());
@@ -104,7 +104,7 @@ class FormTest extends TestCase
         $form = new Form(
             [
                 'text' => $input1,
-                'test' => $input2]
+                'test' => $input2, ]
         );
 
         $this->assertEquals(true, $form->isValid());
@@ -128,7 +128,6 @@ class FormTest extends TestCase
     {
         $this->assertInstanceOf(ArrayIterator::class, $this->form->getIterator());
     }
-
 
     public function testLoadFromServerRequestGET()
     {

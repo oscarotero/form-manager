@@ -25,6 +25,7 @@ class ColorTest extends TestCase
 
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
      */
     public function testInput(bool $isValid, $value, array $attributes)
     {
@@ -54,12 +55,12 @@ class ColorTest extends TestCase
         return [
             [
                 null,
-                'This value should not be blank.'
+                'This value should not be blank.',
             ],
             [
                 null,
                 'This is required!',
-                ['required' => 'This is required!']
+                ['required' => 'This is required!'],
             ],
             [
                 'foo',
@@ -68,13 +69,14 @@ class ColorTest extends TestCase
             [
                 'foo',
                 'Not valid color',
-                ['color' => 'Not valid color']
+                ['color' => 'Not valid color'],
             ],
         ];
     }
 
     /**
      * @dataProvider errorProvider
+     * @param mixed $value
      */
     public function testErrors($value, string $message, array $errorMessages = [])
     {

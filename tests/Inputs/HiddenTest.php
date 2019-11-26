@@ -19,6 +19,7 @@ class HiddenTest extends TestCase
 
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
      */
     public function testInput(bool $isValid, $value, array $attributes)
     {

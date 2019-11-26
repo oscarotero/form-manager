@@ -21,7 +21,7 @@ class UploadedFile
     public function __construct(array $options = [])
     {
         $this->options = $options + [
-            'message' => 'This value is not a valid file.'
+            'message' => 'This value is not a valid file.',
         ];
     }
 

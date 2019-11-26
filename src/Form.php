@@ -3,11 +3,10 @@ declare(strict_types = 1);
 
 namespace FormManager;
 
-use FormManager\InputInterface;
 use ArrayAccess;
-use IteratorAggregate;
 use ArrayIterator;
 use InvalidArgumentException;
+use IteratorAggregate;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**

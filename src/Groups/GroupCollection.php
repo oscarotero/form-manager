@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace FormManager\Groups;
 
-use FormManager\NodeInterface;
-use FormManager\InputInterface;
 use ArrayAccess;
-use IteratorAggregate;
 use ArrayIterator;
 use Countable;
+use FormManager\InputInterface;
+use FormManager\NodeInterface;
+use IteratorAggregate;
 use RuntimeException;
 
 /**

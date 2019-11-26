@@ -13,7 +13,7 @@ class Radio extends Input
     protected $validators = [
         'required' => 'required',
     ];
-    
+
     protected $template = '{{ input }} {{ label }}';
 
     public function __construct(string $label = null, iterable $attributes = [])
@@ -29,7 +29,7 @@ class Radio extends Input
     public function setValue($value): InputInterface
     {
         $this->error = null;
-        
+
         if (!empty($value) && (string) $this->getAttribute('value') === (string) $value) {
             return $this->setAttribute('checked', true);
         }

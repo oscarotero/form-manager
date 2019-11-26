@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace FormManager\Groups;
 
-use FormManager\NodeInterface;
-use FormManager\InputInterface;
 use ArrayAccess;
-use IteratorAggregate;
 use ArrayIterator;
+use FormManager\InputInterface;
+use FormManager\NodeInterface;
 use InvalidArgumentException;
+use IteratorAggregate;
 
 /**
  * Class representing a group of inputs of any type

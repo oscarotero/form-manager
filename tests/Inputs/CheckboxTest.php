@@ -28,6 +28,7 @@ class CheckboxTest extends TestCase
 
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
      */
     public function testInput(bool $isValid, $value, array $attributes, ?bool $expectedValue)
     {
@@ -64,18 +65,19 @@ class CheckboxTest extends TestCase
         return [
             [
                 null,
-                'This value should not be blank.'
+                'This value should not be blank.',
             ],
             [
                 null,
                 'This is required!',
-                ['required' => 'This is required!']
+                ['required' => 'This is required!'],
             ],
         ];
     }
 
     /**
      * @dataProvider errorProvider
+     * @param mixed $value
      */
     public function testErrors($value, string $message, array $errorMessages = [])
     {

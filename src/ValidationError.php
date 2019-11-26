@@ -4,11 +4,9 @@ declare(strict_types = 1);
 namespace FormManager;
 
 use FormManager\Inputs\Input;
-use FormManager\ValidatorFactory;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 use IteratorAggregate;
-use ArrayIterator;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validation;
 
 /**
  * Class representing a validation error

@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace FormManager\Tests\Groups;
 
+use FormManager\Groups\Group;
 use FormManager\Inputs\Input;
 use FormManager\Inputs\Text;
-use FormManager\Groups\Group;
 use PHPUnit\Framework\TestCase;
 
 class GroupTest extends TestCase

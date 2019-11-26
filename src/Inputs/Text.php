@@ -11,7 +11,7 @@ class Text extends Input
     protected $validators = [
         'required' => 'required',
         'length' => ['minlength', 'maxlength'],
-        'pattern' => 'pattern'
+        'pattern' => 'pattern',
     ];
 
     public function __construct(string $label = null, iterable $attributes = [])

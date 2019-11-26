@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace FormManager;
 
-use FormManager\Node;
 use FormManager\Traits\HasOptionsTrait;
 
 /**

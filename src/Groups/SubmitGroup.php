@@ -3,12 +3,8 @@ declare(strict_types = 1);
 
 namespace FormManager\Groups;
 
-use FormManager\NodeInterface;
 use FormManager\InputInterface;
 use FormManager\Inputs\Submit;
-use ArrayAccess;
-use IteratorAggregate;
-use ArrayIterator;
 
 /**
  * Class representing a group of button[type="submit"] elements
@@ -24,7 +20,7 @@ class SubmitGroup extends InputGroup
                 $submit = new Submit($submit);
             }
         }
-        
+
         parent::__construct($submits);
     }
 

@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace FormManager\Tests\Inputs;
 
-use FormManager\Inputs\Text;
 use FormManager\Inputs\Input;
-use FormManager\Inputs\Textarea;
 use FormManager\Inputs\Select;
 use FormManager\Inputs\Submit;
-use Symfony\Component\Validator\Constraints;
+use FormManager\Inputs\Text;
+use FormManager\Inputs\Textarea;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Constraints;
 
 class InputTest extends TestCase
 {

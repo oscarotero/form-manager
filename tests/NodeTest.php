@@ -70,6 +70,7 @@ class NodeTest extends TestCase
 
     /**
      * @dataProvider attributesProvider
+     * @param mixed $value
      */
     public function testAttributes(string $name, $value, string $code)
     {

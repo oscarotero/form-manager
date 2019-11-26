@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace FormManager\Groups;
 
-use FormManager\NodeInterface;
-use FormManager\InputInterface;
 use ArrayAccess;
-use IteratorAggregate;
 use ArrayIterator;
 use Countable;
-use RuntimeException;
+use FormManager\InputInterface;
+use FormManager\NodeInterface;
 use InvalidArgumentException;
+use IteratorAggregate;
+use RuntimeException;
 
 /**
  * Class representing a collection of multiple groups

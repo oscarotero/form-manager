@@ -31,6 +31,7 @@ class NumberTest extends TestCase
 
     /**
      * @dataProvider valuesProvider
+     * @param mixed $value
      */
     public function testInput(bool $isValid, $value, array $attributes)
     {
@@ -60,12 +61,12 @@ class NumberTest extends TestCase
         return [
             [
                 null,
-                'This value should not be blank.'
+                'This value should not be blank.',
             ],
             [
                 null,
                 'This is required!',
-                ['required' => 'This is required!']
+                ['required' => 'This is required!'],
             ],
             [
                 'foo',
@@ -74,40 +75,41 @@ class NumberTest extends TestCase
             [
                 'foo',
                 'Not valid number',
-                ['number' => 'Not valid number']
+                ['number' => 'Not valid number'],
             ],
             [
                 0,
-                'This value should be greater than or equal to 1.'
+                'This value should be greater than or equal to 1.',
             ],
             [
                 0,
                 'This value should be at least 1',
-                ['min' => 'This value should be at least {{ compared_value }}']
+                ['min' => 'This value should be at least {{ compared_value }}'],
             ],
             [
                 11,
-                'This value should be less than or equal to 10.'
+                'This value should be less than or equal to 10.',
             ],
             [
                 11,
                 'This value cannot be greater than 10',
-                ['max' => 'This value cannot be greater than {{ compared_value }}']
+                ['max' => 'This value cannot be greater than {{ compared_value }}'],
             ],
             [
                 8,
-                'This number is not valid.'
+                'This number is not valid.',
             ],
             [
                 8,
                 'Not valid number',
-                ['step' => 'Not valid number']
+                ['step' => 'Not valid number'],
             ],
         ];
     }
 
     /**
      * @dataProvider errorProvider
+     * @param mixed $value
      */
     public function testErrors($value, string $message, array $errorMessages = [])
     {

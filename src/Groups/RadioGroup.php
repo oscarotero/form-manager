@@ -3,12 +3,7 @@ declare(strict_types = 1);
 
 namespace FormManager\Groups;
 
-use FormManager\NodeInterface;
-use FormManager\InputInterface;
 use FormManager\Inputs\Radio;
-use ArrayAccess;
-use IteratorAggregate;
-use ArrayIterator;
 
 /**
  * Class representing a group of input[type="radio"] elements
@@ -22,7 +17,7 @@ class RadioGroup extends InputGroup
                 $radio = new Radio($radio);
             }
         }
-        
+
         parent::__construct($radios);
     }
 

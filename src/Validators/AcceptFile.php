@@ -14,7 +14,7 @@ class AcceptFile
     public function __construct(array $options = [])
     {
         $this->options = $options + [
-            'message' => 'This file type is not valid.'
+            'message' => 'This file type is not valid.',
         ];
 
         $accept = array_map('trim', explode(',', strtolower($this->options['accept'])));

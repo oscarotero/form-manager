@@ -3,10 +3,9 @@ declare(strict_types = 1);
 
 namespace FormManager\Inputs;
 
-use FormManager\Node;
 use FormManager\Datalist;
 use FormManager\InputInterface;
-use FormManager\ValidatorFactory;
+use FormManager\Node;
 use FormManager\ValidationError;
 use Symfony\Component\Validator\Constraint;
 
@@ -69,7 +68,7 @@ abstract class Input extends Node implements InputInterface
         if ($this->label) {
             return strtr($this->template, [
                 '{{ label }}' => (string) $this->label,
-                '{{ input }}' => parent::__toString()
+                '{{ input }}' => parent::__toString(),
             ]);
         }
 

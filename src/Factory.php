@@ -38,6 +38,7 @@ class Factory
 
     /**
      * Factory to create input nodes
+     * @param mixed $arguments
      */
     public static function __callStatic(string $name, $arguments)
     {

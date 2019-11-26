@@ -3,11 +3,10 @@ declare(strict_types = 1);
 
 namespace FormManager\Tests\Groups;
 
-use FormManager\Inputs\Input;
-use FormManager\Inputs\Text;
-use FormManager\Inputs\Hidden;
 use FormManager\Groups\Group;
 use FormManager\Groups\MultipleGroupCollection;
+use FormManager\Inputs\Hidden;
+use FormManager\Inputs\Text;
 use PHPUnit\Framework\TestCase;
 
 class MultipleGroupCollectionTest extends TestCase
@@ -37,7 +36,7 @@ class MultipleGroupCollectionTest extends TestCase
                 'type' => 'group1',
                 'name' => 'Foo',
                 'surname' => 'Bar',
-            ]
+            ],
         ]);
 
         $this->assertCount(1, $input);
@@ -63,7 +62,7 @@ class MultipleGroupCollectionTest extends TestCase
         $input = new MultipleGroupCollection([
             'group' => new Group([
                 'name' => new Text(),
-            ])
+            ]),
         ]);
 
         $input->setValue([
@@ -84,7 +83,7 @@ class MultipleGroupCollectionTest extends TestCase
         $input = new MultipleGroupCollection([
             'group' => new Group([
                 'name' => new Text(),
-            ])
+            ]),
         ]);
 
         $input->setValue([
