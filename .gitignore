@@ -1,4 +1,4 @@
 examples/vendor
 vendor
 composer.lock
-.php_cs.cache
+*.cache

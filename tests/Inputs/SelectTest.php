@@ -56,7 +56,7 @@ class SelectTest extends TestCase
 
     public function testOptgroups()
     {
-        $select = new Select(null, [
+        $select = (new Select())->setOptgroups([
             'Section 1' => [
                 1 => 'One',
                 2 => 'Two',

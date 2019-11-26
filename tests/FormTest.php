@@ -15,7 +15,7 @@ class FormTest extends TestCase
 {
     protected $form;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->form = new Form([
             'text' => (new Text('Name'))->setValue('Oscar'),

@@ -15,44 +15,52 @@ trait HasOptionsTrait
 
     abstract public function appendChild(NodeInterface $node): Node;
 
-    public function setOptions(iterable $options): self
+    public function setOptgroups(iterable $optgroups): self
     {
         $this->options = [];
 
-        foreach ($options as $value => $text) {
-            if (is_array($text)) {
-                $this->addOptgroup($value, $text);
-                continue;
-            }
-
-            $this->addOption($value, (string) $text);
+        foreach ($optgroups as $label => $options) {
+            $this->appendChild($this->createOptgroup($label, $options));
         }
 
         return $this;
     }
 
-    private function addOptgroup($label, iterable $options)
+    public function setOptions(iterable $options): self
+    {
+        $this->options = [];
+
+        foreach ($options as $value => $label) {
+            $attributes = [];
+
+            if (is_array($label)) {
+                $attributes = $label;
+                $label = $attributes['label'] ?? $value;
+                unset($attributes['label']);
+            }
+
+            $this->appendChild($this->createOption($value, (string) $label)->setAttributes($attributes));
+        }
+
+        return $this;
+    }
+
+    private function createOptgroup($label, iterable $options): Node
     {
         $optgroup = new Node('optgroup', compact('label'));
 
         foreach ($options as $value => $label) {
-            $this->addOption($value, $label, $optgroup);
+            $optgroup->appendChild($this->createOption($value, $label));
         }
 
-        $this->appendChild($optgroup);
+        return $optgroup;
     }
 
-    private function addOption($value, string $label = null, Node $parent = null)
+    private function createOption($value, string $label = null): Node
     {
         $option = new Node('option', compact('value'));
         $option->innerHTML = $label ?: (string) $value;
 
-        $this->options[] = $option;
-
-        if ($parent) {
-            $parent->appendChild($option);
-        } else {
-            $this->appendChild($option);
-        }
+        return $this->options[] = $option;
     }
 }

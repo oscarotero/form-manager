@@ -2,8 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [Unreleased]
+### Added
+- Elements that can contain options (`Select`, `Datalist`) have the `setOptgroups` method to define the optgroups.
+- The method `setOptions` can assing other attributes to the options:
+  ```php
+  $select->setOptions([
+    'value1' => [
+        'label' => 'Value label',
+        'disabled' => true
+    ]
+  ])
+  ```
+
+### Removed
+- Ability to add optgroups with the `setOptions` method of select and datalist elements. Use `setOptgroups` instead
 
 ## [6.0.1] - 2019-03-24
 ### Fixed
@@ -27,4 +43,5 @@ This library was rewritten and a lot of breaking changes were included.
 
 [#79]: https://github.com/oscarotero/form-manager/issues/79
 
+[Unreleased]: https://github.com/oscarotero/form-manager/compare/v6.0.1...HEAD
 [6.0.1]: https://github.com/oscarotero/form-manager/compare/v6.0.0...v6.0.1

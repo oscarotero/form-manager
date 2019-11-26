@@ -99,7 +99,7 @@ class Select extends Input
                 }
             }
 
-            $this->addOption($value);
+            $this->appendChild($this->createOption($value));
         }
     }
 }
