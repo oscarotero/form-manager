@@ -28,7 +28,7 @@ class Number extends Input
         }
     }
 
-    public function setValue($value): InputInterface
+    public function setValue($value)
     {
         if ($value === '') {
             $value = null;

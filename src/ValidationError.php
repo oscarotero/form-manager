@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Validation;
 /**
  * Class representing a validation error
  */
-class ValidationError implements IteratorAggregate
+final class ValidationError implements IteratorAggregate
 {
     private $violations;
 

@@ -156,7 +156,7 @@ abstract class Input extends Node implements InputInterface
         return $this->isValid() ? null : $this->error;
     }
 
-    public function setValue($value): InputInterface
+    public function setValue($value)
     {
         $this->error = null;
         $this->setAttribute('value', $value);
@@ -169,7 +169,7 @@ abstract class Input extends Node implements InputInterface
         return $this->getAttribute('value');
     }
 
-    public function setName(string $name): InputInterface
+    public function setName(string $name)
     {
         $this->setAttribute('name', $name);
 
@@ -183,7 +183,7 @@ abstract class Input extends Node implements InputInterface
         return $this;
     }
 
-    public function setId(string $id): InputInterface
+    public function setId(string $id)
     {
         $this->setAttribute('id', $id);
 
