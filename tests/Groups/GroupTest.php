@@ -86,4 +86,23 @@ class GroupTest extends TestCase
 
         $group['name'] = new \StdClass();
     }
+
+    public function testGroupWithNumericalNames()
+    {
+        $input = new Group([
+            '1' => new Text(),
+            '2' => new Text(),
+        ]);
+
+        $this->assertInstanceOf(Text::class, $input[1]);
+        $this->assertInstanceOf(Text::class, $input[2]);
+
+        $this->assertSame('1', $input['1']->getAttribute('name'));
+        $this->assertSame('2', $input[2]->getAttribute('name'));
+
+        $input->setName('user');
+
+        $this->assertSame('user[1]', $input[1]->getAttribute('name'));
+        $this->assertSame('user[2]', $input[2]->getAttribute('name'));
+    }
 }

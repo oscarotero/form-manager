@@ -22,7 +22,7 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
     public function __construct(iterable $inputs = [])
     {
         foreach ($inputs as $name => $input) {
-            $this->offsetSet($name, $input);
+            $this->offsetSet((string) $name, $input);
         }
     }
 
