@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [6.1.0] - 2020-11-14
 ### Added
+- Some phpdoc annotations to help IDEs [#81]
 - Elements that can contain options (`Select`, `Datalist`) have the `setOptgroups` method to define the optgroups.
-- The method `setOptions` can assing other attributes to the options:
+- The method `setOptions` can assing other attributes to the options [#83]
   ```php
   $select->setOptions([
     'value1' => [
@@ -20,6 +21,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - Ability to add optgroups with the `setOptions` method of select and datalist elements. Use `setOptgroups` instead
+
+### Fixed
+- Validate step attribute with decimal values [#87]
 
 ## [6.0.1] - 2019-03-24
 ### Fixed
@@ -42,6 +46,9 @@ This library was rewritten and a lot of breaking changes were included.
 - Added the ability of define label and properties in the input constructors. For example: `F::text('Write your name', ['required'])` instead `F::text()->label('Write your name')->required()`
 
 [#79]: https://github.com/oscarotero/form-manager/issues/79
+[#81]: https://github.com/oscarotero/form-manager/issues/81
+[#83]: https://github.com/oscarotero/form-manager/issues/83
+[#87]: https://github.com/oscarotero/form-manager/issues/87
 
-[Unreleased]: https://github.com/oscarotero/form-manager/compare/v6.0.1...HEAD
+[6.1.0]: https://github.com/oscarotero/form-manager/compare/v6.0.1...v6.1.0
 [6.0.1]: https://github.com/oscarotero/form-manager/compare/v6.0.0...v6.0.1
