@@ -54,4 +54,16 @@ class RangeTest extends NumberTest
 
         $this->assertSame($message, (string) $error);
     }
+
+    public function testDecimalStep()
+    {
+        $input = new Range(null, [
+            'min' => 1,
+            'max' => 10,
+            'step' => 0.5,
+            'value' => 5
+        ]);
+
+        $this->assertTrue($input->isValid());
+    }
 }

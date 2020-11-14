@@ -23,7 +23,7 @@ class Step
             return;
         }
 
-        if ($input % $step) {
+        if (fmod($input, $step)) {
             $context->buildViolation($this->options['message'])->addViolation();
         }
     }
