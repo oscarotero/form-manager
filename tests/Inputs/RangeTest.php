@@ -61,7 +61,7 @@ class RangeTest extends NumberTest
             'min' => 1,
             'max' => 10,
             'step' => 0.5,
-            'value' => 5
+            'value' => 5,
         ]);
 
         $this->assertTrue($input->isValid());
