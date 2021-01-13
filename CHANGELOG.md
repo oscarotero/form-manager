@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.1] - 2021-01-13
+### Fixed
+- Inputs with `multiple` attribute needs to force an array by appending a `[]` to the name [#89]
+
 ## [6.1.0] - 2020-11-14
 ### Added
 - Some phpdoc annotations to help IDEs [#81]
@@ -20,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   ```
 
 ### Removed
-- Ability to add optgroups with the `setOptions` method of select and datalist elements. Use `setOptgroups` instead
+- BREAKING: Ability to add optgroups with the `setOptions` method of select and datalist elements. Use `setOptgroups` instead
 
 ### Fixed
 - Validate step attribute with decimal values [#87]
@@ -49,6 +53,8 @@ This library was rewritten and a lot of breaking changes were included.
 [#81]: https://github.com/oscarotero/form-manager/issues/81
 [#83]: https://github.com/oscarotero/form-manager/issues/83
 [#87]: https://github.com/oscarotero/form-manager/issues/87
+[#89]: https://github.com/oscarotero/form-manager/issues/89
 
+[6.1.1]: https://github.com/oscarotero/form-manager/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/oscarotero/form-manager/compare/v6.0.1...v6.1.0
 [6.0.1]: https://github.com/oscarotero/form-manager/compare/v6.0.0...v6.0.1
