@@ -171,6 +171,9 @@ abstract class Input extends Node implements InputInterface
 
     public function setName(string $name): InputInterface
     {
+        if ($this->getAttribute('multiple')) {
+            $name .= '[]';
+        }
         $this->setAttribute('name', $name);
 
         return $this;
