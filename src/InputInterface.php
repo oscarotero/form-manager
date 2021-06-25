@@ -5,12 +5,20 @@ namespace FormManager;
 
 /**
  * Interface representing an input element
+ *
+ * @template TInput of NodeInterface
  */
 interface InputInterface extends NodeInterface
 {
-    public function setName(string $name): InputInterface;
+    /**
+     * @return TInput
+     */
+    public function setName(string $name);
 
-    public function setValue($value): InputInterface;
+    /**
+     * @return TInput
+     */
+    public function setValue($value);
 
     public function getValue();
 

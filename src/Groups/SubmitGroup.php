@@ -27,7 +27,7 @@ class SubmitGroup extends InputGroup
     public function offsetSet($value, $submit)
     {
         if (!($submit instanceof Submit)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 sprintf('The element "%s" must be an instance of %s (%s)', $value, Submit::class, gettype($submit))
             );
         }
