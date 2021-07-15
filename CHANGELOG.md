@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [unreleased]
+### Added
+- Added support for PHP 8
+
 ## [6.1.1] - 2021-01-13
 ### Fixed
 - Inputs with `multiple` attribute needs to force an array by appending a `[]` to the name [#89]
