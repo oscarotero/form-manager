@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [6.1.2] - 2021-07-19
 ### Added
 - Added support for PHP 8
 
@@ -59,6 +59,7 @@ This library was rewritten and a lot of breaking changes were included.
 [#87]: https://github.com/oscarotero/form-manager/issues/87
 [#89]: https://github.com/oscarotero/form-manager/issues/89
 
+[6.1.2]: https://github.com/oscarotero/form-manager/compare/v6.1.1...v6.1.2
 [6.1.1]: https://github.com/oscarotero/form-manager/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/oscarotero/form-manager/compare/v6.0.1...v6.1.0
 [6.0.1]: https://github.com/oscarotero/form-manager/compare/v6.0.0...v6.0.1
