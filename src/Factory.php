@@ -10,6 +10,8 @@ use InvalidArgumentException;
  * @method static \FormManager\Groups\Group group(array $inputs)
  * @method static \FormManager\Groups\RadioGroup radioGroup(array $radios)
  * @method static \FormManager\Groups\SubmitGroup submitGroup(array $submits)
+ * @method static \FormManager\Groups\GroupCollection groupCollection(\FormManager\Groups\Group $group)
+ * @method static \FormManager\Groups\MultipleGroupCollection multipleGroupCollection(array $groups)
  * @method static \FormManager\Inputs\Checkbox checkbox(string $label, array $attributes)
  * @method static \FormManager\Inputs\Color color(string $label, array $attributes)
  * @method static \FormManager\Inputs\Date date(string $label, array $attributes)
