@@ -26,7 +26,7 @@ class Radio extends Input
         }
     }
 
-    public function setValue($value): InputInterface
+    public function setValue($value)
     {
         $this->error = null;
 
