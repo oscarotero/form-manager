@@ -8,7 +8,7 @@ namespace FormManager;
  */
 class Node implements NodeInterface
 {
-    const SELF_CLOSING_TAGS = [
+    public const SELF_CLOSING_TAGS = [
         'area',
         'base',
         'br',

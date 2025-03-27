@@ -2,3 +2,7 @@ examples/vendor
 vendor
 composer.lock
 *.cache
+/vendor/
+coverage
+.idea
+kit

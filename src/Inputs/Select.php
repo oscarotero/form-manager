@@ -49,6 +49,7 @@ class Select extends Input
 
         if ($this->getAttribute('multiple')) {
             $this->setMultipleValues((array) $value);
+
             return $this;
         }
 
