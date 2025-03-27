@@ -3,5 +3,4 @@
 .gitignore     export-ignore
 phpunit.xml    export-ignore
 .php-cs-fixer.php    export-ignore
-phpunit.xml          export-ignore
 demo.php       export-ignore
