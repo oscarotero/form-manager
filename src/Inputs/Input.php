@@ -42,11 +42,13 @@ abstract class Input extends Node implements InputInterface
     {
         if ($name === 'value') {
             $this->setValue($value);
+
             return;
         }
 
         if ($name === 'id') {
             $this->setId($value);
+
             return;
         }
 
