@@ -5,6 +5,7 @@ namespace FormManager;
 
 use ArrayAccess;
 use ArrayIterator;
+use FormManager\Inputs\Input;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Psr\Http\Message\ServerRequestInterface;
