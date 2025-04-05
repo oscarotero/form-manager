@@ -13,6 +13,13 @@ use Symfony\Component\Validator\Constraints;
  */
 abstract class ValidatorFactory
 {
+    private static $messages = [];
+
+    public static function setMessages(array $messages): void
+    {
+        self::$messages = $messages;
+    }
+
     public static function createConstraints(Input $input): array
     {
         $constraints = [];
@@ -44,12 +51,13 @@ abstract class ValidatorFactory
         $messageKey = 'message'
     ): array {
         $messages = $input->getErrorMessages();
+        $message = $messages[$messageType] ?? self::$messages[$messageType] ?? null;
 
-        if (empty($messages[$messageType])) {
+        if (null === $message) {
             return $defaultOptions;
         }
 
-        return [$messageKey => $messages[$messageType]] + $defaultOptions;
+        return [$messageKey => $message] + $defaultOptions;
     }
 
     public static function number(Input $input): Constraint

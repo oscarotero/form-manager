@@ -86,7 +86,20 @@ All HTML5 field types are supported:
 This library uses internally [symfony/validation](https://symfony.com/doc/current/validation.html) to perform basic html5 validations and error reporting. HTML5 validation attributes like `required`, `maxlength`, `minlength`, `pattern`, etc are supported, in addition to intrinsic validations assigned to each input like email, url, date, etc.
 
 ```php
+//Set defaut error messages
+F::setErrorMessages([
+    'required' => 'The field is required'
+    'maxlength' => 'The field is too long, it must have {{ limit }} characters or less',
+]);
+
 $email = F::email();
+
+//You can also customize/translate the error messages
+$email->setErrorMessages([
+    'email' => 'The email is not valid',
+    'required' => 'The email is required',
+    'maxlength' => 'The email is too long, it must have {{ limit }} characters or less',
+]);
 
 $email->setValue('invalid-email');
 
@@ -105,13 +118,6 @@ echo $error;
 foreach ($error as $err) {
     echo $err->getMessage();
 }
-
-//You can also customize/translate the error messages
-$email->setErrorMessages([
-    'email' => 'The email is not valid',
-    'required' => 'The email is required',
-    'maxlength' => 'The email is too long, it must have {{ limit }} characters or less',
-]);
 
 //And add more symfony validators
 $ip = F::text();
