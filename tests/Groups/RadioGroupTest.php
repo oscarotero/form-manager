@@ -79,4 +79,25 @@ class RadioGroupTest extends TestCase
 
         $this->assertEquals(['name', 'surname', 'address'], $keys);
     }
+
+    public function testRequired(): void
+    {
+        $group = new RadioGroup([
+            'male' => new Radio('Male', ['required' => true]),
+            'female' => 'Female',
+        ]);
+
+        $this->assertFalse($group->isValid());
+        $this->assertSame('This value should not be blank.', (string) $group->getError());
+
+        $group->setValue('invalid');
+        $this->assertFalse($group->isValid());
+        $this->assertSame('This value should not be blank.', (string) $group->getError());
+
+        $group->setValue('male');
+        $this->assertTrue($group->isValid());
+
+        $group->setValue('female');
+        $this->assertTrue($group->isValid());
+    }
 }

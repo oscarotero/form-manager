@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace FormManager\Inputs;
 
+use FormManager\Groups\RadioGroup;
 use FormManager\InputInterface;
 
 /**
@@ -32,6 +33,16 @@ class Radio extends Input
 
         if (!empty($value) && (string) $this->getAttribute('value') === (string) $value) {
             return $this->setAttribute('checked', true);
+        }
+
+        $parent = $this->getParentNode();
+
+        if ($parent instanceof RadioGroup) {
+            if (!empty($value) && isset($parent[(string) $value])) {
+                unset($this->validators['required']);
+            } else {
+                $this->validators['required'] = 'required';
+            }
         }
 
         return $this->removeAttribute('checked');
