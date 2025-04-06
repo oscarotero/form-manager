@@ -63,4 +63,13 @@ class Factory
             sprintf('Input %s not found', $name)
         );
     }
+
+    /**
+     * Set default error messages.
+     * @param array<string, string> $messages
+     */
+    public static function setErrorMessages(array $messages = []): void
+    {
+        ValidatorFactory::setMessages($messages);
+    }
 }
