@@ -7,6 +7,7 @@ use ArrayAccess;
 use ArrayIterator;
 use FormManager\InputInterface;
 use FormManager\NodeInterface;
+use FormManager\ValidationError;
 use IteratorAggregate;
 
 /**
@@ -41,6 +42,7 @@ abstract class InputGroup implements InputInterface, ArrayAccess, IteratorAggreg
     {
         $input->setAttribute('value', $value);
         $input->setName($this->name);
+        $input->setParentNode($this);
 
         $this->inputs[$value] = $input;
     }
@@ -89,6 +91,17 @@ abstract class InputGroup implements InputInterface, ArrayAccess, IteratorAggreg
         }
 
         return true;
+    }
+
+    public function getError(): ?ValidationError
+    {
+        foreach ($this->inputs as $input) {
+            if ($error = $input->getError()) {
+                return $error;
+            }
+        }
+
+        return null;
     }
 
     public function setName(string $name): InputInterface

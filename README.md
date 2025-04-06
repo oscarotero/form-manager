@@ -188,6 +188,16 @@ $radios = F::radioGroup([
 $radios->setValue('blue');
 ```
 
+If you need the radio group to be required, you should add the `required` attribute to at least one radio button:
+
+```php
+$radios = F::radioGroup([
+    'red' => F::radio('Red', ['required' => true]),
+    'blue' => 'Blue',
+    'green' => 'Green',
+]);
+```
+
 ### Submit group
 
 Special case to group several submit buttons under the same name but different values:
