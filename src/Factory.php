@@ -3,6 +3,8 @@
 namespace FormManager;
 
 use InvalidArgumentException;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Factory class to create all nodes.
@@ -42,6 +44,11 @@ class Factory
     ];
 
     /**
+     * @var ?ValidatorInterface
+     */
+    private static $validator = null;
+
+    /**
      * Factory to create input nodes
      * @param mixed $arguments
      */
@@ -71,5 +78,26 @@ class Factory
     public static function setErrorMessages(array $messages = []): void
     {
         ValidatorFactory::setMessages($messages);
+    }
+
+    /**
+     * Set a validator instance.
+     * @param ValidatorInterface $validator
+     */
+    public static function setValidator(ValidatorInterface $validator): void
+    {
+        self::$validator = $validator;
+    }
+
+    /**
+     * Get the validator instance.
+     */
+    public static function getValidator(): ValidatorInterface
+    {
+        if (null === self::$validator) {
+            return self::$validator = Validation::createValidator();
+        }
+
+        return self::$validator;
     }
 }
