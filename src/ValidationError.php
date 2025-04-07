@@ -6,7 +6,6 @@ namespace FormManager;
 use FormManager\Inputs\Input;
 use IteratorAggregate;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Validation;
 
 /**
  * Class representing a validation error
@@ -23,7 +22,7 @@ class ValidationError implements IteratorAggregate
             return null;
         }
 
-        $validator = Validation::createValidator();
+        $validator = Factory::getValidator();
         $violations = $validator->validate($input->getValue(), $constraints);
 
         if (count($violations)) {
