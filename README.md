@@ -7,7 +7,7 @@
 
 ## Installation:
 
-This package requires `PHP>=7.1` and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
+This package requires `PHP>=7.2` and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
 
 ```
 composer require form-manager/form-manager
