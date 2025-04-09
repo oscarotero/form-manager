@@ -160,7 +160,10 @@ abstract class ValidatorFactory
 
     public static function length(Input $input): Constraint
     {
-        $options = [];
+        $options = [
+            'allowEmptyString' => true
+        ];
+
         $minlength = $input->getAttribute('minlength');
         $maxlength = $input->getAttribute('maxlength');
 
