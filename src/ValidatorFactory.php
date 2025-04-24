@@ -161,7 +161,7 @@ abstract class ValidatorFactory
     public static function length(Input $input): Constraint
     {
         $options = [
-            'allowEmptyString' => true
+            'allowEmptyString' => true,
         ];
 
         $minlength = $input->getAttribute('minlength');
@@ -210,8 +210,11 @@ abstract class ValidatorFactory
 
     public static function accept(Input $input): Constraint
     {
-        return new Constraints\Callback(
-            [new Validators\AcceptFile(self::options($input, 'accept', ['accept' => $input->getAttribute('accept')])), '__invoke']
-        );
+        return new Constraints\Callback([
+            new Validators\AcceptFile(
+                self::options($input, 'accept', ['accept' => $input->getAttribute('accept')])
+            ),
+            '__invoke'
+        ]);
     }
 }

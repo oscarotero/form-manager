@@ -52,7 +52,6 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
         return count($this->values);
     }
 
-
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->values);

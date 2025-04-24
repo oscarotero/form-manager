@@ -71,7 +71,12 @@ class SelectTest extends TestCase
         $select->value = 3;
         $this->assertSame(3, $select->value);
 
-        $expetedHtml = '<select><optgroup label="Section 1"><option value="1">One</option><option value="2">Two</option></optgroup><optgroup label="Section 2"><option value="3" selected>Three</option><option value="4">Four</option></optgroup></select>';
+        $expetedHtml = '<select><optgroup label="Section 1">'.
+                '<option value="1">One</option>'.
+                '<option value="2">Two</option>'.
+                '</optgroup><optgroup label="Section 2">'.
+                '<option value="3" selected>Three</option>'.
+                '<option value="4">Four</option></optgroup></select>';
 
         $this->assertSame($expetedHtml, (string) $select);
     }

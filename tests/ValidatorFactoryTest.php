@@ -1,9 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-use PHPUnit\Framework\TestCase;
-use FormManager\ValidatorFactory;
+namespace FormManager\Tests;
+
 use FormManager\Inputs\Text;
+use FormManager\ValidatorFactory;
+use PHPUnit\Framework\TestCase;
 
 class ValidatorFactoryTest extends TestCase
 {

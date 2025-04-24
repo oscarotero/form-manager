@@ -41,7 +41,6 @@ class GroupCollection implements InputInterface, ArrayAccess, Countable, Iterato
         return count($this->values);
     }
 
-
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->values);

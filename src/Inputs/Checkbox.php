@@ -22,7 +22,8 @@ class Checkbox extends Input
         $this->setAttribute('value', 'on');
 
         if (isset($label)) {
-            $this->setLabel($label);
+            $this->s
+            etLabel($label);
         }
     }
 
@@ -30,8 +31,7 @@ class Checkbox extends Input
     {
         $this->error = null;
 
-        if (
-            ((string) $this->getAttribute('value') === (string) $value) ||
+        if (((string) $this->getAttribute('value') === (string) $value) ||
             filter_var($value, FILTER_VALIDATE_BOOLEAN)
         ) {
             return $this->setAttribute('checked', true);

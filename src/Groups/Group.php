@@ -9,7 +9,6 @@ use FormManager\InputInterface;
 use FormManager\NodeInterface;
 use InvalidArgumentException;
 use IteratorAggregate;
-use Symfony\Component\Console\Input\InputOption;
 use Traversable;
 
 /**

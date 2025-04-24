@@ -28,8 +28,7 @@ class UploadedFile
 
     /**
      * @param UploadedFileInterface|array|string|null $input
-     * @param ExecutionContext $context
-     * @return void
+     * @param ExecutionContext                        $context
      */
     public function __invoke($input, $context)
     {
@@ -69,7 +68,7 @@ class UploadedFile
     }
 
     /**
-     * @param int $error
+     * @param  int  $error
      * @return bool
      */
     private function checkErrorType($error): bool
