@@ -11,6 +11,12 @@
             "email": "oom@oscarotero.com",
             "homepage": "http://oscarotero.com",
             "role": "Developer"
+        },
+        {
+            "name": "Filis Futsarov",
+            "email": "filisfutsarov@gmail.com",
+            "homepage": "https://filis.me",
+            "role": "Developer"
         }
     ],
     "support": {

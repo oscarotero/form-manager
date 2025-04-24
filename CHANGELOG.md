@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] - 2021-07-19
+### Added
+- Support until PHP 8.4
+
+## Changed
+- Minimum requirement is `php >= 7.2`
+- Upgrade to `symfony/validator` v5 ([without active support anymore, security fixes only until 2028](https://endoflife.date/symfony))
+
 ## [6.1.2] - 2021-07-19
 ### Added
 - Added support for PHP 8
