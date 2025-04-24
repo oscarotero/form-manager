@@ -24,7 +24,7 @@ class SubmitGroup extends InputGroup
         parent::__construct($submits);
     }
 
-    public function offsetSet($value, $submit)
+    public function offsetSet($value, $submit): void
     {
         if (!($submit instanceof Submit)) {
             throw new InvalidArgumentException(

@@ -38,7 +38,7 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
         }
     }
 
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->inputs);
     }
@@ -62,6 +62,7 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
     /**
      * @param $name string
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($name)
     {
         return $this->inputs[$name] ?? null;

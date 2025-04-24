@@ -21,7 +21,7 @@ class RadioGroup extends InputGroup
         parent::__construct($radios);
     }
 
-    public function offsetSet($value, $radio)
+    public function offsetSet($value, $radio): void
     {
         if (!($radio instanceof Radio)) {
             throw new InvalidArgumentException(

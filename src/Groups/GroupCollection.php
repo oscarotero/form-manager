@@ -10,6 +10,7 @@ use FormManager\InputInterface;
 use FormManager\NodeInterface;
 use IteratorAggregate;
 use RuntimeException;
+use Traversable;
 
 /**
  * Class representing a group collection of inputs
@@ -41,16 +42,17 @@ class GroupCollection implements InputInterface, ArrayAccess, Countable, Iterato
     }
 
 
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->values);
     }
 
-    public function offsetSet($name, $input)
+    public function offsetSet($name, $input): void
     {
         throw new RuntimeException(sprintf('Cannot add elements dinamically to a %s instance', self::class));
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($index)
     {
         return $this->values[$index] ?? null;

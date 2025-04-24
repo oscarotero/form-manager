@@ -58,11 +58,12 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
         return new ArrayIterator($this->values);
     }
 
-    public function offsetSet($name, $input)
+    public function offsetSet($name, $input): void
     {
         throw new RuntimeException(sprintf('Cannot add elements dinamically to a %s instance', self::class));
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($index)
     {
         return $this->values[$index] ?? null;

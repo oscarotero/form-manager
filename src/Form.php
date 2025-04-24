@@ -35,7 +35,7 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         }
     }
 
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->inputs);
     }

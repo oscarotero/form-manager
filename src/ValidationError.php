@@ -7,6 +7,7 @@ use FormManager\Inputs\Input;
 use IteratorAggregate;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validation;
+use Traversable;
 
 /**
  * Class representing a validation error
@@ -38,7 +39,7 @@ class ValidationError implements IteratorAggregate
         $this->violations = $violations;
     }
 
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return $this->violations->getIterator();
     }
