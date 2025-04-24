@@ -46,8 +46,8 @@
         }
     },
     "scripts": {
-        "cs": "phpcs",
-        "cs-fix": "php-cs-fixer fix",
+        "cs": "php vendor/bin/phpcs",
+        "cs-fix": "php vendor/bin/php-cs-fixer fix",
         "phpstan": "phpstan analyse",
         "test": "phpunit",
         "coverage": "phpunit --coverage-text",
