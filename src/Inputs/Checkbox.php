@@ -22,8 +22,7 @@ class Checkbox extends Input
         $this->setAttribute('value', 'on');
 
         if (isset($label)) {
-            $this->s
-            etLabel($label);
+            $this->setLabel($label);
         }
     }
 
