@@ -38,7 +38,7 @@ class ValidationError implements IteratorAggregate
         $this->violations = $violations;
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return $this->violations->getIterator();
     }

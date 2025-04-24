@@ -35,12 +35,13 @@ class GroupCollection implements InputInterface, ArrayAccess, Countable, Iterato
         }
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->values);
     }
 
-    public function getIterator()
+
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->values);
     }
@@ -55,12 +56,12 @@ class GroupCollection implements InputInterface, ArrayAccess, Countable, Iterato
         return $this->values[$index] ?? null;
     }
 
-    public function offsetUnset($index)
+    public function offsetUnset($index): void
     {
         unset($this->values[$index]);
     }
 
-    public function offsetExists($index)
+    public function offsetExists($index): bool
     {
         return isset($this->values[$index]);
     }

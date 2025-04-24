@@ -11,6 +11,7 @@ use FormManager\NodeInterface;
 use InvalidArgumentException;
 use IteratorAggregate;
 use RuntimeException;
+use Traversable;
 
 /**
  * Class representing a collection of multiple groups
@@ -46,13 +47,13 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
         }
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->values);
     }
 
-    #[\ReturnTypeWillChange]
-    public function getIterator()
+
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->values);
     }
@@ -67,12 +68,12 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
         return $this->values[$index] ?? null;
     }
 
-    public function offsetUnset($index)
+    public function offsetUnset($index): void
     {
         unset($this->values[$index]);
     }
 
-    public function offsetExists($index)
+    public function offsetExists($index): bool
     {
         return isset($this->values[$index]);
     }

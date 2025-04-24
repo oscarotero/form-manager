@@ -38,7 +38,7 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
         }
     }
 
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->inputs);
     }
