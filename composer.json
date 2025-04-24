@@ -25,7 +25,8 @@
         "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
         "nyholm/psr7": "^1.0",
         "friendsofphp/php-cs-fixer": "^3",
-        "oscarotero/php-cs-fixer-config": "^1 || ^2"
+        "oscarotero/php-cs-fixer-config": "^1 || ^2",
+        "phpstan/phpstan": "^1 || ^2"
     },
     "autoload": {
         "psr-4": {
@@ -38,8 +39,11 @@
         }
     },
     "scripts": {
+        "cs": "phpcs",
+        "cs-fix": "php-cs-fixer fix",
+        "phpstan": "phpstan analyse",
         "test": "phpunit",
-        "cs": "php-cs-fixer",
-        "cs-fix": "php-cs-fixer fix"
+        "coverage": "phpunit --coverage-text",
+        "coverage-html": "phpunit --coverage-html=coverage"
     }
 }

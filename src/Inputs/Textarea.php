@@ -17,7 +17,7 @@ class Textarea extends Input
         'length' => ['minlength', 'maxlength'],
     ];
 
-    public function __construct(string $label = null, iterable $attributes = [])
+    public function __construct(?string $label = null, iterable $attributes = [])
     {
         parent::__construct('textarea', $attributes);
 

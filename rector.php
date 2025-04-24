@@ -37,8 +37,8 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
 
-//    $rectorConfig->sets([SetList::PHP_84]);
-    $rectorConfig->sets([SetList::PHP_72, SetList::TYPE_DECLARATION]);
+    $rectorConfig->sets([SetList::PHP_84, SetList::TYPE_DECLARATION]);
+//    $rectorConfig->sets([SetList::PHP_72, SetList::TYPE_DECLARATION]);
 
         $rectorConfig->importNames();
 

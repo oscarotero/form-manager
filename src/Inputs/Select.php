@@ -19,7 +19,7 @@ class Select extends Input
 
     private $allowNewValues = false;
 
-    public function __construct(string $label = null, iterable $options = [], iterable $attributes = [])
+    public function __construct(?string $label = null, iterable $options = [], iterable $attributes = [])
     {
         parent::__construct('select', $attributes);
 

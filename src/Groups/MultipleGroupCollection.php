@@ -51,6 +51,7 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
         return count($this->values);
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->values);

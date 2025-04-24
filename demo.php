@@ -77,39 +77,3 @@ if ($_POST) {
     $form->loadFromGlobals();
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Demo</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 2em;
-        }
-        pre {
-            background: #eee;
-            color: #999;
-            padding: 1em;
-            overflow: auto;
-        }
-    </style>
-</head>
-<body>
-    <?= $form->getOpeningTag(); ?>
-    <?php foreach ($form as $field): ?>
-    <div>
-        <?= $field; ?>
-        <?php
-        if ($field instanceof Input) {
-            $field->getError();
-        }
-        ?>
-        <pre><?= htmlspecialchars((string) $field); ?></pre>
-    </div>
-    <?php endforeach; ?>
-    <?= $form->getClosingTag(); ?>
-
-    <pre><?php print_r($form->getValue()); ?></pre>
-</body>
-</html>

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace FormManager\Validators;
 
 use Psr\Http\Message\UploadedFileInterface;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
 class UploadedFile
 {
@@ -25,6 +26,11 @@ class UploadedFile
         ];
     }
 
+    /**
+     * @param UploadedFileInterface|array|string|null $input
+     * @param ExecutionContext $context
+     * @return void
+     */
     public function __invoke($input, $context)
     {
         if (empty($input)
@@ -37,6 +43,9 @@ class UploadedFile
         $context->buildViolation($this->options['message'])->addViolation();
     }
 
+    /**
+     * @param array<string,int|string> $file
+     */
     private function validateArray(array $file): bool
     {
         if (!array_key_exists('name', $file)) {
@@ -59,6 +68,10 @@ class UploadedFile
         return $this->checkErrorType($file->getError());
     }
 
+    /**
+     * @param int $error
+     * @return bool
+     */
     private function checkErrorType($error): bool
     {
         return !isset($error) || !isset(self::ERROR_TYPES[$error]);

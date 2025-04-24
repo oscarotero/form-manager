@@ -57,7 +57,7 @@ abstract class InputGroup implements InputInterface, ArrayAccess, IteratorAggreg
         unset($this->inputs[$value]);
     }
 
-    public function offsetExists($value)
+    public function offsetExists($value): bool
     {
         return isset($this->inputs[$value]);
     }

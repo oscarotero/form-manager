@@ -9,6 +9,8 @@ use FormManager\InputInterface;
 use FormManager\NodeInterface;
 use InvalidArgumentException;
 use IteratorAggregate;
+use Symfony\Component\Console\Input\InputOption;
+use Traversable;
 
 /**
  * Class representing a group of inputs of any type
@@ -19,6 +21,9 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
     private $name = '';
     private $inputs = [];
 
+    /**
+     * @param iterable<InputInterface> $inputs
+     */
     public function __construct(iterable $inputs = [])
     {
         foreach ($inputs as $name => $input) {
@@ -33,12 +38,16 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
         }
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->inputs);
     }
 
-    public function offsetSet($name, $input)
+    /**
+     * @param $name string
+     * @param $input InputInterface
+     */
+    public function offsetSet($name, $input): void
     {
         if (!($input instanceof InputInterface)) {
             throw new InvalidArgumentException(
@@ -50,17 +59,26 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
         $this->inputs[$name] = $input;
     }
 
+    /**
+     * @param $name string
+     */
     public function offsetGet($name)
     {
         return $this->inputs[$name] ?? null;
     }
 
-    public function offsetUnset($name)
+    /**
+     * @param $name string
+     */
+    public function offsetUnset($name): void
     {
         unset($this->inputs[$name]);
     }
 
-    public function offsetExists($name)
+    /**
+     * @param $name string
+     */
+    public function offsetExists($name): bool
     {
         return isset($this->inputs[$name]);
     }
@@ -76,7 +94,10 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
         return $this;
     }
 
-    public function getValue()
+    /**
+     * @return array<string, mixed>
+     */
+    public function getValue(): array
     {
         $value = [];
 
@@ -121,7 +142,7 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return implode("\n", $this->inputs);
     }
