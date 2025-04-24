@@ -32,7 +32,7 @@ jobs:
               run: composer install --prefer-dist --no-progress
 
             - name: Coding Standard
-              run: composer cs
+              run: composer run-script cs
 
     tests:
         name: Tests
