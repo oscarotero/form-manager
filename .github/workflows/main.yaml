@@ -17,15 +17,15 @@ jobs:
 
             - name: Validate composer.json and composer.lock
               run: composer validate
-#
-#            - name: Cache Composer packages
-#              id: composer-cache
-#              uses: actions/cache@v4
-#              with:
-#                  path: vendor
-#                  key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-#                  restore-keys: |
-#                      ${{ runner.os }}-php-
+
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v4
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-php-
 
             - name: Install dependencies
               if: steps.composer-cache.outputs.cache-hit != 'true'
