@@ -5,6 +5,7 @@ namespace FormManager\Groups;
 
 use FormManager\InputInterface;
 use FormManager\Inputs\Submit;
+use InvalidArgumentException;
 
 /**
  * Class representing a group of button[type="submit"] elements

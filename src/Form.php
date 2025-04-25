@@ -48,7 +48,7 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
     {
         if (!($input instanceof InputInterface)) {
             throw new InvalidArgumentException(
-                sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
+                sprintf('The input "%s" must be an instance of %s (%s)', $name, InputInterface::class, gettype($input))
             );
         }
 

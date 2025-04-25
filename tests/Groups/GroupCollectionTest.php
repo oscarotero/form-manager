@@ -78,7 +78,7 @@ class GroupCollectionTest extends TestCase
             ['name' => 'Laura'],
         ]);
 
-        $names = [];
+        $keys = [];
 
         foreach ($input as $index => $group) {
             $keys[] = $index;

@@ -136,7 +136,7 @@ abstract class ValidatorFactory
             );
         }
 
-        return new Constraints\Datetime(
+        return new Constraints\DateTime(
             self::options($input, 'time', [
                 'format' => 'H:i',
                 'message' => 'This value is not a valid time.',

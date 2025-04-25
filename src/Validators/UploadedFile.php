@@ -68,8 +68,7 @@ class UploadedFile
     }
 
     /**
-     * @param  int  $error
-     * @return bool
+     * @param int|null $error
      */
     private function checkErrorType($error): bool
     {

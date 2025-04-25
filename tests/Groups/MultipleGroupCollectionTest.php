@@ -91,7 +91,7 @@ class MultipleGroupCollectionTest extends TestCase
             ['type' => 'group', 'name' => 'Laura'],
         ]);
 
-        $names = [];
+        $keys = [];
 
         foreach ($input as $index => $group) {
             $keys[] = $index;

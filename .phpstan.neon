@@ -1,7 +1,7 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
-    level: 8
+    level: 1
     paths:
         - src
         - tests

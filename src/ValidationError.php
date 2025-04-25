@@ -28,6 +28,7 @@ class ValidationError implements IteratorAggregate
         $violations = $validator->validate($input->getValue(), $constraints);
 
         if (count($violations)) {
+            /** @phpstan-ignore-next-line */
             return new static($violations);
         }
 

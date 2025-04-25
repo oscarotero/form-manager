@@ -25,6 +25,9 @@ jobs:
             - name: Coding Standard
               run: composer cs
 
+            - name: Static Analysis
+              run: composer phpstan
+
     tests:
         name: Tests
         runs-on: ubuntu-latest
