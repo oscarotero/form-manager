@@ -28,7 +28,7 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
         foreach ($groups as $key => $group) {
             if (!($group instanceof Group)) {
                 throw new InvalidArgumentException(
-                    sprintf('The group tagged as %s is not a %s intance', $key, Group::class)
+                    sprintf('The group tagged as %s is not a %s instance', $key, Group::class)
                 );
             }
         }
@@ -59,7 +59,7 @@ class MultipleGroupCollection implements InputInterface, ArrayAccess, Countable,
 
     public function offsetSet($name, $input): void
     {
-        throw new RuntimeException(sprintf('Cannot add elements dinamically to a %s instance', self::class));
+        throw new RuntimeException(sprintf('Cannot add elements dynamically to a %s instance', self::class));
     }
 
     #[\ReturnTypeWillChange]
