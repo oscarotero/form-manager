@@ -1,6 +1,6 @@
-/tests         export-ignore
-.gitattributes export-ignore
-.gitignore     export-ignore
-phpunit.xml    export-ignore
-.php-cs-fixer.php    export-ignore
-demo.php       export-ignore
+/tests                export-ignore
+.gitattributes        export-ignore
+.gitignore            export-ignore
+phpunit.xml           export-ignore
+.php-cs-fixer.php     export-ignore
+demo.php              export-ignore

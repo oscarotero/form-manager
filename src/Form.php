@@ -8,9 +8,12 @@ use ArrayIterator;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Psr\Http\Message\ServerRequestInterface;
+use Traversable;
 
 /**
  * Class representing a form
+ *
+ * @implements ArrayAccess<InputInterface>
  */
 class Form extends Node implements ArrayAccess, IteratorAggregate
 {
@@ -32,16 +35,20 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         }
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->inputs);
     }
 
-    public function offsetSet($name, $input)
+    /**
+     * @param $name string
+     * @param $input InputInterface
+     */
+    public function offsetSet($name, $input): void
     {
         if (!($input instanceof InputInterface)) {
             throw new InvalidArgumentException(
-                sprintf('The input "%s" must be an instance of %s (%s)', $name, Input::class, gettype($input))
+                sprintf('The input "%s" must be an instance of %s (%s)', $name, InputInterface::class, gettype($input))
             );
         }
 
@@ -50,21 +57,35 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         $this->appendChild($input);
     }
 
+    /**
+     * @param $name string
+     * @return InputInterface|null
+     */
+    #[\ReturnTypeWillChange]
     public function offsetGet($name)
     {
         return $this->inputs[$name] ?? null;
     }
 
-    public function offsetUnset($name)
+    /**
+     * @param $name string
+     */
+    public function offsetUnset($name): void
     {
         unset($this->inputs[$name]);
     }
 
-    public function offsetExists($name)
+    /**
+     * @param $name string
+     */
+    public function offsetExists($name): bool
     {
         return isset($this->inputs[$name]);
     }
 
+    /**
+     * @param $value array<string,mixed>
+     */
     public function setValue($value): self
     {
         $value = (array) $value;
@@ -76,7 +97,10 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
         return $this;
     }
 
-    public function getValue()
+    /**
+     * @return array<string,mixed>
+     */
+    public function getValue(): array
     {
         $value = [];
 

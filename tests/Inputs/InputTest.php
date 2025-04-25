@@ -110,12 +110,18 @@ class InputTest extends TestCase
             2 => 'Two',
         ]);
 
-        $this->assertEquals('<select><option value="1">One</option><option value="2">Two</option></select>', (string) $select);
+        $this->assertEquals(
+            '<select><option value="1">One</option><option value="2">Two</option></select>',
+            (string) $select
+        );
 
         $select->name = 'foo';
         $select->value = 2;
 
-        $this->assertEquals('<select name="foo"><option value="1">One</option><option value="2" selected>Two</option></select>', (string) $select);
+        $this->assertEquals(
+            '<select name="foo"><option value="1">One</option><option value="2" selected>Two</option></select>',
+            (string) $select
+        );
     }
 
     public function testSubmit()

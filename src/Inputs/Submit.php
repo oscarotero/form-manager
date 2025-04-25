@@ -10,7 +10,7 @@ class Submit extends Input
 {
     protected $template = '{{ input }}';
 
-    public function __construct(string $label = null, iterable $attributes = [])
+    public function __construct(?string $label = null, iterable $attributes = [])
     {
         parent::__construct('button', $attributes);
         $this->setAttribute('type', 'submit');

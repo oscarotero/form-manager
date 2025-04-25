@@ -5,6 +5,7 @@ namespace FormManager\Groups;
 
 use FormManager\InputInterface;
 use FormManager\Inputs\Submit;
+use InvalidArgumentException;
 
 /**
  * Class representing a group of button[type="submit"] elements
@@ -24,7 +25,7 @@ class SubmitGroup extends InputGroup
         parent::__construct($submits);
     }
 
-    public function offsetSet($value, $submit)
+    public function offsetSet($value, $submit): void
     {
         if (!($submit instanceof Submit)) {
             throw new InvalidArgumentException(

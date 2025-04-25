@@ -56,7 +56,7 @@ trait HasOptionsTrait
         return $optgroup;
     }
 
-    private function createOption($value, string $label = null): Node
+    private function createOption($value, ?string $label = null): Node
     {
         $option = new Node('option', compact('value'));
         $option->innerHTML = $label ?: (string) $value;

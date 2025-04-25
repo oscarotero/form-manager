@@ -9,6 +9,7 @@ use FormManager\InputInterface;
 use FormManager\NodeInterface;
 use FormManager\ValidationError;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * Common utilities for groups of specific inputs (like radio and submits)
@@ -33,12 +34,12 @@ abstract class InputGroup implements InputInterface, ArrayAccess, IteratorAggreg
         }
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->inputs);
     }
 
-    public function offsetSet($value, $input)
+    public function offsetSet($value, $input): void
     {
         $input->setAttribute('value', $value);
         $input->setName($this->name);
@@ -47,17 +48,18 @@ abstract class InputGroup implements InputInterface, ArrayAccess, IteratorAggreg
         $this->inputs[$value] = $input;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($value)
     {
         return $this->inputs[$value] ?? null;
     }
 
-    public function offsetUnset($value)
+    public function offsetUnset($value): void
     {
         unset($this->inputs[$value]);
     }
 
-    public function offsetExists($value)
+    public function offsetExists($value): bool
     {
         return isset($this->inputs[$value]);
     }

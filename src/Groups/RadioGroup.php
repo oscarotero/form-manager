@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace FormManager\Groups;
 
 use FormManager\Inputs\Radio;
+use InvalidArgumentException;
 
 /**
  * Class representing a group of input[type="radio"] elements
@@ -21,7 +22,7 @@ class RadioGroup extends InputGroup
         parent::__construct($radios);
     }
 
-    public function offsetSet($value, $radio)
+    public function offsetSet($value, $radio): void
     {
         if (!($radio instanceof Radio)) {
             throw new InvalidArgumentException(

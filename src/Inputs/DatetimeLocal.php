@@ -15,7 +15,7 @@ class DatetimeLocal extends Input
         'min' => 'min',
     ];
 
-    public function __construct(string $label = null, iterable $attributes = [])
+    public function __construct(?string $label = null, iterable $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'datetime-local');

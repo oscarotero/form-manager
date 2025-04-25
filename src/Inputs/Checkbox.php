@@ -15,7 +15,7 @@ class Checkbox extends Input
         'required' => 'required',
     ];
 
-    public function __construct(string $label = null, iterable $attributes = [])
+    public function __construct(?string $label = null, iterable $attributes = [])
     {
         parent::__construct('input', $attributes);
         $this->setAttribute('type', 'checkbox');
@@ -30,8 +30,7 @@ class Checkbox extends Input
     {
         $this->error = null;
 
-        if (
-            ((string) $this->getAttribute('value') === (string) $value) ||
+        if (((string) $this->getAttribute('value') === (string) $value) ||
             filter_var($value, FILTER_VALIDATE_BOOLEAN)
         ) {
             return $this->setAttribute('checked', true);

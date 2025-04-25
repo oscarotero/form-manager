@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] - 2021-07-19
+### Added
+- Support until PHP 8.4
+
+## Changed
+- Minimum requirement is `php >= 7.2`
+- Upgraded to `symfony/validator` v5 ([without active support anymore, security fixes only until 2028](https://endoflife.date/symfony))
+
 ## [6.1.2] - 2021-07-19
 ### Added
 - Added support for PHP 8
@@ -59,6 +67,7 @@ This library was rewritten and a lot of breaking changes were included.
 [#87]: https://github.com/oscarotero/form-manager/issues/87
 [#89]: https://github.com/oscarotero/form-manager/issues/89
 
+[7.0.0]: https://github.com/oscarotero/form-manager/compare/v6.1.2...v7.0.0
 [6.1.2]: https://github.com/oscarotero/form-manager/compare/v6.1.1...v6.1.2
 [6.1.1]: https://github.com/oscarotero/form-manager/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/oscarotero/form-manager/compare/v6.0.1...v6.1.0

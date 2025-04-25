@@ -8,7 +8,7 @@ namespace FormManager\Inputs;
  */
 class Range extends Number
 {
-    public function __construct(string $label = null, iterable $attributes = [])
+    public function __construct(?string $label = null, iterable $attributes = [])
     {
         parent::__construct($label, $attributes);
         $this->setAttribute('type', 'range');
