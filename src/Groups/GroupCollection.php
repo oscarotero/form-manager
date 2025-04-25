@@ -48,7 +48,7 @@ class GroupCollection implements InputInterface, ArrayAccess, Countable, Iterato
 
     public function offsetSet($name, $input): void
     {
-        throw new RuntimeException(sprintf('Cannot add elements dinamically to a %s instance', self::class));
+        throw new RuntimeException(sprintf('Cannot add elements dynamically to a %s instance', self::class));
     }
 
     #[\ReturnTypeWillChange]

@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Some phpdoc annotations to help IDEs [#81]
 - Elements that can contain options (`Select`, `Datalist`) have the `setOptgroups` method to define the optgroups.
-- The method `setOptions` can assing other attributes to the options [#83]
+- The method `setOptions` can assign other attributes to the options [#83]
   ```php
   $select->setOptions([
     'value1' => [
