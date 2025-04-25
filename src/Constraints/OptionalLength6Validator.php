@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\LengthValidator;
 
 /**
- * Optional length validator for Symfony Validator v6
+ * Optional length validator for Symfony Validator v7
  */
 class OptionalLength6Validator extends LengthValidator
 {

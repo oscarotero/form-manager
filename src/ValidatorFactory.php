@@ -178,14 +178,15 @@ abstract class ValidatorFactory
             $options += self::options($input, 'maxlength', ['max' => $maxlength], 'maxMessage');
         }
 
-        switch (self::getValidatorVersion()) {
-            case 7:
-                return new \FormManager\Constraints\OptionalLength7($options);
-            case 6:
-                return new \FormManager\Constraints\OptionalLength6($options);
-            case 5:
-                $options['allowEmptyString'] = true;
-                return new Constraints\Length($options);
+        $version = self::getValidatorVersion();
+
+        if ($version === 7) {
+            return new \FormManager\Constraints\OptionalLength7($options);
+        } elseif ($version === 6) {
+            return new \FormManager\Constraints\OptionalLength6($options);
+        } else {
+            $options['allowEmptyString'] = true;
+            return new Constraints\Length($options);
         }
     }
 
