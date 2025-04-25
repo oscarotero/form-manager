@@ -8,10 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [7.0.0] - unreleased
 ### Added
 - Support until PHP 8.4
+- Added support for `symfony/validator` v6 (LTS) and v7.
 
 ## Changed
 - Minimum requirement is `php >= 7.2`
-- Upgraded to `symfony/validator` v5 ([without active support anymore, security fixes only until 2028](https://endoflife.date/symfony))
+- Upgraded `symfony/validator` to v5.4 
+  - no active support anymore
+  - [security fixes until 2028 though!](https://endoflife.date/symfony)
+  - the pinned version to 5.4 is to avoid outdated and buggy versions that we cannot rely on.
+
 
 ## [6.1.2] - 2021-07-19
 ### Added

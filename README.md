@@ -2,12 +2,14 @@
 
 [![testing](https://github.com/oscarotero/form-manager/actions/workflows/main.yaml/badge.svg)](https://github.com/oscarotero/form-manager/actions/workflows/main.yaml)
 
-> ### Note: this is the documentation of FormManager 6.x 
-> For v5.x version [Click here](https://github.com/oscarotero/form-manager/tree/v5)
+> ### Note: this is the documentation of FormManager 7.x 
+> For v6.x version [Click here](https://github.com/oscarotero/form-manager/tree/v6)
 
 ## Installation:
 
 This package requires `PHP>=7.2` and is available on [Packagist](https://packagist.org/packages/form-manager/form-manager):
+
+Supports `symfony/validator` v5, v6 and v7.
 
 ```
 composer require form-manager/form-manager

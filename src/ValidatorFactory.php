@@ -4,9 +4,14 @@ declare(strict_types = 1);
 namespace FormManager;
 
 use FormManager\Inputs\Input;
+use PHPUnit\Util\Exception;
+use ReflectionClass;
 use RuntimeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\LengthValidator;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Helper to build the validators
@@ -160,9 +165,7 @@ abstract class ValidatorFactory
 
     public static function length(Input $input): Constraint
     {
-        $options = [
-            'allowEmptyString' => true,
-        ];
+        $options = [];
 
         $minlength = $input->getAttribute('minlength');
         $maxlength = $input->getAttribute('maxlength');
@@ -175,7 +178,35 @@ abstract class ValidatorFactory
             $options += self::options($input, 'maxlength', ['max' => $maxlength], 'maxMessage');
         }
 
-        return new Constraints\Length($options);
+        $version = self::getValidatorVersion();
+
+        if ($version === 7) {
+            return new \FormManager\Constraints\OptionalLength7($options);
+        } elseif ($version === 6) {
+            return new \FormManager\Constraints\OptionalLength6($options);
+        } else {
+            $options['allowEmptyString'] = true;
+            return new Constraints\Length($options);
+        }
+    }
+
+    private static function getValidatorVersion(): int
+    {
+        if (property_exists(Constraints\Length::class, 'allowEmptyString')) {
+            return 5;
+        }
+
+        $reflection = new ReflectionClass(LengthValidator::class);
+        $hasReturnType = $reflection->getMethod('validate')->hasReturnType();
+        if (!$hasReturnType) {
+            return 6;
+        }
+
+        if ($hasReturnType) {
+            return 7;
+        }
+
+        throw new RuntimeException('Cannot determine symfony/validator version. Please report this on GitHub.');
     }
 
     public static function max(Input $input): Constraint

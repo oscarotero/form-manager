@@ -5,4 +5,5 @@ parameters:
     paths:
         - src
         - tests
-#    ignoreErrors:
+    excludePaths:
+        - src/Constraints/OptionalLength6Validator.php
