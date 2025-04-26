@@ -26,6 +26,8 @@ use FormManager\Factory as F;
 Use the imported factory to create all form elements:
 
 ```php
+use FormManager\Factory as F;
+
 //Create an input type="text" element
 $name = F::text();
 
