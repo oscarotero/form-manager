@@ -131,7 +131,7 @@ See [all constraints supported by symfony](https://symfony.com/doc/current/valid
 
 This package allows you to set your custom Validation instance with `Factory::setValidator()`.
 
-This allows to use (`symfony/translations`)[https://symfony.com/doc/current/translation.html] in order to have translations in place.
+This allows to use [symfony/translations](https://symfony.com/doc/current/translation.html) in order to have translations in place.
 
 ```shell
 composer require symfony/translations
