@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace FormManager;
 
@@ -41,7 +41,7 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
     }
 
     /**
-     * @param $name string
+     * @param $name  string
      * @param $input InputInterface
      */
     public function offsetSet($name, $input): void
@@ -58,7 +58,7 @@ class Form extends Node implements ArrayAccess, IteratorAggregate
     }
 
     /**
-     * @param $name string
+     * @param                      $name string
      * @return InputInterface|null
      */
     #[\ReturnTypeWillChange]

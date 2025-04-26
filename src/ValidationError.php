@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace FormManager;
 
@@ -28,7 +28,7 @@ class ValidationError implements IteratorAggregate
         $violations = $validator->validate($input->getValue(), $constraints);
 
         if (count($violations)) {
-            /** @phpstan-ignore-next-line */
+            /* @phpstan-ignore-next-line */
             return new static($violations);
         }
 

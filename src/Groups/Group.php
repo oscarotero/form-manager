@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace FormManager\Groups;
 
@@ -43,7 +43,7 @@ class Group implements InputInterface, ArrayAccess, IteratorAggregate
     }
 
     /**
-     * @param $name string
+     * @param $name  string
      * @param $input InputInterface
      */
     public function offsetSet($name, $input): void

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace FormManager;
 
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Factory class to create all nodes.
- * 
+ *
  * @method static \FormManager\Form                           form(array $inputs, array $attributes)
  * @method static \FormManager\Groups\Group                   group(array $inputs)
  * @method static \FormManager\Groups\RadioGroup              radioGroup(array $radios)

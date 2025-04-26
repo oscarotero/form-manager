@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace FormManager;
 
@@ -182,10 +182,10 @@ abstract class ValidatorFactory
             return new \FormManager\Constraints\OptionalLength7($options);
         } elseif ($version === 6) {
             return new \FormManager\Constraints\OptionalLength6($options);
-        } else {
-            $options['allowEmptyString'] = true;
-            return new Constraints\Length($options);
         }
+        $options['allowEmptyString'] = true;
+
+        return new Constraints\Length($options);
     }
 
     private static function getValidatorVersion(): int
@@ -243,7 +243,7 @@ abstract class ValidatorFactory
             new Validators\AcceptFile(
                 self::options($input, 'accept', ['accept' => $input->getAttribute('accept')])
             ),
-            '__invoke'
+            '__invoke',
         ]);
     }
 }
