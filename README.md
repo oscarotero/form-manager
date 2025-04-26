@@ -147,7 +147,7 @@ $validator = Validation::createValidatorBuilder()
 F::setValidator($validator);
 ```
 
-See (examples/translations.php)[examples/translations.php] for the full example.
+See [examples/translations.php](examples/translations.php) to see the full example.
 
 ## Render html
 
