@@ -1,6 +1,9 @@
 # Form Manager
 
-[![testing](https://github.com/oscarotero/form-manager/actions/workflows/main.yaml/badge.svg)](https://github.com/oscarotero/form-manager/actions/workflows/main.yaml)
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE)
+![Testing][ico-ga]
+[![Total Downloads][ico-downloads]][link-downloads]
 
 > ### Note: this is the documentation of FormManager 7.x 
 > For v6.x version [Click here](https://github.com/oscarotero/form-manager/tree/v6)
