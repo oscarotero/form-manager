@@ -3,41 +3,65 @@ declare(strict_types = 1);
 
 namespace FormManager;
 
+use FormManager\Groups\Group;
+use FormManager\Groups\GroupCollection;
+use FormManager\Groups\MultipleGroupCollection;
+use FormManager\Groups\RadioGroup;
+use FormManager\Groups\SubmitGroup;
+use FormManager\Inputs\Checkbox;
+use FormManager\Inputs\Color;
+use FormManager\Inputs\Date;
+use FormManager\Inputs\DatetimeLocal;
+use FormManager\Inputs\Email;
+use FormManager\Inputs\File;
+use FormManager\Inputs\Hidden;
+use FormManager\Inputs\Month;
+use FormManager\Inputs\Password;
+use FormManager\Inputs\Radio;
+use FormManager\Inputs\Range;
+use FormManager\Inputs\Search;
+use FormManager\Inputs\Select;
+use FormManager\Inputs\Submit;
+use FormManager\Inputs\Tel;
+use FormManager\Inputs\Text;
+use FormManager\Inputs\Textarea;
+use FormManager\Inputs\Time;
+use FormManager\Inputs\Url;
+use FormManager\Inputs\Week;
 use InvalidArgumentException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use FormManager;
 
 /**
  * Factory class to create all nodes.
  *
  * @method static Form                           form(array $inputs = [], array $attributes = [])
- * @method static Groups\Group                   group(array $inputs = [])
- * @method static Groups\RadioGroup              radioGroup(array $radios = [])
- * @method static Groups\SubmitGroup             submitGroup(array $submits = [])
- * @method static Groups\GroupCollection         groupCollection(Groups\Group $group)
- * @method static Groups\MultipleGroupCollection multipleGroupCollection(array $groups)
- * @method static Inputs\Checkbox                checkbox(?string $label = null, array $attributes = [])
- * @method static Inputs\Color                   color(?string $label = null, array $attributes = [])
- * @method static Inputs\Date                    date(?string $label = null, array $attributes = [])
- * @method static Inputs\DatetimeLocal           datetimeLocal(?string $label = null, array $attributes = [])
- * @method static Inputs\Email                   email(?string $label = null, array $attributes = [])
- * @method static Inputs\File                    file(?string $label = null, array $attributes = [])
- * @method static Inputs\Hidden                  hidden($value = null, array $attributes = [])
- * @method static Inputs\Month                   month(?string $label = null, array $attributes = [])
- * @method static Inputs\Number                  number(?string $label = null, array $attributes = [])
- * @method static Inputs\Password                password(?string $label = null, array $attributes = [])
- * @method static Inputs\Radio                   radio(?string $label = null, array $attributes = [])
- * @method static Inputs\Range                   range(?string $label = null, array $attributes = [])
- * @method static Inputs\Search                  search(?string $label = null, array $attributes = [])
- * @method static Inputs\Select                  select(?string $label = null, array $options = [], array $attributes = [])
- * @method static Inputs\Submit                  submit(?string $label = null, array $attributes = [])
- * @method static Inputs\Tel                     tel(?string $label = null, array $attributes = [])
- * @method static Inputs\Text                    text(?string $label = null, array $attributes = [])
- * @method static Inputs\Textarea                textarea(?string $label = null, array $attributes = [])
- * @method static Inputs\Time                    time(?string $label = null, array $attributes = [])
- * @method static Inputs\Url                     url(?string $label = null, array $attributes = [])
- * @method static Inputs\Week                    week(?string $label = null, array $attributes = [])
+ * @method static Group                   group(array $inputs = [])
+ * @method static RadioGroup              radioGroup(array $radios = [])
+ * @method static SubmitGroup             submitGroup(array $submits = [])
+ * @method static GroupCollection         groupCollection(Group $group)
+ * @method static MultipleGroupCollection multipleGroupCollection(array $groups)
+ * @method static Checkbox                checkbox(?string $label = null, array $attributes = [])
+ * @method static Color                   color(?string $label = null, array $attributes = [])
+ * @method static Date                    date(?string $label = null, array $attributes = [])
+ * @method static DatetimeLocal           datetimeLocal(?string $label = null, array $attributes = [])
+ * @method static Email                   email(?string $label = null, array $attributes = [])
+ * @method static File                    file(?string $label = null, array $attributes = [])
+ * @method static Hidden                  hidden($value = null, array $attributes = [])
+ * @method static Month                   month(?string $label = null, array $attributes = [])
+ * @method static Number                  number(?string $label = null, array $attributes = [])
+ * @method static Password                password(?string $label = null, array $attributes = [])
+ * @method static Radio                   radio(?string $label = null, array $attributes = [])
+ * @method static Range                   range(?string $label = null, array $attributes = [])
+ * @method static Search                  search(?string $label = null, array $attributes = [])
+ * @method static Select                  select(?string $label = null, array $options = [], array $attributes = [])
+ * @method static Submit                  submit(?string $label = null, array $attributes = [])
+ * @method static Tel                     tel(?string $label = null, array $attributes = [])
+ * @method static Text                    text(?string $label = null, array $attributes = [])
+ * @method static Textarea                textarea(?string $label = null, array $attributes = [])
+ * @method static Time                    time(?string $label = null, array $attributes = [])
+ * @method static Url                     url(?string $label = null, array $attributes = [])
+ * @method static Week                    week(?string $label = null, array $attributes = [])
  */
 class Factory
 {
