@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 use FormManager\Factory as F;
-use FormManager\InputInterface;
+use FormManager\Inputs\Input;
 
 $form = F::form([
     'accept' => F::checkbox('I am a human'),
@@ -102,7 +102,7 @@ if ($_POST) {
     <div>
         <?= $field; ?>
         <?php
-        if ($field instanceof InputInterface) {
+        if ($field instanceof Input) {
             $field->getError();
         }
         ?>
