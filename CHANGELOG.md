@@ -30,7 +30,7 @@ $colors = F::radioGroup([
 
 ## Changed
 - Minimum requirement is `php >= 7.2`
-- Upgraded `symfony/validator` to v5.4 
+- Set minimum requirement of `symfony/validator` to v5.4 
   - no active support anymore
   - [security fixes until 2028 though!](https://endoflife.date/symfony)
   - the pinned version to 5.4 is to avoid outdated and buggy versions that we cannot rely on.
