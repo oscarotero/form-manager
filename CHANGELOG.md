@@ -7,8 +7,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [7.0.0] - unreleased
 ### Added
-- Support until PHP 8.4
-- Added support for `symfony/validator` v6 (LTS) and v7.
+- Support for PHP 8.4.
+- Support for `symfony/validator` v6 (LTS) and v7.
+- Support for custom validator factory `Factory::setValidator()`.
+  - This allows to use `symfony/translations` for example to have translations. 
+  - See (examples/translations.php)[examples/translations.php].
+- Support for custom global error messages:
+```php
+F::setErrorMessages([
+    'required' => 'The field is required',
+    'email' => 'The email is invalid',
+]);
+```
+- Support for required radio group:
+```php
+$colors = F::radioGroup([
+    'red' => F::radio('Red', ['required' => true]),   
+    'blue' => 'Blue',                                                                                                                          
+    'green' => 'Green',
+]); 
+```
 
 ## Changed
 - Minimum requirement is `php >= 7.2`

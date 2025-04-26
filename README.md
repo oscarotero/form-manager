@@ -1,4 +1,4 @@
-# FormManager
+# Form Manager
 
 [![testing](https://github.com/oscarotero/form-manager/actions/workflows/main.yaml/badge.svg)](https://github.com/oscarotero/form-manager/actions/workflows/main.yaml)
 
@@ -26,16 +26,16 @@ use FormManager\Factory as F;
 Use the imported factory to create all form elements:
 
 ```php
-//Create an input type="text" element
+// Create an input type="text" element
 $name = F::text();
 
-//Create the input with a label
+// Create the input with a label
 $name = F::text('Please, introduce your name');
 
-//Or with extra attributes
+// Or with extra attributes
 $name = F::text('Please, introduce your name', ['class' => 'name-field']);
 
-//Add or remove attributes
+// Add or remove attributes
 $name->setAttribute('title', 'This is the name input');
 $name->removeAttribute('class');
 $name->setAttributes([
@@ -45,10 +45,10 @@ $name->setAttributes([
     'maxlength' => 50
 ]);
 
-//Set the value
+// Set the value
 $name->setValue('MyName');
 
-//Use magic properties to get/set/remove attributes
+// Use magic properties to get/set/remove attributes
 $name->class = 'name-field';
 $name->required = false;
 unset($name->readonly);
@@ -87,7 +87,7 @@ All HTML5 field types are supported:
 This library uses internally [symfony/validation](https://symfony.com/doc/current/validation.html) to perform basic html5 validations and error reporting. HTML5 validation attributes like `required`, `maxlength`, `minlength`, `pattern`, etc are supported, in addition to intrinsic validations assigned to each input like email, url, date, etc.
 
 ```php
-//Set default error messages
+// Set default error messages
 F::setErrorMessages([
     'required' => 'The field is required'
     'maxlength' => 'The field is too long, it must have {{ limit }} characters or less',
@@ -95,7 +95,7 @@ F::setErrorMessages([
 
 $email = F::email();
 
-//You can also customize/translate the error messages
+// You can also customize/translate the error messages
 $email->setErrorMessages([
     'email' => 'The email is not valid',
     'required' => 'The email is required',
@@ -104,29 +104,50 @@ $email->setErrorMessages([
 
 $email->setValue('invalid-email');
 
-//Validate the value
+// Validate the value
 if ($email->isValid()) {
     return true;
 }
 
-//Get errors
+// Get errors
 $error = $email->getError();
 
-//Print the first error message
+// Print the first error message
 echo $error;
 
-//Iterate through all messages
+// Iterate through all messages
 foreach ($error as $err) {
     echo $err->getMessage();
 }
 
-//And add more symfony validators
+// And add more symfony validators
 $ip = F::text();
 $ip->addConstraint(new Constraints\Ip());
 ```
 
 See [all constraints supported by symfony](https://symfony.com/doc/current/validation.html#supported-constraints)
 
+## Translations
+
+This package allows you to set your custom Validation instance with `Factory::setValidator()`.
+
+This allows to use (`symfony/translations`)[https://symfony.com/doc/current/translation.html] in order to have translations in place.
+
+```shell
+composer require symfony/translations
+```
+
+```php
+$validator = Validation::createValidatorBuilder()
+    ->setTranslator($translator)
+    ->setTranslationDomain('validators')
+    ->getValidator();
+
+// Set validator
+F::setValidator($validator);
+```
+
+See (examples/translations.php)[examples/translations.php] for the full example.
 
 ## Render html
 
@@ -359,3 +380,17 @@ foreach ($loginForm as $input) {
 }
 echo $loginForm->getClosingTag();
 ```
+
+---
+
+Please see [CHANGELOG](CHANGELOG.md) for more information about recent changes and [CONTRIBUTING](CONTRIBUTING.md) for contributing details.
+
+The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
+
+[ico-version]: https://img.shields.io/packagist/v/oscarotero/form-manager.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-ga]: https://github.com/oscarotero/form-manager/workflows/testing/badge.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/oscarotero/form-manager.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/oscarotero/form-manager
+[link-downloads]: https://packagist.org/packages/oscarotero/form-manager
