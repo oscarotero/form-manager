@@ -1,23 +1,21 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace FormManager;
 
 use FormManager\Inputs\Input;
-use PHPUnit\Util\Exception;
 use ReflectionClass;
 use RuntimeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\LengthValidator;
-use Symfony\Component\Validator\ConstraintValidatorInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Helper to build the validators
  */
 abstract class ValidatorFactory
 {
+    /** @var array<string,string> */
     private static $messages = [];
 
     public static function setMessages(array $messages): void

@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace FormManager;
 
 use InvalidArgumentException;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Factory class to create all nodes.
@@ -36,6 +39,9 @@ use InvalidArgumentException;
  */
 class Factory
 {
+    /** @var ValidatorInterface|null */
+    private static $validator = null;
+
     public const NAMESPACES = [
         'FormManager\\Inputs\\',
         'FormManager\\Groups\\',
@@ -43,6 +49,7 @@ class Factory
 
     /**
      * Factory to create input nodes
+     *
      * @param mixed $arguments
      */
     public static function __callStatic(string $name, $arguments)
@@ -65,11 +72,24 @@ class Factory
     }
 
     /**
-     * Set default error messages.
      * @param array<string, string> $messages
      */
     public static function setErrorMessages(array $messages = []): void
     {
         ValidatorFactory::setMessages($messages);
+    }
+
+    public static function setValidator(ValidatorInterface $validator): void
+    {
+        self::$validator = $validator;
+    }
+
+    public static function getValidator(): ValidatorInterface
+    {
+        if (null === self::$validator) {
+            return self::$validator = Validation::createValidator();
+        }
+
+        return self::$validator;
     }
 }
