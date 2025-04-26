@@ -1,5 +1,12 @@
 # Form Manager
 
+[ico-version]: https://img.shields.io/packagist/v/form-manager/form-manager.svg?style=flat-square
+[ico-ga]: https://github.com/oscarotero/form-manager/workflows/testing/badge.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/form-manager/form-manager.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/form-manager/form-manager
+[link-downloads]: https://packagist.org/packages/form-manager/form-manager
+
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
 ![Testing][ico-ga]
