@@ -97,7 +97,7 @@ All HTML5 field types are supported:
 This library uses internally [symfony/validation](https://symfony.com/doc/current/validation.html) to perform basic html5 validations and error reporting. HTML5 validation attributes like `required`, `maxlength`, `minlength`, `pattern`, etc are supported, in addition to intrinsic validations assigned to each input like email, url, date, etc.
 
 ```php
-// Set default error messages
+// Set global default error messages
 F::setErrorMessages([
     'required' => 'The field is required'
     'maxlength' => 'The field is too long, it must have {{ limit }} characters or less',
@@ -105,7 +105,7 @@ F::setErrorMessages([
 
 $email = F::email();
 
-// You can also customize/translate the error messages
+// Set per-fied error messages
 $email->setErrorMessages([
     'email' => 'The email is not valid',
     'required' => 'The email is required',
@@ -119,23 +119,23 @@ if ($email->isValid()) {
     return true;
 }
 
-// Get errors
+// Get the errors
 $error = $email->getError();
 
 // Print the first error message
 echo $error;
 
-// Iterate through all messages
+// Iterate through all error messages
 foreach ($error as $err) {
     echo $err->getMessage();
 }
 
-// And add more symfony validators
+// And add more symfony constraints
 $ip = F::text();
 $ip->addConstraint(new Constraints\Ip());
 ```
 
-See [all constraints supported by symfony](https://symfony.com/doc/current/validation.html#supported-constraints)
+See [all supported constraints by symfony/validation](https://symfony.com/doc/current/validation.html#supported-constraints).
 
 ## Translations
 
@@ -325,7 +325,7 @@ $multipleGroupCollection->setValue([
 
 ## Datalist
 
-[Datalist](http://www.w3.org/TR/html5/forms.html#the-datalist-element) are also allowed, just use the `createDatalist()` method:
+[Datalists](http://www.w3.org/TR/html5/forms.html#the-datalist-element) are also allowed, just use the `createDatalist()` method:
 
 ```php
 $input = F::search();
@@ -355,22 +355,22 @@ $loginForm->setAttributes([
     'method' => 'post',
 ]);
 
-//Load data from globals $_GET, $_POST, $_FILES
+// mLoad data from globals $_GET, $_POST, $_FILES
 $loginForm->loadFromGlobals();
 
-//Load data passing the arrays
+// Load data passing the arrays
 $loginForm->loadFromArrays($_GET, $_POST, $_FILES);
 
-//Or load from PSR-7 server request
+// Or load from PSR-7 server request
 $loginForm->loadFromServerRequest($serverRequest);
 
-//Get loaded data
+// Get loaded data
 $data = $loginForm->getValue();
 
-//Print the form
+// Print the form
 echo $loginForm;
 
-//Access to specific inputs:
+// Access to specific inputs:
 echo $loginForm->getOpeningTag();
 echo '<h2>Login:</h2>';
 
@@ -381,10 +381,10 @@ echo '<hr>';
 echo $loginForm[''];
 echo $loginForm->getClosingTag();
 
-//Iterate with all inputs
 echo $loginForm->getOpeningTag();
 echo '<h2>Login:</h2>';
 
+//nIterate through all inputs
 foreach ($loginForm as $input) {
     echo "<div>{$input}</div>";
 }
