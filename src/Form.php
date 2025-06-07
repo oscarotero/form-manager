@@ -14,6 +14,7 @@ use Traversable;
  * Class representing a form
  *
  * @implements ArrayAccess<InputInterface>
+ * @implements IteratorAggregate<InputInterface>
  */
 class Form extends Node implements ArrayAccess, IteratorAggregate
 {
